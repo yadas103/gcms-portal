@@ -1,0 +1,55 @@
+<div ng-switch="state">
+
+  <div ng-switch-when="critical">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <gcms-lov id="{{id}}" list="{{list}}" value="model.value" form="form" state="state" ng-disabled="{{countrydisabled}}" empty="{{empty}}"></gcms-lov>
+    </div>
+  </div>
+
+  <div ng-switch-when="required">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <gcms-lov id="{{id}}" list="{{list}}" value="model.value" form="form" state="state" ng-disabled="{{countrydisabled}}" empty="{{empty}}"></gcms-lov>
+    </div>
+  </div>
+
+  <div ng-switch-when="optional">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}}</label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <gcms-lov id="{{id}}" list="{{list}}" value="model.value" form="form" state="state" ng-disabled="{{countrydisabled}}" empty="{{empty}}"></gcms-lov>
+    </div>
+  </div>
+
+  <div ng-switch-when="view">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}}</label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <div id="{{id}}"><gcms-idname id="value" list="{{list}}"></gcms-idname></div>
+    </div>
+  </div>
+
+</div>

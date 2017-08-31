@@ -1,0 +1,85 @@
+<div ng-switch="state">
+
+  <div ng-switch-when="critical">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <ui-select id="{{id}}" name="{{id}}" class="form-control" multiple tagging="tagTransform" tagging-label="false" tagging-tokens="ENTER" ng-model="model.value" gcms-critical >
+      <!-- gcms-critical -->
+        <ui-select-match placeholder="Add one...">
+         	<span data-toggle="tooltip" data-placement="bottom" title="{{$item[prop]}}">
+	        	<span ng-bind-html="$item[prop].toString() | limitText:true:16:'...'"></span>
+	        </span>
+        </ui-select-match>
+        <ui-select-choices repeat="item in model.value">
+          <div>{{item[prop]}}</div>
+         </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div ng-switch-when="required">
+    <div class="{{class}}">
+      <div ng-if="label">
+  			<label>{{label}} <span class="text-danger">*</span></label>
+  			<span ng-if="info" class="animate-if">
+  				<i class="fa fa-info-circle" gcms-popover></i>
+  				<div ng-hide="true" class="pop-content">{{info}}</div>
+  			</span>
+      </div>
+      <ui-select id="{{id}}" name="{{id}}" class="form-control" multiple tagging="tagTransform" tagging-label="false" tagging-tokens="ENTER" ng-model="model.value" gcms-required>
+        <ui-select-match placeholder="Add one...">
+        	<span data-toggle="tooltip" data-placement="bottom" title="{{$item[prop]}}">
+	        	<span ng-bind-html="$item[prop].toString() | limitText:true:16:'...'"></span>
+	        </span>
+        </ui-select-match>
+        <ui-select-choices repeat="item in model.value">
+          <div>{{item[prop]}}</div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div ng-switch-when="optional">
+    <div class="{{class}}">
+      <div ng-if="label">
+  			<label>{{label}}</label>
+  			<span ng-if="info" class="animate-if">
+  				<i class="fa fa-info-circle" gcms-popover></i>
+  				<div ng-hide="true" class="pop-content">{{info}}</div>
+  			</span>
+      </div>
+      <ui-select id="{{id}}" name="{{id}}" class="form-control" multiple tagging="tagTransform" tagging-label="false" tagging-tokens="ENTER" ng-model="model.value">
+        <ui-select-match placeholder="Add one...">
+        	<span data-toggle="tooltip" data-placement="bottom" title="{{$item[prop]}}">
+	        	<span ng-bind-html="$item[prop].toString() | limitText:true:16:'...'"></span>
+	        </span>
+        </ui-select-match>
+        <ui-select-choices repeat="item in model.value">
+          <div>{{item[prop]}}</div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div ng-switch-when="view">
+    <div class="{{class}}">
+      <div ng-if="label">
+  			<label>{{label}}</label>
+  			<span ng-if="info" class="animate-if">
+  				<i class="fa fa-info-circle" gcms-popover></i>
+  				<div ng-hide="true" class="pop-content">{{info}}</div>
+  			</span>
+      </div>
+      <div>
+        <span id="{{id}}" ng-repeat="item in model.value">{{item[prop]}}{{$last ? '' : ($index == model.value.length - 2) ? ' and ' : ', '}}</span>
+      </div>
+    </div>
+  </div>
+
+</div>

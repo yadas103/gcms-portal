@@ -1,0 +1,22 @@
+<div class="welcome-message">
+
+  <img src="assets/img/gcms_logo.png" class="center-block" width="495px" height="365px" alt="Pfizer"/>
+
+  <div>
+
+    <h2>{{welcome.title}}</h2>
+
+    <span gcms-secure section-name="Landing" action-name="update">
+      <gcms-modal template="landing.welcome.html" controller="ModalDefaultCtrl"
+        content="welcome" ok="update" alt="Edit Welcome">
+        <i class='fa fa-pencil'></i>
+      </gcms-modal> 
+    </span>
+
+  </div>
+
+  <p>
+    {{welcome.message}}
+  </p>
+
+</div>

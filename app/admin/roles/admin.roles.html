@@ -1,0 +1,93 @@
+<h3>Administration</h3>
+
+<hr/>
+
+<div gcms-secure section-name="Administration" action-name="create" style="padding-bottom:20px">
+  <gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
+    <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
+  </gcms-modal>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">data</div>
+
+  <div class="panel-body">
+    <table class="table table-hover roles-table">
+      <thead>
+        <tr>
+          <th gcms-secure section-name="Administration" action-name="update"></th>
+          <th gcms-secure section-name="Administration" action-name="delete"></th>
+          <th>Username</th>
+          <th>Country</th>
+          <th ng-repeat="role in roles">
+            <gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details">{{role.roleName}}</gcms-modal>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="adminRole" ng-repeat="profile in profiles | orderBy:'userName'">
+
+          <td gcms-secure section-name="Administration" action-name="update"
+            class="cursor-pointer" style="padding-right:10px">
+              <a ng-click="go(profile)"><i class="fa fa-pencil"></i></a>
+          </td>
+
+          <td gcms-secure section-name="Administration" action-name="delete">
+            <gcms-modal template="admin.role.delete.html" controller="ModalDefaultCtrl"
+              content="profile" ok="delete" alt="delete user">
+              <i class="fa fa-trash"></i>
+            </gcms-modal>
+          </td>
+
+          <td>{{profile.userName}}</td>
+
+          <td>{{profile.countryISOCode}}</td>
+
+          <td ng-repeat="role in roles"><i ng-show="profile.roleId === role.id" class="fa fa-check"></i></td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div gcms-secure section-name="Administration" action-name="create" style="padding-bottom:20px">
+  <gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
+    <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
+  </gcms-modal>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Country Attributes</div>
+
+  <div class="panel-body">
+    <table class="table table-hover roles-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Schema</th>
+          <th>Table</th>
+          <th>Field</th>
+          <th>Hidden</th>
+          <th>Critical</th>
+          <th>Required</th>
+          <th>Optional</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="adminRole" ng-repeat="field in countryAttributes">
+          <td>{{field.attributeName}}</td>
+          <td>{{field.schemaName}}</td>
+          <td>{{field.tableName}}</td>
+          <td>{{field.columnName}}</td>
+          <td><i ng-show="field.criticalRequiredOptionalIndicator === 'H'" class="fa fa-check"></td>
+          <td><i ng-show="field.criticalRequiredOptionalIndicator === 'C'" class="fa fa-check"></td>
+          <td><i ng-show="field.criticalRequiredOptionalIndicator === 'R'" class="fa fa-check"></td>
+          <td><i ng-show="field.criticalRequiredOptionalIndicator === 'O'" class="fa fa-check"></td>
+          <td><i ng-show="field.criticalRequiredOptionalIndicator === 'V'" class="fa fa-check"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

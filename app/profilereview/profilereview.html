@@ -1,0 +1,354 @@
+<div class="container results">
+
+  <div class="col-md-12">
+    <h3>Profile Review</h3>
+    <hr/>
+    
+		<div class="container-table" style="margin-left:14px;
+		    margin-right:14px;">
+		<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+		    <table class="table table-bordered table-striped table-highlight">
+		      <thead style="background-color:#337ab7;color:white;">
+		        <tr>
+				<th>#</th>
+		        <th>Profile Type</th>
+		        <th>Profile Country</th>
+		        <th>Name</th>
+		        <th>City</th>
+		        <th>Status</th>
+		        <th>Action</th>  		
+		      </tr></thead>
+		      <tbody>
+		        
+		          <tr>
+		           
+		          <td><a href="" ng-init="clickedh=false" ng-click="clickedh=!clickedh">Edit</a></td></td>
+		          <td><input type="text" class="form-control" value=""></td>
+		          <td><input type="text" class="form-control" value=""></td>
+		          <td><input type="text" class="form-control" value=""></td>
+		          <td><input type="text" class="form-control" value=""></td>
+		          <td><input type="text" class="form-control" value=""></td>
+		          <td>
+		            <select class="form-control">
+		                            <option>complete</option>
+		                            <option>incomplete</option>
+									<option>all</option>
+		                        </select>
+		          </td>
+		         
+		         
+		          
+		        </tr>
+				<tr>
+		                <td></td>
+		                <td>HCP</td>
+		                <td>Spain</td>
+		                <td>Sarita,Bonia</td>
+		                <td>Madrid</td>
+		                <td></td>
+						<td><gcms-modal template="profilereview.appdismiss.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+		    <a href="">Approve/Dismiss</a>
+		  </gcms-modal></td>
+		            </tr>
+		            
+		           
+		   </tbody>
+		   </table>
+		    <div class="table-responsive" ng-show="clickedh">
+		   
+		     <div class="panel-body">
+		  <div class="container-box">
+		  <div class="row">
+		    <div class="col-sm-6">
+		    
+		        Profile Type <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        profile country <input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        </div>
+				<div class="row">
+		       <div class="col-sm-6">
+		    first name <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        Last name<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-6">
+		    Org Name <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        City<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-6">
+			   Specialty
+		     <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        address<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-12">
+			   Notes
+		     <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-6">
+			   Status
+		     <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+				<div class="col-sm-6">
+				<span style="float: right;
+		    margin-top: 20px;"><button class="btn btn-primary" role="button">Update</button>
+				<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span>
+				</div>
+		        
+				</div>
+		        
+				</div>
+				</div>
+				</div>
+		
+		    
+		   </div>
+		   </div>
+		   </div>
+		   </div>
+		   
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div class="panel panel-primary ng-scope" gcms-secure="" section-name="Value Exchange" action-name="read">
+		  <div class="panel-heading">Identity request</div>
+		  <div class="container">
+		  <div class="row">
+		   <div class="col-sm-12">
+		  <div class="panel-body">
+		<table class="table table-hover">
+			
+			<div class="table-responsive">
+		    <table class="table table-bordered table-striped table-highlight">
+		      <thead>
+			  <tr>
+		        <th>#</th>
+		       <th>
+			    <th class="profilec"> <a href="#" ng-click="sort('profilec',$event)">profile country
+		
+		                         <span class="{{Header[0]}}"></span>
+		
+		                         </a></th>
+		
+		                    <th>
+		                        <a href="#" ng-click="orderByField='dateOfBirth'; reverseSort = !reverseSort">
+		                            Profile Country
+		                        </a>
+		                        <th>
+		     <a href="#" ng-click="sortName='name'; sortReverse = !sortReverse">
+		          <span ng-show="sortName == 'name' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+		          <span ng-show="sortName == 'name' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+		           Name
+		     </a>
+		</th>
+		                    
+		                    <th>
+		                        <a href="#" ng-click="orderByField='gender'; reverseSort = !reverseSort">
+		                           City
+		                        </a>
+		                    </th>
+		                    <th>
+		                        <a href="#" ng-click="orderByField='salary'; reverseSort = !reverseSort">
+		                           Status
+		                        </a>
+		                    </th>
+							<th>
+		                        <a href="#" ng-click="orderByField='salary'; reverseSort = !reverseSort">
+		                           Action
+		                        </a>
+		                    </th>
+							
+		        
+		       
+		        
+		        
+		        
+		       
+		        </tr>
+		      </thead>
+		      <tbody>
+			  <tr>
+		                <!--td ng-repeat="column in row">{{column}}</td-->
+		            
+		        
+		          
+		             <td><a href="" ng-init="clickedh=false" ng-click="clickedh=!clickedh">View Profile</a></td>
+		          <td><input type="text" ng-model="search"  class="form-control" value="" /></td>
+		          <td><input type="text" ng-model="search" class="form-control" value="" /></td>
+		          <td><input type="text" ng-model="search" class="form-control" value="" /></td>
+		          <td><input type="text" ng-model="search" class="form-control" value="" /></td>
+		          <td><input type="text" ng-model="search" class="form-control" value="" /></td>
+		         
+		       
+		          <td>
+		            <select class="form-control">
+		                            <option>complete</option>
+		                            <option>incomplete</option>
+									<option>all</option>
+		                        </select>
+		          </td>
+		        </tr>
+		        
+			
+				
+				<tr ng-repeat="emp in employees[currentPage] |filter:search | orderBy:columnToOrder:reverse">
+		            <!--td><a href="" ng-init="clickedh=false" ng-click="clickedh=!clickedh"></span>View Profile</button
+		           </td>-->
+		          
+		          <!--td></td>
+		          <td></td>
+		          <td></td>
+		          <td></td>
+		          <td></td>
+				  <td></td-->
+				   
+				  <td>
+		                        
+		                    </td>
+							<td>
+		                        {{ emp.name }}
+		                    </td>
+		                    <td>
+		                        {{ emp.dateOfBirth | date:"dd/MM/yyyy" }}
+		                    </td>
+		                    <td>
+		                        {{ emp.gender }}
+		                    </td>
+		                    <td>
+		                        {{ emp.salary  }}
+		                    </td>
+							<td></td>
+							<td><gcms-modal template="indentity.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+		    <a href="">Approve/Dismiss</a>
+		  </gcms-modal>
+				 
+				  </td>
+				
+				  
+		         
+		          
+		        </tr>
+		   </tbody>
+		   </table>
+		   <div class="table-responsive" ng-show="clickedh">
+		   
+		     <div class="panel-body">
+		  <div class="container-box">
+		  <div class="row">
+		    <div class="col-sm-6">
+		    
+		        Profile Type <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        profile country <input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        </div>
+				<div class="row">
+		       <div class="col-sm-6">
+		    first name <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        Last name<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-6">
+		    Org Name <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        City<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-6">
+			   Specialty
+		     <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        <div class="col-sm-6">
+		        address<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-12">
+			   Notes
+		     <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        
+				</div>
+				<div class="row">
+		       <div class="col-sm-6">
+			   Status
+		     <input type="text" class="form-control" id="acmcode" placeholder="">
+		        </div>
+		        
+				</div>
+		        
+				</div>
+		       
+		          </div>
+				  </div>
+				
+		        
+		
+		  
+		  </div>
+		</table>
+		</div>
+		</div>
+		</div>
+		 <tfoot>
+		                    <td colspan="6">
+		                        <div class="pagination pull-right">
+		                            <ul>
+		                                <li ng-class="{disabled: currentPage == 0}">
+		                                    <a href ng-click="prevPage()">« Prev</a>
+											 </li>
+		                                <li ng-repeat="n in range(pagedItems.length)"
+		                                    ng-class="{active: n == currentPage}"
+		                                ng-click="setPage()">
+		                                    <a href ng-bind="n + 1">1</a>
+		                                </li>
+		                                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+										<a href ng-click="nextPage()">Next »</a>
+		                                </li>
+		                            </ul>
+		                        </div>
+		                    </td>
+		                </tfoot>
+		                <tbody>
+		</div>
+</div>
+</div>		
+     

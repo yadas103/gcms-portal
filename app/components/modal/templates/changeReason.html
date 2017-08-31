@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h3 class="modal-title">Reason for Change</h3>
+</div>
+
+<div class="modal-body">
+  <form name="reasonForm" novalidate>
+    <textarea rows="3" cols="50" class="form-control" id="changeReason" name="changeReason"
+      maxLength="{{maxLength}}" ng-model="item.changeReason" placeholder="" style="resize: none" required></textarea>
+      <span class="error" ng-show="reasonForm.changeReason.$error.required">Required!</span>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="reasonForm.$invalid">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

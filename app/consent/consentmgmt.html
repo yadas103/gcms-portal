@@ -1,0 +1,39 @@
+<div class="container results">
+
+  <div class="col-md-12">
+    <h3>Consent Management</h3>
+    <hr/>
+	    <div class="panel panel-primary">
+	      <div class="panel-heading clearfix">
+	        <div class="pull-left">Search Results</div>
+	        <div class="pull-right">Displaying {{startRecord}} of {{totalRecords}} Results</div>
+	      </div>
+	      <div class="panel-body">
+	       		<table class="table table-hover">
+				  <thead>
+				    <tr>
+				      <th></th>
+				      <th ng-click="sortBy('businessPartyID')" ng-if="!embedded" id="id">Task ID <i ng-if="descSort('businessPartyID')" class="fa fa-sort-desc"></i><i ng-if="ascSort('businessPartyID')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('businessPartyName')" id="Name">Last Name/Org Name <i ng-if="descSort('businessPartyName')" class="fa fa-sort-desc"></i><i ng-if="ascSort('businessPartyName')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('cityName')" id="City">First Name <i ng-if="descSort('cityName')" class="fa fa-sort-desc"></i><i ng-if="ascSort('cityName')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('region')" ng-if="!embedded" id="Region">Profile Country <i ng-if="descSort('region')" class="fa fa-sort-desc"></i><i ng-if="ascSort('region')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Event Name <i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Consent Status <i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Consent Updated Date <i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Initiated By <i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Task Status <i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Document<i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>
+				      <th ng-click="sortBy('specialCode')" ng-if="!embedded" id="Specialty">Action<i ng-if="descSort('specialCode')" class="fa fa-sort-desc"></i><i ng-if="ascSort('specialCode')" class="fa fa-sort-asc"></i></th>				     
+				    </tr>
+				  </thead>
+				  <tbody>
+				  </tbody>
+				</table>
+	      </div>
+	    </div>
+
+	</div>
+</div>
+
+
+

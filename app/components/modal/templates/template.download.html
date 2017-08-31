@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h3 class="modal-title">Set Additional details</h3>
+</div>
+<div class="modal-body">
+	<p>
+	Please provide the below mentioned details.
+	</p>
+	<div>
+	<table class="table table-hover">
+	<thead class="panel-heading">
+	<tr class="panel-title">
+	<th>Template Type</th>
+	<th>Last Name*</th>
+	<th>First Name*</th>
+	<th>Event Description*</th>
+	<th>TR ID*</th> 
+	<th>PO Code</th>
+	<th>ACM/ InterAct Code</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="pro in generateConsentAnnex">
+	<td><gcms-lov list="consentAnnex" value="consentAnnex"></gcms-lov></td>
+	<td>{{pro.lastName}}</td>
+    <td>{{pro.firstName}}</td>	
+	<td><input type="text" id="event" value="" ng-model=request.event></td>
+	<td>{{pro.id}}</td>
+	<td><input type="text" id="po" value="" ng-model=request.po></td>
+	<td><input type="text" id="acm" value="" ng-model=request.acm></td>
+	</tbody>
+	<tfoot>
+	<tr>
+	<td><span class="btn btn-primary" role="button">Save</span></td>
+	<td><span class="btn btn-primary" role="button">Cancel</span></td>
+	</tr>
+	</tfoot>
+	</table>
+	</div>
+	</div>
+	
+	<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="recipientForm.$invalid">Generate Consent Annex</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+	
+	

@@ -1,0 +1,56 @@
+<div ng-switch="state" >
+
+      <div ng-switch-when="critical">
+            <div class="{{class}}">
+                  <div ng-if="label">
+                        <label>{{label}} <span class="text-danger">*</span></label>
+                        <span ng-if="info" class="animate-if">
+                              <i class="fa fa-info-circle" gcms-popover></i>
+                              <div ng-hide="true" class="pop-content">{{info}}</div>
+                        </span>
+                  </div>
+              <input id="{{id}}" name="{{id}}" oninput="if(value.length>this.maxLength)value=value.slice(0,this.maxLength)" class="form-control" type="{{type}}" ng-disabled="{{disabled}}" ng-model="model.value" maxlength="{{maxLength}}"  gcms-decimals required gcms-critical/>
+            </div>
+      </div>
+
+      <div ng-switch-when="required">
+            <div class="{{class}}">
+                  <div ng-if="label">
+                        <label>{{label}} <span class="text-danger">*</span></label>
+                        <span ng-if="info" class="animate-if">
+                              <i class="fa fa-info-circle" gcms-popover></i>
+                              <div ng-hide="true" class="pop-content">{{info}}</div>
+                        </span>
+                  </div>
+                 <input id="{{id}}" name="{{id}}" oninput="if(value.length>this.maxLength)value=value.slice(0,this.maxLength)" class="form-control" type="{{type}}" ng-disabled="{{disabled}}" ng-model="model.value" maxlength="{{maxLength}}"  gcms-optional />
+            </div>
+      </div>
+
+      <div ng-switch-when="optional">
+            <div class="{{class}}">
+                  <div ng-if="label">
+                        <label>{{label}}</label>
+                        <span ng-if="info" class="animate-if">
+                              <i class="fa fa-info-circle" gcms-popover></i>
+                              <div ng-hide="true" class="pop-content">{{info}}</div>
+                        </span>
+                  </div>
+            <input id="{{id}}" name="{{id}}" oninput="if(value.length>this.maxLength)value=value.slice(0,this.maxLength)" maxLength="{{maxLength}}" class="form-control" type="{{type}}" ng-disabled="{{disabled}}" ng-model="model.value" gcms-optional />
+            </div>
+      </div>
+
+      <div ng-switch-when="view">
+            <div class="{{class}}">
+                  <div ng-if="label">
+                        <label>{{label}}</label>
+                        <span ng-if="info" class="animate-if">
+                              <i class="fa fa-info-circle" gcms-popover></i>
+                              <div ng-hide="true" class="pop-content">{{info}}</div>
+                        </span>
+                  </div>
+            <div id="{{id}}" name="{{id}}">
+            <span data-toggle="tooltip" data-placement="bottom" title="{{model.value}}"><span ng-bind-html="model.value.toString() | limitText:true:35:'...'"></span></span>
+            </div>
+            </div>
+      </div>
+</div>

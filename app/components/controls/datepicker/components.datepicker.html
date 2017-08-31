@@ -1,0 +1,62 @@
+<div ng-switch="state">
+  <div ng-switch-when="critical">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <div>
+        <input type="date" id="{{id}}" min="{{min | date:'yyyy-MM-dd'}}" max="{{max | date:'yyyy-MM-dd'}}" name="{{id}}" class="form-control" ng-model="model.value" gcms-critical/>
+      </div>
+
+    </div>
+  </div>
+<div ng-switch-when="required">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <div>
+        <input type="date" id="{{id}}" min="{{min | date:'yyyy-MM-dd'}}" max="{{max | date:'yyyy-MM-dd'}}" name="{{id}}" class="form-control" ng-model="model.value" required/>
+      </div>
+
+    </div>
+  </div>
+
+  <div ng-switch-when="optional">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}}</label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <div>
+        <input type="date" id="{{id}}" min="{{min | date:'yyyy-MM-dd'}}" max="{{max | date:'yyyy-MM-dd'}}" name="{{id}}" class="form-control" ng-model="model.value"/>
+      </div>
+
+    </div>
+  </div>
+
+  <div ng-switch-when="view">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}}</label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+    	<div id="id">{{model.value | date:'dd/MM/yyyy'}}</div>
+    </div>
+  </div>
+
+</div>

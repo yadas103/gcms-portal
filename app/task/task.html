@@ -1,0 +1,323 @@
+<div class="container results">
+
+	<div class="col-md-12">
+		<h3>Tasks</h3>
+		<hr />
+		<h3 class="clearfix uploads">
+
+			<div id="title" class="pull-left"
+				style="font-size: 14px; margin-bottom: 15px; margin-top: -15px;">
+				Below are the tasks associated to your identity. You are requested
+				to upload the scanned EFPIA Cross-Border Consent forms you collected
+				from HCPs or HCOs you interacted with.</div>
+
+
+
+		</h3>
+		<div class="panel panel-primary ng-scope" action-name="read">
+			<div class="panel-heading">Upload your documents - Automatic
+				Match</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="panel-body">
+							<div class="pull-left" action-name="create">
+								<gcms-modal template="tasks.pdfupload.html" controller="ModalDefaultCtrl" ok="upload" content="uploader"	alt="Upload images"> 
+									<span class="btn btn-default" role="button">Select PDF file(s) to upload</span> 
+								</gcms-modal>								
+								<div ng-hide="true" class="pop-content">
+									<div id="templates">
+										<span>Upload Template: </span> <a href="{{template.url}}"
+											target="_blank">{{template.value}}</a>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!-- ngIf: alerts.length > 0 -->
+
+					<div ng-show="successAlert"
+						class="alert alert-success alert-dismissible ng-hide" role="alert">
+						<button type="button" class="close" aria-label="Close">
+							<span aria-hidden="true"></span>
+						</button>
+
+
+					</div>
+					<div class="col-sm-5">
+						<ul>
+							<li>Based on the QR code printed on the top-right corner of
+								each form, the platform will try to <b>automatically match</b>
+								the documents with the tasks.
+							</li>
+							<li>A successful match will remove your task. If
+								unsuccessful, the task will remain and you will manually attach
+								the signed document.</li>
+							<li>The platform accepts <b>only PDF files</b>
+							</li>
+							<li>There are <b>scanned cpies</b> of the EFPIA cross-border
+								consent forms<b>signed by the HCP/HCO</b><br>
+							</li>
+							<li>Being the process facilitator between Transparency Team
+								and the HCP / HCO, <b> you are the responsible</b>for the file
+								content accuracy
+							</li>
+							<li><b>Do not upload unsigned files!</b></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="panel panel-primary" action-name="read">
+			<div class="panel-heading">Upload your documents - Manual Match</div>
+			<div class="panel-body">
+
+				<div ng-if="alerts.length > 0">
+					<alert ng-repeat="alert in alerts" type="{{alert.type}}"
+						close="closeAlert($index)">{{alert.msg}}</alert>
+				</div>
+
+				<div ng-show="successAlert"
+					class="alert alert-success alert-dismissible" role="alert">
+					<button type="button" class="close" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong> <i class="fa fa-check"></i> <span
+						ng-if="uploader.queue.length > 1">{{uploader.queue.length}}
+							Files</span> <span ng-if="uploader.queue.length === 1">1 File</span> <span>Uploaded
+							Successfully</span>
+					</strong>
+				</div>
+
+				<div ng-show="failureAlert"
+					class="alert alert-danger alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong> <i class="fa fa-close"></i> <span
+						ng-if="uploader.queue.length > 1">{{uploader.queue.length}}
+							Files</span> <span ng-if="uploader.queue.length === 1">1 File</span> <span>Rejected</span>
+					</strong>
+				</div>
+
+				<table class="table table-hover">
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped table-highlight">
+							<thead style="color: white; background-color: #337ab7;">
+								<th>Action</th>
+								<th>Who Pays</th>
+								<th>Last Name</th>
+								<th>First Name</th>
+								<th>Profile Country</th>
+								<th>Event Name</th>
+								<th>PO Code</th>
+								<th>ACM Code</th>
+								<th>Consent</th>
+								<th>Created Date</th>
+								<th>Activity</th>
+								<th>Status</th>
+							</thead>
+							<tbody>
+
+								<tr>
+									<td></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td><input type="text" class="form-control" value="" /></td>
+									<td></td>
+									<td><select class="form-control">
+											<option>Complete</option>
+											<option>Incompete</option>
+											<option>All Tasks</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td><span class="glyphicon glyphicon-pencil"
+										style="color: #337ab7;" ng-init="clickedh=false"
+										ng-click="clickedh=!clickedh"></span> <gcms-modal
+											template="delete.task.html" controller="ModalDefaultCtrl"
+											content="addItem" ok="create" alt="Add role"> <span
+											class="glyphicon glyphicon-trash" style="color: #337ab7;"></span>
+										</gcms-modal></td>
+									<td>Afghanishan (AF)</td>
+									<td>Rasanen</td>
+									<td>Kaarina</td>
+									<td>FINLAND</td>
+									<td>Eve1</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>17-Aug-2017</td>
+									<td><a href="">Upload</a></td>
+									<td>Complete</td>
+
+								</tr>
+
+							</tbody>
+						</table>
+						<div class="table-responsive" ng-show="clickedh">
+
+
+							<div class="panel-body">
+								<div class="container-box">
+									<div class="col-sm-4">
+
+
+										<label for="inputtext">ACM code</label> <input type="text"
+											class="form-control" id="acmcode" placeholder="">
+									</div>
+									<div class="col-sm-4">
+										<label for="inputtext">PO code</label> <input type="text"
+											class="form-control" id="acmcode" placeholder="">
+									</div>
+									<div class="col-sm-4">
+										<label for="inputtext">Consent</label> <input type="text"
+											class="form-control" id="acmcode" placeholder="">
+									</div>
+									</td>
+									</tr>
+
+
+									<label for="inputtext">Event Name</label> <input type="text"
+										class="form-control" id="acmcode" placeholder=""> <span
+										style="float: right; margin-top: 20px;"><button
+											class="btn btn-primary" role="button">Update</button>
+										<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+
+
+
+
+
+						<!--thead>
+		        <tr>
+		          <!--th ng-click="sortBy('createdBy')">User Name <i ng-if="descSort('createdBy')" class="fa fa-sort-desc"></i><i ng-if="ascSort('createdBy')" class="fa fa-sort-asc"></i></th>
+		          <th ng-click="sortBy('fileName')">Filename <i ng-if="descSort('fileName')" class="fa fa-sort-desc"></i><i ng-if="ascSort('fileName')" class="fa fa-sort-asc"></i></th>
+		          <th ng-click="sortBy('createdDate')">Date <i ng-if="descSort('createdDate')" class="fa fa-sort-desc"></i><i ng-if="ascSort('createdDate')" class="fa fa-sort-asc"></i></th>
+		          <th ng-click="sortBy('status')">Status <i ng-if="descSort('status')" class="fa fa-sort-desc"></i><i ng-if="ascSort('status')" class="fa fa-sort-asc"></i></th>
+		          <th style="text-align:center" ng-click="sortBy('completeCount')">Complete <i ng-if="descSort('completeCount')" class="fa fa-sort-desc"></i><i ng-if="ascSort('completeCount')" class="fa fa-sort-asc"></i></th>
+		          <th style="text-align:center" ng-click="sortBy('inCompleteCount')">Incomplete <i ng-if="descSort('inCompleteCount')" class="fa fa-sort-desc"></i><i ng-if="ascSort('inCompleteCount')" class="fa fa-sort-asc"></i></th>
+		          <th style="text-align:center" ng-click="sortBy('rejectCount')">Rejected <i ng-if="descSort('rejectCount')" class="fa fa-sort-desc"></i><i ng-if="ascSort('rejectCount')" class="fa fa-sort-asc"></i></th>
+		        </tr>
+		      </thead-->
+
+						<tbody>
+
+							<tr ng-repeat-end=""
+								ng-if="upload.expandIncomplete || upload.expandRejected">
+								<td colspan="7" class="nopadding">
+
+									<table class="table table-striped table-bordered nomargin"
+										ng-if="upload.expandIncomplete">
+										<thead>
+											<tr class="bg-warning">
+												<th>Last Name / Org Name</th>
+												<th>Unique ID</th>
+												<th>Party Type</th>
+												<th>Speciality</th>
+												<th>Reason(s) for Incomplete</th>
+												<th></th>
+											</tr>
+											<tr class="bg-warning">
+												<td colspan="6">Please note that the record count of
+													Incomplete records for this file only displays the original
+													number of Incomplete records upon file upload. The
+													Incomplete record details section below reflects any
+													changes that have been made to these records after initial
+													file upload. Therefore, records that have been corrected
+													and have a status of Complete will not be shown below.</td>
+											</tr>
+										</thead>
+										<tbody>
+
+											<tr ng-repeat="incomplete in upload.details">
+												<td>{{incomplete.partyLastName}}
+													{{incomplete.organizationName}}</td>
+												<td><gcms-upload-default-uniqueid
+														recipient="incomplete.uploadRecipient"></gcms-upload-default-uniqueid></td>
+												<td>{{incomplete.partyType}}</td>
+												<td>{{incomplete.partyPrimarySpeciality}}</td>
+												<td>{{incomplete.incompleteReason}}<!--<pre style="max-width:300px; font-family:sans-serif; border-style:none; background: none; padding: 0px">{{incomplete.incompleteReason}}</pre>--></td>
+												<td class="correction_file"
+													rowspan="{{upload.details.length}}" ng-show="$first">
+													<a class="btn btn-default btn-block"
+													href="/gcms-service/{{locale}}/report-download/bp-incomplete/{{upload.id}}"
+													target="_blank"> <span><i
+															class="fa fa-2x fa-download"></i></span> <span>Correction<br />File
+													</span>
+												</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table class="table table-striped table-bordered nomargin"
+										ng-if="upload.expandRejected">
+										<thead>
+											<tr class="bg-danger">
+												<th>Last Name / Org Name</th>
+												<th>Unique ID</th>
+												<th>Party Type</th>
+												<th>Speciality</th>
+												<th>Reason(s) for Rejection</th>
+												<th>Reason(s) for Incomplete</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="reject in upload.details">
+												<td>{{reject.partyLastName}}
+													{{reject.organizationName}}</td>
+												<td><gcms-upload-default-uniqueid
+														recipient="reject.uploadRecipient"></gcms-upload-default-uniqueid></td>
+												<td>{{reject.partyType}}</td>
+												<td>{{reject.partyPrimarySpeciality}}</td>
+												<td>{{reject.rejectReason}}<!--<pre style="max-width:200px; font-family:sans-serif; border-style:none; background: none; padding: 0px">{{reject.rejectReason}}</pre>--></td>
+												<td>{{reject.incompleteReason}}<!--<pre style="max-width:200px; font-family:sans-serif; border-style:none; background: none; padding: 0px">{{reject.incompleteReason}}</pre>--></td>
+												<td class="correction_file"
+													rowspan="{{upload.details.length}}" ng-show="$first">
+													<a class="btn btn-default btn-block"
+													href="/gcms-service/{{locale}}/report-download/bp-reject/{{upload.id}}"
+													target="_blank"> <span><i
+															class="fa fa-2x fa-download"></i></span> <span>Correction<br />File
+													</span>
+												</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+								</td>
+							</tr ng-repeat-end>
+
+
+
+						</tbody>
+
+				</table>
+
+				<div in-view="$inview&&nextPage()"></div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>

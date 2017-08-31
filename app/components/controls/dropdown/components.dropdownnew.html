@@ -1,0 +1,10 @@
+<div>
+      <div ng-if="label">
+       <label>{{label}}</label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <gcms-lov id="{{id}}" list="{{list}}" value="model.value" form="form" state="state" empty="{{empty}}"></gcms-lov>
+    </div>

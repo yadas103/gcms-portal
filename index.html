@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html ng-app="gcms" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>GCMS</title>
+
+  <link rel="shortcut icon" href="assets/img/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon-precomposed.png">
+
+<!--
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900'>
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800,700'>
+-->
+<!-- build:css css/style.css -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/vendor/famfamfam/famfamfam-flags.css">
+  <link rel="stylesheet" href="assets/vendor/angular-ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="assets/vendor/angular-loading-bar/build/loading-bar.css">
+  <link rel="stylesheet" href="assets/vendor/angular-date-picker-polyfill/dist/angular-date-picker-polyfill-basic.min.css">
+  <link rel="stylesheet" href="assets/vendor/angular-toasty/dist/angular-toasty.min.css">
+  <link rel="stylesheet" href="assets/css/pfizer.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+   <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+  <!-- endbuild -->
+</head>
+<body>
+<!--
+        BEGIN: App-Loading Screen.
+        _____________________________________________________________________________
+        Until the AngularJS application code is loaded and bootstrapped, this is just
+        "static HTML." Meaning, the [class-based] directive, "mAppLoading", won't
+        actually do anything until the application is initialized. As such, we'll give
+        it just enough CSS to "fail open"; then, when the AngularJS app loads, the
+        directive will run and we'll remove this loading screen.
+    -->
+<div class="m-app-loading" ng-if="false">
+<!--
+    HACKY CODE WARNING: I'm putting Style block inside directive so that it
+    will be removed from the DOM when we remove the directive container.
+-->
+<style type="text/css">
+    div.m-app-loading { position: fixed; z-index: 999998; }
+    div.m-app-loading div.animated-container { background-color: #FFFFFF; bottom: 0px; left: 0px; opacity: 1.0; position: fixed; right: 0px; top: 0px; z-index: 999999; }
+    div.m-app-loading div.messaging { color: #000000; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;; left: 0px; margin-top: -37px; position: absolute; right: 0px; text-align: center; top: 50%; }
+    div.m-app-loading h1 { font-size: 26px; line-height: 35px; margin: 0px 0px 20px 0px; }
+    div.m-app-loading div { font-size: 18px; line-height: 14px; margin: 0px 0px 0px 0px; }
+    div.m-app-loading div.spinner-icon { width: 56px; height: 56px; border: solid 2px transparent; border-top-color: #29d; border-left-color: #29d; border-radius: 40px; -webkit-animation: loading-bar-spinner 800ms linear infinite; -moz-animation: loading-bar-spinner 800ms linear infinite; -ms-animation: loading-bar-spinner 800ms linear infinite; -o-animation: loading-bar-spinner 800ms linear infinite; animation: loading-bar-spinner 800ms linear infinite; margin:auto;}
+
+</style>
+
+ <div class="panel panel-default">
+    <!-- BEGIN: Actual animated container. -->
+    <div class="animated-container">
+      <div class="messaging panel-heading">
+        <h3>GCMS is loading ...</h3>
+        <!-- <div class="panel-body"> -->
+          <div class="spinner-icon">
+            <span class="sr-only">Loading</span>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- END: Actual animated container. -->
+</div>
+<!-- END: App-Loading Screen. -->
+
+
+
+  <div id="wrap">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <!-- ============Application Branding====================-->
+              <!--
+              <div class="home">
+                <a style="font-style:normal; padding-top: 8px;" class="fa fa-home fa-1x" ui-sref="landing"></a>
+              </div>
+              -->
+              <a class="navbar-brand" ui-sref="landing">GCMS</a>
+              <!-- ============/Application Branding====================-->
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li trs-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6>Home</h6></a></li>
+                <li trs-secure section-name="Tasks" action-name="browse"><a ui-sref="task"><h6>Tasks</h6></a></li>
+                <li><a ui-sref="profilereview"><h6>Profile Review</h6></a></li>
+                <li trs-secure section-name="Consent Management" action-name="browse"><a ui-sref="consent-mgmt"><h6>Consent Management</h6></a></li>
+                 <li trs-secure section-name="Administration" action-name="browse"><a ui-sref="admin"><h6>Administration</h6></a></li>
+                  <li trs-secure section-name="Help and Support" action-name="browse"><a ui-sref="help"><h6>Help and Support</h6></a></li>
+              </ul>
+
+              <!-- This is the start of the Navigation Right -->
+              <gcms-session></gcms-session>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+        &nbsp;
+        </div>
+      </div>
+      <div class="row">
+        <div ui-view></div>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <!--==================================BEGIN CONTENT FOR FOOTER HERE===================================== -->
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h6 class="text-muted">Copyright © 2017 Pfizer Inc. All rights reserved.</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <toasty></toasty>
+
+<!-- build:js app.js -->
+  <!-- custom js -->
+  <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+
+  <!-- vendor js -->
+  <script src="assets/vendor/angular/angular.min.js"></script>
+  <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="assets/vendor/modernizr/modernizr.js"></script>
+  <script src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="assets/vendor/angular-resource/angular-resource.min.js"></script>
+  <script src="assets/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="assets/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="assets/vendor/angular-translate/angular-translate.min.js"></script>
+  <script src="assets/vendor/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
+  <script src="assets/vendor/angular-ui-select/dist/select.min.js"></script>
+  <script src="assets/vendor/angular-inview/angular-inview.js"></script>
+  <script src="assets/vendor/angular-loading-bar/build/loading-bar.min.js"></script>
+  <script src="assets/vendor/angular-file-upload/angular-file-upload.min.js"></script>
+  <script src="assets/vendor/ng-idle/angular-idle.min.js"></script>
+  <script src="assets/vendor/es5-shim/es5-shim.min.js"></script>
+  <script src="assets/vendor/es6-shim/es6-shim.min.js"></script>
+  <script src="assets/vendor/iso-currency/dist/isoCurrency.js"></script>
+  <script src="assets/vendor/angular-date-picker-polyfill/dist/angular-date-picker-polyfill.min.js"></script>
+  <script src="assets/vendor/angular-toasty/dist/angular-toasty.min.js"></script>
+<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+  <!-- app js -->
+  <script src="app/app.module.js"></script>
+  <script src="app/app.config.js"></script>
+  <script src="app/app.constants.js"></script>
+  <script src="app/app.run.js"></script>
+  <script src="config.js"></script>
+
+  <script src="templates.js"></script>
+
+  <script src="app/components/address/components.address.module.js"></script>
+  <script src="app/components/address/components.address.service.js"></script>
+
+  <script src="app/components/controls/components.controls.module.js"></script>
+  <script src="app/components/controls/lov/components.controls.lov.directive.js"></script>
+  <script src="app/components/controls/lov/components.controls.lovunique.js"></script>
+  <script src="app/components/controls/checkbox/components.checkbox.directive.js"></script>
+  <script src="app/components/controls/checkboxes/components.checkboxes.directive.js"></script>
+  <script src="app/components/controls/dropdown/components.dropdown.directive.js"></script>
+  <script src="app/components/controls/dropdown/components.dropdownunique.js"></script>
+  <script src="app/components/controls/multiselect/components.multiselect.directive.js"></script>
+  <script src="app/components/controls/multiselect/components.singleselect.directive.js"></script>
+  <script src="app/components/controls/multitextbox/components.multitextbox.directive.js"></script>
+  <script src="app/components/controls/search/components.search.directive.js"></script>
+  <script src="app/components/controls/textbox/components.textbox.directive.js"></script>
+  <script src="app/components/controls/textbox/components.textboxunique.js"></script>
+  <script src="app/components/controls/textbox/components.length.service.js"></script>
+  <script src="app/components/controls/textbox/components.decimals.service.js"></script>
+  <script src="app/components/controls/textarea/components.textarea.directive.js"></script>
+  <script src="app/components/controls/datepicker/components.datepicker.directive.js"></script>
+  <script src="app/components/controls/radiobuttons/components.radiobuttons.directive.js"></script>
+  <script src="app/components/controls/history/components.history.directive.js"></script>
+
+
+
+  <script src="app/components/data/components.data.module.js"></script>
+  <script src="app/components/data/components.data.service.country.js"></script>
+  <script src="app/components/data/components.data.service.logged-user-detail.js"></script>
+  <script src="app/components/data/components.data.service.lov.js"></script>
+  <script src="app/components/data/components.data.service.role.js"></script>
+  <script src="app/components/data/components.data.service.user-detail.js"></script>
+  <script src="app/components/data/components.data.service.user-profile.js"></script>
+  <script src="app/components/data/components.data.service.welcome.js"></script>
+  <script src="app/components/data/components.data.service.ui-config.js"></script>
+  <script src="app/components/data/components.data.service.unique-id-verification.js"></script>
+
+
+  <script src="app/components/idname/components.idname.module.js"></script>
+  <script src="app/components/idname/components.idname.directive.js"></script>
+  <script src="app/components/idname/components.idname.service.js"></script>
+
+  <script src="app/components/limit-text/components.limit-text.module.js"></script>
+  <script src="app/components/limit-text/components.limit-text.filter.js"></script>
+
+  <script src="app/components/modal/components.modal.module.js"></script>
+  <script src="app/components/modal/components.modal.directive.js"></script>
+  <script src="app/components/modal/controllers/modal.default.controller.js"></script>
+
+  <script src="app/components/permission/components.permission.module.js"></script>
+  <script src="app/components/permission/components.permission.service.js"></script>
+  <script src="app/components/permission/components.permission.directive.js"></script>
+
+  <script src="app/components/popover/components.popover.module.js"></script>
+  <script src="app/components/popover/components.popover.directive.js"></script>
+
+  <script src="app/components/session/components.session.module.js"></script>
+  <script src="app/components/session/components.session.service.js"></script>
+  <script src="app/components/session/components.session.directive.js"></script>
+
+  <script src="app/components/state/components.state.module.js"></script>
+  <script src="app/components/state/components.state.service.js"></script>
+  <script src="app/components/state/components.state.directive.js"></script>
+
+  <script src="app/components/locale/components.locale.module.js"></script>
+  <script src="app/components/locale/components.locale.service.js"></script>
+
+  <script src="app/components/uniqueid/components.uniqueid.module.js"></script>
+  <script src="app/components/uniqueid/components.uniqueid.service.js"></script>
+  <script src="app/components/uniqueid/components.uniqueid.directive.js"></script>
+
+  <script src="app/components/uniqueid-upload/components.uniqueid-upload.module.js"></script>
+  <script src="app/components/uniqueid-upload/components.uniqueid-upload.service.js"></script>
+  <script src="app/components/uniqueid-upload/components.uniqueid-upload.directive.js"></script>
+
+  <script src="app/components/validators/validator.module.js"></script>
+  <script src="app/components/validators/validator.critical.js"></script>
+  <script src="app/components/validators/validator.optional.js"></script>
+  <script src="app/components/validators/validator.required.js"></script>
+  <script src="app/components/validators/validator.duplicates.js"></script>
+  <script src="app/components/validators/validator.uniqueid.required.js"></script>
+  <script src="app/components/validators/validator.uniqueid.critical.js"></script>
+  <script src="app/components/validators/validator.uniqueid.ve.js"></script>
+
+  <script src="app/landing/landing.module.js"></script>
+  <script src="app/landing/components/welcome/landing.welcome.directive.js"></script>
+
+
+
+  <script src="app/recipient/recipient.module.js"></script>
+  <script src="app/recipient/consent.annex.history.controller.js"></script>
+  <script src="app/components/data/components.data.service.consent-annex-history.js"></script>
+  <script src="app/components/data/components.data.service.profile.js"></script>
+  <script src="app/profilereview/profilereview.module.js"></script>
+  <script src="app/profilereview/profilereview.controller.js"></script>
+  <script src="app/task/task.module.js"></script>
+  <script src="app/task/task.controller.js"></script>
+
+
+  <script src="app/admin/admin.module.js"></script>
+  <script src="app/admin/components/box/administration.box.directive.js"></script>
+  <script src="app/admin/roles/admin.roles.controller.js"></script>
+  <script src="app/admin/roles/admin.details.controller.js"></script>
+
+  <script src="app/consent/consentmgmt.module.js"></script>
+  <script src="app/consent/consent.mgmt.controller.js"></script>
+  
+  <script src="app/admin/admin.module.js"></script>
+  <script src="app/admin/admin.controller.js"></script>
+  
+  <script src="app/components/data/components.data.service.profile.search.js"></script>
+  <script src="app/components/data/components.data.service.templates.js"></script>
+  
+ <!-- <script src="app/consentannex/components/controls/consentannex.controls.module.js"></script>
+  <script src="app/consentannex/components/createprofile/create.profile.directive.js"></script>
+  <script src="app/consentannex/list/profile.list.controller.js"></script>
+  <script src="app/consentannex/search/profile.consent.template.directive.js"></script>
+  <script src="app/consentannex/search/search.module.js"></script>
+  <script src="app/consentannex/consentannex.module.js"></script>-->
+  
+    
+  <script src="app/recipient/recipient.module.js"></script>
+  <script src="app/recipient/components/controls/recipient.controls.module.js"></script>
+  <script src="app/recipient/components/search/recipient.search.directive.js"></script>
+  <script src="app/recipient/search/recipient.search.module.js"></script>
+  <script src="app/recipient/search/recipient.table.directive.js"></script>
+  <script src="app/recipient/search/profile.consent.template.directive.js"></script>
+<script src="app/recipient/list/profile.list.controller.js"></script>
+ <script src="app/recipient/generateAnnex/profile.annex.controller.js"></script>
+
+   <script src="app/components/controls/dropdown/components.dropdownnew.directive.js"></script>
+   
+<!-- endbuild -->
+</body>
+</html>

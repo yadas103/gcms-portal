@@ -1,0 +1,21 @@
+ul.methods div.modal{
+position: static;
+top: auto;
+left: auto;
+width: auto;
+margin-left: 0;
+background-color: transparent;
+border-width: 0px;
+box-shadow: none;
+}
+
+.container .TopMenu,
+.container .breadcrumb,
+.container #project_home_leftnav,
+.navbar-fixed-top{
+	display: none;
+}
+
+.clear-navbar{
+	margin-top: 5px !important;
+}

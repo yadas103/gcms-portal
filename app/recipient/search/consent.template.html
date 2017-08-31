@@ -1,0 +1,43 @@
+<div>
+<form name="requestSearchForm" class="form-horizontal" ng-submit="submit(request)">
+<div>
+	<div class="col-sm-3">
+		<div class="form-group">
+		    <label>Payer Country</label>    
+		      <gcms-lov list="country" value="country"></gcms-lov>
+		    </div>
+	  </div>
+	  <div class="col-sm-3">
+		<div class="form-group">
+			<label>Collecting Country</label>
+				 <select ng-model="request.country" class="form-control">				 				
+					<option ng-repeat="template in templates">{{template.cntry_id.name }}</option>
+				</select>
+			
+		</div>
+	</div>
+  <div class="col-sm-3">
+	<div class="form-group">
+    <label>Type</label>    
+      <gcms-lov list="recipientTypeString" value="request.profileType"></gcms-lov>
+    </div>
+  </div>
+	<div class="col-sm-3">
+		  <div class="form-group"> 
+			  <label>Choose your template</label>			  
+				<select ng-model="templateType" class="form-control">
+					<option ng-repeat="template in templates">{{template.tmpl_name }}</option>
+				</select>
+		</div>
+	</div>
+
+</div>
+<div class="form-group">
+
+<div class="pull-right" >
+  <button type="submit" class="btn btn-lg btn-default" alt="Search"><i class="fa fa-search fa-2x"></i></button>
+  </div>
+ 
+  </div>
+</form>
+</div>

@@ -1,0 +1,5 @@
+<span ng-switch="state">
+	<select ng-switch-when="critical" id="{{id}}" name="{{id}}" class="form-control" ng-model="model.value" ng-options="item.id as item.name for item in items | unique:'name'" gcms-critical ng-disabled="{{disabled}}"><option value="" ng-show="{{empty}}"></option></select>
+	<select ng-switch-when="required" id="{{id}}" name="{{id}}" class="form-control" ng-model="model.value" ng-options="item.id as item.name for item in items | unique:'name'" gcms-optional ng-disabled="{{disabled}}"><option value="" ng-show="{{empty}}"></option></select>
+	<select ng-switch-default id="{{id}}" name="{{id}}" class="form-control" ng-model="model.value" ng-options="item.id as item.name for item in items | unique:'name'" gcms-optional ng-disabled="{{disabled}}"><option value="" ng-show="{{empty}}"></option></select>
+</span>

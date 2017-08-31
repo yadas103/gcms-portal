@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add role</h3>
+</div>
+
+<div class="modal-body">
+  <form name="adminRoleForm" novalidate>
+    <div class="form-group">
+      <div>
+        <label for="userName">Username</label>
+        <!-- <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control"> -->
+        <select id="user" class="form-control" ng-model="item.user" required ng-options="item.userName for item in item.users">
+        </select>
+
+      </div>
+
+      <div style="margin-top:20px">
+        <label for="role">Role</label>
+        <select id="role" class="form-control" ng-model="item.role" required ng-options="item.roleName for item in item.roles">
+        </select>
+
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminRoleForm.$invalid">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

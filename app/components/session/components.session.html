@@ -1,0 +1,32 @@
+<ul class="nav navbar-nav navbar-right" style="padding-right:15px" ng-if="fullName">
+  <li class="dropdown">
+
+    <a class="dropdown-toggle toggle-nav-exPadding pull-right" data-toggle="dropdown">
+      <h6 ng-repeat="(id,profile) in profiles | filter: { countryId : currentProfile.countryId }">
+        <i class="famfamfam-flag-{{profile.countryISOCode.toLowerCase()}}"></i>
+        Welcome, {{ fullName }}
+        <i class="fa fa-user fa user-space"></i>
+        <i class="fa fa-sort-desc"></i>
+      </h6>
+    </a>
+    <ul class="dropdown-menu" role="menu" ng-style="{'min-width': colWidth}">
+      <li>
+          <div class="row" style="margin-left: 0px;">
+              <ul class="list-unstyled col-md-{{12/columns}}" ng-repeat="column in columnsArray">
+                  <li ng-repeat="(id,profile) in profiles | offset:limit*column | limitTo : limit">
+                    <a ng-click="setProfile(profile)" >
+                      <i class="famfamfam-flag-{{profile.countryISOCode.toLowerCase()}}"></i>
+                      {{profile.countryName}} ({{profile.roleName}})
+                      <i class="fa fa-check-circle fa-fw" ng-if="profile.countryId == currentProfile.countryId"></i>
+                    </a>
+                  </li>
+              </ul>
+          </div>
+      </li>
+      <li gcms-secure section-name="Administration" action-name="Read" class="divider" style="margin:1px 0px 0px 0px; padding:0"></li>
+      <li gcms-secure section-name="Administration" action-name="Read"><a ui-sref="admin-roles"><i class="fa fa-cog fa-fw"></i> Administration</a></li>
+
+    </ul>
+
+  </li>
+</ul>

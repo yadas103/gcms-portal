@@ -1,0 +1,50 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Change History
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Attribute Name</th>
+          <th>Original Value</th>
+          <th>Updated Value</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Reason for Change</th>
+          <th>User Name</th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr ng-if="!history && !isLoading">
+          <td colspan="7">
+            <a ng-click="load()">
+              <span><i class="fa fa-2x fa-history"></i></span>
+              <span>Load History</span>
+            </a>
+          </td>
+        </tr>
+        <tr ng-if="!history && isLoading">
+          <td colspan="7">
+            <a ng-click="load()">
+              <span><i class="fa fa-2x fa-spin fa-cog"></i></span>
+              <span>...</span>
+            </a>
+          </td>
+        </tr>
+        <tr ng-if="isLoading && !isData">
+         <td colspan="7">No history data</td>
+        </tr>
+        <tr ng-repeat="item in history track by $index">
+          <td>{{attributeMap[item.tableName][item.field] || item.tableName + '.' + item.field }}</td>
+          <td><span data-toggle="tooltip" data-placement="bottom" title="{{item.oldValue.trim()}}"><span ng-bind-html="item.oldValue.trim() | limitText:true:10:'...'"></span></span></td>
+          <td><span data-toggle="tooltip" data-placement="bottom" title="{{item.newValue.trim()}}"><span ng-bind-html="item.newValue.trim() | limitText:true:10:'...'"></span></span></td>
+          <td>{{convertStringToDate(item.historyUpdatedDateString) | date:'dd/MM/yyyy'}}</td>
+          <td>{{item.historyUpdatedDateTimeString}} ({{item.timeZone}})</td>
+          <td><span data-toggle="tooltip" data-placement="bottom" title="{{item.changeReason.trim()}}"><span ng-bind-html="item.changeReason.trim() | limitText:true:10:'...'"></span></span></td>
+          <td>{{item.updatedBy}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

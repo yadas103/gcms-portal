@@ -1,0 +1,68 @@
+<form name="requestSearchForm" class="form-horizontal" ng-submit="submit(request)">
+
+  <div class="form-group" ng-if="source !== 'recipient.box.html' && source !== 'exchange.payment.html'">
+    <label for="type" class="col-sm-3 control-label">Type</label>
+    <div class="col-sm-9">
+      <gcms-lov list="recipientType" value="request.businessPartyType"></gcms-lov>
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="firstName" ng-model="request.firstName">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="middleName" ng-model="request.middleName">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="lastName" ng-model="request.lastName">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 2">
+    <label for="organizationName" class="col-sm-3 control-label">Organization Name</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="organizationName" ng-model="request.organizationName">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Location</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="address" ng-model="request.address" placeholder="Address">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3"></label>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="city" ng-model="request.city" placeholder="City">
+    </div>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="region" ng-model="request.region" placeholder="Region">
+    </div>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="zip" ng-model="request.zip" placeholder="Zip">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label class="col-sm-3 control-label">Specialty</label>
+    <div class="col-sm-9">
+      <gcms-lov list="specialty" value="request.specialtyID"></gcms-lov>
+    </div>
+  </div>
+
+
+  </div>
+
+</form>

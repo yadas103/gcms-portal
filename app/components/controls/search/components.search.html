@@ -1,0 +1,92 @@
+<div ng-switch="state">
+<!--
+	<div ng-switch-when="critical">
+		<div ng-if="label">
+			<label>{{label}} <span class="text-danger">*</span></label>
+			<span ng-if="info" class="animate-if">
+				<i class="fa fa-info-circle" gcms-popover></i>
+				<div ng-hide="true" class="pop-content">{{info}}</div>
+			</span>
+		</div>
+		<span class="popover-link" gcms-popover>
+			<div class="input-group">
+				<span class="btn btn-default pull-left" ng-if="value" role="button" ui-sref="recipient-detail-view({ id:value.id })" title="Recipient Details">
+					<span ng-if="value.businessPartyTypeCode === 'HCP'"><i class="fa fa-user-md"></i></span>
+			    <span ng-if="value.businessPartyTypeCode === 'HCO'"><i class="fa fa-hospital-o"></i></span>
+				</span>
+				<div class="form-control pull-left" style="width:450px; background-color:#F5F5F5">&nbsp;<gcms-name-label recipient="value"></gcms-name-label></div>
+				&nbsp;<span class="btn btn-default pull-left" role="button"><i class="fa fa-search"></i></span>
+			</div>
+		</span>
+		<div style="display:none" class="pop-content">
+			<gcms-recipient-search source="source" criteria="criteria" result="setRecipient"></gcms-recipient-search>
+		</div>
+	</div>
+
+	<div ng-switch-when="required">
+		<div ng-if="label">
+			<label>{{label}} <span class="text-danger">*</span></label>
+			<span ng-if="info" class="animate-if">
+				<i class="fa fa-info-circle" gcms-popover></i>
+				<div ng-hide="true" class="pop-content">{{info}}</div>
+			</span>
+		</div>
+		<span class="popover-link" gcms-popover>
+			<div class="input-group">
+				<span class="btn btn-default pull-left" ng-if="value" role="button" ui-sref="recipient-detail-view({ id:value.id })" title="Recipient Details">
+					<span ng-if="value.businessPartyTypeCode === 'HCP'"><i class="fa fa-user-md"></i></span>
+			    <span ng-if="value.businessPartyTypeCode === 'HCO'"><i class="fa fa-hospital-o"></i></span>
+				</span>
+				<div class="form-control pull-left" style="width:450px; background-color:#F5F5F5">&nbsp;<gcms-name-label recipient="value"></gcms-name-label></div>
+				&nbsp;<span class="btn btn-default pull-left" role="button"><i class="fa fa-search"></i></span>
+			</div>
+		</span>
+		<div style="display:none" class="pop-content">
+			<gcms-recipient-search source="source" criteria="criteria" result="setRecipient"></gcms-recipient-search>
+		</div>
+	</div>
+
+	<div ng-switch-when="optional">
+		<div ng-if="label">
+			<label>{{label}}</label>
+			<span ng-if="info" class="animate-if">
+				<i class="fa fa-info-circle" gcms-popover></i>
+				<div ng-hide="true" class="pop-content">{{info}}</div>
+			</span>
+		</div>
+		<span class="popover-link" gcms-popover>
+			<div class="input-group">
+				<span class="btn btn-default pull-left" ng-if="value" role="button" ui-sref="recipient-detail-view({ id:value.id })" title="Recipient Details">
+					<span ng-if="value.businessPartyTypeCode === 'HCP'"><i class="fa fa-user-md"></i></span>
+			    <span ng-if="value.businessPartyTypeCode === 'HCO'"><i class="fa fa-hospital-o"></i></span>
+				</span>
+				<div class="form-control pull-left" style="width:450px; background-color:#F5F5F5">&nbsp;<gcms-name-label recipient="value"></gcms-name-label></div>
+				&nbsp;<span class="btn btn-default pull-left" role="button"><i class="fa fa-search"></i></span>
+			</div>
+		</span>
+		<div style="display:none" class="pop-content">
+			<gcms-recipient-search source="source" criteria="criteria" result="setRecipient"></gcms-recipient-search>
+		</div>
+	</div>
+
+	<div ng-switch-when="view">
+		<div>
+			<div ng-if="label">
+				<label>{{label}}</label>
+				<span ng-if="info" class="animate-if">
+					<i class="fa fa-info-circle" gcms-popover></i>
+					<div ng-hide="true" class="pop-content">{{info}}</div>
+				</span>
+			</div>
+  		<div>
+				<span class="btn btn-default pull-left" ng-if="value" role="button" ui-sref="recipient-detail-view({ id:value.id })" title="Recipient Details">
+					<span ng-if="value.businessPartyTypeCode === 'HCP'"><i class="fa fa-user-md"></i></span>
+			    <span ng-if="value.businessPartyTypeCode === 'HCO'"><i class="fa fa-hospital-o"></i></span>
+				</span>
+				&nbsp;
+  			</span><gcms-name-label recipient="value"></gcms-name-label>
+  		</div>
+		</div>
+	</div>
+-->
+</div>

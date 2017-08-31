@@ -1,0 +1,59 @@
+<div class="panel panel-primary">
+	<div class="panel-heading clearfix">
+		<h3 class="panel-title">Search Details</h3>
+	</div>
+ 	<div class="panel-body">
+		<gcms-templates></gcms-templates>
+	
+	
+					  <div>
+			 <table ng-table="vm.tableParams" class="table" show-filter="true">
+				<tr ng-repeat="pro in profileSearch">
+					<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+			                <input type="checkbox" ng-model="checkboxes.items[pro.id]" />
+			            </td>
+			        <td class="col-sm-2" title="'Last Name'" filter="{ lastName: 'text'}" sortable="'lastName'">
+			            {{pro.lastName}}</td>
+			        <td class="col-sm-2" title="'First Name'" filter="{ firstName: 'text'}" sortable="'firstName'">
+			            {{pro.firstName}}</td>
+			        <td class="col-sm-2" title="'Organisation Name'" filter="{ organisationName: 'text'}" sortable="'organisationName'">
+			            {{pro.organisationName}}</td>
+			        <td class="col-sm-2" title="'Country'" filter="{ country: 'text'}" sortable="'country'">
+			            {{pro.country}}</td>
+			        <td class="col-sm-2" title="'Address'" filter="{ address: 'text'}" sortable="'address'">
+			            {{pro.address}}</td>
+			        <td class="col-sm-2" title="'City'" filter="{ city: 'text'}" sortable="'city'">
+			            {{pro.city}}</td>
+			        <td class="col-sm-2" title="'Region'" filter="{ region: 'text'}" sortable="'region'">
+			            {{pro.region}}</td>
+			    </tr>
+			</table>
+			<script type="text/ng-template" id="ng-table/headers/checkbox.html">
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
+    </script>
+			
+			</div>
+		<!-- 	<div>
+			<span>Generate Consent Annex</span>
+			<gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
+			         ok="create" cancel="cancel">
+			         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
+			       </gcms-modal>
+			</div>
+			<br/>
+			<br/>
+			<div>
+			     <span>Create Identity Request</span>
+			      <gcms-modal template="recipient.create.html" controller="ModalDefaultCtrl"
+			         ok="create" cancel="cancel">
+			        <span style="color:white;margin: 0px 0px 0px 13px; padding: 0px 0px 0px 3px;">Create Identity Request</span>
+			       </gcms-modal>
+			      
+			    </div> -->
+
+
+
+	</div>
+</div>
+
+

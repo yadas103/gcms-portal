@@ -1,0 +1,72 @@
+<div ng-switch="state">
+
+  <div ng-switch-when="critical">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <ui-select id="{{id}}" name="{{id}}" multiple ng-model="model.value" required gcms-critical>
+        <ui-select-match placeholder="Pick one...">{{$item.name}}<gcms-idname id="$item[prop]" list="{{list}}"></gcms-idname></ui-select-match>
+        <ui-select-choices repeat="item in listItems track by item.id" refresh="refreshList($select.search)" refresh-delay="0">
+          <div>{{item.name}}</div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div ng-switch-when="required">
+    <div class="{{class}}">
+      <div ng-if="label">
+        <label>{{label}} <span class="text-danger">*</span></label>
+        <span ng-if="info" class="animate-if">
+          <i class="fa fa-info-circle" gcms-popover></i>
+          <div ng-hide="true" class="pop-content">{{info}}</div>
+        </span>
+      </div>
+      <ui-select id="{{id}}" name="{{id}}" multiple ng-model="model.value" gcms-required>
+        <ui-select-match placeholder="Pick one...">{{$item.name}}<gcms-idname id="$item[prop]" list="{{list}}"></gcms-idname></ui-select-match>
+        <ui-select-choices repeat="item in listItems track by item.id" refresh="refreshList($select.search)" refresh-delay="0">
+          <div>{{item.name}}</div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div ng-switch-when="optional">
+    <div class="{{class}}">
+      <div ng-if="label">
+  			<label>{{label}}</label>
+  			<span ng-if="info" class="animate-if">
+  				<i class="fa fa-info-circle" gcms-popover></i>
+  				<div ng-hide="true" class="pop-content">{{info}}</div>
+  			</span>
+      </div>
+      <ui-select id="{{id}}" name="{{id}}" multiple ng-model="model.value">
+        <ui-select-match placeholder="Pick one...">{{$item.name}}<gcms-idname id="$item[prop]" list="{{list}}"></gcms-idname></ui-select-match>
+        <ui-select-choices repeat="item in listItems track by item.id" refresh="refreshList($select.search)" refresh-delay="0">
+          <div>{{item.name}}</div>
+      </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div ng-switch-when="view">
+    <div class="{{class}}">
+      <div ng-if="label">
+  			<label>{{label}}</label>
+  			<span ng-if="info" class="animate-if">
+  				<i class="fa fa-info-circle" gcms-popover></i>
+  				<div ng-hide="true" class="pop-content">{{info}}</div>
+  			</span>
+      </div>
+      <div>
+        <span id="{{id}}" ng-repeat="item in model.value track by $index">
+          <gcms-idname id="item[prop]" list="{{list}}"></gcms-idname>{{$last ? '' : ($index == model.value.length - 2) ? ' and ' : ', '}}</span>
+      </div>
+    </div>
+  </div>
+</div>

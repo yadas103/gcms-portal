@@ -1,0 +1,74 @@
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title">Delete</h3>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-sm-7">
+  <p>Please provide the reason of deleting this taks:</p>
+</div>
+<div class="col-sm-5">
+<!--select name="singleSelect" id="singleSelect" ng-model="group.name" 
+ng-options="Group.Name for Group in Groups" class="ng-pristine ng-valid ng-touched">
+      <option value="">Wrong name selected</option>
+      <option value="">Event canceled</option>
+      <option value="option-2">No payment</option>
+	  <option value="option-2" ng-show="group.name.Value == 'new'">Other reason</option>
+    </select-->
+</div>
+</div>
+<div class="msg">
+  <input class="text-box" type="text" name="NewValue" ng-model="newValue" />
+  <select ng-model="group.name" ng-options="Group.Name for Group in Groups"></select>
+    <div class="col-md-4" ng-show="group.name.Value == 'new'">
+        <input class="text-box" type="text" name="NewValue" ng-model="newValue" />
+        <button ng-click="add(newValue)">Add</button>
+
+</div>
+	
+	
+  <div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">Delete</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+  <script>
+
+ function ($scope) {
+    $scope.add = function (newValue) {
+        var obj = {};
+        obj.Name = newValue;
+        obj.Value = newValue;
+        $scope.Groups.push(obj);
+        $scope.group.name = obj;
+        $scope.newValue = '';
+    }
+	 $scope.Groups = [{
+        Name: 'a1',
+        Value: 'd1'
+    }, {
+        Name: 'c2',
+        Value: 'A2'
+    }, {
+        Name: 'f1',
+        Value: 'c3'
+    }, {
+        Name: 'd4',
+        Value: 'a1'
+    }, {
+        Name: '11',
+        Value: '22'
+    }, {
+        Name: 'E1',
+        Value: 'E2'
+    }, {
+        Name: 'New',
+        Value: 'new'
+    }];
+    $scope.group = {
+        name: ""
+    }
+});
+  </script>
+
+	
+	

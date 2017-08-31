@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{item.id}}</h3>
+  <h3>{{item.consannexid.bpid.firstName}}</h3>
+</div>
+
+<div class="modal-body">
+  <form name="taskForm" novalidate>
+    <div class="form-group">
+
+      <div>
+        <label for="consannexid.eventname">Event Name</label>
+        <input type="text" class="form-control" id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" required>
+        <span class="error" ng-show="taskForm.title.$error.required">Required!</span>
+      </div>
+
+      
+
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

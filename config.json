@@ -1,0 +1,20 @@
+{
+  "local": {
+    "ENVIRONMENT": {
+      "SERVICE_URI": "/mocks/",
+      "SERVICE_EXT": ".json"
+    }
+  },
+  "local-server": {
+    "ENVIRONMENT": {
+      "SERVICE_URI": "http://localhost:8080/GCMSService/",
+      "SERVICE_EXT": ""
+    }
+  },
+  "test-server": {
+    "ENVIRONMENT": {
+      "SERVICE_URI": "/GCMSService/",
+      "SERVICE_EXT": ""
+    }
+  }
+}

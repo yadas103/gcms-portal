@@ -1,0 +1,6 @@
+<span ng-switch="state">
+  <input type="checkbox" ng-model="model" gcms-critical ng-switch-when="critical"/>
+  <input type="checkbox" ng-model="model" required ng-switch-when="required" />
+  <input type="checkbox" ng-model="model" ng-switch-when="optional" />
+  <span ng-switch-when="view">{{model.value}}</span>
+</span>

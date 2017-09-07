@@ -1,6 +1,9 @@
-<div class="modal-header">
-  <h3 class="modal-title">{{item.id}}</h3>
-  <h3>{{item.consannexid.bpid.firstName}}</h3>
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title">Edit Profile : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
+                         <br> Task ID: {{item.id}} 
+  </h3>
+  
 </div>
 
 <div class="modal-body">
@@ -9,10 +12,36 @@
 
       <div>
         <label for="consannexid.eventname">Event Name</label>
-        <input type="text" class="form-control" id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" required>
-        <span class="error" ng-show="taskForm.title.$error.required">Required!</span>
+        <input type="text" class="form-control" id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" >        
       </div>
-
+      <div>
+        <label for="consannexid.pocode">PO Code</label>
+        <input type="text" class="form-control" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" >        
+      </div>
+      <div>
+        <label for="consannexid.acmcode">ACM Code</label>
+        <input type="text" class="form-control" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" >        
+      </div>
+		<div>
+    	<label class="col-sm-3 control-label">Consent Status</label>
+    	<div>
+      	<gcms-lov list="consentType" value="item.consannexid.consentstatus.id"></gcms-lov>
+    	</div>
+    	</div>
+    	<div>
+        <label for="consannexid.consentstartdate">Consent StartDate </label>
+        <input type="date"  class="form-control"  ng-model="item.consannexid.consentstartdate" value={{item.consannexid.consentstartdate}} min="{{item.consannexid.consentstartdate | date:'yyyy-MM-dd'}}" />
+        
+      
+         </div>
+      <div>
+        <label for="consannexid.consentenddate">Consent EndDate</label>
+        <input type="date"  class="form-control"  ng-model="item.consannexid.consentenddate | date:'yyyy-MM-dd'" value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate | date:'yyyy-MM-dd'}}" />
+        
+     
+       <!--  <input type="date" id="endDate" name="endDate" class="form-control" ng-model="item.consannexid.consentenddate"  />
+        <span class="error" ng-show="searchForm.validFrom.$error.date">Not a valid date!</span> min="{{to.minDate | date:'yyyy-MM-dd'}}" max="{{to.maxDate | date:'yyyy-MM-dd'}}-->
+      </div>
       
 
     </div>
@@ -20,6 +49,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">OK</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">Update</button>
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

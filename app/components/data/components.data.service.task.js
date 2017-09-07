@@ -9,7 +9,7 @@
 
   /**
    * @ngdoc method
-   * @name ConsentAnnex
+   * @name Task
    * @methodOf gcms.components.data.service:ConsentAnnex
    * @description Constructor for the ConsentAnnex data service
    * @param {object} $resource A factory which creates a resource object

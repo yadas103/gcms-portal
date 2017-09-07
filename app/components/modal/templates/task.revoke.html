@@ -1,0 +1,63 @@
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title">Revoke Consent</h3>
+</div>
+<div class="modal-body">
+
+<form name="requestSearchForm" class="form-horizontal" ng-submit="submit(request)">
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="firstName" class="col-sm-3 control-label">HCP/O Name:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="firstName" ng-model="request.firstName">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="middleName" class="col-sm-3 control-label">Event Name:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="middleName" ng-model="request.middleName">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="lastName" class="col-sm-3 control-label">Consent Status:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="lastName" ng-model="request.lastName">
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 2">
+    <label for="organizationName" class="col-sm-3 control-label">Consent Start Date:</label>
+    <div class="col-sm-9">
+      
+        <input type="date" id="validFrom" name="validFrom" class="form-control" ng-model="request.transactionFromDate" max="{{from.maxDate | date:'yyyy-MM-dd'}}" />
+        <span class="error" ng-show="searchForm.validFrom.$error.date">Not a valid date!</span>
+     
+    </div>
+  </div>
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 2">
+    <label for="organizationName" class="col-sm-3 control-label">Consent End Date:</label>
+    <div class="col-sm-9">
+      <input type="date" id="validTo" name="validTo" class="form-control" ng-model="request.transactionToDate" min="{{to.minDate | date:'yyyy-MM-dd'}}" max="{{to.maxDate | date:'yyyy-MM-dd'}}" />
+        <span class="error" ng-show="searchForm.validTo.$error.date">Not a valid date!</span>
+    </div>
+  </div>
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 2">
+    <label for="organizationName" class="col-sm-3 control-label">Reason for Revocation:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="organizationName" ng-model="request.organizationName">
+    </div>
+  </div>
+  
+  <gcms-modal template="recipient.upload.html" controller="ModalDefaultCtrl" ok="upload" content="uploader" alt="Upload images">
+      <span class="btn btn-default" role="button">Upload Proof of Revocation</span>
+    </gcms-modal>
+	
+ 
+</form>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" ng-click="ok()">Conform</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>

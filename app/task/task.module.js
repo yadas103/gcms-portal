@@ -10,14 +10,10 @@
 
   'use strict';
 
-  /*angular
-    .module('gcms.recipient', []);
-}());*/
-angular
+  angular
     .module('gcms.task', [
-      'ui.bootstrap',
-      'gcms.components.data'
-    ]);
-
-})();
-
+                          'ui.bootstrap',
+                          'gcms.components.data',
+                          'smart-table'                        
+                          ]);
+}());

@@ -17,6 +17,7 @@
       'angular-inview',
       'angular-loading-bar',
       'isoCurrency',
+      'smart-table',
       'angular-date-picker-polyfill',
       'angular-toasty',
       'gcms.environment',
@@ -39,7 +40,6 @@
 	  'gcms.identity',
 	  'gcms.task',
 	  'gcms.administration',
-	  'gcms.consentmgmt',	  
-	  'gcms.task'	 
+	  'gcms.consentmgmt'	 
     ]);
 })();

@@ -6,9 +6,9 @@
     .module('gcms.recipient')
     .directive('gcmsTemplates', Templates);
 
-  Templates.$inject = ['Templates','$state','$stateParams'];
+  Templates.$inject = ['Templates','$state','$stateParams','Country'];
 
-    function Templates(Templates,$state,$stateParams) {
+    function Templates(Templates,$state,$stateParams,Country) {
       return {
         restrict: 'E',
         scope: {
@@ -23,23 +23,23 @@
     	
         	 $scope.request = {};
         	 
-          var updateTemplates = function(result){
-            $scope.templates = result;
+          var updateCountry = function(result){
+            $scope.counties = result;
           };
 
-          var loadTemplates = function(){
-            $scope.templates = [];
-            Templates.query().$promise.then(updateTemplates);
+          var loadCountry = function(){
+            $scope.counties = [];
+            Country.query().$promise.then(updateCountry);
           };
 
-          loadTemplates();
+          loadCountry();
 
-          $scope.$on('$localeChangeSuccess', loadTemplates);
+          $scope.$on('$localeChangeSuccess', loadCountry);
 
         
           $scope.update = function(item) {
-            $scope.templates = item;
-            Templates.update({ id: item.id }, item);     
+            $scope.counties = item;
+            Country.update({ id: item.id }, item);     
           };
           
           // populate $scope request property

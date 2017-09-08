@@ -25,7 +25,6 @@
   <link rel="stylesheet" href="assets/vendor/angular-toasty/dist/angular-toasty.min.css">
   <link rel="stylesheet" href="assets/css/pfizer.css">
   <link rel="stylesheet" href="assets/css/app.css">
-   <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
   <!-- endbuild -->
 </head>
 <body>
@@ -99,12 +98,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li trs-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6>Home</h6></a></li>
-                <li trs-secure section-name="Tasks" action-name="browse"><a ui-sref="task"><h6>Tasks</h6></a></li>
+                <li gcms-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6>Home</h6></a></li>
+                <li gcms-secure section-name="Tasks" action-name="browse"><a ui-sref="task"><h6>Tasks</h6></a></li>
                 <li><a ui-sref="profilereview"><h6>Profile Review</h6></a></li>
-                <li trs-secure section-name="Consent Management" action-name="browse"><a ui-sref="consent-mgmt"><h6>Consent Management</h6></a></li>
-                 <li trs-secure section-name="Administration" action-name="browse"><a ui-sref="admin"><h6>Administration</h6></a></li>
-                  <li trs-secure section-name="Help and Support" action-name="browse"><a ui-sref="help"><h6>Help and Support</h6></a></li>
+                <li gcms-secure section-name="Consent Management" action-name="browse"><a ui-sref="consent-mgmt"><h6>Consent Management</h6></a></li>
+                 <li gcms-secure section-name="Administration" action-name="browse"><a ui-sref="admin"><h6>Administration</h6></a></li>
+                  <li gcms-secure section-name="Help and Support" action-name="browse"><a ui-sref="help"><h6>Help and Support</h6></a></li>
               </ul>
 
               <!-- This is the start of the Navigation Right -->
@@ -217,6 +216,11 @@
   <script src="app/components/data/components.data.service.welcome.js"></script>
   <script src="app/components/data/components.data.service.ui-config.js"></script>
   <script src="app/components/data/components.data.service.unique-id-verification.js"></script>
+  <script src="app/components/data/components.data.service.business-profile.js"></script>
+  <script src="app/components/data/components.data.service.templates.js"></script>
+  <script src="app/components/data/components.data.service.profile.search.js"></script>
+  <script src="app/components/data/components.data.service.identity.request.js"></script>
+  <script src="app/components/data/components.data.service.annexprofiles.js"></script>
 
 
   <script src="app/components/idname/components.idname.module.js"></script>
@@ -271,7 +275,6 @@
 
 
   <script src="app/recipient/recipient.module.js"></script>
-  <script src="app/recipient/consent.annex.history.controller.js"></script>
   <script src="app/components/data/components.data.service.consent-annex-history.js"></script>
   <script src="app/components/data/components.data.service.profile.js"></script>
   <script src="app/profilereview/profilereview.module.js"></script>
@@ -296,15 +299,7 @@
   <script src="app/admin/admin.controller.js"></script>
   
   <script src="app/components/data/components.data.service.profile.search.js"></script>
-  <script src="app/components/data/components.data.service.templates.js"></script>
-  
- <!-- <script src="app/consentannex/components/controls/consentannex.controls.module.js"></script>
-  <script src="app/consentannex/components/createprofile/create.profile.directive.js"></script>
-  <script src="app/consentannex/list/profile.list.controller.js"></script>
-  <script src="app/consentannex/search/profile.consent.template.directive.js"></script>
-  <script src="app/consentannex/search/search.module.js"></script>
-  <script src="app/consentannex/consentannex.module.js"></script>-->
-  
+  <script src="app/components/data/components.data.service.templates.js"></script>  
     
   <script src="app/recipient/recipient.module.js"></script>
   <script src="app/recipient/components/controls/recipient.controls.module.js"></script>
@@ -314,8 +309,10 @@
   <script src="app/recipient/search/profile.consent.template.directive.js"></script>
 <script src="app/recipient/list/profile.list.controller.js"></script>
  <script src="app/recipient/generateAnnex/profile.annex.controller.js"></script>
-
    <script src="app/components/controls/dropdown/components.dropdownnew.directive.js"></script>
+   	  <script src="app/recipient/list/profile.list.controller.js"></script>
+ <script src="app/recipient/generateAnnex/profile.annex.controller.js"></script>		
+  <script src="app/recipient/createMissingProfiles/create.missing.profiles.directive.js"></script>
    
 <!-- endbuild -->
 </body>

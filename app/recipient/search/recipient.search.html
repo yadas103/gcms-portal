@@ -1,59 +1,86 @@
 <div class="panel panel-primary">
-	<div class="panel-heading clearfix">
+	<div class="panel-heading">
 		<h3 class="panel-title">Search Details</h3>
 	</div>
- 	<div class="panel-body">
-		<gcms-templates></gcms-templates>
 	
-	
-					  <div>
-			 <table ng-table="vm.tableParams" class="table" show-filter="true">
-				<tr ng-repeat="pro in profileSearch">
-					<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
-			                <input type="checkbox" ng-model="checkboxes.items[pro.id]" />
-			            </td>
-			        <td class="col-sm-2" title="'Last Name'" filter="{ lastName: 'text'}" sortable="'lastName'">
-			            {{pro.lastName}}</td>
-			        <td class="col-sm-2" title="'First Name'" filter="{ firstName: 'text'}" sortable="'firstName'">
-			            {{pro.firstName}}</td>
-			        <td class="col-sm-2" title="'Organisation Name'" filter="{ organisationName: 'text'}" sortable="'organisationName'">
-			            {{pro.organisationName}}</td>
-			        <td class="col-sm-2" title="'Country'" filter="{ country: 'text'}" sortable="'country'">
-			            {{pro.country}}</td>
-			        <td class="col-sm-2" title="'Address'" filter="{ address: 'text'}" sortable="'address'">
-			            {{pro.address}}</td>
-			        <td class="col-sm-2" title="'City'" filter="{ city: 'text'}" sortable="'city'">
-			            {{pro.city}}</td>
-			        <td class="col-sm-2" title="'Region'" filter="{ region: 'text'}" sortable="'region'">
-			            {{pro.region}}</td>
-			    </tr>
-			</table>
-			<script type="text/ng-template" id="ng-table/headers/checkbox.html">
-        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
-    </script>
-			
-			</div>
-		<!-- 	<div>
-			<span>Generate Consent Annex</span>
-			<gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
-			         ok="create" cancel="cancel">
-			         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
-			       </gcms-modal>
-			</div>
-			<br/>
-			<br/>
-			<div>
-			     <span>Create Identity Request</span>
-			      <gcms-modal template="recipient.create.html" controller="ModalDefaultCtrl"
-			         ok="create" cancel="cancel">
-			        <span style="color:white;margin: 0px 0px 0px 13px; padding: 0px 0px 0px 3px;">Create Identity Request</span>
-			       </gcms-modal>
-			      
-			    </div> -->
-
-
-
-	</div>
+<!-- <gcms-profile-search></gcms-profile-search>	 -->
+	<gcms-templates></gcms-templates>
 </div>
+<div class="panel panel-primary">
+<table class="table table-hover " >
+	<div class="table-responsive">
+	
+    <table st-table="profileSearchCopy" st-safe-src="profileSearch" class="table table-bordered table-striped table-highlight">
+      	<thead >
+      	<tr style="color:white;background-color:#337ab7;">
+        <th>Select</th>    
+		<th ng-click="orderByField='id'; reverseSort = !reverseSort" st-sort="id" >TR ID</th>
+        <th ng-click="orderByField='lastName'; reverseSort = !reverseSort" st-sort="lastName">Last Name</th>
+        <th ng-click="orderByField='firstName'; reverseSort = !reverseSort" st-sort="firstName">First Name</th>
+		<th ng-click="orderByField='organisationName'; reverseSort = !reverseSort" st-sort="organisationName">Organization Name</th>
+        <th ng-click="orderByField='city'; reverseSort = !reverseSort" st-sort="city">City Name</th>
+        <th ng-click="orderByField='address'; reverseSort = !reverseSort" st-sort="address">Address</th>
+        <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty">Specialty</th>
+		</tr>
+		
+		<tr>
+	      <th></th>
+		  <th><input ng-model="search.id" st-search="id" placeholder=" " class="form-control" type="search"/></th>
+          <th><input ng-model="search.lastName" st-search="lastName" placeholder=" " class="form-control" type="search"/></th>         
+          <th><input ng-model="search.firstName" st-search="firstName" placeholder=" " class="form-control" type="search"/></th>
+          <th><input ng-model="search.organisationName" st-search="organisationName" placeholder=" " class="form-control" type="search"/></th>
+          <th><input ng-model="search.city" st-search="city" placeholder=" " class="form-control" type="search"/></th>
+          <th><input ng-model="search.address" st-search="address" placeholder=" " class="form-control" type="search"/></th> 		  
+  		  <th><input ng-model="search.specialty" st-search="specialty" placeholder=" " class="form-control" type="search"/></th>  				  
+     	</tr>
+      </thead>
+      <tbody>
+     	
+        <tr data-ng-repeat="pro in profileSearch | filter:search:strict | orderBy:orderByField:reverseSort">  
+          				
+          				<td><input type="checkbox" ng-model="checkboxes.items[pro.id]"></td>              			
+          				<td>{{pro.id}}</td>
+          				<td>{{pro.lastName}}</td>
+                        <td>{{pro.firstName}}</td>
+                        <td>{{pro.organisationName}}</td> 
+                        <td>{{pro.city}}</td> 
+                        <td>{{pro.address}}</td>
+                        <td></td>                       
+                       
+        </tr data-ng-repeat>
+   </tbody> 
+   <tfoot>
+<tr>
+<td colspan="13" class="text-center">
+<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
+</td>
+</tr>
+</tfoot>
+        
+   </table>   
+     
+ </div>
+
+ </table>
+ 
+   
+<span>Generate Consent Annex</span>
+<gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
+         ok="create" cancel="cancel">
+         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
+       </gcms-modal>
+</div>
+<br/>
+<br/>
+<div>
+     <span>Create Identity Request</span>
+      <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl"
+         ok="create" cancel="cancel">
+         <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
+       </gcms-modal>
+      
+    </div>
+</div> 
+
 
 

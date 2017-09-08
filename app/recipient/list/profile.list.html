@@ -2,7 +2,7 @@
  <table ng-table="vm.tableParams" class="table" show-filter="true">
 	<tr ng-repeat="pro in profileSearch">
 		<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
-                <input type="checkbox" ng-model="checkboxes.items[pro.id]" />
+                <input type="checkbox" ng-model="checkboxes.items[pro]" />
             </td>
         <td class="col-sm-2" title="'Last Name'" filter="{ lastName: 'text'}" sortable="'lastName'">
             {{pro.lastName}}</td>

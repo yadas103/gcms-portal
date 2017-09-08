@@ -10,5 +10,5 @@
   'use strict';
 
   angular
-    .module('gcms.recipient', ['gcms.recipient.controls','ngTable']); 
+    .module('gcms.recipient', ['gcms.recipient.controls','smart-table']); 
 }());

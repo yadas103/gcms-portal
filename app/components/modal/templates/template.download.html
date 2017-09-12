@@ -1,45 +1,61 @@
-<div class="modal-header">
-  <h3 class="modal-title">Set Additional details</h3>
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium;padding-left: 10px;">Set Additional details</h3>
 </div>
 <div class="modal-body">
-	<p>
-	Please provide the below mentioned details.
+	<p style="font-size: 12px;">
+	It is very important to give us the required details. Event Name allows us to match multiple payments to the same profile. PO Code and ACM Code will give us the ability to identify the right invoices. 
+Enter this information in the proper columns of the below list. Once done press Save Changes button.
 	</p>
-	<div>
-	<table class="table table-hover">
-	<thead class="panel-heading">
-	<tr class="panel-title">
-	<th>Template Type</th>
-	<th>Last Name*</th>
-	<th>First Name*</th>
-	<th>Event Description*</th>
-	<th>TR ID*</th> 
-	<th>PO Code</th>
-	<th>ACM/ InterAct Code</th>
+	<div class="panel panel-primary">
+	<table class="table table-bordered table-striped table-highlight">
+	<thead style="background-color:#337ab7;color:white;">
+	<tr class="panel-title" style="font-size: 14px;">
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">Template Type</th>
+	
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">Last Name</th>
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">First Name</th>
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">Event DES.</th>
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">TR_ID</th>
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">PO Code</th>
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">ACM Code</th>
+	
 	</tr>
 	</thead>
 	<tbody>
-	<tr ng-repeat="pro in generateConsentAnnex">
-	<td><gcms-lov list="consentAnnex" value="consentAnnex"></gcms-lov></td>
-	<td>{{pro.lastName}}</td>
-    <td>{{pro.firstName}}</td>	
-	<td><input type="text" id="event" value="" ng-model=request.event></td>
-	<td>{{pro.id}}</td>
-	<td><input type="text" id="po" value="" ng-model=request.po></td>
-	<td><input type="text" id="acm" value="" ng-model=request.acm></td>
+	
+	<tr>
+	<td><input type="text" class="form-control" value="Higny" /></td>
+	<td><input type="text" class="form-control" value="Julien" /></td>
+	<td><input type="text" class="form-control" value="Orthopedic Meet" /></td>
+	<td><input type="text" class="form-control" value="6000945757" /></td>
+	<td><input type="text" class="form-control" value="4567878" /></td>
+	<td><input type="text" class="form-control" value="" /></td>
+	<td><input type="text" class="form-control" value="" /></td>
+	</tr>
+	<tr>
+	<td><input type="text" class="form-control" value="Feller" /></td>
+	<td><input type="text" class="form-control" value="Nathalie" /></td>
+	<td><input type="text" class="form-control" value="Nathalie" /></td>
+	<td><input type="text" class="form-control" value="Nathalie" /></td>
+	<td><input type="text" class="form-control" value="4567878" /></td>
+	<td><input type="text" class="form-control" value="" /></td>
+	<td><input type="text" class="form-control" value="" /></td>
+	</tr>
 	</tbody>
 	<tfoot>
-	<tr>
-	<td><span class="btn btn-primary" role="button">Save</span></td>
-	<td><span class="btn btn-primary" role="button">Cancel</span></td>
-	</tr>
+	
 	</tfoot>
 	</table>
 	</div>
+	
+	<p style="font-size: 12px;">
+	Pressing "I acknowledge, please proceed" button will give you a ZIP archive with all selected profiles details pre-populated in the country's EFPIA cross-border template. Use those documents (MS Word .DOCX editable files) to physically capture the consent. Once received back from HCPs / HCOs , you are required to upload the PDF scans in this portal. The system will automatically notify you, by email, in 30 days.
+	</p>
 	</div>
 	
-	<div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="recipientForm.$invalid">Generate Consent Annex</button>
+	<div class="modal-footer" style="padding: 6px;">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="recipientForm.$invalid">I acknowledge,please proceed
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
 	

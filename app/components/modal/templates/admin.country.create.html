@@ -1,29 +1,27 @@
-<div class="modal-header">
-  <h3 class="modal-title">Add Countries and Templates</h3>
+<div class="modal-header" style="color: #fff;
+    background-color: #337ab7;">
+  <h3 class="modal-title" style="font-size: 15px;
+    height: 13px;
+    padding-bottom: inherit;">Add users and Roles</h3>
 </div>
 
 <div class="modal-body">
   <form name="adminRoleForm" novalidate>
     <div class="form-group">
       <div>
-        <label for="userName">Country ISO Code</label>
+        <label for="userName">Username (NTID)</label>
          <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
-       
+        
 
       </div>
 
       <div style="margin-top:20px">
-        <label for="role">Country Name</label>
+        <label for="role">User Role</label>
         <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
 
       </div>
 	  <div style="margin-top:20px">
-        <label for="role">Country Contact</label>
-         <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
-
-      </div>
-	  <div style="margin-top:20px">
-        <label for="role">	Identity Reviewers</label>
+        <label for="role">Role Description</label>
          <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
 
       </div>

@@ -1,42 +1,56 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title">Edit Profile : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
+  <h3 class="modal-title" style="font-size: medium;">Edit Profile : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
                          <br> Task ID: {{item.id}} 
   </h3>
   
 </div>
 
 <div class="modal-body">
-  <form name="taskForm" novalidate>
+  <form name="taskForm" novalidate class="form-horizontal">
     <div class="form-group">
-
-      <div>
-        <label for="consannexid.eventname">Event Name</label>
-        <input type="text" class="form-control" id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" >        
-      </div>
-      <div>
-        <label for="consannexid.pocode">PO Code</label>
-        <input type="text" class="form-control" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" >        
-      </div>
-      <div>
-        <label for="consannexid.acmcode">ACM Code</label>
-        <input type="text" class="form-control" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" >        
-      </div>
-		<div>
-    	<label class="col-sm-3 control-label">Consent Status</label>
-    	<div>
-      	<gcms-lov list="consentType" value="item.consannexid.consentstatus.id"></gcms-lov>
-    	</div>
-    	</div>
-    	<div>
-        <label for="consannexid.consentstartdate">Consent StartDate </label>
+    <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="">
+    </div>
+  </div>
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="">
+    </div>
+  </div>
+      <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" >
+    </div>
+  </div>
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="middleName" class="col-sm-3 control-label">Consent Status:</label>
+    <div class="col-sm-9">
+      <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"></gcms-lov>
+    </div>
+  </div>
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent StartDate:</label>
+    <div class="col-sm-9">
         <input type="date"  class="form-control"  ng-model="item.consannexid.consentstartdate" value={{item.consannexid.consentstartdate}} min="{{item.consannexid.consentstartdate | date:'yyyy-MM-dd'}}" />
-        
+    </div>
+  </div>
+  <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
+    <label for="consannexid.consentenddate" class="col-sm-3 control-label">Consent EndDate:</label>
+    <div class="col-sm-9">
+      <input type="date"  class="form-control"  ng-model="item.consannexid.consentenddate | date:'yyyy-MM-dd'" value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate | date:'yyyy-MM-dd'}}" />
+    </div>
+  </div>
       
-         </div>
-      <div>
-        <label for="consannexid.consentenddate">Consent EndDate</label>
-        <input type="date"  class="form-control"  ng-model="item.consannexid.consentenddate | date:'yyyy-MM-dd'" value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate | date:'yyyy-MM-dd'}}" />
+		
+    	
+    	
+      	
+    	
+      
         
      
        <!--  <input type="date" id="endDate" name="endDate" class="form-control" ng-model="item.consannexid.consentenddate"  />
@@ -44,7 +58,7 @@
       </div>
       
 
-    </div>
+   
   </form>
 </div>
 

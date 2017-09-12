@@ -1,0 +1,191 @@
+<div class="modal-header" style="color: #fff;
+    background-color: #337ab7;">
+  <h3 class="modal-title" style="font-size: 15px;
+    height: 13px;
+    padding-bottom: inherit;">Template</h3>
+</div>
+<div class="modal-body">
+<div class="container-table">
+  
+<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-primary">
+    <table class="table table-bordered table-striped table-highlight">
+      <thead style="background-color:#337ab7;color:white;">
+        <tr>
+		<th><gcms-modal template="template.add.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+    <span class="btn btn-default" role="button" style="margin-left:11px;"><i class="fa fa-plus"></i></span>
+  </gcms-modal></th>
+        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Template Code</th>
+        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Template Name</th>
+        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Dates Range</th>
+        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Start date</th>
+        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">End date</th>
+       		
+      </tr></thead>
+	   <tbody data-ng-repeat="bp in profileModle.BusinessProfile">
+
+	   <tr>
+                    
+                        <td><a href="" data-ng-click="selectTableRow($index, ConsentAnnex.bp.profileId)">
+                            Edit</a><span><a href="">Delete</a></span></td>
+                        <td>{{bp.Tname}}</td>
+                        <td>{{bp.DR}}</td>
+                        <td>{{bp.QRcode}}</td>
+                        <td>{{bp.conpage}}</td>
+                        <td>{{bp.Tcode}}</td>
+						
+						
+                    </tr>
+					 <tr data-ng-show="dayDataCollapse[$index]">
+                      <td colspan="8">
+                      <table class="table table-hover table-condensed table-striped" >
+                         <thead>
+                                
+                                          <tr>
+										 
+										  <div class="row">
+										  <div class="col-sm-5">
+										  Template Name:<input type="text" class="form-control" value="" />
+										  </div>
+										  <div class="col-sm-6">
+										  QR Code Page:<input type="text" class="form-control" value="" />
+										  </div>
+										  
+										  </div>
+										  <div class="row">
+										  <div class="col-sm-5">
+										  Template Code:<input type="text" class="form-control" value="" />
+										  </div>
+										  <div class="col-sm-3">
+										  Consent Page:<input type="text" class="form-control" value="" />
+										  </div>
+										  <div class="col-sm-4" style="margin-top: 19px;">
+										  Dates Range:<input type="checkbox" name="" value="">
+										  </div>
+										  
+										  </div>
+										 
+										  
+                                              <!--td>Template Name:<input type="text" class="form-control" value="" /></td>
+                                              <td>QR Code Page:<input type="text" class="form-control" value="" /></td><ln>
+                                              <td>Consent Page:<input type="text" class="form-control" value="" /></td>
+                                              <td>Template Code:<input type="text" class="form-control" value="" /></td>
+											  <td>Dates Range:<input type="checkbox" name="vehicle" value="Bike" style="margin-right:14px;"></td-->
+                                                
+                                            </tr>
+                           
+                           
+                         </thead>
+                         
+                         <tbody>
+                           <tr data-ng-if="ConsentAnnex.BusinessProfile.profileId==bp.profileId">
+                             
+                                                
+                             
+                             
+                           </tr>
+                           
+                           
+                         </tbody>
+                        
+                        
+                        
+                      </table>
+                      
+                      </td>
+                    </tr>
+      <!--tbody>
+        
+         
+		<tr>
+                <td><span><a href="" style="margin-right:7px;">Edit</a><a href="">Delete</a></span></td>
+                <td>local Consent Form</td>
+				<td><input type="checkbox" name="vehicle" value="Bike" style="margin-right:14px;"></td>
+                <td>1</td>
+                <td>2</td>
+                <td>CO2</td>
+                <td><span><a href="" style="margin-right:7px;">view</a><a href="">Update</a></span></td>
+				
+            </tr>
+			<tr>
+                <td><span><a href="" style="margin-right:7px;">Edit</a><a href="">Delete</a></span></td>
+                <td>Test Temlate</td>
+				<td><input type="checkbox" name="vehicle" value="Bike" style="margin-right:14px;"></td>
+                <td>1</td>
+                <td>2</td>
+                <td>CO3</td>
+                <td><span><a href="" style="margin-right:7px;">view</a><a href="">Update</a></span></td>
+				
+            </tr>
+            
+           
+   </tbody-->
+   </table>
+    <!--div class="table-responsive" ng-show="clickedh">
+   
+     <div class="panel-body">
+  <div class="container-box">
+  <div class="row">
+    <div class="col-sm-6">
+    
+        Profile Type <input type="text" class="form-control" id="acmcode" placeholder="">
+        </div>
+        <div class="col-sm-6">
+        profile country <input type="text" class="form-control" id="acmcode" placeholder=""></div>
+        </div>
+		<div class="row">
+       <div class="col-sm-6">
+    first name <input type="text" class="form-control" id="acmcode" placeholder="">
+        </div>
+        <div class="col-sm-6">
+        Last name<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+        
+		</div>
+		<div class="row">
+       <div class="col-sm-6">
+    Org Name <input type="text" class="form-control" id="acmcode" placeholder="">
+        </div>
+        <div class="col-sm-6">
+        City<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+        
+		</div>
+		<div class="row">
+       <div class="col-sm-6">
+	   Specialty
+     <input type="text" class="form-control" id="acmcode" placeholder="">
+        </div>
+        <div class="col-sm-6">
+        address<input type="text" class="form-control" id="acmcode" placeholder=""></div>
+        
+		</div>
+		<div class="row">
+       <div class="col-sm-12">
+	   Notes
+     <input type="text" class="form-control" id="acmcode" placeholder="">
+        </div>
+        
+		</div>
+		<div class="row">
+       <div class="col-sm-6">
+	   Status
+     <input type="text" class="form-control" id="acmcode" placeholder="">
+        </div>
+		<div class="col-sm-6">
+		<span style="float: right;
+    margin-top: 20px;"><button class="btn btn-primary" role="button">Update</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span>
+		</div>
+        
+		</div>
+        
+		</div>
+		</div>
+		</div>
+
+    
+   </div>
+   </div>
+   </div>
+   </div>
+   </div>

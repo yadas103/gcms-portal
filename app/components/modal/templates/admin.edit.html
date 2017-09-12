@@ -1,0 +1,41 @@
+<div class="modal-header" style="color: #fff;
+    background-color: #337ab7;">
+  <h3 class="modal-title" style="font-size: 15px;
+    height: 13px;
+    padding-bottom: inherit;">Edit Countries</h3>
+</div>
+
+<div class="modal-body">
+  <form name="announcementForm" novalidate>
+    <div class="form-group">
+
+      <div>
+        <label for="title" style="margin-bottom: 0px;">Country ISO Code</label>
+        <input type="text" class="form-control" id="title" name="title" ng-model="item.announcementTitle" placeholder="" required>
+        <span class="error" ng-show="announcementForm.title.$error.required">Required!</span>
+      </div>
+
+      <div class="top-buffer">
+       <label for="title">Country Name</label>
+        <input type="text" class="form-control" id="title" name="title" ng-model="item.announcementTitle1" placeholder="" required>
+        <span class="error" ng-show="announcementForm.title.$error.required">Required!</span>
+      </div>
+	  <div class="top-buffer">
+       <label for="title">Country Contact</label>
+        <input type="text" class="form-control" id="title" name="title" ng-model="item.announcementTitle2" placeholder="" required>
+        <span class="error" ng-show="announcementForm.title.$error.required">Required!</span>
+      </div>
+	  <div class="top-buffer">
+       <label for="title">Identity Reviewers</label>
+        <input type="text" class="form-control" id="title" name="title" ng-model="item.announcementTitle3" placeholder="" required>
+        <span class="error" ng-show="announcementForm.title.$error.required">Required!</span>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" role="button">Update</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

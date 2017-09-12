@@ -99,7 +99,7 @@
           <th><input st-search="consannexid.eventname" placeholder=" " class="form-control" type="search"/></th> 		  
   		  <th><input st-search="" placeholder=" " class="form-control" type="search"/></th>
   		  <th><input st-search="" placeholder=" " class="form-control" type="search"/></th>
-		  <th><st-select-distinct collection="TaskAttributes" predicate="taskstatus"></st-select-distinct></th>
+		  <th><st-select-distinct  collection="TaskAttributes" predicate="taskstatus"></st-select-distinct></th>
           <th><input st-search="" placeholder="" class="form-control" type="search"/></th>
           <th></th>
  		  <th></th>
@@ -143,13 +143,15 @@
   						<div ng-switch-when="INCOMPLETED">
   							<gcms-modal template="task.reassign.html" controller="ModalDefaultCtrl"
                   			 content="con" ok="reassign" alt="{{con.id}}">
-							<span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span>
+							<!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
+							<span>Reassign</span>
                 			</gcms-modal>
   						</div>
   						<div ng-switch-when="COMPLETED">
       						<gcms-modal template="task.revoke.html" controller="ModalDefaultCtrl"
                   			content="con" ok="revoke" alt="{{con.id}}">
-              				<span class="glyphicon glyphicon-retweet" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span>
+              				<!-- <span class="glyphicon glyphicon-retweet" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
+              				<span>Revoke</span>
 			  				<a href="">DLU-P</a>
 							<a href="">DLU-T</a>
                 			</gcms-modal>

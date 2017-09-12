@@ -13,14 +13,15 @@
     <table st-table="profileSearchCopy" st-safe-src="profileSearch" class="table table-bordered table-striped table-highlight">
       	<thead >
       	<tr style="color:white;background-color:#337ab7;">
-        <th>Select</th>    
-		<th ng-click="orderByField='id'; reverseSort = !reverseSort" st-sort="id" >TR ID</th>
-        <th ng-click="orderByField='lastName'; reverseSort = !reverseSort" st-sort="lastName">Last Name</th>
-        <th ng-click="orderByField='firstName'; reverseSort = !reverseSort" st-sort="firstName">First Name</th>
-		<th ng-click="orderByField='organisationName'; reverseSort = !reverseSort" st-sort="organisationName">Organization Name</th>
-        <th ng-click="orderByField='city'; reverseSort = !reverseSort" st-sort="city">City Name</th>
-        <th ng-click="orderByField='address'; reverseSort = !reverseSort" st-sort="address">Address</th>
-        <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty">Specialty</th>
+        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Select</th>    
+		<th ng-click="orderByField='id'; reverseSort = !reverseSort" st-sort="id"  style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;width: 77px;">TR ID</th>
+        <th ng-click="orderByField='lastName'; reverseSort = !reverseSort" st-sort="lastName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Last Name</th>
+        <th ng-click="orderByField='firstName'; reverseSort = !reverseSort" st-sort="firstName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">First Name</th>
+		<th ng-click="orderByField='organisationName'; reverseSort = !reverseSort" st-sort="organisationName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Organization Name</th>
+        <th ng-click="orderByField='city'; reverseSort = !reverseSort" st-sort="city" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">City Name</th>
+        <th ng-click="orderByField='address'; reverseSort = !reverseSort" st-sort="address" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Address</th>
+        <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Specialty</th>
+         <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Consent History</th>
 		</tr>
 		
 		<tr>
@@ -31,7 +32,8 @@
           <th><input ng-model="search.organisationName" st-search="organisationName" placeholder=" " class="form-control" type="search"/></th>
           <th><input ng-model="search.city" st-search="city" placeholder=" " class="form-control" type="search"/></th>
           <th><input ng-model="search.address" st-search="address" placeholder=" " class="form-control" type="search"/></th> 		  
-  		  <th><input ng-model="search.specialty" st-search="specialty" placeholder=" " class="form-control" type="search"/></th>  				  
+  		  <th><input ng-model="search.specialty" st-search="specialty" placeholder=" " class="form-control" type="search"/></th>
+  		  <th></th>  				  
      	</tr>
       </thead>
       <tbody>
@@ -45,7 +47,8 @@
                         <td>{{pro.organisationName}}</td> 
                         <td>{{pro.city}}</td> 
                         <td>{{pro.address}}</td>
-                        <td></td>                       
+                        <td></td> 
+                        <td><i class="fa fa-eye" aria-hidden="true"></i></td>                       
                        
         </tr data-ng-repeat>
    </tbody> 
@@ -63,23 +66,20 @@
 
  </table>
  
-   
-<span>Generate Consent Annex</span>
-<gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
-         ok="create" cancel="cancel">
-         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
-       </gcms-modal>
-</div>
-<br/>
-<br/>
-<div>
-     <span>Create Identity Request</span>
+<!--   <span>Create Identity Request</span>
       <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl"
          ok="create" cancel="cancel">
          <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
        </gcms-modal>
-      
-    </div>
+
+ <gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
+         ok="create" cancel="cancel">
+         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
+       </gcms-modal> -->
+</div>
+<br/>
+<br/>
+
 </div> 
 
 

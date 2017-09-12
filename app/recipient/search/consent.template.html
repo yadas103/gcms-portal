@@ -1,4 +1,51 @@
-<div>
+<div class="panel-body">
+	<form name="requestSearchForm" class="form-horizontal"
+		ng-submit="submit(request)"
+		style="margin-right: 17px; margin-left: 2px;">
+		<div class="row">
+			<div class="col-sm-3">
+
+				<gcms-lov list="country" value="country"></gcms-lov>
+				<label style="font-size: 12px;">Payer Country</label><br>
+			</div>
+			<div class="col-sm-3 form-group"
+				style="margin-right: 17px; margin-left: 2px;">
+				<select ng-model="request.country"
+					class="form-control">
+					<option ng-repeat="con in counties">{{con.name}}</option>
+				</select> <label style="font-size: 12px;">Reporting Country</label><br>
+			</div>
+			<div class="col-sm-3 form-group"
+				style="margin-right: 17px; margin-left: 2px;">
+				<gcms-lov list="recipientTypeString" value="request.profileType"></gcms-lov>
+				<label style="font-size: 12px;">Business Party Type</label><br>
+			</div>
+			<div class="col-sm-2" class="form-group">
+				<button type="submit" class="btn btn-default" style="margin-right: 10px;" alt="Search">
+					<i class="fa fa-search"></i>
+				</button>
+				<gcms-modal template="template.download.html"
+					controller="ModalDefaultCtrl" ok="create" cancel="cancel">
+				<a ui-sref="recipient-detail-add"> <span class="btn btn-default"
+					role="button" style="margin-right: 10px;" ><i class="fa fa-download"></i></span>
+				</a> </gcms-modal>
+				<gcms-modal template="identity.request.html"
+					controller="ModalDefaultCtrl" ok="create" cancel="cancel">
+				<span class="btn btn-default" role="button" style="margin-right: 10px;" ><i
+					class="fa fa-plus"></i></span> </gcms-modal>
+			</div>
+		</div>
+	</form>
+	<!--  <span class="btn btn-default" role="button"><i class="fa fa-refresh"></i>
+       </span> -->
+</div>
+
+
+
+
+
+
+<!-- <div>
 	<form name="requestSearchForm" class="form-horizontal"
 		ng-submit="submit(request)">
 		<div>
@@ -6,6 +53,7 @@
 				<div class="form-group">
 					<label>Collecting Country</label>
 					<gcms-lov list="country" value="country"></gcms-lov>
+					
 				</div>
 			</div>
 			<div class="col-sm-3">
@@ -33,4 +81,4 @@
 			</div>
 		</div>
 	</form>
-</div>
+</div> -->

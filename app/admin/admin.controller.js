@@ -1,213 +1,90 @@
- (function () {
-	  'use strict';
 
-	  angular
-	    .module('gcms.administration')
-	    .controller('AdminRoleCtrl', IdCon);
 
-	    IdCon.$inject = ['$rootScope', '$scope'];
 
-	 
-  
-  
-    $scope.tableRowExpanded = false;
-    $scope.tableRowIndexCurrExpanded = "";
-    $scope.tableRowIndexPrevExpanded = "";
-    $scope.storeIdExpanded = "";
-    $scope.dayDataCollapse = [];
-   
 
-    $scope.dayDataCollapseFn = function () {
-        for (var i = 0; $scope.dataModel.ConsentAnnex.length - 1; i += 1) {
-            $scope.dayDataCollapse.append('true');
-            
+(function () {
+  'use strict';
+
+  angular
+    .module('gcms.administration')
+    .controller('AdminRoleCtrl', UserRole);
+
+  UserRole.$inject = ['$rootScope', '$scope', '$stateParams', '$state', 'UserDetail'];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+    // private variables
+    var userName = $stateParams.id;
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    // scope variables
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+      return session.collections.role().then(function(roles) {
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
         }
+      }
     };
-    
-  
-    
-    $scope.selectTableRow = function (index, storeId) {
-      
-      
 
-      if ($scope.dayDataCollapse === 'undefined') {
-            $scope.dayDataCollapse = $scope.dayDataCollapseFn();
-            
-      } else {
-    
-    if ($scope.tableRowExpanded === false && $scope.tableRowIndexCurrExpanded === "" && $scope.storeIdExpanded === "") {
-                $scope.tableRowIndexPrevExpanded = "";
-                $scope.tableRowExpanded = true;
-                $scope.tableRowIndexCurrExpanded = index;
-                $scope.storeIdExpanded = storeId;
-                $scope.dayDataCollapse[index] = true;
-    
-    }else if ($scope.tableRowExpanded === true) {
-      if ($scope.tableRowIndexCurrExpanded === index && $scope.storeIdExpanded === storeId) {
-        
-                 $scope.tableRowExpanded = false;
-                    $scope.tableRowIndexCurrExpanded = "";
-                    $scope.storeIdExpanded = "";
-                    $scope.dayDataCollapse[index] = false;
-     
-       }else{
-         
-                 $scope.tableRowIndexPrevExpanded = $scope.tableRowIndexCurrExpanded;
-                    $scope.tableRowIndexCurrExpanded = index;
-                    $scope.storeIdExpanded = storeId;
-                    $scope.dayDataCollapse[$scope.tableRowIndexPrevExpanded] = false;
-                    $scope.dayDataCollapse[$scope.tableRowIndexCurrExpanded] = true;
-         
-         
-       }
-     
-      
-    }
-        
-      }  
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin-roles'); });
     };
-    
-    
-    $scope.profileModle={
-      
-    "BusinessProfile" : [
-{   "profileId": "sdvgfsdg",
-"Name": "zsdgfvsdg",
-"Phone": "dghdfhydfh",
-"Address": "emen\mujhfy",
-},
-{   
-"profileId": "sdgsdgg",
-"Name": "xsdgsdgdg",
-"Phone": "dfhdfhd",
-"Address": "emen\mujhfy",
-},
-{   
-"profileId": "gghgg",
-"Name": "xdfghdfh",
-"Phone": "dfhdfjcjudfj",
-"Address": "emen\mujhfy",
-},
-]
-      
-    };
-    
-    
-  
-  
-  $scope.dataModel ={
-  
-    "ConsentAnnex": [
-{   
-"ConsentId" : "001",
-"Country" : "UK",
-"EventName" : "Event1",
-"StartDate": "2013-07-01",
-            "EndDate": "2013-07-02",
-"ConsentLocation":"filepath1",
-"BusinessProfile":
-{
-"profileId": "1000",
-"Name": "Store 1",
-"Phone": "+46 31 1234567",
-"Address": "Avenyn 1",
-"storeCity": "Gothenburg"
-},
- "ConsentData":
-           {
-"ConsentName": "CND" ,
-"ConsentStatus": "Consented"
-           }
- 
-},
-{   
-"ConsentId" : "002",
-"Country" : "GE" ,
-"EventName" : "Event2" ,
-"StartDate": "2013-07-01",
-            "EndDate": "2013-07-02",
-"ConsentLocation":"filepath2",
-"BusinessProfile":
-{
-"profileId": "2000",
-"Name": "Store 2",
-"Phone": "+46 31 1234567",
-"Address": "Avenyn 1",
-"storeCity": "Gothenburg"
-},
-"ConsentData":
-{
-"ConsentName": "NCND",
-"ConsentStatus": "NotConsented"
-}
-},
-{   
-"ConsentId" : "003",
-"Country" : "US" ,
-"EventName" : "Event3",
-"StartDate": "2013-07-01",
-      "EndDate": "2013-07-02",
-"ConsentLocation":"filepath3",
-"BusinessProfile":
-{
-"profileId": "3000",
-"Name": "Store 3",
-"Phone": "+46 31 1234567",
-"Address": "Avenyn 1",
-"storeCity": "Gothenburg"
-} ,
-"ConsentData":
-{
-"ConsentName": "CND",
-"ConsentStatus": "Consented"
-}
-},
-{   
-"ConsentId" : "004",
-"Country" : "SZ",
-"EventName" : "Event4",
-"StartDate": "2013-07-01",
-            "EndDate": "2013-07-02",
-"ConsentLocation":"filepath4",
-"BusinessProfile": 
-{
-"profileId": "4000",
-"Name": "Store 4",
-"Phone": "+46 31 1234567",
-"Address": "Avenyn 1",
-"storeCity": "Gothenburg"
-},
-"ConsentData":
-{
-"ConsentName": "NCND",
-"ConsentStatus": "NotConsented"
-}
-},
-{   
-"ConsentId" : "005",
-"Country" : "SZ",
-"EventName" : "Event5",
-"StartDate": "2013-07-01",
-            "EndDate": "2013-07-02",
-"ConsentLocation":"filepath5",
-"BusinessProfile": 
-{
-"profileId": "4000",
-"Name": "Store 4",
-"Phone": "+46 31 1234567",
-"Address": "Avenyn 1",
-"storeCity": "Gothenburg"
-},
-"ConsentData":
-{
-"ConsentName": "NCND",
-"ConsentStatus": "NotConsented"
-}
-}
-]
-};
-  
-  
-});
 
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on('$localeChangeSuccess', getData);
 
+  }
+})();

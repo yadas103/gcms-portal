@@ -2,11 +2,12 @@
 
 <hr/>
 
-<div gcms-secure section-name="Administration" action-name="create" style="padding-bottom:20px">
-  <gcms-modal template="admin.country.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+<!--div gcms-secure section-name="Administration" action-name="create" style="padding-bottom:20px">
+  <gcms-modal template="admin.country2.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
     <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
   </gcms-modal>
-</div>
+</div-->
+
 
 <div class="panel panel-primary ng-scope">
   <div class="panel-heading">Manage Countries and Temlates</div>
@@ -15,89 +16,71 @@
   <table class="table table-bordered table-striped table-highlight">
       <thead>
         <tr>
-		<th></th>
+		<th><gcms-modal template="admin.country2.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+    <span class="btn btn-default" role="button" style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
+  </gcms-modal></th>
         <th>Country ISO Code</th>
         <th>Country  Name</th>
         <th>Country Contact</th>
         <th>Identity Reviewers</th>
         
-      </tr>
+      </tr>    
 	  </thead>
-      <tbody>
+	 <tbody>
+	  
         
           <tr>
-            <td>
-    <a href="" ng-init="clickedh=false" ng-click="clickedh=!clickedh">EDIT</a>
-  
+            <td style="width: 139px;">  <gcms-modal template="admindownarro.html" controller="ModalDefaultCtrl"
+              content="announcement" ok="update" alt="Edit Announcement {{announcement.id}}">
+	 <i class="fa fa-arrow-down"></i>
+            </gcms-modal>
+            <gcms-modal template="admin.edit.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+    <span> <a href="">EDIT</a></span>
+  </gcms-modal>
+			 
+            
 			<a href="">Delete</a></td>
-			<td>RO</td>
-                <td>ROMANIA</td>
-                <td>SOFIA</td>
-                <td>5 POZITANO SQ</td>
-              </tr>
-			    <tr ng-show="clickedh">
-				<td style="border: 1px solid #f9f9f9;"></td>
-                           <td style="border: 1px solid #f9f9f9;">contry ISO code:<input type="text" class="form-control" value="" /></td>
-                         <td style="border: 1px solid #f9f9f9;">Country Name:<input type="text" class="form-control" value="" /></td><ln>
-                         <td style="border: 1px solid #f9f9f9;">Country Contact:<input type="text" class="form-control" value="" /></td>
-                      <td style="border: 1px solid #f9f9f9;">Identity Reviewers:<input type="text" class="form-control" value="" />
-					   <span style="float: right;
-    margin-top: 20px;"><button class="btn btn-primary" role="button">Update</button>
-		<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span></td>
-                                                
-                                           
-				
-				
-		</tr>
-          
-		 
-			  <tr>
-            <td><a href="" ng-init="clickede=false" ng-click="clickede=!clickede">EDIT</a>
-			<a href="">Delete</a>
 			<td>BE</td>
                 <td>Beldium</td>
                 <td>SOFIA</td>
                 <td>5 POZITANO SQ</td>
               </tr>
-			  <tr  ng-show="clickede">
 			
-				
-				<td style="border: 1px solid #f9f9f9;"></td>
-                           <td style="border: 1px solid #f9f9f9;">contry ISO code:<input type="text" class="form-control" value="" /></td>
-                         <td style="border: 1px solid #f9f9f9;">Country Name:<input type="text" class="form-control" value="" /></td><ln>
-                         <td style="border: 1px solid #f9f9f9;">Country Contact:<input type="text" class="form-control" value="" /></td>
-                      <td style="border: 1px solid #f9f9f9;">Identity Reviewers:<input type="text" class="form-control" value="" />
-					   <span style="float: right;
-    margin-top: 20px;"><button class="btn btn-primary" role="button">Update</button>
-		<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span></td>
-                                                
-                                           
-				
-				
-		</tr>
+		
+   
+  
+			<!--gcms-secure section-name="Landing" action-name="delete">
+              <span class="icon" trs-secure section-name="Landing" action-name="delete">
+                <gcms-modal template="admin.delete.html" controller="ModalDefaultCtrl"
+                  content="quicklink" ok="delete" alt="Delete Link {{quicklink.id}}">
+                 
+	<span class="btn btn-default ng-scope" role="button"><i class="fa fa-trash"></i></span>
+                </gcms-modal>
+              </span-->
+			 
+		 
 			  <tr>
-            <td><a href="" ng-init="clickede=false" ng-click="clickedee=!clickedee">EDIT</a>
+            <td><gcms-modal template="admin.edit.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+    <span> <a href="">EDIT</a></span>
+  </gcms-modal>
+			<a href="">Delete</a></td>
+			<td>BE</td>
+                <td>Beldium</td>
+                <td>SOFIA</td>
+                <td>5 POZITANO SQ</td>
+              </tr>
+			  
+			  <tr>
+            <td><gcms-modal template="admin.edit.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+    <span> <a href="">EDIT</a></span>
+  </gcms-modal>
 			<a href="">Delete</a>
 			<td>DE</td>
                 <td>Germany</td>
                 <td>SOFIA</td>
                 <td>5 POZITANO SQ</td>
               </tr>
-		<tr  ng-show="clickedee">
-			
-				<td style="border: 1px solid #f9f9f9;"></td>
-                           <td style="border: 1px solid #f9f9f9;">contry ISO code:<input type="text" class="form-control" value="" /></td>
-                         <td style="border: 1px solid #f9f9f9;">Country Name:<input type="text" class="form-control" value="" /></td><ln>
-                         <td style="border: 1px solid #f9f9f9;">Country Contact:<input type="text" class="form-control" value="" /></td>
-                      <td style="border: 1px solid #f9f9f9;">Identity Reviewers:<input type="text" class="form-control" value="" />
-					  <span style="float: right;
-    margin-top: 20px;"><button class="btn btn-primary" role="button">Update</button>
-		<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span></td>
-                                                
-                                           
-				
-				
-		</tr>
+		
 		  
    </tbody>
    </table>
@@ -116,11 +99,11 @@
    
 </div>
 
-<div gcms-secure section-name="Administration" action-name="create" style="padding-bottom:20px">
-  <gcms-modal template="admin.user.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
+<!--div gcms-secure section-name="Administration" action-name="create" style="padding-bottom:20px">
+  <gcms-modal template="admin.country.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
     <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
   </gcms-modal>
-</div>
+</div-->
 
 <div class="panel panel-primary">
   <div class="panel-heading">Manage users and Roles</div>
@@ -129,7 +112,9 @@
   <table class="table table-bordered table-striped table-highlight">
       <thead>
         <tr>
-		<th></th>
+		<th><gcms-modal template="admin.country.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
+    <span class="btn btn-default" role="button" style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
+  </gcms-modal></th>
         <th>Username (NTID)</th>
         <th>User Role</th>
         <th>Role Description</th>
@@ -147,28 +132,16 @@
           
         </tr>
 		<tr>
-            <td><a href="" ng-init="clickedhe=false" ng-click="clickedhe=!clickedhe">EDIT</a>
+            <td><gcms-modal template="admin.edit.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add role">
+    <span> <a href="">EDIT</a></span>
+  </gcms-modal>
 			<a href="">Delete</a>
 			<td>RO</td>
                 <td>ROMANIA</td>
                 <td>SOFIA</td>
                 
               </tr>
-			  <tr  ng-show="clickedhe">
-			
-				<td style="border: 1px solid #f9f9f9;"></td>
-                           <td style="border: 1px solid #f9f9f9;">Username(NTID)<input type="text" class="form-control" value="" /></td>
-                         <td style="border: 1px solid #f9f9f9;">User Role<input type="text" class="form-control" value="" /></td><ln>
-                         <td style="border: 1px solid #f9f9f9;">Role Description<input type="text" class="form-control" value="" />
-                      
-					 <span style="float: right;
-    margin-top: 20px;"><button class="btn btn-primary" role="button">Update</button>
-		<button class="btn btn-warning" ng-click="cancel()">Cancel</button></span></td>
-                                                
-                                           
-				
-				
-		</tr>
+			  
 			  
 			 
    </tbody>

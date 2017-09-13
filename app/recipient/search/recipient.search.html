@@ -38,7 +38,7 @@
       </thead>
       <tbody>
      	
-        <tr data-ng-repeat="pro in profileSearch | filter:search:strict | orderBy:orderByField:reverseSort">  
+        <tr data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">  
           				
           				<td><input type="checkbox" ng-model="checkboxes.items[pro.id]"></td>              			
           				<td>{{pro.id}}</td>
@@ -48,19 +48,21 @@
                         <td>{{pro.city}}</td> 
                         <td>{{pro.address}}</td>
                         <td></td> 
-                        <td><i class="fa fa-eye" aria-hidden="true"></i></td>                       
+                        <td><button type="submit" class="btn btn-sm btn-info"  data-ng-click="submitid(pro.id)">
+                        		<i class="glyphicon glyphicon-eye-open"></i>
+                            </button></td>                        
                        
-        </tr data-ng-repeat>
-   </tbody> 
-   <tfoot>
-<tr>
-<td colspan="13" class="text-center">
-<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
-</td>
-</tr>
-</tfoot>
-        
-   </table>   
+        </tr>
+   </tbody>
+				<tfoot>
+					<tr>
+						<td colspan="9" class="text-center">
+							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
+						</td>
+					</tr>
+				</tfoot>
+
+			</table>   
      
  </div>
 

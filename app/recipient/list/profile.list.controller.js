@@ -112,7 +112,10 @@
            myService.set(JSON.stringify(ids));
           };
           
-          
+          $scope.submitid = function(id) {
+        	  $state.go('profile-detail-view', {id} );
+       	  };
+  
           
        
     }

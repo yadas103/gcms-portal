@@ -63,16 +63,20 @@
           action: 'browse'
         }
       })
-       .state('profilereview', {
+      .state('profilereview', {
     	resolve: {},
     	url: '/profilereview',
-    	controller: 'ProfileReviewController',
-        templateUrl: 'app/profilereview/profilereview.html',
-        data: {
-          section: 'Profile Review',
-          action: 'browse'
+        templateUrl: 'app/profilereview/identitydetail/identity.html'
+      })
+      .state('identityProfiles', {
+        resolve: {},
+        url: '/identityProfiles/?:criteria',
+        templateUrl: 'app/profilereview/identitydetail/identity.html',
+        controller: 'IdentityListCtrl',
+        params: {
+          criteria: {}
         }
-      })      
+      })
 	  .state('admin', {
     	resolve: {},
     	url: '/admin',

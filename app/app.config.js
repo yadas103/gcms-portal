@@ -83,16 +83,6 @@
           action: 'browse'
         }
       })
-      .state('recipient', {
-    	resolve: {},
-        url: '/recipient',
-        controller: 'ConsentAnnexCtrl',
-        templateUrl: 'app/recipient/recipient.html',
-        data: {
-          section: 'Covered Recipient',
-          action: 'read'
-        }
-      })
 	  .state('exchange', {
     	resolve: {},
         url: '/exchange',
@@ -169,6 +159,16 @@
           action: 'read'
         }
       })
+      .state('profile-detail-view', {
+			resolve: {},
+			url: '/recipient-detail/:id',
+			templateUrl: 'app/recipient/search/consentstatus.html',
+			controller: 'ConsentAnnexCtrl', 
+			data: {
+			section: 'Home',
+			action: 'browse'
+			}
+		})
        .state('consent-mgmt', {
               resolve: {},
               url: '/consent-mgmt',       

@@ -11,5 +11,5 @@
   'use strict';
 
   angular
-    .module('gcms.identity', []);
+    .module('gcms.identity', ['gcms.components.data']);
 }());

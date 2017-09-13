@@ -1,0 +1,185 @@
+<div class="panel panel-primary ng-scope">
+	<div class="panel-heading">Identity request</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel-body">
+
+					<table class="table table-bordered table-striped table-highlight">
+						<thead>
+						
+							<tr>
+								  <tr>
+        <td>
+          <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+           #
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								 <td>
+          <a href="#" ng-click="sortType = 'profileTypeId'; sortReverse = !sortReverse">
+          profileTypeId
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								</td>
+								 <td>
+          <a href="#" ng-click="sortType = 'firstName'; sortReverse = !sortReverse">
+           firstName
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								</td>
+								 <td>
+          <a href="#" ng-click="sortType = 'lastName'; sortReverse = !sortReverse">
+           lastName
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								</td>
+								 <td>
+          <a href="#" ng-click="sortType = 'organizationName'; sortReverse = !sortReverse">
+           organizationName
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								</td>
+								 <td>
+          <a href="#" ng-click="sortType = 'profileCountry'; sortReverse = !sortReverse">
+          profileCountry
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								</td>
+								 <td>
+          <a href="#" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+          status
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+								<th><a href="#"
+									ng-click="orderByField='salary'; reverseSort = !reverseSort">Action</a></th>
+							</tr>
+
+							<tr>
+							<td></td>
+							<form>
+                       <div class="form-group">
+                       <td> <div class="input-group">
+                     
+                           <input type="text" class="form-control"  ng-model="">
+                    </div> </td> 
+                   <td>  <div class="input-group">
+                     
+                           <input type="text" class="form-control" placeholder="" ng-model="identity.firstName">
+                    </div>  </td> 
+                   <td>   <div class="input-group">
+                     
+                         <input type="text" class="form-control" placeholder="" ng-model="identity.lastName">
+                    </div> </td> 
+                    <td>  <div class="input-group">
+                     
+                         <input type="text" class="form-control" placeholder="" ng-model="identity.organizationName">
+                    </div>  </td>
+                    <td>  <div class="input-group">
+                     
+                         <input type="text" class="form-control" placeholder="" ng-model="identity.country">
+                    </div>  </td>
+                   <td> <div class="input-group">
+                        <input type="text" class="form-control" placeholder="" ng-model="identity.status">
+                    </div>   </td>   
+                           </div>
+  
+	
+
+								<td><select class="form-control">
+										<option>Approve</option>
+										<option>Dismiss</option>
+										<option>Validate</option>
+								</select></td>
+								</form>
+							</tr>
+						</thead>
+						<tbody data-ng-repeat="identity in identityRequest|orderBy:sortType:sortReverse|filter:searchFish">
+							<tr>
+								<td><button type="btn btn-small"
+										data-ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
+										data-ng-hide="editMode">VIEWPROFILE</button></td>
+								<td>{{ identity.profileTypeId }}</td>
+								<td>{{ identity.firstName}}</td>
+								<td>{{ identity.lastName }}</td>
+								<td>{{ identity.organizationName}}</td>
+								<td>{{ identity.country}}</td>
+								<td>{{ identity.status }}</td>
+								
+								
+								<td><gcms-modal template="indentity.search.html" controller="ModalDefaultCtrl" content="IdentitySearch" ok="validate(item)" >
+    <a href="">Approve/Dismiss</a>
+  </gcms-modal></td>
+									</tr>
+							<tr data-ng-show="dayDataCollapse[$index]">
+								<td colspan="12">
+									<table class="table table-hover table-condensed table-striped">
+										<tr>
+											<td>ProfileTypeId:{{
+													identity.profileTypeId }}
+											</td>
+											<td>FirstName:{{
+													identity.firstName}}
+											</td>
+										</tr>
+										<tr>
+											<td>LastName:{{
+													identity.lastName }}
+											</td>
+											<td>OrganizationName:{{
+													identity.organizationName}}
+											</td>
+										</tr>
+
+										<tr>
+											<td>Country:{{
+													identity.country }}
+											</td>
+											<td>Address:{{ identity.address}}
+											</td>
+										</tr>
+										<tr>
+
+											<td>specility:{{ identity.specility}} 
+											</td>
+											<td>Notes:<span data-ng-hide="editMode">{{
+													identity.notes}}</span> </td>
+											
+										</tr>
+										<tr >
+													
+												<td>Status:<span data-ng-hide="editMode">{{
+													identity.status}}</span> </td>
+											
+</tr>
+
+
+							
+
+										
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

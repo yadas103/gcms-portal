@@ -46,7 +46,7 @@
         locale: function(){ return localeMapper.getCurrentISOCode(); },
       },
       { 
-    	
+    	update: { method:'PUT' },
         query:  { method:'GET', isArray:true }
       }
     );

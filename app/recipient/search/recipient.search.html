@@ -15,6 +15,7 @@
       	<tr style="color:white;background-color:#337ab7;">
         <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Select</th>    
 		<th ng-click="orderByField='id'; reverseSort = !reverseSort" st-sort="id"  style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;width: 77px;">TR ID</th>
+		<th ng-click="orderByField='profileType'; reverseSort = !reverseSort" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;width: 77px;" st-sort="profileType">Profile Type</th>		
         <th ng-click="orderByField='lastName'; reverseSort = !reverseSort" st-sort="lastName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Last Name</th>
         <th ng-click="orderByField='firstName'; reverseSort = !reverseSort" st-sort="firstName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">First Name</th>
 		<th ng-click="orderByField='organisationName'; reverseSort = !reverseSort" st-sort="organisationName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Organization Name</th>
@@ -27,6 +28,7 @@
 		<tr>
 	      <th></th>
 		  <th><input ng-model="search.id" st-search="id" placeholder=" " class="form-control" type="search"/></th>
+		  <th><input ng-model="search.profileType" st-search="profileType" placeholder=" " class="form-control" type="search"/></th>
           <th><input ng-model="search.lastName" st-search="lastName" placeholder=" " class="form-control" type="search"/></th>         
           <th><input ng-model="search.firstName" st-search="firstName" placeholder=" " class="form-control" type="search"/></th>
           <th><input ng-model="search.organisationName" st-search="organisationName" placeholder=" " class="form-control" type="search"/></th>
@@ -42,22 +44,26 @@
           				
           				<td><input type="checkbox" ng-model="checkboxes.items[pro.id]"></td>              			
           				<td>{{pro.id}}</td>
+          				<td>{{pro.profileType}}</td>
           				<td>{{pro.lastName}}</td>
                         <td>{{pro.firstName}}</td>
                         <td>{{pro.organisationName}}</td> 
                         <td>{{pro.city}}</td> 
                         <td>{{pro.address}}</td>
                         <td></td> 
-                        <td><button type="submit" class="btn btn-sm btn-info"  data-ng-click="submitid(pro.id)">
-                        		<i class="glyphicon glyphicon-eye-open"></i>
+                        <td><button type="submit" class="btn btn-default"  data-ng-click="submitid(pro.id)">                        	
+                        		<i class="fa fa-file-archive-o" aria-hidden="true"></i>
                             </button></td>                        
                        
         </tr>
    </tbody>
 				<tfoot>
 					<tr>
-						<td colspan="9" class="text-center">
+						<!-- <td colspan="10" class="text-center">
 							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
+						</td> -->
+						<td colspan="10" class="text-center">
+							<div st-items-by-page="20" st-pagination="" st-template="app/recipient/list/pagination.custom.html"></div>
 						</td>
 					</tr>
 				</tfoot>
@@ -67,17 +73,6 @@
  </div>
 
  </table>
- 
-<!--   <span>Create Identity Request</span>
-      <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl"
-         ok="create" cancel="cancel">
-         <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
-       </gcms-modal>
-
- <gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
-         ok="create" cancel="cancel">
-         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
-       </gcms-modal> -->
 </div>
 <br/>
 <br/>

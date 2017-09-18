@@ -15,7 +15,7 @@
         $scope.orderByField = 'firstName';
         $scope.reverseSort = false;
         $scope.selectedids = [];
-        $scope.itemsByPage=5;
+        $scope.itemsByPage=20;
         
         var ids = [];
      /*   var lastname = [];

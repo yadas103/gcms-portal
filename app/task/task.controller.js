@@ -65,7 +65,25 @@
 	            Task.update({ id:item.id }, item);
 	          };
 	          
-	          
+          /**
+           * @ngdoc method
+           * @name update
+           * @methodOf 
+           * @description Updates Task
+           * @param {object} item Task to update
+           */
+  		 $scope.revoke = function(item) {
+  			 console.log("Inside revoke function");
+  			 console.log(item.id);	 
+  	         angular.forEach($scope.TaskAttributes, function(con){
+  	            	
+  	         if (con.id === item.id) {
+  	           con.consannexid.consentstatus.id=62;
+  	           con.updatedDate = new Date();      
+  	              }
+  	            });            
+  	            Task.update({ id:item.id }, item);
+  	          };  
 	          
 	          
 		 

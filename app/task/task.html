@@ -147,14 +147,12 @@
 							<span>Reassign</span>
                 			</gcms-modal>
   						</div>
-  						<div ng-switch-when="COMPLETED">
-      						<gcms-modal template="task.revoke.html" controller="ModalDefaultCtrl"
-                  			content="con" ok="revoke" alt="{{con.id}}">
-              				<!-- <span class="glyphicon glyphicon-retweet" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
-              				<span>Revoke</span>
-			  				<a href="">DLU-P</a>
-							<a href="">DLU-T</a>
-                			</gcms-modal>
+  						<div ng-switch-when="COMPLETED">          			
+      						<gcms-modal template="task.revoke.html" controller="ModalDefaultCtrl" content="con" ok="revoke" alt="Revoke Consent{{con.id}}">
+					           <span>Revoke</span>
+					       </gcms-modal>														
+							<a ng-json-export-excel data="con" report-fields="{'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status'}" filename="'filename'">DLU-P</a>
+							<a ng-json-export-excel data="con" report-fields="{'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status'}" filename="'filename'">DLU-T</a>
   						</div>
   						<div ng-switch-when="DELETE">
      						<gcms-modal template="task.undelete.html" controller="ModalDefaultCtrl"

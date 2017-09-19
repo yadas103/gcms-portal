@@ -1,0 +1,41 @@
+
+
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title">Edit Country </h3>
+</div>
+
+<div class="modal-body">
+  <form name="administrationForm" novalidate>
+    <div class="form-group">
+
+     <div>
+        <label for="userName">Country ISO Code</label>
+        <input type="text" class="form-control" id="isoCode" name="isoCode" ng-model="item.countries.isoCode" placeholder="" >        
+      </div>
+    <div style="margin-top:20px">
+        <label for="role">Country Name</label>
+        <input type="text" class="form-control" id="name" name="name" ng-model="item.countries.name" placeholder="" >        
+      </div>
+      <div style="margin-top:20px">
+        <label for="role">Country Contact</label>
+        <input type="text" class="form-control" id="cntryContact" name="cntryContact" ng-model="item.cntryContact" placeholder="" >        
+      </div>
+    <div style="margin-top:20px">
+        <label for="role">Identity Reviewers</label>
+        <input type="text" class="form-control" id="cntryReviewer" name="cntryReviewer" ng-model="item.cntryReviewer" placeholder="" >        
+      </div>
+      
+      
+      
+
+      
+
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="administrationForm.$invalid">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

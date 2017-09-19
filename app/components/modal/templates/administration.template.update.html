@@ -1,0 +1,56 @@
+<div class="modal-header"
+	style="background-color: #337ab7; color: white; padding: 5px;">
+	<h3 class="modal-title">Edit Template</h3>
+
+</div>
+
+<div class="modal-body">
+	<form name="taskForm" novalidate>
+		<div class="form-group">
+
+			<div>
+				<label for="template_name">Template Name</label> <input type="text"
+					class="form-control" id="tmpl_name" name="tmpl_name"
+					ng-model="item.tmpl_name" placeholder="">
+			</div>
+			<div>
+				<label for="template_code">Template Description</label> <input type="text"
+					class="form-control" id="tmpl_code" name="tmpl_code"
+					ng-model="item.tmpl_desc" placeholder="">
+			</div>
+			<div>
+				<label for="dates_range">Dates Range</label> <input type="text"
+					class="form-control" id="dates_rages" name="dates_rages"
+					ng-model="item.dates_rages" placeholder="">
+			</div>
+
+			<div>
+				<label for="template_validity_start_date">Template Validity
+					StartDate </label> <input type="date" class="form-control"
+					ng-model="item.validity_start_date"
+					value={{item.validity_start_date}} />
+				<!-- min="{{item.consannexid.consentstartdate | date:'yyyy-MM-dd'}}" -->
+
+
+			</div>
+			<div>
+				<label for="template_validity_end_date">Template Validity
+					EndDate</label> <input type="date" class="form-control"
+					ng-model="item.validity_end_date | date:'yyyy-MM-dd'"
+					value={{item.validity_end_date}} />
+
+
+				<!--  <input type="date" id="endDate" name="endDate" class="form-control" ng-model="item.consannexid.consentenddate"  />
+        <span class="error" ng-show="searchForm.validFrom.$error.date">Not a valid date!</span> min="{{to.minDate | date:'yyyy-MM-dd'}}" max="{{to.maxDate | date:'yyyy-MM-dd'}}-->
+			</div>
+
+
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()"
+		ng-disabled="taskForm.$invalid">Update</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

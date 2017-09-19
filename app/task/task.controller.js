@@ -35,16 +35,57 @@
 		      });
 		  };
 	  
-	  getData();  
+	  getData();
+	  $scope.displayedCollection = [].concat($scope.TaskAttributes);
+	  
+	  /**
+       *  Bulk upload fuctionality
+       */
 
+      $scope.uploads = [];
+      $scope.alerts = [];
+      $scope.locale = localeMapper.getCurrentISOCode();
+
+      $scope.uploader = new FileUploader({
+        filters: [{
+          fn: function(item) {
+            var flag = false;
+            for (var i in this.queue){
+              if (item.name === this.queue[i].file.name){
+                flag = true;
+              }
+            }
+
+            if (flag){
+              item.name += '(' + (this.queue.length + 1) + ')';
+            }
+
+            return true;
+          }
+        }],
+
+        url: '../gcms-service/' + $scope.locale + '/bulk-upload'
+      });   
+      $scope.closeAlert = function(index) {
+          $scope.alerts.splice(index, 1);
+        };
+      $scope.upload = function() {
+   	   console.log("Inside upload");
+          if ($scope.uploader.queue.length > 0) {
+       	   return FileMonitor.query().$promise.then(function(result){
+   		       $scope.Result = result;
+   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' Files Successfully Uploaded'});
+   		       $scope.uploader.clearQueue();
+   		       console.log(result)		       
+   		      });
+   		  };
+            
+          }
 		 
 	  
-	  /**      
-       * @description pagination in client side
-       * 
-       */
-		$scope.itemsByPage=5;
-		$scope.displayedCollection = [].concat($scope.TaskAttributes);
+	 
+		
+		
 		/**
          * @ngdoc method
          * @name update
@@ -90,64 +131,7 @@
 		 $scope.$on('$localeChangeSuccess', getData);
 		   
 		   
-		  /* $scope.uploader = new FileUploader({
-		        filters: [{
-		          fn: function(item) {
-		            var flag = false;
-		            for (var i in this.queue){
-		              if (item.name === this.queue[i].file.name){
-		                flag = true;
-		              }
-		            }
-
-		            if (flag){
-		              item.name += '(' + (this.queue.length + 1) + ')';
-		            }
-
-		            return true;
-		          }
-		        }],
-
-		        url: '../GCMSService/upload'
-		     
-		      });
-		   $scope.upload = function() {
-		        if ($scope.uploader.queue.length > 0) {
-		          $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' Files Successfully Uploaded'});
-		        }
-		        //$scope.alerts.push({type:'danger', msg: 'Files Rejected'});
-
-		        $scope.uploader.clearQueue();
-		        loadAllUploads();
-		      };*/
-		      
-		      /**
-		       * @ngdoc method
-		       * @name loadAllUploads
-		       * @methodOf controller:
-		       * @description Loads all uploads
-		       */
-		       /*var loadAllUploads = function(){
-		         if($scope.loading){return;}
-
-		         $scope.loading = true;
-		         $scope.offset = 0;
-
-		         var params = {
-		           pageIndex: 0,
-		           maxResults: $scope.limit,
-		           enablePaging: true
-		         };
-
-		         if($scope.sortField !== ''){
-		           params.sortBy = $scope.sortField;
-		           params.sortDescending = !$scope.sortAscending;
-		         }
-
-		         //$scope.loading = true;
-		        // FileMonitor.query(params).$promise.then(setUploads);
-		         
-		       }; */
+		  
     
   }
 })();

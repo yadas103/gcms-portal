@@ -77,16 +77,6 @@
           criteria: {}
         }
       })
-	  .state('admin', {
-    	resolve: {},
-    	url: '/admin',
-    	controller: 'AdminRoleCtrl',
-        templateUrl: 'app/admin/admin.html',
-        data: {
-          section: 'Administration',
-          action: 'browse'
-        }
-      })
 	  .state('exchange', {
     	resolve: {},
         url: '/exchange',

@@ -1,47 +1,51 @@
-<div class="panel-body">
-	<form name="requestSearchForm" class="form-horizontal"
-		ng-submit="submit(request)"
-		style="margin-right: 17px; margin-left: 2px;">
-		<div class="row">
-			<div class="col-sm-3">
-
+<div class="panel-body-con">
+<form name="requestSearchForm" class="form-horizontal"
+		ng-submit="submit(request)" style="margin-right: 17px;
+    margin-left: 2px;">
+					<div class="row">
+					<div class="col-sm-3" id="search-drop">
+				
 				<gcms-lov list="country" value="request.profileCountry"></gcms-lov>
-				<label style="font-size: 12px;">Payer Country</label><br>
-			</div>
-			<div class="col-sm-3 form-group" 
-				style="margin-right: 17px; margin-left: 2px;">
-				<select ng-model="request.country"
-					class="form-control"  style="width: 261px;height: 27px;">
-					<option ng-repeat="con in counties">{{con.name}}</option>
-				</select> <label style="font-size: 12px;">Reporting Country</label><br>
-			</div>
-			<div class="col-sm-3 form-group" 
-				style="margin-right: 17px; margin-left: 2px;">
-				<gcms-lov list="recipientTypeString" value="request.profileType"></gcms-lov>
-				<label style="font-size: 12px;">Business Party Type</label><br>
-			</div>
-			<div class="col-sm-2" class="form-group" >
-				<button type="submit" class="btn btn-default" style="margin-right: 10px;" alt="Search" data-toggle="tooltip" data-placement="top" title="search">
+    <label style=" font-size: 12px;">Collecting Country</label><br>
+</div>
+<div class="col-sm-3 form-group" id="search-drop" style="margin-right: 17px;
+    margin-left: 2px;">
+		 <select ng-model="request.country" style="width: 261px;height: 27px;">
+						<option ng-repeat="con in counties">{{con.name}}</option>
+					</select>
+					
+    <label style=" font-size: 12px;">Reporting Country</label><br>
+	</div>
+	<div class="col-sm-3 form-group" id="search-drop" style="margin-right: 17px;
+    margin-left: 2px;">
+	
+			<gcms-lov list="recipientTypeString" value="request.profileType"></gcms-lov>
+    <label style=" font-size: 12px;">Business Party Type</label><br>
+</div>
+<div class="col-sm-2" class="form-group" id="search-drop" style="margin-left: 15px;">
+		
+				<button type="submit" class="btn btn-lg btn-default" alt="Search" data-toggle="tooltip" data-placement="top" title="search">
 					<i class="fa fa-search"></i>
 				</button>
-				<gcms-modal template="template.download.html"
-					controller="ModalDefaultCtrl" ok="create" cancel="cancel">
-				<a ui-sref="recipient-detail-add"> <span class="btn btn-default"
-					role="button" data-toggle="tooltip"  data-placement="top" title="download" style="margin-right: 10px;" ><i class="fa fa-download"></i></span>
-				</a> </gcms-modal>
-				<gcms-modal template="identity.request.html"
-					controller="ModalDefaultCtrl" ok="create" cancel="cancel">
-				<span class="btn btn-default" role="button" style="margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="create request" ><i
-					class="fa fa-plus"></i></span> </gcms-modal>
+				<gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
+         ok="create" cancel="cancel">
+         <a ui-sref="recipient-detail-add">
+        <span class="btn btn-default" role="button" data-toggle="tooltip"  data-placement="top" title="download"><i class="fa fa-download"></i></span>
+      </a>
+       </gcms-modal>
+        <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl"
+         ok="create" cancel="cancel">
+         <span class="btn btn-default" role="button" data-toggle="tooltip" data-placement="top" title="create request"><i class="fa fa-plus"></i></span>
+       </gcms-modal>
 			</div>
-		</div>
-	</form>
-	<!--  <span class="btn btn-default" role="button"><i class="fa fa-refresh"></i>
+			</div>
+			</form>
+       <!--  <span class="btn btn-default" role="button"><i class="fa fa-refresh"></i>
        </span> -->
-</div>
-
-
-
+     </div>
+		
+		
+		
 
 
 

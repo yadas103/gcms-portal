@@ -1,33 +1,30 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: medium;">Reassign Tasks</h3>
-</div>
-<div class="modal-body">
-<form class="form">
-  <div class="form-group">
-    <label for="curtask">Current Task Owner:</label>
-    <input type="curtask" class="form-control" id="curtask">
-  </div>
-  <div class="form-group">
-    <label for="newtask">New Task Owner:</label>
-    <input type="newtask" class="form-control" id="newtask" placeholder="search the owner name">
-  </div>
-  </form>
-   
+  <h3 class="modal-title">
+                         <br> Task ID: {{item.id}} </br>
+                          <br> Current Assign: <gcms-idname id="item.assignedto" list="userPr"></gcms-idname> </br>
+                         
+  </h3>
   
-        
-         
-    </div>
+</div>
 
+<div class="modal-body">
+<gcms-lov list="userPr" value="item.assignedto"></gcms-lov>
+  <form name="taskReassignForm" novalidate>
+    <div class="form-group">
 
+		<div>
+    	<label class="col-sm-3 control-label">new Assignedtoo</label>
+    	<div>      	
+      	<gcms-idname list="userPr" id="item.assignedto" ></gcms-idname>
+    	</div>
+    	</div>
+    	
+     </div>
+  </form>
+</div>
 
-	
-	
-  <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">Confirm</button>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskReassignForm.$invalid">Confirm</button>
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
- 
-
-	
-	

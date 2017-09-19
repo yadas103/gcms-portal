@@ -13,13 +13,38 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task'];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','UserProfiles','reassign'];
 
   
-  function TaskController($rootScope, $scope,$filter,Task){
+  function TaskController($rootScope, $scope,$filter,Task,UserProfiles,reassign){
+	  
 	  
 	  console.log("Inside controller");
-	 
+	  $scope.add = function (newValue) {
+          var obj = {};
+          obj.Name = newValue;
+          obj.Value = newValue;
+          $scope.Groups.push(obj);
+          $scope.group.name = obj;
+          $scope.newValue = '';
+      } 
+
+      $scope.Groups = [{
+          Name: 'Wrong name selected',
+          Value: 'd1'
+      }, {
+          Name: 'Event canceled',
+          Value: 'A2'
+      }, {
+          Name: 'No payment',
+          Value: 'c3'
+      },   {
+          Name: 'Other reason',
+          Value: 'new'
+      }];
+      $scope.group = {
+          name: ""
+      }
 	  /**
 	     * @ngdoc method
 	     * @name getData
@@ -37,7 +62,15 @@
 	  
 	  getData();  
 
-		 
+	  var getData1 = function(){
+		    
+		     return UserProfiles.query().$promise.then(function(UserProfiles){
+		       $scope.userProfiles = UserProfiles;
+		       console.log(UserProfiles);
+		      });
+		  };
+	  
+	  getData1();  
 	  
 	  /**      
        * @description pagination in client side
@@ -64,8 +97,8 @@
 	            });            
 	            Task.update({ id:item.id }, item);
 	          };
-	          
-          /**
+			  
+		          /**
            * @ngdoc method
            * @name update
            * @methodOf 
@@ -84,10 +117,82 @@
   	            });            
   	            Task.update({ id:item.id }, item);
   	          };  
+			  
+			  
+			  
+	          $scope.updateDelete = function(item) {
+	 			 console.log("Inside updateDelete function");
+	 			 console.log(item.id);	 
+	 	         angular.forEach($scope.TaskAttributes, function(con){
+	 	            	
+	 	         if (con.id === item.id) {
+	 	            con.deleted='true';
+	 	           con.taskstatus="DELETED";
+	 	          con.deleteReason=item.deleteReason;
+	 	         con.deleteReasonDesc=item.deleteReasonDesc;
+	 	           con.updatedDate = new Date();      
+	 	              }
+	 	            });            
+	 	            Task.update({ id:item.id }, item);
+	 	          };
+	 	         $scope.updateReassign = function(item) {
+		 			 console.log("Inside updateReassign function");
+		 			 console.log(item.id);	 
+		 	         angular.forEach($scope.TaskAttributes, function(con){
+		 	            	
+		 	         if (con.id === item.id) {
+		 	        	
+		 	        	con.assignedto= item.assignedto;
+		 	              }
+		 	            });            
+		 	            Task.update({ id:item.id }, item);
+		 	          };
+		 	          
+		 	         $scope.updateUnDelete = function(item) {
+			 			 console.log("Inside updateDelete function");
+			 			 console.log(item.id);	 
+			 	         angular.forEach($scope.TaskAttributes, function(con){
+			 	            	
+			 	         if (con.id === item.id) {
+			 	            con.deleted='false';
+			 	           con.taskstatus="INCOMPLETED";
+			 	          con.deleteReason=item.deleteReason;
+			 	         con.deleteReasonDesc=item.deleteReasonDesc;
+			 	           con.updatedDate = new Date();      
+			 	              }
+			 	            });            
+			 	            Task.update({ id:item.id }, item);
+			 	          };
+	 	          
+	        /*  $scope.updateReassign = function(item) {
+	 			 console.log("Inside updateReassign function");
+	 			 console.log(item.id);
+	 			 angular.forEach($scope.TaskAttributes, function(con){
+	 			 if (con.id === item.id) {
+	 			 con.assignedto= reassign.get().assignedto;
+	 			 }
+	 	            });
+	 	            Task.update({ id:item.id }, item);
+	 	          };*/
+	 	          
+	      
 	          
+	 	         $scope.delete = function(item) {
+	 	        	 console.log("Inside delete function");
+	 	        	
+	 	            var index = 0;
+	 	            angular.forEach($scope.TaskAttributes, function(con){
+	 	              if (con.id === item.id){
+	 	            	 console.log(item.deleteReason);
+	 	                $scope.TaskAttributes.splice(index, 1);
+	 	              }
+	 	              index++;
+	 	            });
+	 	            Task.delete({ id:item.id,'deleteReason': item.deleteReason,'deleteReasonDesc':item.deleteReasonDesc});
+	 	          };
+	 	          
 	          
-		 
-		 $scope.$on('$localeChangeSuccess', getData);
+	           $scope.$on('$localeChangeSuccess', getData);
 		   
 		   
 		  /* $scope.uploader = new FileUploader({

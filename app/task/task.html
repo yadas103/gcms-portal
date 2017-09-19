@@ -99,7 +99,7 @@
           <th><input st-search="consannexid.eventname" placeholder=" " class="form-control" type="search"/></th> 		  
   		  <th><input st-search="" placeholder=" " class="form-control" type="search"/></th>
   		  <th><input st-search="" placeholder=" " class="form-control" type="search"/></th>
-		  <th><st-select-distinct  collection="TaskAttributes" predicate="taskstatus"></st-select-distinct></th>
+		  <th><st-select-distinct collection="TaskAttributes" predicate="taskstatus"></st-select-distinct></th>
           <th><input st-search="" placeholder="" class="form-control" type="search"/></th>
           <th></th>
  		  <th></th>
@@ -110,13 +110,16 @@
         <tr data-ng-repeat="con in displayedCollection"  ng-switch on="con.taskstatus">      
         <!-- <tr data-ng-repeat="con in TaskAttributes | filter: search:strict">	 -->			
           	<td> 
+          		<div ng-switch="con.taskstatus">
           				<gcms-modal template="task.update.html" controller="ModalDefaultCtrl"
               			content="con" ok="update" alt="Edit Task {{con.id}}">
               			<span class="glyphicon glyphicon-pencil" style="color:#337ab7;" ></span>
             			</gcms-modal>
             			<gcms-modal template="task.delete.html" controller="ModalDefaultCtrl" 
-            			content="con" ok="delete" alt="Delete Task {{con.id}}">
+            			content="con" ok="updateDelete" alt="Delete Task {{con.id}}">
   						 <span class="glyphicon glyphicon-trash" style="color:#337ab7;" ></span>
+  						</gcms-modal>
+  				</div>
             </td>
             			<td>{{con.id}}</td>
             			<td>{{con.consannexid.bpid.id}}</td>
@@ -142,21 +145,20 @@
                     <div ng-switch="con.taskstatus">
   						<div ng-switch-when="INCOMPLETED">
   							<gcms-modal template="task.reassign.html" controller="ModalDefaultCtrl"
-                  			 content="con" ok="reassign" alt="{{con.id}}">
-							<!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
-							<span>Reassign</span>
+                  			 content="con" ok="updateReassign" alt="{{con.id}}">
+							<span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span>
                 			</gcms-modal>
   						</div>
-  						<div ng-switch-when="COMPLETED">          			
+  						<div ng-switch-when="COMPLETED">
       						<gcms-modal template="task.revoke.html" controller="ModalDefaultCtrl" content="con" ok="revoke" alt="Revoke Consent{{con.id}}">
 					           <span>Revoke</span>
 					       </gcms-modal>														
 							<a ng-json-export-excel data="con" report-fields="{'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status'}" filename="'filename'">DLU-P</a>
 							<a ng-json-export-excel data="con" report-fields="{'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status'}" filename="'filename'">DLU-T</a>
   						</div>
-  						<div ng-switch-when="DELETE">
+  						<div ng-switch-when="DELETED">
      						<gcms-modal template="task.undelete.html" controller="ModalDefaultCtrl"
-                  			content="con" ok="undelete" alt="{{con.id}}">
+                  			content="con" ok="updateUnDelete" alt="{{con.id}}">
               				<span class="glyphicon glyphicon-undo" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span>
                 			</gcms-modal>
   						</div>

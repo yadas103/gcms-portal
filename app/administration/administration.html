@@ -1,0 +1,118 @@
+<h3>Administration</h3>
+
+<hr />
+<div class="panel panel-primary ng-scope">
+	<div class="panel-heading">Manage Countries and Templates</div>
+
+	<div class="panel-body">
+
+
+		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
+			class="table table-bordered table-striped table-highlight">
+			<thead style="background-color: #337ab7; color: white">
+				<tr>
+					<th></th>
+					<th>Country ISO Code</th>
+					<th>Country Name</th>
+					<th>Country Contact</th>
+					<th>Identity Reviewers</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat-start="con in displayedCollection">
+
+					<td style="width: 139px;"><gcms-modal
+							template="administration.country.update.html"
+							controller="ModalDefaultCtrl" content="con" ok="update"
+							alt="Edit {{con.id}}"> <span
+							class="glyphicon glyphicon-pencil" style="color: #337ab7;"></span>
+						</gcms-modal>
+						<button ng-if="con.expanded" ng-click="con.expanded = false">
+							<i class="fa fa-arrow-down" aria-hidden="true"></i>
+						</button>
+						<button ng-if="!con.expanded" ng-click="value(con)">
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button></td>
+					<td>{{con.countries.isoCode}}</td>
+					<td>{{con.countries.name}}</td>
+					<td>{{con.cntryContact}}</td>
+					<td>{{con.cntryReviewer}}</td>
+				</tr>
+				<tr ng-if="con.expanded" ng-repeat-end="">
+					<td></td>
+					<td colspan="4">
+						<!--  st-table="Templates" -->
+						<table class="table table-bordered table-striped table-highlight">
+							<thead style="background-color: #337ab7; color: white">
+								<tr>
+									<th><gcms-modal
+											template="administration.template.add.html"
+											controller="ModalDefaultCtrl" ok="createTemplate"
+											alt="Add Templates"> <span
+											class="btn btn-default" role="button"
+											style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
+										</gcms-modal></th>
+
+									<th>Template Name</th>
+									<th>Template Code</th>
+									<th>Template Description</th>
+									<th>Dates Range</th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>Template Upload</th>
+									<!-- data-ng-if="temp.cntry_id.id==con.countries.id" -->
+								</tr>
+							</thead>
+							<tbody ng-repeat="temp in Templates">
+
+								<tr data-ng-if="temp.cntry_id.id==con.countries.id">
+
+									<td><gcms-modal
+											template="administration.template.update.html"
+											controller="ModalDefaultCtrl" content="temp"
+											ok="updateTemplate" alt="Edit Template {{temp.id}}">
+										<span class="glyphicon glyphicon-pencil"
+											style="color: #337ab7;"></span> </gcms-modal> <gcms-modal
+											template="administration.template.delete.html"
+											controller="ModalDefaultCtrl" content="temp"
+											ok="deleteTemplate" alt="Delete Template {{temp.id}}">
+										<span class="glyphicon glyphicon-trash"
+											style="color: #337ab7;"></span></td>
+
+
+
+									</td>
+									<td>{{temp.tmpl_name}} {{temp.id}}</td>
+									<td>{{temp.tmpl_code}}</td>
+									<td>{{temp.tmpl_desc}}</td>
+									<td>{{temp.dates_rages}}</td>
+									<td>{{temp.validity_start_date}}</td>
+									<td>{{temp.validity_end_date}}</td>
+									<td>
+										<div ng-if="temp.tmpl_location==undefined">Upload</div>
+										<div ng-if="temp.tmpl_location!=undefined">View Change</div>
+									</td>
+								</tr>
+
+
+							</tbody>
+						</table>
+					</td>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="13" class="text-center">
+						<div st-items-by-page="5" st-pagination=""
+							st-template="app/task/pagination.custom.html"></div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+
+		</tr>
+		</tbody>
+		</table>
+	</div>
+
+</div>

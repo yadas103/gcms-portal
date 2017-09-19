@@ -19,7 +19,7 @@
 			<div class="col-sm-6">
 				<div class="panel-body">
 					<div>
-						<gcms-modal template="recipient.upload.html"
+						<gcms-modal template="bulk.upload.html"
 							controller="ModalDefaultCtrl" ok="upload" content="uploader"
 							alt="Upload images"> <span class="btn btn-default"
 							role="button">Select PDF file(s) to upload</span> </gcms-modal>
@@ -30,14 +30,7 @@
 			</div>
 			<!-- ngIf: alerts.length > 0 -->
 
-			<div ng-show="successAlert"
-				class="alert alert-success alert-dismissible ng-hide" role="alert">
-				<button type="button" class="close" aria-label="Close">
-					<span aria-hidden="true"></span>
-				</button>
-
-
-			</div>
+	
 			<div class="col-sm-5">
 				<ul style="font-size: 12px;">
 					<li>Based on the QR code printed on the top-right corner of
@@ -58,32 +51,35 @@
 				</ul>
 			</div>
 		</div>
+		<div ng-if="alerts.length > 0">
+			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
+				close="closeAlert($index)"> {{alert.msg}}
+			<table class="table table-bordered table-striped table-highlight">
+				<thead>
+					<tr>
+						<td>Name</td>
+						<td>Status</td>
+						<td>Reason</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="c in Result">
+						<td>{{c.name}}</td>
+						<td>{{c.status}}</td>
+						<td>{{c.reason}}</td>
+					</tr>
+				</tbody>
+
+			</table>
+
+			</alert>
+		</div>
 
 	</div>
 </div>
 <div class="panel panel-primary table-responsive">
 	<div class="panel-heading">Upload your documents - Manual Match</div>
 	<div class="panel-body">
-
-		<div ng-if="alerts.length > 0">
-			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
-				close="closeAlert($index)">{{alert.msg}}</alert>
-		</div>
-
-		<div ng-show="successAlert"
-			class="alert alert-success alert-dismissible" role="alert">
-			<button type="button" class="close" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<strong> <i class="fa fa-check"></i> <span
-				ng-if="uploader.queue.length > 1">{{uploader.queue.length}}
-					Files</span> <span ng-if="uploader.queue.length === 1">1 File</span> <span>Uploaded
-					Successfully</span>
-			</strong>
-		</div>
-
-
-
 
 
 		<table class="table table-hover ">

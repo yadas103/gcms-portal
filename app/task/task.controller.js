@@ -13,10 +13,10 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task'];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper'];
 
   
-  function TaskController($rootScope, $scope,$filter,Task){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper){
 	  
 	  console.log("Inside controller");
 	 

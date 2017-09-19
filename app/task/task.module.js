@@ -14,6 +14,7 @@
     .module('gcms.task', [
                           'ui.bootstrap',
                           'gcms.components.data',
-                          'smart-table'                        
+                          'smart-table',
+                          'angularFileUpload'
                           ]);
 }());

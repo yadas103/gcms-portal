@@ -1,0 +1,83 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add Template  </h3>
+</div>
+
+<div class="modal-body">
+  <form name="adminTemplateForm" novalidate>
+    
+  	 
+  	
+      <div class="form-group">
+        <label for="templateName" class="col-sm-3 control-label">Template Name</label>
+        <div class="col-sm-9">
+         <input type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="" > 
+         </div>       
+       </div>
+       
+      
+      <div class="form-group">
+        <label for="templateType" class="col-sm-3 control-label" >Template Type</label>
+        <div class="col-sm-9">
+        <select ng-model="item.tmpl_type" ng-click="foo();" ng-dropdown" style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+    		<option value="Y">InCountry</option>
+    		<option value="N">CrossBorder</option>
+    	</select> 
+         <!-- <input type="text" class="form-control" id="templateType" name="templateType" ng-model="item.tmpl_type" placeholder="" >  -->
+         </div>       
+       </div>
+     
+      <div >
+        <label for="templatePage" class="col-sm-3 control-label">Template Page</label>
+        <div class="col-sm-9">
+         <input type="text" class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="" > 
+         </div>       
+        </div>
+      <br>
+      
+      <div >
+        <label for="templateDesc" class="col-sm-3 control-label">Template Description</label>
+        <div class="col-sm-9">
+        <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" >
+        </div>        
+      </div>
+      <br>
+      
+      <div >
+    <label for="consentValidityPeriod" class="col-sm-3 control-label" style="margin-left: -141px;">Consent Validity Period :</label>
+    
+    <select ng-model="item.dates_rages" ng-click="foo();" ng-dropdown" style=" margin-left: 15px; width: 70%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+    		<option value="Y">Y</option>
+    		<option value="N">N</option>
+    </select> 
+    
+  </div>
+  
+      
+      
+	 <!-- <div class="form-group">
+        <label for="consentValidityPeriod" class="col-sm-3 control-label" style="margin-left: -139px;">Consent</label>
+         <div class="col-sm-9">
+           <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" >
+         <select ng-model="item.dates_rages" ng-click="foo();" ng-dropdown style="margin-left: -3px;">
+    		<option value="Y">Y</option>
+    		<option value="N">N</option>
+  		</select> 
+  		</div> 
+        <input type="text" class="form-control" id="datesrages" name="datesrages" ng-model="item.dates_rages" placeholder="" >        
+     </div> -->
+     
+      
+      
+     
+      
+
+    
+  </form>
+</div>
+
+ <div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminTemplateForm.$invalid">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+
+ 

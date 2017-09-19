@@ -102,55 +102,14 @@
         url: '/',
         templateUrl: 'app/timeout.html'
       })
-      .state('task-results', {
-        resolve: {},
-        url: '/task-results/?:criteria',
-        templateUrl: 'app/task/list/task.list.html',
-        controller: 'TaskListCtrl',
-        params: {
-          criteria: {}
-        },
-        data: {
-          section: 'Task',
-          action: 'read'
-        }
-      })
-      .state('task-detail-edit', {
-        resolve: {},
-        url: '/task-detail/:id/edit',
-        templateUrl: 'app/task/detail/task.detail.html',
-        controller: 'TaskDetailCtrl',
-        params: {
-          isEdit: true,
-          task: null
-        },
-        data: {
-          section: 'Task',
-          action: 'update'
-        }
-      })
-      .state('task-detail-view', {
-        resolve: {},
-        url: '/task-detail/:id',
-        templateUrl: 'app/task/detail/task.detail.html',
-        controller: 'TaskDetailCtrl',
-        params: {
-          isView: true,
-          task: null
-        },
-        data: {
-          section: 'Task',
-          action: 'read'
-        }
-      })
-      .state('admin-roles', {
-        resolve: {},
-        url: '/admin/roles',
-        controller: 'AdminRoleCtrl',
-        templateUrl: 'app/admin/roles/admin.roles.html',
+       .state('admin', {
+    	resolve: {},
+    	url: '/admin',
+    	controller: 'AdminCtrl',
+        templateUrl: 'app/administration/administration.html',
         data: {
           section: 'Administration',
-          action: 'read'
+          action: 'browse'
         }
       })
       .state('profile-detail-view', {

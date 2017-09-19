@@ -13,7 +13,7 @@
   },
   "test-server": {
     "ENVIRONMENT": {
-      "SERVICE_URI": "/GCMSService/",
+      "SERVICE_URI": "/gcms-service/",
       "SERVICE_EXT": ""
     }
   }

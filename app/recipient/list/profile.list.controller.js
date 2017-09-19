@@ -18,9 +18,7 @@
         $scope.itemsByPage=20;
         
         var ids = [];
-     /*   var lastname = [];
-        var firstname = [];*/
-  
+    
         // set criteria
         if($stateParams.criteria !== '[object Object]'){
           $scope.criteria = JSON.parse($stateParams.criteria);
@@ -91,8 +89,12 @@
               angular.forEach($scope.profileSearch, function(item) {
                   checked   +=  ($scope.checkboxes.items[item.id]) || 0;
                   unchecked += (!$scope.checkboxes.items[item.id]) || 0;
-                  if($scope.checkboxes.items[item.id] && ($scope.selectedids.indexOf(item.id) === -1)){
-                	  $scope.selectedids.push(item.id);
+                  if($scope.checkboxes.items[item.id] && ($scope.selectedids.indexOf(item) === -1)){
+                	  $scope.selectedids.push(item);            	  
+                  }
+                  else if(!$scope.checkboxes.items[item.id] && ($scope.selectedids.indexOf(item) !== -1)){                
+                	  $scope.selectedids.pop();      
+               
                   }
               });
               if ((unchecked == 0) || (checked == 0)) {

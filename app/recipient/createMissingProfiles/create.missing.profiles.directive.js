@@ -46,40 +46,6 @@
         	    	IdentityRequest.save(request);
 									
 				};
-
-/*        	 
-          var updateCountry = function(result){
-            $scope.counties = result;
-          };
-
-          var loadCountry = function(){
-            $scope.counties = [];
-            GcmsCountry.query().$promise.then(updateCountry);
-          };
-
-          loadCountry();
-
-          $scope.$on('$localeChangeSuccess', loadCountry);
-
-        
-          $scope.update = function(item) {
-            $scope.counties = item;
-            GcmsCountry.update({ id: item.id }, item);     
-          };
-          
-          // populate $scope request property
-          if ($scope.criteria !== undefined){
-            $scope.request = $scope.criteria;
-          }
-          console.log('$scope.criteria'+$scope.criteria);
-          $scope.source = $scope.source || 'consent.template.html';
-
-          *//**
-           * @ngdoc method
-           * @name submit
-           * @methodOf trs.recipient.directive:trsRecipientSearch
-           * @description Builds criteria and submits recipient search form
-           *//**/
   
         }
       };

@@ -6,14 +6,16 @@
     .factory('myService', myService);
 
     function myService() {
-    	 var savedData = {}
+    	 var id = {};
+    	 
     	 function set(data) {
-    	   savedData = data;
+    		 id = {};
+    	   id = data;
     	 }
     	 function get() {
-    	  return savedData;
+    	  return id;
     	 }
-
+    	     	 
     	 return {
     	  set: set,
     	  get: get

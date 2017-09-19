@@ -19,9 +19,11 @@
 					ng-model="item.tmpl_desc" placeholder="">
 			</div>
 			<div>
-				<label for="dates_range">Dates Range</label> <input type="text"
-					class="form-control" id="dates_rages" name="dates_rages"
-					ng-model="item.dates_rages" placeholder="">
+				<label for="dates_range">Dates Range</label>
+				 <select ng-model="item.dates_rages" ng-click="foo();" ng-dropdown" style=" margin-left: 15px; width: 70%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+    		<option value="Y">Y</option>
+    		<option value="N">N</option>
+    </select>
 			</div>
 
 			<div>
@@ -36,7 +38,7 @@
 			<div>
 				<label for="template_validity_end_date">Template Validity
 					EndDate</label> <input type="date" class="form-control"
-					ng-model="item.validity_end_date | date:'yyyy-MM-dd'"
+					ng-model="item.validity_end_date"
 					value={{item.validity_end_date}} />
 
 

@@ -15,6 +15,7 @@
                           'ui.bootstrap',
                           'gcms.components.data',
                           'smart-table',
-                          'angularFileUpload'
+                          'angularFileUpload',
+                          'ngJsonExportExcel'
                           ]);
 }());

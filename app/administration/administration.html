@@ -4,14 +4,14 @@
 <div class="panel panel-primary ng-scope">
 	<div class="panel-heading">Manage Countries and Templates</div>
 
-	<div class="panel-body">
+	<div class="panel-body" style="padding:27px;">
 
 
 		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
 			class="table table-bordered table-striped table-highlight">
 			<thead style="background-color: #337ab7; color: white">
 				<tr>
-					<th></th>
+					<th style="padding: 20px;"></th>
 					<th>Country ISO Code</th>
 					<th>Country Name</th>
 					<th>Country Contact</th>
@@ -26,14 +26,16 @@
 							template="administration.country.update.html"
 							controller="ModalDefaultCtrl" content="con" ok="update"
 							alt="Edit {{con.id}}"> <span
-							class="glyphicon glyphicon-pencil" style="color: #337ab7;"></span>
+							class="glyphicon glyphicon-pencil" style="color: #337ab7; margin-left: 31px;"></span>
 						</gcms-modal>
-						<button ng-if="con.expanded" ng-click="con.expanded = false">
-							<i class="fa fa-arrow-down" aria-hidden="true"></i>
-						</button>
-						<button ng-if="!con.expanded" ng-click="value(con)">
-							<i class="fa fa-arrow-right" aria-hidden="true"></i>
-						</button></td>
+						<span ng-if="con.expanded" ng-click="con.expanded = false">
+							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 15px;
+    color: #337ab7; padding-left: 9px;"></i>
+						</span>
+						<span ng-if="!con.expanded" ng-click="value(con)">
+							<i class="fa fa-arrow-right" aria-hidden="true" style="    font-size: 15px;
+    color: #337ab7; padding-left: 9px;"></i>
+						</span></td>
 					<td>{{con.countries.isoCode}}</td>
 					<td>{{con.countries.name}}</td>
 					<td>{{con.cntryContact}}</td>

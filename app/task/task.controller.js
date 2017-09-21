@@ -19,6 +19,32 @@
   function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail){
 	  
 	  console.log("Inside controller");
+	  $scope.add = function (newValue) {
+          var obj = {};
+          obj.Name = newValue;
+          obj.Value = newValue;
+          $scope.Groups.push(obj);
+          $scope.group.name = obj;
+          $scope.newValue = '';
+      } 
+      
+      $scope.Groups = [{
+          Name: 'Wrong name selected',
+          Value: 'd1'
+      }, {
+          Name: 'Event canceled',
+          Value: 'A2'
+      }, {
+          Name: 'No payment',
+          Value: 'c3'
+      },   {
+          Name: 'Other reason',
+          Value: 'new'
+      }];
+      $scope.group = {
+          name: ""
+      }
+      
 	  
 	  var getloggedUserData = function(){
 		    
@@ -157,7 +183,55 @@
   	            Task.update({ id:item.id }, item);
   	          };  
 	          
-	          
+	      
+
+
+  	     $scope.updateDelete = function(item) {
+			console.log("Inside updateDelete function");
+			console.log(item.id);
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.deleted = 'true';
+					con.taskstatus = "DELETED";
+					con.deleteReason = item.deleteReason;
+					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.updatedDate = new Date();
+				}
+			});
+			Task.update({
+				id : item.id
+			}, item);
+		};
+		$scope.updateReassign = function(item) {
+			console.log("Inside updateReassign function");
+			console.log(item.id);
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.assignedto = item.assignedto;
+				}
+			});
+			Task.update({
+				id : item.id
+			}, item);
+		};
+
+		$scope.updateUnDelete = function(item) {
+			console.log("Inside updateDelete function");
+			console.log(item.id);
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.deleted = 'false';
+					con.taskstatus = "INCOMPLETED";
+					con.deleteReason = item.deleteReason;
+					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.updatedDate = new Date();
+				}
+			});
+			Task.update({
+				id : item.id
+			}, item);
+		};
+		 	          
 		 
 		 $scope.$on('$localeChangeSuccess', getTaskData);
 		   

@@ -20,9 +20,9 @@
 
   angular
     .module('gcms.components.data')
-    .factory('IdentityRequest', IdentityRequest);
+    .factory('IdentityRequestView', IdentityRequestView);
 
-  IdentityRequest.$inject = ['$resource', 'localeMapper', 'ENVIRONMENT'];
+  IdentityRequestView.$inject = ['$resource', 'localeMapper', 'ENVIRONMENT'];
   /**
    * @ngdoc method
    * @name identityRequest
@@ -34,7 +34,7 @@
       consistent service uri to use across the application
    * @returns {object} The user profile data service
    */
-  function IdentityRequest($resource, localeMapper, ENVIRONMENT)  {
+  function IdentityRequestView($resource, localeMapper, ENVIRONMENT)  {
 
     /*var hydrateidentityRequests = function(response) {
       var collections = $rootScope.session.collections
@@ -43,7 +43,7 @@
     };
 */
   return $resource(
-      ENVIRONMENT.SERVICE_URI + ':locale/profileRequest' + ENVIRONMENT.SERVICE_EXT,
+      ENVIRONMENT.SERVICE_URI + ':locale/profileRequest/:id' + ENVIRONMENT.SERVICE_EXT,
       {
     	  
         id: '@id',

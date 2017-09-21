@@ -66,7 +66,8 @@
       .state('profilereview', {
     	resolve: {},
     	url: '/profilereview',
-        templateUrl: 'app/profilereview/identitydetail/identity.html'
+    	controller: 'identityCtrl',
+        templateUrl: 'app/profilereview/identitydetail/identityProfile.html',
       })
       .state('identityProfiles', {
         resolve: {},
@@ -101,6 +102,47 @@
     	resolve: {},
         url: '/',
         templateUrl: 'app/timeout.html'
+      })
+            .state('task-results', {
+        resolve: {},
+        url: '/task-results/?:criteria',
+        templateUrl: 'app/task/list/task.list.html',
+        controller: 'TaskListCtrl',
+        params: {
+          criteria: {}
+        },
+        data: {
+          section: 'Task',
+          action: 'read'
+        }
+      })
+      .state('task-detail-edit', {
+        resolve: {},
+        url: '/task-detail/:id/edit',
+        templateUrl: 'app/task/detail/task.detail.html',
+        controller: 'TaskDetailCtrl',
+        params: {
+          isEdit: true,
+          task: null
+        },
+        data: {
+          section: 'Task',
+          action: 'update'
+        }
+      })
+      .state('task-detail-view', {
+        resolve: {},
+        url: '/task-detail/:id',
+        templateUrl: 'app/task/detail/task.detail.html',
+        controller: 'TaskDetailCtrl',
+        params: {
+          isView: true,
+          task: null
+        },
+        data: {
+          section: 'Task',
+          action: 'read'
+        }
       })
        .state('admin', {
     	resolve: {},

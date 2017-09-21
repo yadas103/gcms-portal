@@ -1,41 +1,40 @@
-
-
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title">Edit Country </h3>
+  <h3 class="modal-title" style="font-size: medium;">Edit Country</h3>
 </div>
-
 <div class="modal-body">
-  <form name="administrationForm" novalidate>
-    <div class="form-group">
+<form name="administrationForm" class="form-horizontal" novalidate>
 
-     <div>
-        <label for="userName">Country ISO Code</label>
-        <input type="text" class="form-control" id="isoCode" name="isoCode" ng-model="item.countries.isoCode" placeholder="" >        
-      </div>
-    <div style="margin-top:20px">
-        <label for="role">Country Name</label>
-        <input type="text" class="form-control" id="name" name="name" ng-model="item.countries.name" placeholder="" >        
-      </div>
-      <div style="margin-top:20px">
-        <label for="role">Country Contact</label>
-        <input type="text" class="form-control" id="cntryContact" name="cntryContact" ng-model="item.cntryContact" placeholder="" >        
-      </div>
-    <div style="margin-top:20px">
-        <label for="role">Identity Reviewers</label>
-        <input type="text" class="form-control" id="cntryReviewer" name="cntryReviewer" ng-model="item.cntryReviewer" placeholder="" >        
-      </div>
-      
-      
-      
-
-      
+  <div class="form-group">
+    <label for="firstName" class="col-sm-3 control-label">Country ISO Code:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="isoCode" name="isoCode" ng-model="item.countries.isoCode" placeholder="" ng-readonly="true">
+    </div>
+	</div>
+ <div class="form-group">
+    <label for="role" class="col-sm-3 control-label">Country Name:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="name" name="name" ng-model="item.countries.name" placeholder="" ng-readonly="true">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="role" class="col-sm-3 control-label">Country Contact:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="cntryContact" name="cntryContact" ng-model="item.cntryContact" placeholder="" >
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="role" class="col-sm-3 control-label">Identity Reviewers:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="cntryReviewer" name="cntryReviewer" ng-model="item.cntryReviewer" placeholder="">
+    </div>
+  </div>
 
     </div>
   </form>
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="administrationForm.$invalid">OK</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="administrationForm.$invalid">Update</button>
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

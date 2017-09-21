@@ -13,35 +13,65 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper'];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','LoggedUserDetail'];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail){
 	  
 	  console.log("Inside controller");
+	  
+	  var getloggedUserData = function(){
+		    
+		     return LoggedUserDetail.query().$promise.then(function(l){
+		       $scope.loggeduser = l;
+		       
+		      });
+		  };	  
+	  getloggedUserData();
+	  
+		/*  $scope.getloggedUserData = function (getloggedUserData) {
+			  LoggedUserDetail.get({ firstName: person.firstName, lastName: person.lastName })
+            .$promise.then(function (data) {
+                $scope.getloggedUserData.exist = data;
+            });
+     }
+});*/
+		  
+		  
+	  
+	  /**
+	   	 * selim 
+	     * @ngdoc method
+	     * @name value
+	     * @methodOf this method used for DLU-P/T excel generation
+	     * @description Gets data
+	     */
+	  $scope.dldata=[];
+	  $scope.value=function(con){            
+	      $scope.dldata = [con];
+	  }
 	 
 	  /**
-	     * @ngdoc method
-	     * @name getData
+	     * selim
+	     * @name getTaskData
 	     * @methodOf 
 	     * @description Gets data
 	     */
       
-	  var getData = function(){
+	  var getTaskData = function(){
 		    
 		     return Task.query().$promise.then(function(task){
 		       $scope.TaskAttributes = task;
 		       console.log(task);
 		      });
-		  };
-	  
-	  getData();
+		  };	  
+	  getTaskData();
 	  $scope.displayedCollection = [].concat($scope.TaskAttributes);
 	  
 	  /**
+	   *  selim
        *  Bulk upload fuctionality
        */
-
       $scope.uploads = [];
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
@@ -87,6 +117,7 @@
 		
 		
 		/**
+		 * selim
          * @ngdoc method
          * @name update
          * @methodOf 
@@ -128,7 +159,7 @@
 	          
 	          
 		 
-		 $scope.$on('$localeChangeSuccess', getData);
+		 $scope.$on('$localeChangeSuccess', getTaskData);
 		   
 		   
 		  

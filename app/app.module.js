@@ -40,6 +40,7 @@
 	  'gcms.identity',
 	  'gcms.task',
 	  'gcms.administration',
-	  'gcms.consentmgmt'	 
+	  'gcms.consentmgmt',
+	  'ngJsonExportExcel'
     ]);
 })();

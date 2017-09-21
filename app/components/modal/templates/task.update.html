@@ -33,13 +33,13 @@
     </div>
   </div>
   <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
-    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent StartDate:</label>
+    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
     <div class="col-sm-9">
         <input type="date"  class="form-control"  ng-model="item.consannexid.consentstartdate" value={{item.consannexid.consentstartdate}} min="{{item.consannexid.consentstartdate | date:'yyyy-MM-dd'}}" />
     </div>
   </div>
   <div class="form-group" ng-if="!request.businessPartyType || request.businessPartyType === 1">
-    <label for="consannexid.consentenddate" class="col-sm-3 control-label">Consent EndDate:</label>
+    <label for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
     <div class="col-sm-9">
       <input type="date"  class="form-control"  ng-model="item.consannexid.consentenddate | date:'yyyy-MM-dd'" value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate | date:'yyyy-MM-dd'}}" />
     </div>

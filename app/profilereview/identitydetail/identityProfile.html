@@ -1,9 +1,6 @@
-
-<div class="panel panel-primary ng-scope" table-responsive">
+<div class="panel panel-primary table-responsive">
 	<div class="panel-heading">Identity request</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
+	
 				<div class="panel-body">
 
 					<table class="table table-bordered table-striped table-highlight">
@@ -72,7 +69,7 @@
 							<tr>
 							<th></th>
 							<form>
- <div class="form-group">
+                       <div class="form-group">
                        <th> <div class="input-group">
                      
                            <input type="text" class="form-control"  ng-model="" id="formrequest">
@@ -108,36 +105,23 @@
 								</form>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="identity in identityRequestView|orderBy:sortType:sortReverse|filter:searchFish" ng-switch on="identity.status">
+						<tbody data-ng-repeat="identity in identityRequest|orderBy:sortType:sortReverse|filter:searchFish">
 							<tr>
-								<td><button type="btn btn-small"
-										data-ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
-										data-ng-hide="editMode" style="padding: 1px 9px;font-size: 10px;">VIEWPROFILE</button></td>
+								<td><button class="btn btn-primary" ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
+                                                            data-ng-hide="editMode"  ng-disabled="recipientForm.$invalid" style="padding: 1px 9px;font-size: 10px;"> Viewprofile
+                                                           
+                                                           </button></td>
 								<td>{{ identity.profileTypeId }}</td>
 								<td>{{ identity.firstName}}</td>
 								<td>{{ identity.lastName }}</td>
 								<td>{{ identity.organizationName}}</td>
 								<td>{{ identity.country}}</td>
 								<td>{{ identity.status }}</td>
-								 
-								<td>
-								<div ng-switch="identity.status">
-								{{data}}
-  						<div ng-switch-when="Approve">
-  							
-    Approve/Dismiss
-  						</div>
-  						<div ng-switch-when="Dismiss">
-  							
-  Approve/Dismiss 
-  						</div>
-							<div ng-switch-default>
-  							<gcms-modal template="indentity.search.html"  ng-init="item=identity"  
-								  controller="ModalDefaultCtrl" content="identity" open="" alt="Validate {{identity.id}}" >
-    <a href="">Approve/Dismiss</a>  </gcms-modal>
-  						</div>	
-						</div>		
-</td>
+								
+								
+								<td><gcms-modal template="indentity.search.html" controller="ModalDefaultCtrl" content="IdentitySearch" ok="validate(item)" >
+    <a href="">Approve/Dismiss</a>
+  </gcms-modal></td>
 									</tr>
 							<tr data-ng-show="dayDataCollapse[$index]">
 								<td colspan="12">
@@ -193,8 +177,6 @@
 
 				</div>
 			</div>
-		</div>
-	</div>
 </div>
 
 

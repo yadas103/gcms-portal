@@ -132,10 +132,10 @@
         resolve: {},
         url: '/admin/roles/:id',
         controller: 'UserRoleCtrl',
-        templateUrl: 'app/admin/roles/admin.details.html',
+        templateUrl: 'app/administration/administration.details.html',
         data: {
           section: 'Administration',
-          action: 'read'
+          action: 'browse'
         }
 	  });
     });

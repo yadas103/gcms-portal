@@ -170,6 +170,18 @@ fieldset {
     margin: 0 2px;
     border: 1px solid silver
 }
+#formrequest{
+	    border-radius: 5px;
+}
+.pro-rev{
+	    padding-bottom: 20px;
+    padding-left: 30px;
+
+}
+.headpro{
+	    color: white;
+    padding-left: 21px;
+}
 legend {
     padding: 0;
     border: 0

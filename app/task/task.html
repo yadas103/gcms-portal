@@ -30,7 +30,14 @@
 			</div>
 			<!-- ngIf: alerts.length > 0 -->
 
+			<div ng-show="successAlert"
+				class="alert alert-success alert-dismissible ng-hide" role="alert">
+				<button type="button" class="close" aria-label="Close">
+					<span aria-hidden="true"></span>
+				</button>
+
 	
+			</div>
 			<div class="col-sm-5">
 				<ul style="font-size: 12px;">
 					<li>Based on the QR code printed on the top-right corner of
@@ -81,6 +88,22 @@
 	<div class="panel-heading">Upload your documents - Manual Match</div>
 	<div class="panel-body">
 
+		<div ng-if="alerts.length > 0">
+			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
+				close="closeAlert($index)">{{alert.msg}}</alert>
+		</div>
+
+		<div ng-show="successAlert"
+			class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong> <i class="fa fa-check"></i> <span
+				ng-if="uploader.queue.length > 1">{{uploader.queue.length}}
+					Files</span> <span ng-if="uploader.queue.length === 1">1 File</span> <span>Uploaded
+					Successfully</span>
+			</strong>
+		</div>
 
 		<table class="table table-hover ">
 			<div class="table-responsive">
@@ -245,7 +268,7 @@
 											</a>
 										</span>
 									</div>
-									<div ng-switch-when="DELETE">
+									<div ng-switch-when="DELETED">
 										<gcms-modal template="task.undelete.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
 											alt="{{con.id}}"> <span

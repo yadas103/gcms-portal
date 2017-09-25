@@ -1,7 +1,7 @@
 <h3>Administration</h3>
 
 <hr />
-<div class="panel panel-primary ng-scope">
+<div class="panel panel-primary table-responsive">
 	<div class="panel-heading">Manage Countries and Templates</div>
 
 	<div class="panel-body" style="padding:27px;">
@@ -53,7 +53,7 @@
 											controller="ModalDefaultCtrl" ok="createTemplate"
 											alt="Add Templates"> <span
 											class="btn btn-default" role="button"
-											style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
+											style="margin-left: 10px;"><i class="fa fa-plus"></i></span>
 										</gcms-modal></th>
 
 									<th>Template Name</th>
@@ -75,7 +75,7 @@
 											controller="ModalDefaultCtrl" content="temp"
 											ok="updateTemplate" alt="Edit Template {{temp.id}}">
 										<span class="glyphicon glyphicon-pencil"
-											style="color: #337ab7;"></span> </gcms-modal> <gcms-modal
+											style="color: #337ab7; padding-left:12px;"></span> </gcms-modal> <gcms-modal
 											template="administration.template.delete.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deleteTemplate" alt="Delete Template {{temp.id}}">

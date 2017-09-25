@@ -1,0 +1,314 @@
+<h3 class="clearfix uploads">
+	<div id="title" class="pull-left"
+		style="font-size: 12px; margin-bottom: 15px; margin-top: -15px;">
+		Below are the tasks associated to your identity. <strong>You
+			are requested </strong>to <strong>upload</strong> the scanned EFPIA
+		Cross-Border Consent forms you collected from HCPs or HCOs you
+		interacted with.
+	</div>
+
+
+
+</h3>
+
+
+<div class="panel panel-primary">
+	<div class="panel-heading">Upload your documents-Automatic Match</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="panel-body">
+					<!-- <div>
+						<gcms-modal template="bulk.upload.html"
+							controller="ModalDefaultCtrl" ok="upload" content="uploader" 
+							alt="Upload images"> <span class="btn btn-default"
+							role="button">Select PDF file(s) to upload</span> </gcms-modal>
+
+					</div> -->
+					<div>
+						<label class="fileContainer"> <a class="btn btn-default"
+							role="button">Select files...</a> <input type="file"
+							ngf-select="" ng-model="picFile" name="file"
+							ngf-pattern="'image/*,application/pdf'" nv-file-select
+							uploader="uploader" multiple="" accept="application/pdf" />
+						</label>
+
+					</div>
+					<div class="queue">
+						<div>
+							Queue progress: {{uploader.queue.length}} File(s)
+							<div class="progress" style="">
+								<div class="progress-bar" role="progressbar"
+									ng-style="{ 'width': uploader.progress + '%' }"
+									style="width: 0%;"></div>
+							</div>
+						</div>
+						
+						
+						
+						<button type="button" ng-show="uploader.getNotUploadedItems().length " class="btn btn-success "
+							ng-click="uploader.uploadAll()"
+							style="color: white;">
+							<span class="fa fa-upload"></span> Upload PDFs
+						</button>
+						
+						{{uploader.queue.isSuccess}}
+						
+						<button type="button" ng-show="uploader.progress" class="btn btn-success "
+							ng-click="upload()"
+							style="color: white;">
+							<span class="fa fa-spinner"></span> Validate PDFs
+						</button>
+						
+						<gcms-modal template="bulk.upload.html"
+							controller="ModalDefaultCtrl" ok="" content="Result"
+							alt="Upload images"> 
+							<button ng-show="alerts.length > 0 == true" class="btn btn-success"
+							style="color: white;">Uploaded PDF's Status</button></gcms-modal>
+	
+						<!-- <span class="btn btn-default"
+							role="button" ng-click="upload()">Process Upload</span> -->
+						<!-- <span ng-mouseover="upload()"> x
+						<gcms-modal template="bulk.upload.html"
+							controller="ModalDefaultCtrl" ok="" content="Result"
+							alt="Upload images"> 
+							<button class="btn btn-primary"
+							ng-disabled="!uploader.queue.length" disabled="disabled" style="color: white;">Results</button><!-- <span
+							class="btn btn-primary btn-s " role="button" ng-disabled="!uploader.queue.length" disabled="disabled">Results</span> ss </gcms-modal>
+
+						</span>-->
+
+					</div>
+
+				</div>
+			</div>
+			<!-- ngIf: alerts.length > 0 -->
+
+
+			<div class="col-sm-5">
+				<ul style="font-size: 12px;">
+					<li>Based on the QR code printed on the top-right corner of
+						each form, the platform will try to <strong>automatically
+							match the documents with the task.</strong>
+					</li>
+					<li>A succesful match will remove your task. if unsuccesful,
+						the task will remain and you will manually attach the signed
+						document.</li>
+					<li>The platform accepts <strong>only PDF files</strong></li>
+					<li>There are <b>scnned cpies</b> of the EFPIA cross-border
+						consent forms<b>signed by the HCP/HCO</b>
+					<li>Being the process facilitator between Transparency Team
+						and the HCP / HCO,<strong>you are the responsible</strong> for the
+						file content accuracy
+					</li>
+					<li><strong>Do not upload unsigned files!</strong></li>
+				</ul>
+			</div>
+		</div>
+		<div ng-if="alerts.length > 0">
+			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
+				close="closeAlert($index)"> {{alert.msg}} </alert>
+		</div>
+
+	</div>
+</div>
+<div class="panel panel-primary table-responsive">
+	<div class="panel-heading">Upload your documents - Manual Match</div>
+	<div class="panel-body">
+
+
+		<table class="table table-hover ">
+			<div class="table-responsive">
+				<!-- st-set-filter="myStrictFilter" -->
+				<table st-set-filter="customFilter" st-table="displayedCollection"
+					st-safe-src="TaskAttributes"
+					class="table table-bordered table-striped table-highlight">
+					<thead>
+						<tr class="taskth"
+							style="color: white; background-color: #337ab7;">
+							<th
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Action</th>
+							<th
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Task
+								ID</th>
+							<th
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">TR
+								ID</th>
+							<th st-sort="consannexid.bpid.lastName"
+								style="font-size: 13px; font-family: sans-serif;">Last
+								Name/Org Name</th>
+							<th st-sort="consannexid.bpid.firstName"
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">First
+								Name</th>
+							<th st-sort="consannexid.profilecountry.name"
+								style="font-size: 13px; font-family: sans-serif;">Profile
+								Country</th>
+							<th st-sort="consannexid.eventname"
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Event
+								Name</th>
+							<th style="font-size: 13px; font-family: sans-serif;">Consent
+								Status</th>
+							<th st-sort="con.updatedDate"
+								style="font-size: 13px; font-family: sans-serif;">Consent
+								Updated Date</th>
+							<th
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Task
+								Status</th>
+							<th style="font-size: 13px; font-family: sans-serif;">Initiated
+								By</th>
+							<th style="font-size: 13px; font-family: sans-serif;">Document
+								Upload</th>
+							<th
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Activity</th>
+						</tr>
+
+						<tr>
+							<th></th>
+							<th><input st-search="" placeholder=" " class="form-control"
+								type="search" /></th>
+							<th><input st-search="" placeholder=" " class="form-control"
+								type="search" /></th>
+							<th><input st-search="consannexid.bpid.lastName"
+								placeholder=" " class="form-control" type="search" /></th>
+							<th><input st-search="consannexid.bpid.firstName"
+								placeholder=" " class="form-control" type="search" /></th>
+							<th><input st-search="consannexid.profilecountry.name"
+								placeholder=" " class="form-control" type="search" /></th>
+							<th><input st-search="consannexid.eventname" placeholder=" "
+								class="form-control" type="search" /></th>
+							<th><input st-search="" placeholder=" " class="form-control"
+								type="search" /></th>
+							<th><input st-search="" placeholder=" " class="form-control"
+								type="search" /></th>
+							<th><st-select-distinct collection="TaskAttributes"
+									predicate="taskstatus"></st-select-distinct></th>
+							<th><input st-search="" placeholder="" class="form-control"
+								type="search" /></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody data-ng-repeat="con in displayedCollection" ng-switch
+						on="con.taskstatus">
+						<tr
+							data-ng-if="loggeduser.roleId='5' || loggeduser.id==con.assignedto">
+							<td><gcms-modal template="task.update.html"
+									controller="ModalDefaultCtrl" content="con" ok="update"
+									alt="Edit Task {{con.id}}"> <span
+									class="glyphicon glyphicon-pencil" style="color: #337ab7;"></span>
+								</gcms-modal> <gcms-modal template="task.delete.html"
+									controller="ModalDefaultCtrl" content="con" ok="delete"
+									alt="Delete Task {{con.id}}"> <span
+									class="glyphicon glyphicon-trash" style="color: #337ab7;"></span></td>
+							<td>{{con.id}}</td>
+							<td>{{con.consannexid.bpid.id}}</td>
+							<td>{{con.consannexid.bpid.lastName}}</td>
+							<td>{{con.consannexid.bpid.firstName}}</td>
+							<td>{{con.consannexid.profilecountry.name}}</td>
+							<td>{{con.consannexid.eventname}}</td>
+							<!-- <td>{{con.consannexid.consentstatus.consentName}}</td>  -->
+							<td><gcms-idname id="con.consannexid.consentstatus.id"
+									list="consentType"></gcms-idname></td>
+							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
+							<td>{{con.taskstatus}}</td>
+							<td>{{con.createdBy}}</td>
+							<td>
+								<div ng-if="con.consannexid.annnexlocation==undefined">Upload</div>
+								<div ng-if="con.consannexid.annnexlocation!=undefined">View
+									Change</div>
+
+							</td>
+							<td>
+								<div ng-switch="con.taskstatus">
+									<div ng-switch-when="INCOMPLETED">
+										<gcms-modal template="task.reassign.html"
+											controller="ModalDefaultCtrl" content="con" ok="reassign"
+											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
+										<span>Reassign</span> </gcms-modal>
+									</div>
+									<div ng-switch-when="COMPLETED">
+										<gcms-modal template="task.revoke.html"
+											controller="ModalDefaultCtrl" content="con" ok="revoke"
+											alt="Revoke Consent{{con.id}}"> <span>Revoke</span>
+										</gcms-modal>
+
+										<!-- 'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status' -->
+										<span ng-mouseover="value(con)"> <a
+											ng-json-export-excel data="dldata"
+											report-fields="{											
+											'consannexid.bpid.id': 'TR Party ID',
+											'consannexid.bpid.profileType': 'Party_Type',
+											'consannexid.bpid.organisationName': 'Organization',
+											'consannexid.bpid.lastName': 'Party Last Name',
+											'consannexid.bpid.firstName': 'Party First Name',
+											'consannexid.bpid.addressType': 'Party_address_type',
+											'consannexid.bpid.address': 'Party Address Line 1',
+											'consannexid.bpid.address2': 'Party Address Line 2',
+											'consannexid.bpid.address3': 'Party Address Line 3',
+											'consannexid.bpid.address4': 'Party Address Line 4',
+											'consannexid.bpid.city': 'Party City',
+											'consannexid.profilecountry.code': 'Party Postal/Zip Code',
+											'consannexid.profilecountry.isoCode': 'Party Country Code (2 character ISO)',
+											'consannexid.consentstatus.consentStatus': 'Consent_Status',
+											'consannexid.consentstartdate': 'Consent_Start_Date',
+											'consannexid.consentenddate': 'Consent_End_Date',
+											A: 'Source System Code'											
+											}"
+											filename="'DLU-P'"> DLU-P </a> <a ng-json-export-excel
+											data="dldata"
+											report-fields="{
+											'consannexid.eventname': 'Event Name',
+											'consannexid.profilecountry.code': 'Transaction Reporting Country',
+											'consannexid.consentstatus.consentName': 'Consent',
+											'consannexid.pocode': 'Purchase Order Number',
+											'consannexid.bpid.id': 'Covered Recipient ID',
+											'consannexid.bpid.profileType': 'Covered Recipient ID Type',
+											'consannexid.bpid.lastName': 'Covered Recipient Last Name/Organization Name for HCO',
+											'consannexid.bpid.firstName': 'Covered Recipient First Name',
+											'consannexid.bpid.address': 'Covered Recipient Address Line 1',
+											'consannexid.bpid.address2': 'Covered Recipient Address Line 2',
+											'consannexid.bpid.address3': 'Covered Recipient Address Line 3',
+											'consannexid.bpid.address4': 'Covered Recipient Address Line 4',
+											'consannexid.bpid.city': 'Covered Recipient City',
+											'Consent update from GCMS': 'Transaction Comments',
+											'DLU-T-GCMS': 'Source System Code'
+											}"
+											filename="'DLU-T'"> DLU-T </a>
+										</span>
+									</div>
+									<div ng-switch-when="DELETE">
+										<gcms-modal template="task.undelete.html"
+											controller="ModalDefaultCtrl" content="con" ok="undelete"
+											alt="{{con.id}}"> <span
+											class="glyphicon glyphicon-undo"
+											style="color: #337ab7; margin-left: 20px; margin-top: 8px;"></span>
+										</gcms-modal>
+									</div>
+								</div>
+
+							</td>
+
+						</tr>
+
+					</tbody>
+					<tfoot>
+						<tr
+							data-ng-if="loggeduser.roleId='5' || loggeduser.id==con.assignedto">
+							<td colspan="13" class="text-center">
+								<div st-items-by-page="5" st-pagination=""
+									st-template="app/task/pagination.custom.html"></div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</table>
+
+	</div>
+</div>
+</div>
+
+
+
+
+

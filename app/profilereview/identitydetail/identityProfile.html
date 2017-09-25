@@ -93,10 +93,10 @@
 						</thead>
 						<tbody data-ng-repeat="identity in identityRequestView|orderBy:sortType:sortReverse|filter:searchFish">
 							<tr>
-								<td><button class="btn btn-primary" ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
-                                                            data-ng-hide="editMode"  ng-disabled="recipientForm.$invalid" style="padding: 1px 9px;font-size: 10px;"> View Profile
+								<td><a href=""  ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
+                                                            data-ng-hide="editMode"  ng-disabled="recipientForm.$invalid" > View Profile
                                                            
-                                                           </button></td>
+                                                           </a></td>
 								<td>{{ identity.profileTypeId }}</td>
 								<td>{{ identity.firstName}}</td>
 								<td>{{ identity.lastName }}</td>

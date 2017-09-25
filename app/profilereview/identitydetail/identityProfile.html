@@ -11,55 +11,41 @@
         <th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse" class="headpro">
            #
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
           </span>
         </th>
 			<th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'profileTypeId'; sortReverse = !sortReverse" class="headpro">
-          profileTypeId
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          Profile Type Id
           </span>
         </th>
 								
 			<th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'firstName'; sortReverse = !sortReverse" class="headpro">
-           firstName
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+           First Name
           </span>
         </th>
 								
 			<th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'lastName'; sortReverse = !sortReverse" class="headpro">
-           lastName
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+           Last Name
           </span>
         </th>
 								
 			<th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'organizationName'; sortReverse = !sortReverse" class="headpro">
-           organizationName
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+           OrganizationName
           </span>
         </th>
 								
 			<th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'profileCountry'; sortReverse = !sortReverse" class="headpro">
-          profileCountry
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          Profile Country
           </span>
         </th>
 								
 			<th class="pro-rev" style="padding-bottom: 18px;">
           <span href="#" ng-click="sortType = 'status'; sortReverse = !sortReverse" class="headpro">
-          status
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          Status
           </span>
         </th>
 								<th class="pro-rev" style="padding-bottom: 18px;"><span href="#"
@@ -105,10 +91,10 @@
 								</form>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="identity in identityRequest|orderBy:sortType:sortReverse|filter:searchFish">
+						<tbody data-ng-repeat="identity in identityRequestView|orderBy:sortType:sortReverse|filter:searchFish">
 							<tr>
 								<td><button class="btn btn-primary" ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
-                                                            data-ng-hide="editMode"  ng-disabled="recipientForm.$invalid" style="padding: 1px 9px;font-size: 10px;"> Viewprofile
+                                                            data-ng-hide="editMode"  ng-disabled="recipientForm.$invalid" style="padding: 1px 9px;font-size: 10px;"> View Profile
                                                            
                                                            </button></td>
 								<td>{{ identity.profileTypeId }}</td>
@@ -127,41 +113,44 @@
 								<td colspan="12">
 									<table class="table table-hover table-condensed table-striped">
 										<tr>
-											<td>ProfileTypeId:{{
+											<td style=" padding-left: 63px;">ProfileTypeId:  {{
 													identity.profileTypeId }}
 											</td>
-											<td>FirstName:{{
+											
+											<td style=" padding-left: 63px;">FirstName:  {{
 													identity.firstName}}
 											</td>
 										</tr>
 										<tr>
-											<td>LastName:{{
+											<td style=" padding-left: 63px;">LastName:  {{
 													identity.lastName }}
 											</td>
-											<td>OrganizationName:{{
+											<td style=" padding-left: 63px;">OrganizationName:  {{
 													identity.organizationName}}
 											</td>
 										</tr>
 
 										<tr>
-											<td>Country:{{
+											<td style=" padding-left: 63px;">Country:  {{
 													identity.country }}
 											</td>
-											<td>Address:{{ identity.address}}
+											<td style=" padding-left: 63px;">Address:  {{ identity.address}}
 											</td>
 										</tr>
 										<tr>
 
-											<td>specility:{{ identity.specility}} 
+											<td style=" padding-left: 63px;">Speciality:  {{ identity.specility}} 
 											</td>
-											<td>Notes:<span data-ng-hide="editMode">{{
+											<td style=" padding-left: 63px;"> Notes:<span data-ng-hide="editMode">{{
 													identity.notes}}</span> </td>
 											
 										</tr>
 										<tr >
 													
-												<td>Status:<span data-ng-hide="editMode">{{
+												<td  style=" padding-left: 63px;">Status:   <span data-ng-hide="editMode">{{
 													identity.status}}</span> </td>
+											
+												 <td style="float:right;"> <button class="btn btn-warning" ng-click="showme=false"">Close</button></td>
 											
 </tr>
 

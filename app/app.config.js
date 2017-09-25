@@ -45,6 +45,7 @@
               //templateUrl: 'app/landing/landing.html',
               url: '/',    
               templateUrl: 'app/recipient/search/recipient.search.html',
+              controller: 'ProfileListCtrl',
               data: {
                 section: 'Home',
                 action: 'browse'

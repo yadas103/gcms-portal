@@ -6,9 +6,9 @@
     .module('gcms.recipient')
     .directive('gcmsAnnex', Annex);
 
-  Annex.$inject = ['myService','Templates','$stateParams','$filter','GenerateAnnex','$state','ConsentAnnex','Country'];
+  Annex.$inject = ['myService','Templates','$stateParams','$filter','$state','ConsentAnnex','Country'];
 
-    function Annex(myService,Templates,$stateParams,$filter,GenerateAnnex,$state,ConsentAnnex,Country) {
+    function Annex(myService,Templates,$stateParams,$filter,$state,ConsentAnnex,Country) {
     	 return {
          	restrict: 'E',
              scope: {            
@@ -18,19 +18,31 @@
         controller: function($scope) {        	
            
             $scope.generateConsentAnnex = {};
-            $scope.id = [];   
-            $scope.cntry = JSON.parse($stateParams.criteria);
-            $scope.cntryValue = $scope.cntry.country;   
+            $scope.id = [];  
+            $scope.checked = [];
+            $scope.cntry = {};
+            $scope.cntryValue = {};   
             $scope.filterTempalates = [];
             $scope.templId = {};
             $scope.profileCountry_Id = {};
             var profileData = {};
-            var countryData = {};
+           
+            
             
             var getData = function(){                                           	            	
-            	$scope.id =  JSON.parse(myService.get());                    
+            	$scope.id =  myService.get(); 
+            	 $scope.checkedIds = $scope.id.selid.checked;
+            	 $scope.checkedIds = JSON.parse($scope.checkedIds);
+            	 $scope.cntryValue = $scope.id.selectedParams.selection;
+            	 $scope.searchCriteria = JSON.parse($scope.cntryValue);
+            	 $scope.cntryValue = $scope.searchCriteria.country;
+            	 
+            	 
               };
               getData(); 
+              
+              
+              
               
               var updateTemplates = function(result){
                   $scope.templates = result;                
@@ -41,6 +53,7 @@
                 		$scope.templId = result.id;
                 		$scope.profileCountry_Id = result.cntry_id.id;
                 	}
+                	
                     return (result.cntry_id.name == $scope.cntryValue);
                   }
                 
@@ -58,32 +71,32 @@
                     Templates.update({ id: item.id }, item);     
                   };
                                   
-                  
-                  var getCountryData = function(){
-                      return Country.query().$promise.then(function(Country){
-                        countryData = Country;
-                        
-                       });
-                  };
+          
                 
-                  getCountryData();
-               
+              
                   var y = 0;
                   $scope.submit = function(request){                 	
                 	
-                	 var values = $scope.id;                	 
+                	 var values = $scope.checkedIds;               	 
                 	 var profilecountry = 'profilecountry';
                 	 var payercountry = 'payercountry';
                 	 var profileType = 'profileType';
                 	 var bpid = 'bpid';
+                	 $scope.cntry = $scope.id.selection;
                 	 request.tmpl_id = {id: JSON.stringify($scope.templId)};            
-                	 request[profilecountry] = {id: JSON.stringify($scope.cntry.profileCountry)};
+                	 request[profilecountry] = {id: JSON.stringify($scope.id.collectingCtry)};
                 	 request[payercountry] = {id: JSON.stringify($scope.profileCountry_Id)}; // Need to replace it to $scope.cntry.country; from $scope.cntry.profileCountry;
-                	 request[profileType] = $scope.cntry.profileType;                	
+                	 request[profileType] = $scope.searchCriteria.profileType;                	
                 	 request[bpid] = {id: JSON.stringify(values[y].id)};
-                	 ConsentAnnex.save(request).$promise.then(function (data) {
-                	
-                	 });
+                	 ConsentAnnex.save(request).$promise.then(function(result) {
+                         if(result.$promise.$$state.status == 1)
+                     	{
+                     	$scope.msg = "You can see the generated PDF in your Downloads folder";
+                     	}
+                    
+                   }).catch(function(){
+                 	  $scope.msg = "Unable to generate PDF";
+                   });
                 	 y++;
                 	 
                 	  

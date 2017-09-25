@@ -89,8 +89,8 @@
 									<td>{{temp.tmpl_code}}</td>
 									<td>{{temp.tmpl_desc}}</td>
 									<td>{{temp.dates_rages}}</td>
-									<td>{{temp.validity_start_date}}</td>
-									<td>{{temp.validity_end_date}}</td>
+									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
+									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
 									<td>
 										<div ng-if="temp.tmpl_location==undefined">Upload</div>
 										<div ng-if="temp.tmpl_location!=undefined">View Change</div>

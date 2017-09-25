@@ -46,25 +46,21 @@
       }
       
 	  
-	  var getloggedUserData = function(){
-		    
+	  /**
+	   	 * selim 
+	     * @ngdoc method
+	     * @name value
+	     * @methodOf this method used for getting logged in user details
+	     * @description Gets data
+	     */
+	  var getloggedUserData = function(){		    
 		     return LoggedUserDetail.query().$promise.then(function(l){
-		       $scope.loggeduser = l;
-		       
+		       $scope.loggeduser = l.userProfiles[0];		       
 		      });
 		  };	  
-	  getloggedUserData();
 	  
-		/*  $scope.getloggedUserData = function (getloggedUserData) {
-			  LoggedUserDetail.get({ firstName: person.firstName, lastName: person.lastName })
-            .$promise.then(function (data) {
-                $scope.getloggedUserData.exist = data;
-            });
-     }
-});*/
-		  
-		  
 	  
+ 	  
 	  /**
 	   	 * selim 
 	     * @ngdoc method
@@ -127,14 +123,14 @@
         };
       $scope.upload = function() {
    	   console.log("Inside upload");
-          if ($scope.uploader.queue.length > 0) {
+          //if ($scope.uploader.queue.length > 0) {
        	   return FileMonitor.query().$promise.then(function(result){
    		       $scope.Result = result;
-   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' Files Successfully Uploaded'});
+   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' File(s) Processing Successful'});
    		       $scope.uploader.clearQueue();
    		       console.log(result)		       
    		      });
-   		  };
+   		//  };
             
           }
 		 

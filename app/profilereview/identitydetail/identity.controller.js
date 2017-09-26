@@ -125,18 +125,22 @@ $scope.childClick=function (){
       };
     
         $scope.updateApprove = function(item) {
-        	console.log($scope.profile1);
-        	if($scope.profile1 !=null)
+        	console.log("inside updateApprove");
+        	 console.log($scope.profile1);
+        	 var ide=$scope.profile1;
+        	if(ide!=0)
         	{
-        		alert(yipeee);
+        		 item.status="Approve";
+            	 item.updatedDate = new Date();
+            	
         	}
+        	
         	
       	  console.log("Inside updateApprove");
       	  console.log(item);
             //angular.forEach($scope.identityRequest, function(identity){
             	
-            	 item.status="Approve";
-            	 item.updatedDate = new Date();
+            	
                 
           //  });
             	 IdentityRequestView.update({ id:item.id },item);
@@ -146,9 +150,14 @@ $scope.childClick=function (){
           
           $scope.updateDismiss = function(item) {
           	 console.log("Inside updateDismiss");
-               item.status="Dismiss";
-              	item.updatedDate = new Date();
-              	IdentityRequestView.update({ id:item.id }, item);
+          	console.log($scope.profile1);
+       	 var ide=$scope.profile1;
+       	if(ide!=0)
+       	{
+       		 item.status="Dismiss";
+           	 item.updatedDate = new Date();
+       	}
+         	IdentityRequestView.update({ id:item.id }, item);
           };
       /**
        * @ngdoc method
@@ -191,55 +200,80 @@ $scope.childClick=function (){
        * @methodOf trs.recipient.directive:trsRecipientSearch
        * @description Builds criteria and submits recipient search form
        */
-      $scope.validate = function(item) {
-      	
-       // var criteria = {};
-    	  console.log("Inside Validate");
+      $scope.validateApprove = function(item) {
+      	 console.log("Inside ValidateApprove");
         console.log(item.id);
-        
-       /* $stateParams.criteria = JSON.stringify(criteria);
-        $state.go('identityProfiles', {criteria: JSON.stringify(id) } );
-        console.log('criteria' + criteria);*/
-       // var id = {id:item.id};
-        var id  ={id:item.profileTypeId};
+        var id  ={id:item.bpid};
         console.log(id);
-      /*Profile1.get(id).$promise.then(function (profile1) {
-    	    $scope.profile1 = profile1;
-		       console.log($scope.profile1 );
-		      
-		      console.log(
-		               response
-		              );
-        	//if thre is a row then show an alert
-        });*/
-      var getDataProfile = function(){
-		    
-		     return Profile1.get(id).$promise.then(function (profile1) {
-		    	    $scope.profile1 = profile1;
-				       console.log($scope.profile1 );
-				      
-				      console.log(
-				               response
-				              );
-		        	//if thre is a row then show an alert
-		        })
-		        
-		        .catch(function(profile1) {
-  console.error('Gists error', profile1.status, profile1.data);
-});
-		  };
-		  console.log(getDataProfile);
-	  getDataProfile();  
-	  $scope.$on('$localeChangeSuccess', getDataProfile);
-	  console.log($scope.gists);
-   alert(status);
-   if($scope.profile1 !=null)
-	{
-		alert(yipeee);
-	}
-	
+      var updateProfile1= function(result) {
+            $scope.profile1 = result;
+           // item.bpid="";
+            console.log( $scope.profile1);
+            var ide=$scope.profile1;
+        	if(ide!=0)
+            
+        	{
+        		item.status=" Validated";
+        	}
+           else {
+        		item.status=" not Validated";
+        	}
+            
       };
-      
+		  var getDataProfile = function() {
+	            $scope.profile1 = [];
+	            
+	            Profile1.get(id).$promise
+	                        .then(updateProfile1);
+	           
+	      };
+	     
+	      getDataProfile();
+		  console.log("hiiiii");
+		  item.status="";
+	  $scope.$on('$localeChangeSuccess', getDataProfile);
+	 console.log($scope.profile1);
+	
+   alert($scope.profile1);
+  
+      };
+      $scope.validateDismiss = function(item) {
+       	 console.log("Inside ValidateDismiss");
+         console.log(item.id);
+         var id  ={id:item.bpid};
+         console.log(id);
+       var updateProfile1= function(result) {
+             $scope.profile1 = result;
+            // item.bpid="";
+             console.log( $scope.profile1);
+             var ide=$scope.profile1;
+         	if(ide!=0)
+             
+         	{
+         		item.status=" Validated";
+         	}
+            else {
+         		item.status=" not Validated";
+         	}
+             
+       };
+ 		  var getDataProfile = function() {
+ 	            $scope.profile1 = [];
+ 	            
+ 	            Profile1.get(id).$promise
+ 	                        .then(updateProfile1);
+ 	           
+ 	      };
+ 	     
+ 	      getDataProfile();
+ 		  console.log("hiiiii");
+ 		  item.status="";
+ 	  $scope.$on('$localeChangeSuccess', getDataProfile);
+ 	 console.log($scope.profile1);
+ 	
+    alert($scope.profile1);
+   
+       };
 }
 
 

@@ -91,7 +91,7 @@
 								</form>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="identity in identityRequestView|orderBy:sortType:sortReverse|filter:searchFish">
+						<tbody data-ng-repeat="identity in identityRequestView|orderBy:sortType:sortReverse|filter:searchFish" ng-switch on="identity.status">
 							<tr>
 								<td><a href=""  ng-click="selectTableRow($index, identity.profileTypeId) ;editMode = true; "
                                                             data-ng-hide="editMode"  ng-disabled="recipientForm.$invalid" > View Profile

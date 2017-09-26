@@ -34,8 +34,8 @@
                <label  for="lastname" style=" font-size: 12px;">Last Name/Organization Name</label><br>
             </div>
             <div class="col-sm-1 form-group" id="search-drop" style="margin-left: 21px;width: 222px;">
-               <input type="text" class="form-control" id="speciality" ng-model="request.speciality">
-               <label for="lastname" style=" font-size: 12px;">Speciality</label><br>
+               <input type="text" class="form-control" id="city" ng-model="request.city">
+               <label for="city" style=" font-size: 12px;">City</label><br>
             </div>
             <div class="col-sm-2" class="form-group" id="search-drop" style="margin-right: 15px;float: right;margin-top: -12px; padding-left: -1px;">
                <button type="submit" class="btn btn-lg btn-default" ng-click = "submit(request)" alt="Search" data-toggle="tooltip" data-placement="top" title="search" ng-disabled="requestSearchForm.$invalid">
@@ -97,9 +97,7 @@
                   <td></td>
                   <td><a href ="" type="submit"   data-ng-click="submitid(pro.id)"> View                             
                                     
-                            </a></td>
-
-               </tr>
+                            </a></td>             
             </tbody>
             <tfoot>
                <tr>
@@ -108,8 +106,9 @@
                      </td> -->
                   <td colspan="10" class="text-center">
                      <div st-items-by-page="20" st-pagination="" st-template="app/recipient/list/pagination.custom.html"></div>
+                      <div>{{responseOnSearch}}</div>
                   </td>
-               </tr>
+               </tr>              
             </tfoot>
          </table>
       </div>

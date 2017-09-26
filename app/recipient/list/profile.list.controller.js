@@ -10,14 +10,12 @@
 
     function ProfileSearch(ProfileSearch,$scope,$stateParams,$state,myService,Templates,Country) {
     	
-        var params = {} /*JSON.parse($stateParams.criteria)*/;
+        var params = {};
         $scope.orderByField = 'firstName';
         $scope.reverseSort = false;
         $scope.selectedids = [];  
         $scope.itemsByPage=20;
-      //  $scope.profileSearch = {};
-       // $scope.profileSearchCopy = {};
-        
+       
         var ids = [];
         var criteria = {};
         
@@ -29,7 +27,6 @@
 	        value: 'HCO'
 	    }];
         
-  //************************************************************************
         $scope.request = {};
    	 
         var updateCountry = function(result){
@@ -56,73 +53,26 @@
                 }
               } 
         	
-        /*	if($stateParams.profileSearch) {
-              	$scope.profileSearch = $stateParams.profileSearch;
-              
-                  return;
-                }     */                 
-
                 ProfileSearch.get(params).$promise
                 .then(function(profileSearch) {
                   $scope.profileSearch = profileSearch;             
                  
                 }).catch(function(){
-                  
+                	$scope.profileSearch.length = 0;
+                	$scope.profileSearchCopy.length = 0;
+                	$scope.responseOnSearch = "No records to show"
+                	
                 });
              
           
           };
-          
-
       
-        //************************************************************************
         // set criteria
-       /* if($stateParams.criteria !== '[object Object]'){
-          $scope.criteria = JSON.parse($stateParams.criteria);
-        }*/
-        
-
-       /* var getData = function(){           
-            
-            if($stateParams.profileSearch) {
-          	$scope.profileSearch = $stateParams.profileSearch;
-          
-              return;
-            }                      
-
-            ProfileSearch.get(params).$promise
-            .then(function(profileSearch) {
-              $scope.profileSearch = profileSearch;             
-             
-            }).catch(function(){
-              $state.go('no-permission');
-            });
-          };*/
+       
           
           $scope.profileSearchCopy = [].concat($scope.profileSearch);
        	
-       /* console.log(params);
-          var updateProfile = function(result){
-            $scope.profileSearch = result;
-            
-          };
-
-          var loadProfile = function(){
-            $scope.profileSearch = [];
-            ProfileSearch.query(params).$promise.then(updateProfile);
-          };
-
-          loadProfile();
-
-          $scope.$on('$localeChangeSuccess', loadProfile);
-
-        
-          $scope.update = function(item) {
-            $scope.profileSearch = item;
-            ProfileSearch.update({ id: item.id }, item);           
-            
-          };
-          */
+       
           $scope.checkboxes = { 'checked': false, items: {} };
           
           // watch for check all checkbox

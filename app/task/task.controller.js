@@ -19,45 +19,47 @@
   function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail){
 	  
 	  console.log("Inside controller");
-	  $scope.add = function (newValue) {
-          var obj = {};
-          obj.Name = newValue;
-          obj.Value = newValue;
-          $scope.Groups.push(obj);
-          $scope.group.name = obj;
-          $scope.newValue = '';
-      } 
-      
-      $scope.Groups = [{
-          Name: 'Wrong name selected',
-          Value: 'd1'
-      }, {
-          Name: 'Event canceled',
-          Value: 'A2'
-      }, {
-          Name: 'No payment',
-          Value: 'c3'
-      },   {
-          Name: 'Other reason',
-          Value: 'new'
-      }];
-      $scope.group = {
-          name: ""
-      }
+	  
+
+		$scope.add = function(newValue) {
+			var obj = {};
+			obj.Name = newValue;
+			obj.Value = newValue;
+			$scope.Groups.push(obj);
+			$scope.group.name = obj;
+			$scope.newValue = '';
+		}
+
+		$scope.Groups = [ {
+			Name : 'Wrong Name selected',
+			Value : 'd1'
+		}, {
+			Name : 'Event cancelled',
+			Value : 'A2'
+		}, {
+			Name : 'No Payment',
+			Value : 'c3'
+		}, {
+			Name : 'Other reason',
+			Value : 'new'
+		} ];
+		$scope.group = {
+			name : ""
+		}
       
 	  
 	  /**
-	   	 * selim 
-	     * @ngdoc method
-	     * @name value
-	     * @methodOf this method used for getting logged in user details
-	     * @description Gets data
-	     */
-	  var getloggedUserData = function(){		    
-		     return LoggedUserDetail.query().$promise.then(function(l){
-		       $scope.loggeduser = l.userProfiles[0];		       
-		      });
-		  };	  
+		 * selim
+		 * 
+		 * @ngdoc method
+		 * @name value
+		 * @methodOf this method used for getting logged in user details
+		 * @description Gets data
+		 * 
+		 * var getloggedUserData = function(){ return
+		 * LoggedUserDetail.query().$promise.then(function(l){ $scope.loggeduser =
+		 * l.userProfiles[0]; }); };
+		 */	  
 	  
 	  
  	  
@@ -70,6 +72,10 @@
 	     */
 	  $scope.dldata=[];
 	  $scope.value=function(con){            
+		  con['AddressType']='primary Address';
+		  con['Source System Code[P]']='DLU-P-GCMS';
+		  con['Source System Code[T]']='DLU-T-GCMS';
+		  con['Transaction Comments']='Consent update from GCMS';
 	      $scope.dldata = [con];
 	  }
 	 
@@ -116,7 +122,8 @@
           }
         }],
 
-        url: '../gcms-service/' + $scope.locale + '/bulk-upload'
+        url: '../gcms-service/' + $scope.locale + '/bulk-upload',
+       
       });   
       $scope.closeAlert = function(index) {
           $scope.alerts.splice(index, 1);

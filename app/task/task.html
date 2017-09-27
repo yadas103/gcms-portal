@@ -54,7 +54,7 @@
 						
 						{{uploader.queue.isSuccess}}
 						
-						<button type="button" ng-show="uploader.progress" class="btn btn-success "
+						<button type="button" ng-show="uploader.progress==100" class="btn btn-success "
 							ng-click="upload()"
 							style="color: white;">
 							<span class="fa fa-spinner"></span> Validate PDFs
@@ -66,17 +66,25 @@
 							<button ng-show="alerts.length > 0 == true" class="btn btn-success"
 							style="color: white;">Uploaded PDF's Status</button></gcms-modal>
 	
-						<!-- <span class="btn btn-default"
-							role="button" ng-click="upload()">Process Upload</span> -->
-						<!-- <span ng-mouseover="upload()"> x
-						<gcms-modal template="bulk.upload.html"
-							controller="ModalDefaultCtrl" ok="" content="Result"
-							alt="Upload images"> 
-							<button class="btn btn-primary"
-							ng-disabled="!uploader.queue.length" disabled="disabled" style="color: white;">Results</button><!-- <span
-							class="btn btn-primary btn-s " role="button" ng-disabled="!uploader.queue.length" disabled="disabled">Results</span> ss </gcms-modal>
+						<!--
+						<button type="button" ng-show="uploader.getNotUploadedItems().length == true" class="btn btn-primary "
+							ng-click="uploader.uploadAll()"
+							ng-disabled="!uploader.getNotUploadedItems().length"
+							disabled="disabled" style="color: white;">
+							<span class="fa fa-upload"></span> Upload PDFs
+						</button>
+						<button type="button" ng-show="uploader.progress" class="btn btn-primary "
+							ng-click="upload()"
+							ng-disabled="!uploader.progress"
+							disabled="disabled" style="color: white;">
+							<span class="fa fa-spinner"></span> Process PDFs
+						</button>
+						 <button type="button" class="btn btn-success"
+							ng-click="upload()" ng-disabled="!uploader.queue.length"
+							disabled="disabled" style="background-color: green;">
+							<span class="class=" fa fa-spinner fa-spin"></span>Process PDFs
+						</button> -->
 
-						</span>-->
 
 					</div>
 
@@ -190,8 +198,7 @@
 					</thead>
 					<tbody data-ng-repeat="con in displayedCollection" ng-switch
 						on="con.taskstatus">
-						<tr
-							data-ng-if="loggeduser.roleId='5' || loggeduser.id==con.assignedto">
+						<tr>
 							<td><gcms-modal template="task.update.html"
 									controller="ModalDefaultCtrl" content="con" ok="update"
 									alt="Edit Task {{con.id}}"> <span
@@ -241,7 +248,7 @@
 											'consannexid.bpid.organisationName': 'Organization',
 											'consannexid.bpid.lastName': 'Party Last Name',
 											'consannexid.bpid.firstName': 'Party First Name',
-											'consannexid.bpid.addressType': 'Party_address_type',
+											'AddressType': 'AddressType',
 											'consannexid.bpid.address': 'Party Address Line 1',
 											'consannexid.bpid.address2': 'Party Address Line 2',
 											'consannexid.bpid.address3': 'Party Address Line 3',
@@ -252,7 +259,7 @@
 											'consannexid.consentstatus.consentStatus': 'Consent_Status',
 											'consannexid.consentstartdate': 'Consent_Start_Date',
 											'consannexid.consentenddate': 'Consent_End_Date',
-											A: 'Source System Code'											
+											'Source System Code[P]': 'Source System Code[P]'											
 											}"
 											filename="'DLU-P'"> DLU-P </a> <a ng-json-export-excel
 											data="dldata"
@@ -270,18 +277,16 @@
 											'consannexid.bpid.address3': 'Covered Recipient Address Line 3',
 											'consannexid.bpid.address4': 'Covered Recipient Address Line 4',
 											'consannexid.bpid.city': 'Covered Recipient City',
-											'Consent update from GCMS': 'Transaction Comments',
-											'DLU-T-GCMS': 'Source System Code'
+											'Transaction Comments': 'Transaction Comments',
+											'Source System Code[T]': 'Source System Code[T]'
 											}"
 											filename="'DLU-T'"> DLU-T </a>
 										</span>
 									</div>
-									<div ng-switch-when="DELETE">
+									<div ng-switch-when="DELETED">
 										<gcms-modal template="task.undelete.html"
 											controller="ModalDefaultCtrl" content="con" ok="undelete"
-											alt="{{con.id}}"> <span
-											class="glyphicon glyphicon-undo"
-											style="color: #337ab7; margin-left: 20px; margin-top: 8px;"></span>
+											alt="{{con.id}}"> <span>Undelete</span>
 										</gcms-modal>
 									</div>
 								</div>
@@ -292,8 +297,7 @@
 
 					</tbody>
 					<tfoot>
-						<tr
-							data-ng-if="loggeduser.roleId='5' || loggeduser.id==con.assignedto">
+						<tr>
 							<td colspan="13" class="text-center">
 								<div st-items-by-page="5" st-pagination=""
 									st-template="app/task/pagination.custom.html"></div>

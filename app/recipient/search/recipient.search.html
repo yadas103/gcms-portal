@@ -2,7 +2,6 @@
    <div class="panel-heading">
       <h3 class="panel-title">Search Details</h3>
    </div>
-   
    <!-- <gcms-profile-search></gcms-profile-search>	 -->
    <!-- <gcms-templates></gcms-templates> -->
    <div class="panel-body-con">
@@ -42,12 +41,11 @@
                <button type="submit" class="btn btn-lg btn-default" ng-click = "submit(request)" alt="Search" data-toggle="tooltip" data-placement="top" title="search" ng-disabled="requestSearchForm.$invalid">
                <i class="fa fa-search"></i>
                </button>
-               <gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
-                  ok="create" cancel="cancel">
+               <gcms-modal template="template.download.html" controller="ModalDefaultCtrl" cancel="cancel">
                   <span class="btn btn-default" role="button" data-toggle="tooltip"  data-placement="top" title="download" ng-click="list()"><i class="fa fa-download"></i></span>
                   </a>
                </gcms-modal>
-               <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" content="profile" ok="create" cancel="cancel">
+               <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" open="">
                   <span class="btn btn-default" role="button" data-toggle="tooltip" data-placement="top" title="create request"><i class="fa fa-plus"></i></span>
                </gcms-modal>
             </div>
@@ -56,79 +54,64 @@
    </div>
 </div>
 <div class="panel panel-primary table-responsive">
-
-<table class="table table-hover " >
-	
-	
-    <table st-table="profileSearchCopy" st-safe-src="profileSearch" class="table table-bordered table-striped table-highlight">
-      	<thead >
-      	<tr style="color:white;background-color:#337ab7;">
-        <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Select</th>    
-		<th ng-click="orderByField='id'; reverseSort = !reverseSort" st-sort="id"  style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;width: 77px;">TR ID</th>
-        <th ng-click="orderByField='lastName'; reverseSort = !reverseSort" st-sort="lastName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Last Name</th>
-        <th ng-click="orderByField='firstName'; reverseSort = !reverseSort" st-sort="firstName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">First Name</th>
-		<th ng-click="orderByField='organisationName'; reverseSort = !reverseSort" st-sort="organisationName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Organization Name</th>
-        <th ng-click="orderByField='city'; reverseSort = !reverseSort" st-sort="city" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">City Name</th>
-        <th ng-click="orderByField='address'; reverseSort = !reverseSort" st-sort="address" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Address</th>
-        <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Specialty</th>
-         <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty" style="font-size: 13px; font-family: sans-serif; padding-bottom: 9px;">Consent History</th>
-		</tr>
-		
-		<tr>
-	      <th></th>
-		  <th><input ng-model="search.id" st-search="id" placeholder=" " class="form-control" type="search"/></th>
-          <th><input ng-model="search.lastName" st-search="lastName" placeholder=" " class="form-control" type="search"/></th>         
-          <th><input ng-model="search.firstName" st-search="firstName" placeholder=" " class="form-control" type="search"/></th>
-          <th><input ng-model="search.organisationName" st-search="organisationName" placeholder=" " class="form-control" type="search"/></th>
-          <th><input ng-model="search.city" st-search="city" placeholder=" " class="form-control" type="search"/></th>
-          <th><input ng-model="search.address" st-search="address" placeholder=" " class="form-control" type="search"/></th> 		  
-  		  <th><input ng-model="search.specialty" st-search="specialty" placeholder=" " class="form-control" type="search"/></th>
-  		  <th></th>  				  
-     	</tr>
-      </thead>
-      <tbody>
-     	
-        <tr data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">  
-          				
-          				<td><input type="checkbox" ng-model="checkboxes.items[pro.id]" style="margin-left: 13px;"></td>              			
-          				<td>{{pro.id}}</td>
-          				<td>{{pro.lastName}}</td>
-                        <td>{{pro.firstName}}</td>
-                        <td>{{pro.organisationName}}</td> 
-                        <td>{{pro.city}}</td> 
-                        <td><div class="home-add">{{pro.address}}</div></td>
-                        <td></td> 
-                        <td><button type="submit" class="btn btn-sm btn-info"  data-ng-click="submitid(pro.id)">
-                        		<i class="glyphicon glyphicon-eye-open"></i>
-                            </button></td>                        
-                       
-        </tr>
-   </tbody>
-				<tfoot>
-					<tr>
-						<td colspan="9" class="text-center">
-							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
-						</td>
-					</tr>
-				</tfoot>
-
-			</table>   
-     
- </div>
-
- </table>
- 
-<!--   <span>Create Identity Request</span>
-      <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl"
-         ok="create" cancel="cancel">
-         <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
-       </gcms-modal>
-
- <gcms-modal template="template.download.html" controller="ModalDefaultCtrl"
-         ok="create" cancel="cancel">
-         <span class="btn btn-default" role="button" ng-click="list()"><i class="fa fa-download"></i></span>
-       </gcms-modal> -->
-
+   <table class="table table-hover " >
+      <div class="table-responsive">
+         <table st-table="profileSearchCopy" st-safe-src="profileSearch" class="table table-bordered table-striped table-highlight">
+            <thead >
+               <tr style="color:white;background-color:#337ab7;">
+                  <th style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Select</th>
+                  <th ng-click="orderByField='id'; reverseSort = !reverseSort" st-sort="id"  style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;width: 77px;">TR ID</th>
+                  <th ng-click="orderByField='profileType'; reverseSort = !reverseSort" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;width: 77px;" st-sort="profileType">Profile Type</th>
+                  <th ng-click="orderByField='lastName'; reverseSort = !reverseSort" st-sort="lastName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Last Name</th>
+                  <th ng-click="orderByField='firstName'; reverseSort = !reverseSort" st-sort="firstName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">First Name</th>
+                  <th ng-click="orderByField='organisationName'; reverseSort = !reverseSort" st-sort="organisationName" style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Organization Name</th>
+                  <th ng-click="orderByField='city'; reverseSort = !reverseSort" st-sort="city" style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">City Name</th>
+                  <th ng-click="orderByField='address'; reverseSort = !reverseSort" st-sort="address" style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Address</th>
+                  <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty" style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Specialty</th>
+                  <th ng-click="orderByField='specialty'; reverseSort = !reverseSort" st-sort="specialty" style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Consent History</th>
+               </tr>
+               <tr>
+                  <th></th>
+                  <th><input ng-model="search.id" st-search="id" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.profileType" st-search="profileType" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.lastName" st-search="lastName" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.firstName" st-search="firstName" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.organisationName" st-search="organisationName" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.city" st-search="city" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.address" st-search="address" placeholder=" " class="form-control" type="search"/></th>
+                  <th><input ng-model="search.specialty" st-search="specialty" placeholder=" " class="form-control" type="search"/></th>
+                  <th></th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
+                  <td><input type="checkbox" ng-model="checkboxes.items[pro.id]"></td>
+                  <td>{{pro.id}}</td>
+                  <td>{{pro.profileType}}</td>
+                  <td>{{pro.lastName}}</td>
+                  <td>{{pro.firstName}}</td>
+                  <td>{{pro.organisationName}}</td>
+                  <td>{{pro.city}}</td>
+                  <td>{{pro.address}}</td>
+                  <td></td>
+                  <td><a href ="" type="submit"   data-ng-click="submitid(pro.id)"> View                             
+                                    
+                            </a></td>             
+            </tbody>
+            <tfoot>
+               <tr>
+                  <!-- <td colspan="10" class="text-center">
+                     <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
+                     </td> -->
+                  <td colspan="10" class="text-center">
+                     <div st-items-by-page="20" st-pagination="" st-template="app/recipient/list/pagination.custom.html"></div>
+                      <div>{{responseOnSearch}}</div>
+                  </td>
+               </tr>              
+            </tfoot>
+         </table>
+      </div>
+   </table>
 </div>
 <br/>
 <br/>

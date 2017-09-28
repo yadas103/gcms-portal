@@ -18,7 +18,6 @@
   function AdminController($rootScope, $scope,$state,localeMapper,Review,Templates,UserProfile, UserDetail, Role){
 	  
 	  console.log("Inside controller");
-
 	    // private variables
 	    var allUsers = [];
 

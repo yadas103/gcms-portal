@@ -16,7 +16,7 @@
         locale: function(){ return localeMapper.getCurrentISOCode();}
       },
       {
-        get:    { method:'GET', isArray:false },
+        get:    { method:'GET', isArray:true },
         query:  { method:'GET',isArray:true }
       }
     );

@@ -104,7 +104,7 @@
         url: '/',
         templateUrl: 'app/timeout.html'
       })
-            .state('task-results', {
+      .state('task-results', {
         resolve: {},
         url: '/task-results/?:criteria',
         templateUrl: 'app/task/list/task.list.html',

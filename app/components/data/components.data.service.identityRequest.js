@@ -1,7 +1,6 @@
 /**
  * @ngdoc service
  * @name gcms.components.data.service:identityRequest
- *
  * @description
  * Represents an user profile data service.
  *

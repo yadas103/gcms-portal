@@ -8,89 +8,17 @@
 (function () {
   'use strict';
 
-
   angular
     .module('gcms.identity')
     .controller('identityCtrl', IdentityController);
 
-  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$state','$stateParams','Profile1'];
+  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$state','$stateParams','Profile1','LoggedUserDetail'];
 
   
-  function IdentityController(IdentityRequestView,$scope,$rootScope,$state,$stateParams,Profile1){
+  function IdentityController(IdentityRequestView,$scope,$rootScope,$state,$stateParams,Profile1,LoggedUserDetail){
 	  
 	  
 	  console.log("Inside identitycontroller");
-	  
-     
-	  /*var getData = function(){
-		    
-		     return IdentityRequest.query().$promise.then(function(IdentityRequest){
-		       $scope.IdentityRequestAttributes = IdentityRequest;
-		       console.log(IdentityRequest);
-		      });
-		  };
-	  
-	  getData();*/  
-$scope.childClick=function (){
-	$rootScope.item=$scope.ide;
-};
-
-
-      $scope.tableRowExpanded = false;
-      $scope.tableRowIndexCurrExpanded = "";
-      $scope.tableRowIndexPrevExpanded = "";
-      $scope.storeIdExpanded = "";
-      $scope.dayDataCollapse = [];
-      $scope.editing = false;
-      $scope.newField = [];
-      $scope.sortType     = 'name'; // set the default sort type
-      $scope.sortReverse  = false;  // set the default sort order
-      $scope.searchFish   = '';     // set the default search/filter term
-     
-      $scope.selectTableRow = function(index, storeId) {
-      	
-            if ($scope.dayDataCollapse === 'undefined') {
-                  $scope.dayDataCollapse = $scope.dayDataCollapseFn();
-
-            } else {
-
-                  if ($scope.tableRowExpanded === false
-                              && $scope.tableRowIndexCurrExpanded === ""
-                              && $scope.storeIdExpanded === "") {
-                        $scope.tableRowIndexPrevExpanded = "";
-                        $scope.tableRowExpanded = true;
-                        $scope.tableRowIndexCurrExpanded = index;
-                        $scope.storeIdExpanded = storeId;
-                        $scope.dayDataCollapse[index] = true;
-
-                  } else if ($scope.tableRowExpanded === true) {
-                        if ($scope.tableRowIndexCurrExpanded === index
-                                    && $scope.storeIdExpanded === storeId) {
-
-                              $scope.tableRowExpanded = false;
-                              $scope.tableRowIndexCurrExpanded = "";
-                              $scope.storeIdExpanded = "";
-                              $scope.dayDataCollapse[index] = false;
-
-                        } else {
-
-                              $scope.tableRowIndexPrevExpanded = $scope.tableRowIndexCurrExpanded;
-                              $scope.tableRowIndexCurrExpanded = index;
-                              $scope.storeIdExpanded = storeId;
-                              $scope.dayDataCollapse[$scope.tableRowIndexPrevExpanded] = false;
-                              $scope.dayDataCollapse[$scope.tableRowIndexCurrExpanded] = true;
-
-                        }
-
-                  }
-            }
-      };
-
-      /*$scope.editIdentityProfile = function(field) {
-            $scope.editing = $scope.identityRequest.indexOf(field);
-            $scope.newField[$scope.editing] = angular.copy(field);
-      };*/
-      
 
       var updateIdentityRequestView = function(result) {
             $scope.identityRequestView = result;
@@ -106,6 +34,7 @@ $scope.childClick=function (){
 
       loadIdentityRequestView();
      
+      $scope.displayedCollection = [].concat($scope.identityRequestView);
 
       $scope.$on('$localeChangeSuccess', loadIdentityRequestView);
 

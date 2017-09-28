@@ -8,9 +8,7 @@
 	</div>
 
 
-
 </h3>
-
 
 <div class="panel panel-primary">
 	<div class="panel-heading">Upload your documents-Automatic Match</div>
@@ -45,7 +43,6 @@
 						</div>
 						
 						
-						
 						<button type="button" ng-show="uploader.getNotUploadedItems().length " class="btn btn-success "
 							ng-click="uploader.uploadAll()"
 							style="color: white;">
@@ -57,7 +54,7 @@
 						<button type="button" ng-show="uploader.progress==100" class="btn btn-success "
 							ng-click="upload()"
 							style="color: white;">
-							<span class="fa fa-spinner"></span> Validate PDFs
+							<span class="fa fa-spinner"></span> Process PDFs
 						</button>
 						
 						<gcms-modal template="bulk.upload.html"
@@ -65,7 +62,7 @@
 							alt="Upload images"> 
 							<button ng-show="alerts.length > 0 == true" class="btn btn-success"
 							style="color: white;">Uploaded PDF's Status</button></gcms-modal>
-	
+						
 						<!--
 						<button type="button" ng-show="uploader.getNotUploadedItems().length == true" class="btn btn-primary "
 							ng-click="uploader.uploadAll()"
@@ -84,10 +81,9 @@
 							disabled="disabled" style="background-color: green;">
 							<span class="class=" fa fa-spinner fa-spin"></span>Process PDFs
 						</button> -->
-
+									
 
 					</div>
-
 				</div>
 			</div>
 			<!-- ngIf: alerts.length > 0 -->
@@ -95,7 +91,7 @@
 
 			<div class="col-sm-5">
 				<ul style="font-size: 12px;">
-					<li>Based on the QR code printed on the top-right corner of
+				 <li>Based on the QR code printed on the top-right corner of
 						each form, the platform will try to <strong>automatically
 							match the documents with the task.</strong>
 					</li>
@@ -204,7 +200,7 @@
 									alt="Edit Task {{con.id}}"> <span
 									class="glyphicon glyphicon-pencil" style="color: #337ab7;"></span>
 								</gcms-modal> <gcms-modal template="task.delete.html"
-									controller="ModalDefaultCtrl" content="con" ok="delete"
+									controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 									alt="Delete Task {{con.id}}"> <span
 									class="glyphicon glyphicon-trash" style="color: #337ab7;"></span></td>
 							<td>{{con.id}}</td>
@@ -229,7 +225,7 @@
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETED">
 										<gcms-modal template="task.reassign.html"
-											controller="ModalDefaultCtrl" content="con" ok="reassign"
+											controller="ModalDefaultCtrl" content="con" ok="updateReassign"
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
 										<span>Reassign</span> </gcms-modal>
 									</div>
@@ -285,7 +281,7 @@
 									</div>
 									<div ng-switch-when="DELETED">
 										<gcms-modal template="task.undelete.html"
-											controller="ModalDefaultCtrl" content="con" ok="undelete"
+											controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
 											alt="{{con.id}}"> <span>Undelete</span>
 										</gcms-modal>
 									</div>

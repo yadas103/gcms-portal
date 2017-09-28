@@ -22,7 +22,7 @@
 	  console.log("Inside UserRole===>>>");
     // private variables
     var userName = $stateParams.id;
-    console.log("Inside UserRole:userName===>>>"+userName);
+    console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
     // scope variables

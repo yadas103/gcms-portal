@@ -72,8 +72,10 @@
        .directive('pageSelect', [function() {
     	   return {
     		restrict: 'E',
-        	template: '<input type="text" class="select-page" ng-model="inputPage" ng-change="selectPage(inputPage)">',
+    		
+        	template: '<input type="number" class="select-page" ng-model="inputPage" min=1  max={{numPages}} ng-change="selectPage(inputPage)" ></input>',
         	link: function(scope, element, attrs) {
+        		
         	scope.$watch('currentPage', function(c) {
             scope.inputPage = c;
           	});

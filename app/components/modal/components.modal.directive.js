@@ -49,56 +49,74 @@
       },
       templateUrl: 'app/components/modal/components.modal.html',
       controller: function($scope, $modal) {
+    	  
+    	   /*$scope.cancel = $scope.cancel || function(){
+    		   
+    	   };*/
+    	   
+    	  /*
+    	   * selim
+    	   * methode added for cancel model
+    	   */
+    	  var temp = angular.copy($scope.content);
+    	  $scope.edit = $scope.content;
+    	  
+    	   $scope.cancel = function(){
+    		   console.log("Inside cancel function");
+    		   angular.copy(temp, $scope.edit);
+    		   
+    	   };
 
-        $scope.cancel = $scope.cancel || function(){};
+           /**
+            * @ngdoc method
+            * @name resolve
+            * @methodOf gcms.components.modal.directive:gcmsModal
+            * @description
+            * Resolves the promise returned by the modal instance result
+            */
+           $scope.resolve = function(item) {
+        	 // $scope.modelBeingEdited = item;
+             $scope.ok()(item);
+             console.log("in resove" +item)
+           };
 
-        /**
-         * @ngdoc method
-         * @name resolve
-         * @methodOf gcms.components.modal.directive:gcmsModal
-         * @description
-         * Resolves the promise returned by the modal instance result
-         */
-        $scope.resolve = function(item) {
-          $scope.ok()(item);
-        };
+           /**
+            * @ngdoc method
+            * @name reject
+            * @methodOf gcms.components.modal.directive:gcmsModal
+            * @description
+            * Rejects the promise returned by the modal instance result
+            */
+           $scope.reject = function() {
+        	   console.log("Inside cancel directive");
+             $scope.cancel();
+           };
 
-        /**
-         * @ngdoc method
-         * @name reject
-         * @methodOf gcms.components.modal.directive:gcmsModal
-         * @description
-         * Rejects the promise returned by the modal instance result
-         */
-        $scope.reject = function() {
-          $scope.cancel();
-        };
+           /**
+            * @ngdoc method
+            * @name open
+            * @methodOf gcms.components.modal.directive:gcmsModal
+            * @description
+            * Opens the modal instance
+            */
+           $scope.open = function(){
 
-        /**
-         * @ngdoc method
-         * @name open
-         * @methodOf gcms.components.modal.directive:gcmsModal
-         * @description
-         * Opens the modal instance
-         */
-        $scope.open = function(){
-
-          var modalInstance = $modal.open({
-            templateUrl: 'app/components/modal/templates/' + $scope.template,
-            controller: $scope.controller,
-            resolve: {
-               item: function () {
-                 return $scope.content;
+             var modalInstance = $modal.open({
+               templateUrl: 'app/components/modal/templates/' + $scope.template,
+               controller: $scope.controller,
+               resolve: {
+                  item: function () {
+                    return $scope.content;
+                  }
                }
-            }
-          });
+             });
 
-          modalInstance.result
-            .then(  $scope.resolve  )
-            .catch( $scope.reject   );
+             modalInstance.result
+               .then(  $scope.resolve  )
+               .catch( $scope.reject   );
 
-          return modalInstance;
-        };
+             return modalInstance;
+           };
       }
     };
   }

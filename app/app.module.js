@@ -41,6 +41,9 @@
 	  'gcms.task',
 	  'gcms.administration',
 	  'gcms.consentmgmt',
-	  'ngJsonExportExcel'
+	  'ngJsonExportExcel',
+	  'dctmNgFileManager',
+	  'ngFileSaver', 
+	  'dctmRestClient'
     ]);
 })();

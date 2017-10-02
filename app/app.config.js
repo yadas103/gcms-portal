@@ -45,6 +45,7 @@
               //templateUrl: 'app/landing/landing.html',
               url: '/',    
               templateUrl: 'app/recipient/search/recipient.search.html',
+              controller: 'ProfileListCtrl',
               data: {
                 section: 'Home',
                 action: 'browse'
@@ -66,7 +67,8 @@
       .state('profilereview', {
     	resolve: {},
     	url: '/profilereview',
-        templateUrl: 'app/profilereview/identitydetail/identity.html'
+    	controller: 'identityCtrl',
+        templateUrl: 'app/profilereview/identitydetail/identityProfile.html',
       })
       .state('identityProfiles', {
         resolve: {},

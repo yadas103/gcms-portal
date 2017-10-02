@@ -1,95 +1,41 @@
-<div class="modal-header">
-  <h3 class="modal-title">Upload Files</h3> 
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium;">Uploaded File details
+  </h3>
+  
 </div>
 
-<div class="modal-body uploadModal">
 
-  <label class="fileContainer">
-    <a class="btn btn-default" role="button">Select files...</a>
-    <input type="file" ngf-select="" ng-model="picFile" name="file"  ngf-pattern="'image/*,application/pdf'" nv-file-select uploader="item" multiple="" accept="application/pdf" />
-  </label>
-   <!--form name="myForm">    
-      Picture & Resume: <input type="file" ngf-select="" 
-               ng-model="picFile" name="file"  ngf-pattern="'image/*,application/pdf'" multiple>
-      <br>
+<div class="modal-body">
 
-      <button ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile)">Submit</button>
-  </form-->
-
-  <div>
-
-    <!-- <table class="table"> 
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th ng-show="item.isHTML5">Size</th>
-          <th ng-show="item.isHTML5">Progress</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-		<tr>
-		<td>Eric</td>
-		<td>Upload</td>
-		<td>Active</td>
-		
+<form name="myForm" > 
+     <table class="table table-hover table-bordered table-striped table-highlight">
+			<thead>
+        		<tr style="background-color: #337ab7;
+    color: white;">
+          			<th>File Name</th>
+          			<th >Status</th>
+          			<th>Reason</th>
           
-        </tr>
+        		</tr>
       </thead>
-      <tbody>
-        <tr ng-repeat="obj in item.queue">
-          <td><div style="text-overflow: ellipsis !important; white-space: nowrap; width: 130px; overflow: hidden !important; font-weight:bold">{{ obj.file.name }}</div></td>
-          <td ng-show="item.isHTML5" nowrap>{{obj.file.size/1024/1024|number:2}} MB</td>
-          <td ng-show="item.isHTML5">
-            <div class="progress" style="margin-bottom: 0">
-              <div class="progress-bar" role="progressbar" ng-style="{ 'width': obj.progress + '%' }"></div>
-            </div>
-          </td>
-          <td class="text-center">
-            <span ng-show="obj.isSuccess"><i class="fa fa-check"></i></span>
-            <span ng-show="obj.isCancel"><i class="fa fa-ban"></i></span>
-            <span ng-show="obj.isError"><i class="fa fa-trash"></i></span>
-          </td>
-          <td nowrap>
-            <button type="button" class="btn btn-success btn-xs uploadModalButtonText" ng-click="obj.upload()" ng-disabled="obj.isReady || obj.isUploading || obj.isSuccess">
-              <span class="fa fa-upload"></span> Upload
-            </button>
-            
-            <button type="button" class="btn btn-warning btn-xs uploadModalButtonText" ng-click="obj.cancel()" ng-disabled="!obj.isUploading">
-              <span class="fa fa-ban"></span> Cancel
-            </button>
-           
-            <button type="button" class="btn btn-danger btn-xs uploadModalButtonText" ng-click="obj.remove()">
-              <span class="fa fa-trash"></span> Remove
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
 
-    <div class="queue">
-      <div>
-        Queue progress:
-        <div class="progress" style="">
-            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 0%;"></div>
-        </div>
-      </div>
-       <button type="button" class="btn btn-success btn-s uploadModalButtonText" ng-click="item.uploadAll()" ng-disabled="!item.getNotUploadedItems().length" disabled="disabled">
-        <span class="fa fa-upload"></span> Upload all
-      </button> 
-      
-       <!-- <button type="button" class="btn btn-warning btn-s uploadModalButtonText" ng-click="item.cancelAll()" ng-disabled="!item.isUploading" disabled="disabled">
-        <span class="fa fa-ban"></span> Cancel all
-      </button> -->
-      
-      <button type="button" class="btn btn-danger btn-s uploadModalButtonText" ng-click="item.clearQueue()" ng-disabled="!item.queue.length" disabled="disabled">
-        <span class="fa fa-trash"></span> Remove all
-      </button> 
-    </div>
+				<tbody>
+					<tr ng-repeat="c in item">
+						<td>{{c.name}}</td>
+						<td>{{c.status}}</td>
+						<td>{{c.reason}}</td>
+					</tr>
+				</tbody>
 
-  </div>
-
+			</table>
+			
+ </form>
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">Done</button>
+  
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
+
+

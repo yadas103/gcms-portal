@@ -3,7 +3,7 @@
  * @name gcms.admin
  *
  * @description
- * Represents a admin module.
+ * Represents a administrator module.
  */
 
 (function () {

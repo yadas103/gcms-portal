@@ -437,6 +437,17 @@
     var getConsentTypes = function() {
       return getLocalizedLov('consent');
     };
+    /**
+	* @Kaswas
+     * @ngdoc method
+     * @name getUserProfileName
+     * @methodOf gcms.components.session.service:session
+     * @description Gets consent types
+     * @returns {object} A promise resolving to a consent types array
+     */
+    var getUserProfileName = function() {
+      return getLocalizedLov('userProfile');
+    };
 
     /**
      * @ngdoc method
@@ -600,6 +611,7 @@
             completionStatus: getCompletionStatuses,
             lockedStatus: getLockedStatuses,
             consentType: getConsentTypes,
+            userPr:getUserProfileName,
             suffix: getSuffixes,
             transactionStatus: getTransactionStatuses,
             sourceCode: getSourceCode,

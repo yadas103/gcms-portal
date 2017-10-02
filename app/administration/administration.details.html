@@ -1,0 +1,970 @@
+<h3>Administration</h3>
+
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>
+<h3>Administration</h3>
+<hr/>
+
+<div class="row">
+  <div class = "col-sm-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{user.userName}}
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-hover roles-table">
+          <thead>
+            <tr>
+              <th>Primary</th>
+              <th>Country</th>
+              <th ng-repeat="role in roles">{{role.roleName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="profile in user.userProfiles" class="userRole">
+
+              <td ng-if="allowDefaultCountryChange">
+                <input name="primary" type="radio" ng-model="profile.defaultProfileIndicator"
+                  ng-value="true" ng-change="setPrimary(profile.countryId)" />
+              </td>
+              <td ng-if="!allowDefaultCountryChange">
+                <i ng-show="profile.defaultProfileIndicator === true" class="fa fa-check"></i>
+              </td>
+
+              <td><gcms-idname id="profile.countryId" list="country"></gcms-idname></td>
+
+              <td ng-repeat="role in roles">
+
+                <span ng-if="profile.countryId === currentProfile.countryId">
+                  <input name="profile.roleId" type="radio" ng-model="profile.roleId" value="{{role.id}}" />
+                </span>
+
+                <span ng-if="profile.countryId !== currentProfile.countryId">
+                  <i ng-show="profile.roleId === role.id" class="fa fa-check"></i>
+                </span>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-3">
+    <gcms-admin-box user="user" save="save"></gcms-admin-box>
+  </div>
+</div>

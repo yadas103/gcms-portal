@@ -1,6 +1,8 @@
 <p style="font-size: 12px;">Before requesting a new profile, please make sure you searched
  using multiple criteria</p>
 	
+	<div ng-model = "msg">{{responseOnSave}}</div>
+	
             <form novalidate name="saveProfiles" class="form-vertical" role="form" ng-submit="submit(item)">
                  <h4 style="color: black; font-size: small;">General Details</h4>
                 <div class="form-group">
@@ -9,7 +11,7 @@
 					<select ng-model="group1.name" ng-options="Group1.Name for Group1 in Groupss" style="width: 388px;
                      border-radius: 3px;
                      height: 30px;
-                     border: 1px solid #cccccc;"></select>                      
+                     border: 1px solid #cccccc;" required></select>                      
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -17,20 +19,20 @@
                 <div class="form-group" ng-model="new1Value" ng-hide="group1.name.Value == 'HCO'">
                     <label for="fname" class="col-sm-3 control-label" style="font-size: 13px;">First Name:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                   <input type="text" class="form-control" id="firstName" ng-model="item.firstName">
+                   <input type="text" class="form-control" id="firstName" ng-model="item.firstName" required>
    
                     </div>
                 </div>
                 <div class="form-group" ng-model="new1Value" ng-hide="group1.name.Value == 'HCO'">
                     <label for="lastname" class="col-sm-3 control-label" style="font-size: 13px;">Last Name:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                       <input type="text" class="form-control" id="lastName" ng-model="item.lastName">
+                       <input type="text" class="form-control" id="lastName" ng-model="item.lastName" required>
                     </div>
                 </div>
                 <div class="form-group" name="New1Value" ng-model="new1Value">
                     <label for="oragname" class="col-sm-3 control-label" style="font-size: 13px;">Organization Name:*</label>
                     <div class="col-sm-9"style="height: 29px;">
-                        <input type="text" id="organizationName" class="form-control" ng-model="item.organizationName">
+                        <input type="text" id="organizationName" class="form-control" ng-model="item.organizationName" required>
                     </div>
                 </div>
 				 <legend style="color: black; font-size: small;">Professional Details</legend>
@@ -43,19 +45,19 @@
 				<div class="form-group">
                     <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px;">Profile Country:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <input type="text" id="country" placeholder="" class="form-control" ng-model="item.country">
+                        <input type="text" id="country" placeholder="" class="form-control" ng-model="item.country" required>
                     </div>
                 </div>
 				<div class="form-group" ng-model="new1Value" ng-hide="group1.name.Value == 'new1'">
                     <label for="Prosp" class="col-sm-3 control-label" style="font-size: 13px;">Profile Specialty:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <input type="text" id="specility" placeholder="" class="form-control" ng-model="item.specility">
+                        <input type="text" id="specility" placeholder="" class="form-control" ng-model="item.specility" required>
                     </div>
                 </div>
 				<div class="form-group">
                     <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;">Profile Address:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <input type="text" id="address" placeholder="" class="form-control" ng-model="item.address">
+                        <input type="text" id="address" placeholder="" class="form-control" ng-model="item.address" required>
                     </div>
                 </div>
                  <!-- /.form-group -->
@@ -69,6 +71,7 @@
 
 	<div class="form-group">
 		<div class="col-sm-3">
-			<button type="submit" class="btn btn-primary">Save</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="saveProfiles.$invalid">Save</button>
 		</div>
 	</div>
+	</form>

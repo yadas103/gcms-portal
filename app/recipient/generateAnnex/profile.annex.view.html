@@ -1,5 +1,7 @@
+ <div ng-model = "downloadMsg">{{msg}}</div>
   <form name="generateAnnex">
   <table class="table table-hover" >
+  <div class="table-responsive">
 	<thead class="panel-heading">
 	<tr class="panel-title">
 	<th>Template Type</th>
@@ -14,7 +16,7 @@
 	</thead>
 	
 	<tbody>
-	<tr ng-repeat = "i in id"  >
+	<tr ng-repeat = "i in checkedIds"  >
 	<td>
 	<select ng-model="request.tmpl_id" class="form-control">
 	<option ng-repeat="template in templates | filter:customArrayFilter">{{template.tmpl_name}}</option>
@@ -31,5 +33,6 @@
 	</tbody>	
 	<tfoot>	
 	</tfoot>
+	</div>
 	</table>
 </form>	

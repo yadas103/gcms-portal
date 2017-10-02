@@ -1,10 +1,51 @@
-<div class="panel panel-primary">
-		<!--  <div class="panel-heading"></div>  -->
-		  <div class="panel-body">
+<div class="panel panel-primary table-responsive">
+	<div class="panel-heading">Consent History</div>
+	<div class="panel-body">
+			
+			<table class="table table-hover ">
+			<div class="table-responsive">
+				<!-- st-set-filter="myStrictFilter" -->
+				<table st-table="ConsentAttributes" st-safe-src="ConsentAttributes" class="table table-bordered table-striped table-highlight">
+					<thead>
+							<th>HCP/O Name</th>
+						 	<th>Consent Updated Date</th>
+			                 <th>Consent Code</th>
+			                 <th>Consent Status</th>
+			                 <th>Consent Start Date</th>
+			                 <th>Consent End Date</th>
+			                 <th>Consent Event Name</th>
+			                 <th>Initiated By</th>
+			                 <th>Document</th>
+					</thead>
+					<tbody data-ng-repeat="field in ConsentAttributes">
+					  <tr data-ng-if="field.bpid.id==id">
+					  							<td>{{field.bpid.firstName}} {{field.bpid.lastName}}</td>
+                                                <td>{{field.consentstatus.updatedDate}}</td>
+                                                <td>{{field.consentstatus.consentStatusCode}}</td>
+          										<td>{{field.consentstatus.consentName}}</td>
+          										<td>{{field.consentstartdate}}</td>
+          										<td>{{field.consentenddate}}</td>
+          										<td>{{field.eventname}}</td>
+         										<td>{{field.createdBy}}</td>
+                                                <td><a href="">View</a></td>
+					  
+					  </tr>
+					</tbody>
+					
+					<tfoot>
+						<tr data-ng-if="field.bpid.id==id">
+							<td colspan="13" class="text-center">
+								<div st-items-by-page="5" st-pagination=""
+									st-template="app/task/pagination.custom.html"></div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
 		  
 		  
-		  
-<table class="table table-hover ">
+	</div>
+</div>	  
+<!-- <table class="table table-hover ">
 
 	<thead style="color:white;background-color:#337ab7;">
 			 <tr>
@@ -36,10 +77,13 @@
                              
 
                            </tr>
+                           <tr data-ng-else>
+                            <td>No Records found
+                           </tr>
     
                  </tbody>
 
               </table>
               </div>
               </div>
-                           
+                         -->   

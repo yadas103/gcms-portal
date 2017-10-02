@@ -43,7 +43,17 @@
         	    	var request = item;
         	    	
 				
-        	    	IdentityRequest.save(request);
+        	    	IdentityRequest.save(request).$promise
+                    .then(function(result) {
+                        if(result.$promise.$$state.status == 1)
+                        	{
+                        	$scope.responseOnSave = "Saved successfully";
+                        	}
+                       
+                      }).catch(function(){
+                    	  $scope.responseOnSave = "Unable to save record";
+                      });
+                   
 									
 				};
   

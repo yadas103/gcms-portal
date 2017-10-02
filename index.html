@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/vendor/angular-toasty/dist/angular-toasty.min.css">
   <link rel="stylesheet" href="assets/css/pfizer.css">
   <link rel="stylesheet" href="assets/css/app.css">
+  
   <!-- endbuild -->
 </head>
 <body>
@@ -170,7 +171,11 @@
   <script src="assets/vendor/angular-date-picker-polyfill/dist/angular-date-picker-polyfill.min.js"></script>
   <script src="assets/vendor/angular-toasty/dist/angular-toasty.min.js"></script>
   <script src="assets/vendor/angular-smart-table/dist/smart-table.min.js"></script>
-
+  <script src="assets/vendor/angular-file-saver/dist/angular-file-saver.min.js"></script> 
+  
+  
+ 
+ 	
   <!-- app js -->
   <script src="app/app.module.js"></script>
   <script src="app/app.config.js"></script>
@@ -221,8 +226,11 @@
   <script src="app/components/data/components.data.service.templates.js"></script>
   <script src="app/components/data/components.data.service.profile.search.js"></script>
   <script src="app/components/data/components.data.service.identity.request.js"></script>
+  <script src="app/components/data/components.data.service.identityRequest.js"></script>
   <script src="app/components/data/components.data.service.annexprofiles.js"></script> 
   <script src="app/components/data/components.data.service.consent-annex-history.js"></script>
+  <script src="app/components/data/components.data.service.business.profile.js"></script>
+  
 
 
   <script src="app/components/idname/components.idname.module.js"></script>
@@ -283,8 +291,9 @@
   <!-- Profile Review module -->
   <script src="app/profilereview/profilereview.module.js"></script>
   <script src="app/profilereview/profilereview.controller.js"></script>  
+  <script src="app/profilereview/profilereview.module.js"></script>
   <script src="app/profilereview/components/controls/identity.controls.module.js"></script>
-  <script src="app/profilereview/identitydetail/identity.directive.js"></script>  
+  <script src="app/profilereview/identitydetail/identity.controller.js"></script>
   <script src="app/profilereview/identitysearch/identityprofile.directive.js"></script>
   <script src="app/profilereview/identitysearch/identitysearch.controller.js"></script>
   
@@ -302,6 +311,9 @@
   <script src="app/components/data/components.data.service.review.js"></script>
   <script src="app/administration/administration.module.js"></script>
   <script src="app/administration/administration.controller.js"></script>
+  <script src="app/administration/administration.details.controller.js"></script>
+  <script src="app/administration/administration.box.directive.js"></script>
+  
 
 
   <script src="app/admin/components/box/administration.box.directive.js"></script>
@@ -330,5 +342,21 @@
   <!-- Pagination -->
  <!--  <script src="app/recipient/list/pageSelect.directive.js"></script> -->
 <!-- endbuild -->
+
+<!-- for file upload -->
+
+	<script src="app/filemanager/filemanager.module.js"></script>
+  <script src="app/filemanager/services/filemanager.middleware.js"></script>
+  <script src="app/filemanager/services/filemanager.navigator.js"></script>
+  <script src="app/filemanager/providers/client.js"></script>
+  <script src="app/filemanager/providers/config.js"></script>
+  <script src="app/filemanager/providers/translations.js"></script>
+  <script src="app/filemanager/filters/filters.js"></script>
+  <script src="app/filemanager/entities/permit.js"></script>
+  <script src="app/filemanager/entities/item.js"></script>
+  <script src="app/filemanager/directives/directives.js"></script>
+  <script src="app/filemanager/controllers/filemanager.controller.js"></script>
+  <script src="app/filemanager/controllers/selector.controller.js"></script>
+
 </body>
 </html>

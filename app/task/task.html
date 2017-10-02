@@ -10,7 +10,7 @@
 
 
 </h3>
-
+<!--  <div ng-controller="FileManagerController" ng-init="login()"></div>  -->
 
 <div class="panel panel-primary">
 	<div class="panel-heading">Upload your documents-Automatic Match</div>
@@ -118,6 +118,7 @@
 
 	</div>
 </div>
+<div ng-include="'app/filemanager/templates' + '/modals.html'"></div> 
 <div class="panel panel-primary table-responsive">
 	<div class="panel-heading">Upload your documents - Manual Match</div>
 	<div class="panel-body">
@@ -218,7 +219,15 @@
 							<td>{{con.taskstatus}}</td>
 							<td>{{con.createdBy}}</td>
 							<td>
-								<div ng-if="con.consannexid.annnexlocation==undefined">Upload</div>
+								<div ng-if="con.consannexid.annnexlocation==undefined">
+								
+								<div ng-controller="FileManagerController">
+    							<a herf="" ng-show="config.allowedActions.upload" ng-click="modal('uploadfile')">
+        						 Upload
+     				    		</a>                    
+								</div>
+								
+								</div>
 								<div ng-if="con.consannexid.annnexlocation!=undefined">View
 									Change</div>
 

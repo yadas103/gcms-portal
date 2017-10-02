@@ -20,25 +20,20 @@
 	  
 	  console.log("Inside controller");
 	  
-	  var getloggedUserData = function(){
-		    
+	  /**
+	   	 * selim 
+	     * @ngdoc method
+	     * @name value
+	     * @methodOf this method used for getting logged in user details
+	     * @description Gets data
+	     *
+	      var getloggedUserData = function(){		    
 		     return LoggedUserDetail.query().$promise.then(function(l){
-		       $scope.loggeduser = l;
-		       
+		       $scope.loggeduser = l.userProfiles[0];		       
 		      });
-		  };	  
-	  getloggedUserData();
+		  };*/	  
 	  
-		/*  $scope.getloggedUserData = function (getloggedUserData) {
-			  LoggedUserDetail.get({ firstName: person.firstName, lastName: person.lastName })
-            .$promise.then(function (data) {
-                $scope.getloggedUserData.exist = data;
-            });
-     }
-});*/
-		  
-		  
-	  
+	    
 	  /**
 	   	 * selim 
 	     * @ngdoc method
@@ -47,7 +42,11 @@
 	     * @description Gets data
 	     */
 	  $scope.dldata=[];
-	  $scope.value=function(con){            
+	  $scope.value=function(con){ 
+		  con['AddressType']='primary Address';
+		  con['Source System Code[P]']='DLU-P-GCMS';
+		  con['Source System Code[T]']='DLU-T-GCMS';
+		  con['Transaction Comments']='Consent update from GCMS';
 	      $scope.dldata = [con];
 	  }
 	 
@@ -62,7 +61,8 @@
 		    
 		     return Task.query().$promise.then(function(task){
 		       $scope.TaskAttributes = task;
-		       console.log(task);
+		       
+		      // console.log(task);
 		      });
 		  };	  
 	  getTaskData();
@@ -95,20 +95,23 @@
         }],
 
         url: '../gcms-service/' + $scope.locale + '/bulk-upload'
+       
       });   
+      
       $scope.closeAlert = function(index) {
           $scope.alerts.splice(index, 1);
         };
+        
       $scope.upload = function() {
    	   console.log("Inside upload");
-          if ($scope.uploader.queue.length > 0) {
+          //if ($scope.uploader.queue.length > 0) {
        	   return FileMonitor.query().$promise.then(function(result){
    		       $scope.Result = result;
-   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' Files Successfully Uploaded'});
+   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' Files Proccess Successfully'});
    		       $scope.uploader.clearQueue();
    		       console.log(result)		       
    		      });
-   		  };
+   		  //};
             
           }
 		 
@@ -133,10 +136,12 @@
 	           con.consannexid.consentstatus.id=item.consannexid.consentstatus.id;
 	           con.updatedDate = new Date();      
 	              }
-	            });            
+	            });
 	            Task.update({ id:item.id }, item);
 	          };
 	          
+	          
+	       
           /**
            * @ngdoc method
            * @name update
@@ -157,7 +162,55 @@
   	            Task.update({ id:item.id }, item);
   	          };  
 	          
-	          
+	      
+
+
+  	     $scope.updateDelete = function(item) {
+			console.log("Inside updateDelete function");
+			console.log(item.id);
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.deleted = 'true';
+					con.taskstatus = "DELETED";
+					con.deleteReason = item.deleteReason;
+					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.updatedDate = new Date();
+				}
+			});
+			Task.update({
+				id : item.id
+			}, item);
+		};
+		$scope.updateReassign = function(item) {
+			console.log("Inside updateReassign function");
+			console.log(item.id);
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.assignedto = item.assignedto;
+				}
+			});
+			Task.update({
+				id : item.id
+			}, item);
+		};
+
+		$scope.updateUnDelete = function(item) {
+			console.log("Inside updateDelete function");
+			console.log(item.id);
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.deleted = 'false';
+					con.taskstatus = "INCOMPLETED";
+					con.deleteReason = item.deleteReason;
+					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.updatedDate = new Date();
+				}
+			});
+			Task.update({
+				id : item.id
+			}, item);
+		};
+		 	          
 		 
 		 $scope.$on('$localeChangeSuccess', getTaskData);
 		   

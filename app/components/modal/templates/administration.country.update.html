@@ -20,13 +20,13 @@
   <div class="form-group">
     <label for="role" class="col-sm-3 control-label">Country Contact:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="cntryContact" name="cntryContact" ng-model="item.cntryContact" placeholder="" >
+      <input ng-maxlength="30" type="text" class="form-control" id="cntryContact" name="cntryContact" ng-model="item.cntryContact" placeholder="" >
     </div>
   </div>
   <div class="form-group">
     <label for="role" class="col-sm-3 control-label">Identity Reviewers:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="cntryReviewer" name="cntryReviewer" ng-model="item.cntryReviewer" placeholder="">
+      <input ng-maxlength="50" type="text" class="form-control" id="cntryReviewer" name="cntryReviewer" ng-model="item.cntryReviewer" placeholder="">
     </div>
   </div>
 
@@ -36,5 +36,5 @@
 
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="ok()" ng-disabled="administrationForm.$invalid">Update</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-warning" ng-click="cancel()" ng-disabled="administrationForm.$invalid">Cancel</button>
 </div>

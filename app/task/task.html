@@ -135,10 +135,10 @@
 							style="color: white; background-color: #337ab7;">
 							<th
 								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Action</th>
-							<th
+							<th st-sort="id"
 								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Task
 								ID</th>
-							<th
+							<th st-sort="consannexid.bpid.id"
 								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">TR
 								ID</th>
 							<th st-sort="consannexid.bpid.lastName"
@@ -171,9 +171,9 @@
 
 						<tr>
 							<th></th>
-							<th><input st-search="" placeholder=" " class="form-control"
+							<th><input st-search="id" placeholder=" " class="form-control"
 								type="search" /></th>
-							<th><input st-search="" placeholder=" " class="form-control"
+							<th><input st-search="consannexid.bpid.id" placeholder=" " class="form-control"
 								type="search" /></th>
 							<th><input st-search="consannexid.bpid.lastName"
 								placeholder=" " class="form-control" type="search" /></th>
@@ -211,7 +211,7 @@
 							<td>{{con.consannexid.bpid.lastName}}</td>
 							<td>{{con.consannexid.bpid.firstName}}</td>
 							<td>{{con.consannexid.profilecountry.name}}</td>
-							<td>{{con.consannexid.eventname}}</td>
+							<td style="word-break: break-all ; width: 120px;">{{con.consannexid.eventname}}</td>
 							<!-- <td>{{con.consannexid.consentstatus.consentName}}</td>  -->
 							<td><gcms-idname id="con.consannexid.consentstatus.id"
 									list="consentType"></gcms-idname></td>

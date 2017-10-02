@@ -7,28 +7,31 @@
       <div class="form-group">
          <label for="templateName" class="col-sm-3 control-label">Template Name:</label>
          <div class="col-sm-9">
-            <input type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="">
+            <input ng-maxlength="50" type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="max 50 char">
          </div>
       </div>
       <div class="form-group">
          <label for="templateType" class="col-sm-3 control-label">Template Type:</label>
          <div class="col-sm-9">
             <select ng-model="item.tmpl_type" ng-click="foo();" ng-dropdown" style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
-               <option value="Y">InCountry</option>
-               <option value="N">CrossBorder</option>
+               <option   value="Y">InCountry</option>
+               <option   value="N">CrossBorder</option>
             </select>
          </div>
       </div>
       <div class="form-group">
-         <label for="templatePage" class="col-sm-3 control-label">Template Page:</label>
+         <label for="templatePage" class="col-sm-3 control-label">Template Consent Page:</label>
          <div class="col-sm-9">
-            <input type="text" class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="">
+            <input type="number" min=1 max=10 class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="provide consent page number" required >
          </div>
       </div>
       <div class="form-group">
          <label for="templateDesc" class="col-sm-3 control-label">Template Description:</label>
          <div class="col-sm-9">
-            <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" >
+         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control" ng-model="item.tmpl_desc" > 
+          
+            </textarea>
+            <!-- <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" > -->
          </div>
       </div>
       <div class="form-group">
@@ -54,6 +57,6 @@
    </form>
 </div>
 <div class="modal-footer">
-   <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminTemplateForm.$invalid">OK</button>
-   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+   <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminTemplateForm.$invalid">Add Template</button>
+   <button class="btn btn-warning" ng-click="cancel()" ng-disabled="adminTemplateForm.$invalid">Cancel</button>
 </div>

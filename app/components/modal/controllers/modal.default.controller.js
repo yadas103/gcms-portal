@@ -12,7 +12,7 @@
     .module('gcms.components.modal')
     .controller('ModalDefaultCtrl', ModalDefault);
 
-    ModalDefault.$inject = ['$scope','$modalInstance', 'item'];
+    ModalDefault.$inject = ['$scope','$modalInstance','$timeout','item'];
 
     /**
      * @ngdoc method
@@ -23,16 +23,28 @@
      * @param {object} $modalInstance An object which represents a modal window instance
      * @param {object} item The object received from the modal directive controller
      */
-    function ModalDefault($scope,$modalInstance, item) {
+    function ModalDefault($scope,$modalInstance,$timeout, item) {
     	
       $scope.item = item;
       $scope.maxLength = 100;
       
+      /*
+       * selim
+       * handdled for date
+       */
+      $scope.dt = new Date();
+      $scope.startDate = function() {
+    	    $timeout(function() {
+    	      $scope.openedStart = true;
+    	    });
+    	  };
+    	  $scope.endDate = function() {
+      	    $timeout(function() {
+      	      $scope.openedEnd = true;
+      	    });
+      	  };
       
-      
-     /* var date=new Date();
-     // $filter('date')(new Date(), 'dd/MM/yyyy');
-      item.date = $filter('date')(date[ item.date, "dd/MM/yyyy"]);*/
+    
       
       //hide popovers in case we came from there
       //$('.popover-link').popover('hide');

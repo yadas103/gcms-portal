@@ -58,11 +58,16 @@
         	console.log("inside updateApprove");
         	 console.log($scope.profile1);
         	 var ide=$scope.profile1;
-        	if(ide!=0)
+        	 console.log(item.status);
+        	if(item.notes==="Validated")
         	{
         		 item.status="Approve";
             	 item.updatedDate = new Date();
+            	 item.notes=""
             	
+        	}else{
+        		item.bpid="";
+        		item.notes=""
         	}
         	
         	
@@ -82,11 +87,16 @@
           	 console.log("Inside updateDismiss");
           	console.log($scope.profile1);
        	 var ide=$scope.profile1;
-       	if(ide!=0)
+       	if(item.notes==="Validated")
        	{
-       		 item.status="Dismiss";
+       		 item.status="Reject";
            	 item.updatedDate = new Date();
+           	 item.notes=""
        	}
+       	else{
+    		item.bpid="";
+    		item.notes=""
+    	}
          	IdentityRequestView.update({ id:item.id }, item);
           };
       /**
@@ -130,23 +140,27 @@
        * @methodOf trs.recipient.directive:trsRecipientSearch
        * @description Builds criteria and submits recipient search form
        */
-      $scope.validateApprove = function(item) {
-      	 console.log("Inside ValidateApprove");
+      $scope.validate= function(item) {
+      	 console.log("Inside Validate");
         console.log(item.id);
         var id  ={id:item.bpid};
         console.log(id);
       var updateProfile1= function(result) {
             $scope.profile1 = result;
+            item.notes="";
+            console.log(item.status);
            // item.bpid="";
             console.log( $scope.profile1);
             var ide=$scope.profile1;
         	if(ide!=0)
             
         	{
-        		item.status=" Validated";
+        		item.notes="Validated";
+        		console.log(item.notes);
         	}
            else {
-        		item.status=" not Validated";
+        		item.notes=" not Validated";
+        		console.log(item.notes);
         	}
             
       };
@@ -160,14 +174,15 @@
 	     
 	      getDataProfile();
 		  console.log("hiiiii");
+		  item.notes=" Not-Validated";
 		  item.status="";
+		  console.log( item.notes);
 	  $scope.$on('$localeChangeSuccess', getDataProfile);
 	 console.log($scope.profile1);
 	
-   alert($scope.profile1);
-  
+ 
       };
-      $scope.validateDismiss = function(item) {
+      /*$scope.validateDismiss = function(item) {
        	 console.log("Inside ValidateDismiss");
          console.log(item.id);
          var id  ={id:item.bpid};
@@ -203,7 +218,7 @@
  	
     alert($scope.profile1);
    
-       };
+       };*/
 }
 
 

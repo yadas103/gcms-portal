@@ -1,65 +1,74 @@
-<div class="modal-header" style="background-color: #337ab7;
-    color: white;">
-  <h3 class="modal-title">Identity Approve/Dismiss</h3>
+<div class="modal-header"
+	style="background-color: #337ab7; color: white;">
+	<h3 class="modal-title">Identity Approve/Reject</h3>
+</div>
+  
+   <div class="col-sm-24">
+<div class="modal-body">
+	<div class="panel panel-primary">
+		<div ng-controller="identityCtrl">
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<td>If HCP/HCO does not exist,please manually create the
+							profile in TR. Once you have the TR ID of <br> the created
+							profile,please enter it in the next text box and press validation
+							button.If the profile is<br> found in TR status will change
+							to validated and then you can press the Approve button to
+							complete the acitivity.
+						</td>
+						<td style="padding: 4px;">
+                        
+							<!-- <div ng-switch="item.status">
+								<div ng-switch-when="Validated">
+									<button class="btn btn-primary  ng-disabled"
+										style="background-color: green;">{{item.status}}</button>
+								</div>
+								<div ng-switch-when=" Not-Validated">
+									<button class="btn btn-primary ng-disabled"
+										style="background-color: red;">{{item.status}}</></button>
+								</div>
+                           <div ng-switch-default>
+									<button class="btn btn-primary ng-disabled"
+										style="background-color:green;"></></button>
+								</div>
+							</div> -->
+						</td>
+
+						<td><input type="text" ng-model="item.bpid">
+
+						 {{item.notes}}
+						 {{item.status}}
+						
+								
+						</td>
+     
+						<td><button class="btn btn-primary" ng-click="validate(item)"
+								value="{{item.bpid}}" style="    margin-left: -13px;margin-top: 1px;">Validate</td>
+						<td><button class="btn btn-primary"
+								ng-click="updateApprove(item)" value="{{item.identity.id}}" style="    margin-left: -13px;margin-top: 1px;">Approve</button>
+								
+							</td>
+					<td>
+								<button class="btn btn-primary" ng-click="updateDismiss(item)"
+								value="{{item.identity.id}}" style="    margin-left: -13px;margin-top: 1px;">Reject</button>
+							</td>
+					</tr>
+					<tr>
+					</tr>
+
+				</tbody>
+
+			</table>
+		</div>
+	</div>
 </div>
 
-<div class="modal-body table-responsive">
-
-      <div class="panel panel-primary">
-            {{item.id}}
-      <div ng-controller="identityCtrl">
-      <table class="table table-hover table-responsive">
-      <tbody>
-      
-      
-      <tr>
-
-      <td>If HCP/HCO does not exist,please manually create the profile in TR. Once you have the TR ID of <br>
-      the created profile,please enter it in the next text box and press validation button.If the profile is<br>
-    found in TR status will change to validated and then you can press the Approve button to complete the acitivity.</td>
-      <td><button  class="btn btn-primary"   >Not Validated</td>
-      <td><input type="text" ng-model="item.profileTypeId"></td>
-
-      <td><button  class="btn btn-primary" ng-click="validate(item)" value="{{item.profileTypeId}}" >Validate </td>
-      <td><button class="btn btn-primary"  ng-click="updateApprove(item)" value ="{{identity.id}}"  >Approve
-      </td>
-      </div>
-      </tr>
-      
-      </tbody>
-      
-      </table>
-      </div>
-      </div>
-      </div>
-      <div class="modal-body">
-      
-      <div class="panel panel-primary">
-      <div ng-controller="identityCtrl">
-      <table class="table table-hover">
-      <tbody>
-      
-      <tr>
-      {{item.data}}
-      <td>If HCP/HCO does not exist,please manually create the profile in TR. Once you have the TR ID of <br>
-      the created profile,please enter it in the next text box and press validation button.If the profile is<br>
-    found in TR status will change to validated and then you can press the Approve button to complete the acitivity.</td>
-      <td>Not Validated</td>
-      <td><input type="text" value=""></td>
-      
-      <td><button  class="btn btn-primary" ng-click="validate(item)" value="{{item.profileTypeId}}" >Validate </td>
-      <td>
-      <button class="btn btn-primary"  ng-click="updateDismiss(item)" value ="{{item.profileTypeId}}">Discuss
-      </td>
-      </tr>
-      </tbody>
-      
-      </table>
-      </div>
-      </div>
-      </div>
-      
-      <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" >Cancel Approval
-  <button class="btn btn-warning" ng-click="cancel()">Dismiss</button>
 </div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">
+		Close
+</div>
+
+

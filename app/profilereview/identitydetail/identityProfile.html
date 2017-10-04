@@ -60,14 +60,15 @@
 							<td>
 								<div ng-switch="identity.status">
 
-									<div ng-switch-when="Approve">Approve/Dismiss</div>
-									<div ng-switch-when="Dismiss">Approve/Dismiss</div>
+									<div ng-switch-when="Approve">Approve/Reject</div>
+									<div ng-switch-when="Reject">Approve/Reject</div>
 									<div ng-switch-default>
 										<gcms-modal template="indentity.search.html"
 											ng-init="item=identity" controller="ModalDefaultCtrl"
-											content="identity" open="" alt="Validate {{identity.id}}">
-										<a href="">Approve/Dismiss</a> </gcms-modal>
+											content="identity" open="" >
+										<a href="">Approve/Reject</a> </gcms-modal>
 									</div>
+									
 								</div>
 							</td>
 

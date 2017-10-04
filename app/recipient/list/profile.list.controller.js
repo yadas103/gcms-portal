@@ -276,7 +276,7 @@
           
           $scope.submitid = function(id) {
      		 
-              $state.go('profile-detail-view', {id} );
+              $state.go('profile-detail-view', {id:id} );
             };
             
             

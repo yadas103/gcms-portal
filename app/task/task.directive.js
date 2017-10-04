@@ -36,7 +36,7 @@
 
                 if (newValue) {
                   var temp = [];
-                  scope.distinctItems = ['All'];
+                  scope.distinctItems = ['ALL'];
 
                   angular.forEach(scope.collection, function(item) {
                     var value = item[predicate];
@@ -48,7 +48,8 @@
                   temp.sort();
 
                   scope.distinctItems = scope.distinctItems.concat(temp);
-                  scope.selectedOption = scope.distinctItems[0];
+                  //scope.selectedOption = scope.distinctItems[3];
+                  scope.selectedOption = 'INCOMPLETE';
                   scope.optionChanged(scope.selectedOption);
                 }
               }, true);
@@ -60,7 +61,7 @@
 
                 query.distinct = selectedOption;
 
-                if (query.distinct === 'All') {
+                if (query.distinct === 'ALL') {
                   query.distinct = '';
                 }
 

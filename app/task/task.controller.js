@@ -200,7 +200,7 @@
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.deleted = 'false';
-					con.taskstatus = "INCOMPLETED";
+					con.taskstatus = "INCOMPLETE";
 					con.deleteReason = item.deleteReason;
 					con.deleteReasonDesc = item.deleteReasonDesc;
 					con.updatedDate = new Date();

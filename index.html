@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/vendor/angular-toasty/dist/angular-toasty.min.css">
   <link rel="stylesheet" href="assets/css/pfizer.css">
   <link rel="stylesheet" href="assets/css/app.css">
+  
   <!-- endbuild -->
 </head>
 <body>
@@ -170,7 +171,11 @@
   <script src="assets/vendor/angular-date-picker-polyfill/dist/angular-date-picker-polyfill.min.js"></script>
   <script src="assets/vendor/angular-toasty/dist/angular-toasty.min.js"></script>
   <script src="assets/vendor/angular-smart-table/dist/smart-table.min.js"></script>
-
+  <script src="assets/vendor/angular-file-saver/dist/angular-file-saver.min.js"></script> 
+  
+  
+ 
+ 	
   <!-- app js -->
   <script src="app/app.module.js"></script>
   <script src="app/app.config.js"></script>
@@ -337,5 +342,21 @@
   <!-- Pagination -->
  <!--  <script src="app/recipient/list/pageSelect.directive.js"></script> -->
 <!-- endbuild -->
+
+<!-- for file upload -->
+
+	<script src="app/filemanager/filemanager.module.js"></script>
+  <script src="app/filemanager/services/filemanager.middleware.js"></script>
+  <script src="app/filemanager/services/filemanager.navigator.js"></script>
+  <script src="app/filemanager/providers/client.js"></script>
+  <script src="app/filemanager/providers/config.js"></script>
+  <script src="app/filemanager/providers/translations.js"></script>
+  <script src="app/filemanager/filters/filters.js"></script>
+  <script src="app/filemanager/entities/permit.js"></script>
+  <script src="app/filemanager/entities/item.js"></script>
+  <script src="app/filemanager/directives/directives.js"></script>
+  <script src="app/filemanager/controllers/filemanager.controller.js"></script>
+  <script src="app/filemanager/controllers/selector.controller.js"></script>
+
 </body>
 </html>

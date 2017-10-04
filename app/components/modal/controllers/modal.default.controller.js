@@ -1,5 +1,5 @@
 /**
- * @ngdoc  overview
+ * @ngdoc overview
  * @name gcms.components.modal.controller:ModalDefaultCtrl
  *
  * @description

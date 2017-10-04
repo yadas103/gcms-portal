@@ -77,7 +77,8 @@
     BASIC_PERMISSIONS: ['None', 'Browse', 'Read', 'Relate', 'Version', 'Write', 'Delete'],
     EXTEND_PERMISSIONS: ['CHANGE_FOLDER_LINKS', 'CHANGE_LOCATION', 'CHANGE_OWNER', 'CHANGE_PERMIT', 'CHANGE_STATE', 'DELETE_OBJECT', 'EXECUTE_PROC'],
     REPOSITORY_RESOURCE: 'repoResource',
-    REPOSITORY_LINKS: 'repoLinks'
+    REPOSITORY_LINKS: 'repoLinks',
+    DOC_LINK: 'docLink'
   })
 
   module.provider('clientLocalStore', function (dctmConstants) {
@@ -555,26 +556,16 @@
           })
           return promise
         },
-        'getFolderObjectByPath': function getFolderObjectByPath (repo, links,path) {
+        'getFolderObjectByPath': function getFolderObjectByPath (repoLink,path) {
             var defer = this.clientBase.q.defer()
             var promise = defer.promise
             if (!path) {
               throw new Error('object path must be provided')
             }
-            /*var pathArr = path.split('/')
-            var objName = pathArr.pop()
-            var folderPath = pathArr.join('/')*/
-            var folderPath ='/GCMS Consent Forms Repository/Consent docs'
-           var dql = "select r_object_id from dm_folder where any r_folder_path = '" + folderPath + "'"
-           
-           
-//           var link1 = findLinkInLinksArray(this.clientBase.getCachedRepository(), dctmConstants.LINK_RELATIONS.SELF)
-         //  var link2 = findLinkInLinksArray(this.clientBase.getCachedRepositoryArr().links, dctmConstants.LINK_RELATIONS.SELF)
-          //   var dql = "SELECT * FROM dm_sysobject WHERE FOLDER ('" + folderPath + "') and object_name = '" + objName + "'"
-        //   var link = findLinkInLinksArray(links, dctmConstants.LINK_RELATIONS.SELF)
-//            var link = this.getLinkFromResource(repo, dctmConstants.LINK_RELATIONS.CABINETS)
-           var link="http://dctmrest-dev.pfizer.com/dctm-rest/repositories/gnosis71_dev"
-            this.get(link, null, 'dql', encodeURIComponent(dql)).then(angular.bind(this, function (resp) {
+            
+           var dql = "select r_object_id from dm_folder where any r_folder_path = '" + path + "'"
+
+            this.get(repoLink, null, 'dql', encodeURIComponent(dql)).then(angular.bind(this, function (resp) {
               if (!resp.data || !resp.data.entries || resp.data.entries.length == 0) {
                 defer.resolve(null)
               }else {

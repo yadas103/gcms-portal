@@ -143,9 +143,9 @@
     
     //getFolderObjectByPath
         
-        ApiMiddleware.prototype.getFolderObjectByPath = function (repo, links,path) {
+        ApiMiddleware.prototype.getFolderObjectByPath = function (repoLink,path) {
        
-     	return dctmClient.getFolderObjectByPath(repo, links,path)
+     	return dctmClient.getFolderObjectByPath(repoLink,path)
        
         }
         ApiMiddleware.prototype.listFolderChildren = function (parent, pageNumber, itemsPerPage) {

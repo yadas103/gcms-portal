@@ -278,7 +278,7 @@
      		 
               $state.go('profile-detail-view', {id} );
             };
-          
-       
-    }
+            
+            
+      }
 })();

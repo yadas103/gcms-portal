@@ -13,7 +13,8 @@
         username: 'srvamr-gcmsacct',
         password: 'Pfe26811',
         signedin: false,
-
+        repoLink:'http://dctmrest-dev.pfizer.com/dctm-rest/repositories/gnosis71_dev',
+        folderPath:'/GCMS Consent Forms Repository/Consent docs',
         searchForm: true,
         sidebar: true,
         breadcrumb: true,

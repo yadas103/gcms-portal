@@ -123,6 +123,7 @@
         }],
 
         url: '../gcms-service/' + $scope.locale + '/bulk-upload'
+       
       });   
       $scope.closeAlert = function(index) {
           $scope.alerts.splice(index, 1);
@@ -132,11 +133,11 @@
           //if ($scope.uploader.queue.length > 0) {
        	   return FileMonitor.query().$promise.then(function(result){
    		       $scope.Result = result;
-   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + ' File(s) Processing Successful'});
+   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
    		       $scope.uploader.clearQueue();
    		       console.log(result)		       
    		      });
-   		//  };
+   		  //};
             
           }
 		 
@@ -161,10 +162,12 @@
 	           con.consannexid.consentstatus.id=item.consannexid.consentstatus.id;
 	           con.updatedDate = new Date();      
 	              }
-	            });            
+	            });
 	            Task.update({ id:item.id }, item);
 	          };
 	          
+	          
+	       
           /**
            * @ngdoc method
            * @name update

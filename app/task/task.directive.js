@@ -75,6 +75,7 @@
     		
         	template: '<input type="number" class="select-page" ng-model="inputPage" min=1  max={{numPages}} ng-change="selectPage(inputPage)" required></input>',
         	link: function(scope, element, attrs) {
+        		
         	scope.$watch('currentPage', function(c) {
             scope.inputPage = c;
           	});

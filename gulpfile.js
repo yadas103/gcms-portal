@@ -27,7 +27,7 @@ var rev = require('gulp-rev');
 
 var templateCache = require('gulp-angular-templatecache');
 
-gulp.task('usemin', ['move-assets','move-famfamfam', 'move-fonts', 'install', 'build','templates'], function () {
+gulp.task('usemin', ['move-templates','move-meta','move-config', 'move-assets','move-famfamfam', 'move-fonts', 'install', 'build','templates'], function () {
   return gulp.src('./*.html')
       .pipe(usemin({
         css: [minifyCss(), 'concat', rev()],
@@ -44,10 +44,20 @@ gulp.task('templates', function () {
 });
 
 gulp.task('move-templates', ['clean:build'], function(){
-  return gulp.src(['./app/**/*.html'],  {base: './app/'})
+  return gulp.src(['./app/**/*.*'],  {base: './app/'})
   .pipe(minifyHtml({empty: true}))
   .pipe(gulp.dest('./build/app/'));
 });
+
+gulp.task('move-meta', ['clean:build'], function(){
+	  return gulp.src(['./META-INF/*.*'],  {base: './META-INF/'})	 
+	  .pipe(gulp.dest('./build/META-INF/'));
+	});
+
+gulp.task('move-config', ['clean:build'], function(){
+	  return gulp.src(['./config.*'],  {base: './'})	 
+	  .pipe(gulp.dest('./build/'));
+	});
 
 gulp.task('move-assets', ['clean:build'], function(){
   return gulp.src(['./assets/**/*.ico',
@@ -66,7 +76,7 @@ gulp.task('move-fonts', ['clean:build'], function(){
 });
 
 gulp.task('default', ['connect:reload', 'watch','openbrowser']);
-gulp.task('build', ['test', 'ngdoc', 'lint', 'plato']);
+gulp.task('build', ['lint', 'plato']);
 gulp.task('deploy', ['war']);
 //Uf2bme2cds!
 /**
@@ -106,12 +116,15 @@ gulp.task('configure:test-server', function(){
 
 
 gulp.task('war', ['install','build','usemin'],function () {
-    return gulp.src(['./build/**/*.*'])
-        .pipe(war({
+    return gulp.src(['./build/**/*.*']) 
+        //.pipe(warmanifest({
+           // options
+         //}))
+         .pipe(war({
             welcome: 'index.html',
-            displayName: 'gcms',
+            displayName: 'gcms'            
         }))
-       .pipe(zip('gcms.war'))
+       .pipe(zip('gcms-portal.war'))
         .pipe(gulp.dest('./dist/'));
 
 });

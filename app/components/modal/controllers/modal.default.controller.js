@@ -28,24 +28,6 @@
       $scope.item = item;
       $scope.maxLength = 100;
       
-      /*
-       * selim
-       * handdled for date
-       */
-      $scope.dt = new Date();
-      $scope.startDate = function() {
-    	    $timeout(function() {
-    	      $scope.openedStart = true;
-    	    });
-    	  };
-    	  $scope.endDate = function() {
-      	    $timeout(function() {
-      	      $scope.openedEnd = true;
-      	    });
-      	  };
-      
-    
-      
       //hide popovers in case we came from there
       //$('.popover-link').popover('hide');
       $('.popover').hide();

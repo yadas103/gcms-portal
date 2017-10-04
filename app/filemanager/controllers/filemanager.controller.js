@@ -118,31 +118,29 @@
 
         $scope.uploadFiles = function () {
         	console.log("uploadFiles");
-        	
+        	//login
         	$scope.apiMiddleware.login().then(function () {
 	                $scope.fileNavigator.refresh()
 	                $scope.modal('signin', true)
-                //get folder path
-	                var repo1 =$storage.getItem(dctmConstants.REPOSITORY_RESOURCE)
-	                var links =$storage.getItem(dctmConstants.REPOSITORY_LINKS)
-	                //getObjectByPath
 	                
-	                  $scope.apiMiddleware.getFolderObjectByPath(repo1,links,'/GCMS Consent Forms Repository/Consent docs').then(function (feed) {
-	               // $scope.apiMiddleware.getObjectByPath(repo1,'/GCMS Consent Forms Repository/Consent docs').then(function (feed) {	
-	                	   console.log("INSIDE FOLDER")
-	                	
-	                      //upload 
-		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (data) {
-//		            $scope.fileNavigator.refresh()
+	                var repoLink =$scope.config.repoLink
+	                var path =$scope.config.folderPath
+                    //getFolderObjectByPath
+	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   	
+	                //upload 
+		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		            $scope.modal('uploadfile', true)
+		            var link =respn.data.links[0]
+		            var docLink = link.href;
+		            console.log(docLink);
+		            $storage.setItem(dctmConstants.DOC_LINK, docLink)
+		            var cacheLink = $storage.getItem(dctmConstants.DOC_LINK)
+		            console.log(cacheLink);
+		            
 		          }, function (resp) {
 		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files')
 		            $scope.apiMiddleware.error = errorMsg
 		          })	
-	                 // var object = $scope.apiMiddleware.parseEntries(feed.data)	                
-		               /* for (var o in this.fileList) {
-		                  var item = this.fileList[o]
-		                }*/
 	                }, function (resp) {
 	                  self.apiMiddleware.parseError(resp.data)
 	                })

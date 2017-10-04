@@ -1,57 +1,63 @@
 <div class="panel panel-primary">
-   <div class="panel-heading">
-      <h3 class="panel-title">Search Details</h3>
-   </div>
-   <!-- <gcms-profile-search></gcms-profile-search>	 -->
-   <!-- <gcms-templates></gcms-templates> -->
-   <div class="panel-body-con">
-      <form name="requestSearchForm" class="form-horizontal"
-         style="  margin-right: -12px;  margin-left: 32px; ">
-         <div class="row">
-            <div class="col-sm-3" id="search-drop">
-               <select ng-model="request.profileCountry" style="width: 200px;height: 27px;" required>
-                  <option ng-repeat="con in counties">{{con.name}}</option>
-               </select>
-               <!-- <gcms-lov list="country" value="request.profileCountry" state ="critical"></gcms-lov> -->
-               <label style=" font-size: 12px;">Collecting Country</label><br>
-            </div>
-            <div class="col-sm-2 form-group" id="search-drop" style="width: 229px;height: 27px; margin-left: -69px;">
-               <select ng-model="request.country" style="width: 200px;height: 27px;" required>
-                  <option ng-repeat="rep in counties">{{rep.name}}</option>
-               </select>
-               <label style=" font-size: 12px;">Reporting Country</label><br>
-            </div>
-            <div class="col-sm-2 form-group" id="search-drop" style="margin-right: 17px;
-               margin-left: 2px;">
-               <select ng-model="request.profileType" style="width: 200px;height: 27px;" required>
-                  <option ng-repeat="prof in profile_types">{{prof.name}}</option>
-               </select>
-               <!-- <gcms-lov list="recipientTypeString" value="request.profileType" state ="critical"></gcms-lov> -->
-               <label style=" font-size: 12px;">Business Party Type</label><br>
-            </div>
-            <div class="col-sm-2 form-group" id="search-drop" style="margin-left: 19px;width: 210px;">
-               <input type="text" class="form-control" id="lastName" ng-model="request.lastName" required>
-               <label  for="lastname" style=" font-size: 12px;">Last Name/Organization Name</label><br>
-            </div>
-            <div class="col-sm-1 form-group" id="search-drop" style="margin-left: 21px;width: 222px;">
+	<div class="panel-heading">
+		<h3 class="panel-title">Search Details</h3>
+	</div>
+	
+<!-- <gcms-profile-search></gcms-profile-search>	 -->
+	<!-- <gcms-templates></gcms-templates> -->
+	<div class="panel-body-con">
+<form name="requestSearchForm" class="form-horizontal"
+		 style="  margin-right: -12px;  margin-left: 32px; ">
+					<div class="row">
+					<div class="col-sm-3" id="search-drop">
+				 <select ng-model="request.profileCountry" style="width: 200px;height: 27px;" required>
+						<option ng-repeat="con in counties">{{con.name}}</option>
+					</select>
+				<!-- <gcms-lov list="country" value="request.profileCountry" state ="critical"></gcms-lov> -->
+    <label style=" font-size: 12px;">Collecting Country</label><br>
+</div>
+<div class="col-sm-2 form-group" id="search-drop" style="width: 229px;height: 27px; margin-left: -69px;">
+		 <select ng-model="request.country" style="width: 200px;height: 27px;" required>
+						<option ng-repeat="rep in counties">{{rep.name}}</option>
+					</select>
+					
+    <label style=" font-size: 12px;">Reporting Country</label><br>
+	</div>
+	<div class="col-sm-2 form-group" id="search-drop" style="margin-right: 17px;
+    margin-left: 2px;">
+	<select ng-model="request.profileType" style="width: 200px;height: 27px;" required>
+						<option ng-repeat="prof in profile_types">{{prof.name}}</option>
+					</select>
+			<!-- <gcms-lov list="recipientTypeString" value="request.profileType" state ="critical"></gcms-lov> -->
+    <label style=" font-size: 12px;">Business Party Type</label><br>
+</div>
+<div class="col-sm-2 form-group" id="search-drop" style="margin-left: 19px;width: 210px;">
+		<input type="text" class="form-control" id="lastName" ng-model="request.lastName" required>
+					
+    <label  for="lastname" style=" font-size: 12px;">Last Name/Organization Name</label><br>
+	</div>
+	<div class="col-sm-1 form-group" id="search-drop" style="margin-left: 21px;width: 222px;">
                <input type="text" class="form-control" id="city" ng-model="request.city">
                <label for="city" style=" font-size: 12px;">City</label><br>
-            </div>
-            <div class="col-sm-2" class="form-group" id="search-drop" style="margin-right: 15px;float: right;margin-top: -12px; padding-left: -1px;">
-               <button type="submit" class="btn btn-lg btn-default" ng-click = "submit(request)" alt="Search" data-toggle="tooltip" data-placement="top" title="search" ng-disabled="requestSearchForm.$invalid">
-               <i class="fa fa-search"></i>
-               </button>
+	</div>
+<div class="col-sm-2" class="form-group" id="search-drop" style="margin-right: 15px;float: right;margin-top: -12px; padding-left: -1px;">
+ 
+		
+				<button type="submit" class="btn btn-lg btn-default" ng-click = "submit(request)" alt="Search" data-toggle="tooltip" data-placement="top" title="search" ng-disabled="requestSearchForm.$invalid">
+					<i class="fa fa-search"></i>
+				</button>
                <gcms-modal template="template.download.html" controller="ModalDefaultCtrl" cancel="cancel">
-                  <span class="btn btn-default" role="button" data-toggle="tooltip"  data-placement="top" title="download" ng-click="list()"><i class="fa fa-download"></i></span>
-                  </a>
-               </gcms-modal>
+        <span class="btn btn-default" role="button" data-toggle="tooltip"  data-placement="top" title="download" ng-click="list()"><i class="fa fa-download"></i></span>
+      </a>
+       </gcms-modal>
                <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" open="">
-                  <span class="btn btn-default" role="button" data-toggle="tooltip" data-placement="top" title="create request"><i class="fa fa-plus"></i></span>
-               </gcms-modal>
-            </div>
-         </div>
-      </form>
-   </div>
+         <span class="btn btn-default" role="button" data-toggle="tooltip" data-placement="top" title="create request"><i class="fa fa-plus"></i></span>
+       </gcms-modal>
+			</div>
+			</div>
+			</form>
+     </div>
+
 </div>
 <div class="panel panel-primary table-responsive">
    <table class="table table-hover " >

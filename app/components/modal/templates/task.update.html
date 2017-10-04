@@ -1,6 +1,6 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: medium;">Edit Profile : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
+  <h3 class="modal-title" style="font-size: medium;">Edit Task : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
                          <br> Task ID: {{item.id}} 
   </h3> 
 </div>
@@ -10,19 +10,19 @@
     <div class="form-group">
     <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="">
+      <input ng-maxlength="60" type="text" class="form-control"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="">
     </div>
   </div>
   <div class="form-group" >
     <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="">
+      <input ng-maxlength="60" type="text" class="form-control" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="max 60 char">
     </div>
   </div>
       <div class="form-group" >
     <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" >
+      <input ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" >
     </div>
   </div>
   <div class="form-group" >
@@ -33,15 +33,20 @@
   </div>
   <div class="form-group" >
     <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
-    <!-- date :{{item.consannexid.consentstartdate | date:'dd-MM-yyyy'}} -->
     <div class="col-sm-9">
-        <input type="date"  class="form-control"  ng-model="item.consannexid.consentstartdate" value="{{item.consannexid.consentstartdate}}" min="{{item.consannexid.consentstartdate}}" />
+    	<!-- <input type="date" class="form-control" ng-model="item.consannexid.consentstartdate" value="{{item.consannexid.consentstartdate}}" min="{{item.consannexid.consentstartdate}}" /> --> 
+    	<input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" is-open="openedStart" ng-required="true" close-text="Close" />              
+              <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
+              <i class="fa fa-calendar"></i></button>   
     </div>
   </div>
   <div class="form-group" >
     <label for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
     <div class="col-sm-9">
-      <input type="date"  class="form-control"  ng-model="item.consannexid.consentenddate " value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate }}" />
+       <!-- <input type="date"  class="form-control" ng-model="item.consannexid.consentenddate"  value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate}}" /> -->
+       <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" is-open="openedEnd" ng-required="true" close-text="Close" />                           
+              <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
+              <i class="fa fa-calendar"></i></button>
     </div>
   </div>
       
@@ -64,5 +69,5 @@
 
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">Update</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-warning" ng-click="cancel()" ng-disabled="taskForm.$invalid">Cancel</button>
 </div>

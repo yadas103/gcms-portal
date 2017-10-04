@@ -9,6 +9,7 @@
 
 
 </h3>
+<!--  <div ng-controller="FileManagerController" ng-init="login()"></div>  -->
 
 <div class="panel panel-primary">
 	<div class="panel-heading">Upload your documents-Automatic Match</div>
@@ -95,11 +96,11 @@
 						each form, the platform will try to <strong>automatically
 							match the documents with the task.</strong>
 					</li>
-					<li>A succesful match will remove your task. if unsuccesful,
+					<li>A successful match will remove your task. if unsuccessful,
 						the task will remain and you will manually attach the signed
 						document.</li>
 					<li>The platform accepts <strong>only PDF files</strong></li>
-					<li>There are <b>scnned cpies</b> of the EFPIA cross-border
+					<li>There are <b>scanned copies</b> of the EFPIA cross-border
 						consent forms<b>signed by the HCP/HCO</b>
 					<li>Being the process facilitator between Transparency Team
 						and the HCP / HCO,<strong>you are the responsible</strong> for the
@@ -116,6 +117,7 @@
 
 	</div>
 </div>
+<div ng-include="'app/filemanager/templates' + '/modals.html'"></div> 
 <div class="panel panel-primary table-responsive">
 	<div class="panel-heading">Upload your documents - Manual Match</div>
 	<div class="panel-body">
@@ -131,46 +133,46 @@
 						<tr class="taskth"
 							style="color: white; background-color: #337ab7;">
 							<th
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Action</th>
-							<th
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Task
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Action</th>
+							<th st-sort="id"
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Task
 								ID</th>
-							<th
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">TR
+							<th st-sort="consannexid.bpid.id"
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">TR
 								ID</th>
 							<th st-sort="consannexid.bpid.lastName"
 								style="font-size: 13px; font-family: sans-serif;">Last
 								Name/Org Name</th>
 							<th st-sort="consannexid.bpid.firstName"
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">First
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">First
 								Name</th>
 							<th st-sort="consannexid.profilecountry.name"
-								style="font-size: 13px; font-family: sans-serif;">Profile
+								style="font-size: 13px; font-family: sans-serif;padding-bottom: 25px;">Profile
 								Country</th>
 							<th st-sort="consannexid.eventname"
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Event
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Event
 								Name</th>
-							<th style="font-size: 13px; font-family: sans-serif;">Consent
+							<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Consent
 								Status</th>
 							<th st-sort="con.updatedDate"
 								style="font-size: 13px; font-family: sans-serif;">Consent
 								Updated Date</th>
 							<th
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Task
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Task
 								Status</th>
-							<th style="font-size: 13px; font-family: sans-serif;">Initiated
+							<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Initiated
 								By</th>
-							<th style="font-size: 13px; font-family: sans-serif;">Document
+							<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Document
 								Upload</th>
 							<th
-								style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Activity</th>
+								style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Activity</th>
 						</tr>
 
 						<tr>
 							<th></th>
-							<th><input st-search="" placeholder=" " class="form-control"
+							<th><input st-search="id" placeholder=" " class="form-control"
 								type="search" /></th>
-							<th><input st-search="" placeholder=" " class="form-control"
+							<th><input st-search="consannexid.bpid.id" placeholder=" " class="form-control"
 								type="search" /></th>
 							<th><input st-search="consannexid.bpid.lastName"
 								placeholder=" " class="form-control" type="search" /></th>
@@ -208,7 +210,7 @@
 							<td>{{con.consannexid.bpid.lastName}}</td>
 							<td>{{con.consannexid.bpid.firstName}}</td>
 							<td>{{con.consannexid.profilecountry.name}}</td>
-							<td>{{con.consannexid.eventname}}</td>
+							<td style="word-break: break-all ; width: 120px;">{{con.consannexid.eventname}}</td>
 							<!-- <td>{{con.consannexid.consentstatus.consentName}}</td>  -->
 							<td><gcms-idname id="con.consannexid.consentstatus.id"
 									list="consentType"></gcms-idname></td>
@@ -216,7 +218,15 @@
 							<td>{{con.taskstatus}}</td>
 							<td>{{con.createdBy}}</td>
 							<td>
-								<div ng-if="con.consannexid.annnexlocation==undefined">Upload</div>
+								<div ng-if="con.consannexid.annnexlocation==undefined">
+								
+								<div ng-controller="FileManagerController">
+    							<a herf="" ng-show="config.allowedActions.upload" ng-click="modal('uploadfile')">
+        						 Upload
+     				    		</a>                    
+								</div>
+								
+								</div>
 								<div ng-if="con.consannexid.annnexlocation!=undefined">View
 									Change</div>
 

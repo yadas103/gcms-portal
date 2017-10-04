@@ -1,0 +1,35 @@
+<div class="modal animated fadeIn" id="uploadfile" ng-controller ="FileManagerController">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form ng-submit="uploadFiles()">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                  <span class="sr-only">{{"close" | translate}}</span>
+              </button>
+          <h4 class="modal-title">{{"upload_files" | translate}}</h4>
+        </div>
+        <div class="modal-body">
+          <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
+          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" />
+          <div ng-include data-src="'error-bar'" class="clearfix"></div>
+        </div>
+        <div class="modal-footer">
+          <div ng-show="!apiMiddleware.inprocess">
+          
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{"cancel" | translate}}</button>
+            
+            <button type="submit" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess">{{'upload' | translate}}</button>
+          </div>
+          <div ng-show="apiMiddleware.inprocess">
+            <span class="label label-warning">{{"uploading" | translate}} ...</span>
+          </div>
+        </div>
+        
+      </form>
+     
+    </div>
+  </div>
+</div>
+
+ 

@@ -3,17 +3,20 @@
    <h3 class="modal-title" style="font-size: medium;">Edit Template</h3>
 </div>
 <div class="modal-body">
-   <form name="taskForm" class="form-horizontal" novalidate>
+   <form name="adminForm" class="form-horizontal" novalidate>
       <div class="form-group">
          <label for="template_name" class="col-sm-3 control-label">Template Name:</label>
          <div class="col-sm-9">
-            <input type="text" class="form-control" id="tmpl_name" name="tmpl_name" ng-model="item.tmpl_name" placeholder="">
+            <input ng-maxlength="50" type="text" class="form-control" id="tmpl_name" name="tmpl_name" ng-model="item.tmpl_name" placeholder="max 50 char">
          </div>
       </div>
       <div class="form-group">
          <label for="template_code" class="col-sm-3 control-label">Template Description:</label>
          <div class="col-sm-9">
-            <input type="text" class="form-control" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_desc" placeholder="">
+         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control" ng-model="item.tmpl_desc" > 
+          
+            </textarea>
+            <!-- <input type="text" class="form-control" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_desc" placeholder=""> -->
          </div>
       </div>
       <div class="form-group">
@@ -28,14 +31,20 @@
       <div class="form-group">
          <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity Start Date:</label>
          <div class="col-sm-9">
-            <input type="date" class="form-control" ng-model="item.validity_start_date"
-               value={{item.validity_start_date}}>
+              <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart" ng-required="true" close-text="Close" />                          
+              <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
+              <i class="fa fa-calendar"></i></button> 
+              
+              
          </div>
       </div>
       <div class="form-group">
          <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
          <div class="col-sm-9">
-            <input type="date" class="form-control" ng-model="item.validity_end_date | date:'dd-MM-yyyy'" value={{item.validity_end_date}} />
+            <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
+              <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
+              <i class="fa fa-calendar"></i></button>  
+              
          </div>
       </div>
       <!--  <input type="date" id="endDate" name="endDate" class="form-control" ng-model="item.consannexid.consentenddate"  />
@@ -45,6 +54,6 @@
 </div>
 <div class="modal-footer">
    <button class="btn btn-primary" ng-click="ok()"
-      ng-disabled="taskForm.$invalid">Update</button>
-   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      ng-disabled="adminForm.$invalid">Update</button>
+   <button class="btn btn-warning" ng-click="cancel()" ng-disabled="adminForm.$invalid">Cancel</button>
 </div>

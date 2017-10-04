@@ -1,6 +1,7 @@
 <h3>Administration</h3>
+
 <hr />
-<div class="panel panel-primary table-responsive">
+<div class="panel panel-primary ng-scope">
 	<div class="panel-heading">Manage Countries and Templates</div>
 
 	<div class="panel-body" style="padding:27px;">
@@ -10,13 +11,22 @@
 			class="table table-bordered table-striped table-highlight">
 			<thead style="background-color: #337ab7; color: white">
 				<tr>
+					
 					<th style="padding: 20px;width:8%;"></th>
-					<th>Country ISO Code</th>
-					<th>Country Name</th>
-					<th>Country Contact</th>
-					<th>Identity Reviewers</th>
+					<th st-sort="countries.isoCode">Country ISO Code</th>
+					<th st-sort="countries.name">Country Name</th>
+					<th st-sort="cntryContact">Country Contact</th>
+					<th st-sort="cntryReviewer">Identity Reviewers</th>
 
 				</tr>
+				<tr>
+				<th></th>
+				<th><input st-search="countries.isoCode" placeholder=" " class="form-control" type="search" /></th>
+				<th><input st-search="countries.name" placeholder=" " class="form-control" type="search" /></th>
+				<th><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></th>
+				<th><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></th>
+				</tr>
+				
 			</thead>
 			<tbody>
 				<tr ng-repeat-start="con in displayedCollection">
@@ -25,11 +35,11 @@
 							template="administration.country.update.html"
 							controller="ModalDefaultCtrl" content="con" ok="update"
 							alt="Edit {{con.id}}"> <span
+							
 							class="glyphicon glyphicon-pencil" style="color: #337ab7; margin-left: 18px;"></span>
 						</gcms-modal>
 						<span ng-if="con.expanded" ng-click="con.expanded = false">
-							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 15px;
-    color: #337ab7; padding-left: 9px;"></i>
+							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 15px; color: #337ab7; padding-left: 9px;"></i>
 						</span>
 						<span ng-if="!con.expanded" ng-click="value(con)">
 							<i class="fa fa-arrow-right" aria-hidden="true" style="    font-size: 15px;
@@ -52,7 +62,7 @@
 											controller="ModalDefaultCtrl" ok="createTemplate"
 											alt="Add Templates"> <span
 											class="btn btn-default" role="button"
-											style="margin-left: 10px;"><i class="fa fa-plus"></i></span>
+											style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
 										</gcms-modal></th>
 
 									<th>Template Name</th>
@@ -74,19 +84,19 @@
 											controller="ModalDefaultCtrl" content="temp"
 											ok="updateTemplate" alt="Edit Template {{temp.id}}">
 										<span class="glyphicon glyphicon-pencil"
-											style="color: #337ab7; padding-left:12px;"></span> </gcms-modal> <gcms-modal
+											style="color: #337ab7; margin-left: 20px;"></span> </gcms-modal> <gcms-modal
 											template="administration.template.delete.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deleteTemplate" alt="Delete Template {{temp.id}}">
 										<span class="glyphicon glyphicon-trash"
-											style="color: #337ab7;"></span></td>
+											style="color: #337ab7; margin-left: 20px;"></span></td>
 
 
 
 									</td>
-									<td>{{temp.tmpl_name}} {{temp.id}}</td>
+									<td style="word-break: break-all ; width: 200px;">{{temp.tmpl_name}}</td>
 									<td>{{temp.tmpl_code}}</td>
-									<td>{{temp.tmpl_desc}}</td>
+									<td style="word-break: break-all ; width: 250px;">{{temp.tmpl_desc}}</td>
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
@@ -123,18 +133,18 @@
   
   <div class="panel-body">
 	<table class="table table-bordered table-striped table-highlight">
-      <thead>
+      <thead style="background-color: #337ab7; color: white">
         <tr>
 		<th>
 		  <gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
 		    <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
 		  </gcms-modal>
 		</th>
-		<th></th>
+		
         <th>Username</th>
           <th>Country</th>
           <th ng-repeat="role in roles">
-            <gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details">{{role.roleName}}</gcms-modal>
+            <gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" >{{role.roleName}}</gcms-modal>
           </th>
       </tr>
 	  </thead>
@@ -143,13 +153,12 @@
           <td 
             class="cursor-pointer" style="padding-right:10px">
               <a ng-click="go(profile)"><i class="fa fa-pencil"></i></a>
-          </td>
-          <td >
-            <gcms-modal template="admin.role.delete.html" controller="ModalDefaultCtrl"
+              <gcms-modal template="admin.role.delete.html" controller="ModalDefaultCtrl"
               content="profile" ok="delete" alt="delete user">
               <i class="fa fa-trash"></i>
             </gcms-modal>
           </td>
+          
 
           <td>{{profile.userName}}</td>
           <td>{{profile.countryISOCode}}</td>

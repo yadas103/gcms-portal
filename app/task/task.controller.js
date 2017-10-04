@@ -122,8 +122,7 @@
           }
         }],
 
-        url: '../gcms-service/' + $scope.locale + '/bulk-upload',
-       
+        url: '../gcms-service/' + $scope.locale + '/bulk-upload'
       });   
       $scope.closeAlert = function(index) {
           $scope.alerts.splice(index, 1);

@@ -50,7 +50,22 @@
       templateUrl: 'app/components/modal/components.modal.html',
       controller: function($scope, $modal) {
 
-        $scope.cancel = $scope.cancel || function(){};
+    	   /*$scope.cancel = $scope.cancel || function(){
+    		   
+    	   };*/
+    	   
+    	  /*
+    	   * selim
+    	   * methode added for cancel model
+    	   */
+    	  var temp = angular.copy($scope.content);
+    	  $scope.edit = $scope.content;
+    	  
+    	   $scope.cancel = function(){
+    		   console.log("Inside cancel function");
+    		   angular.copy(temp, $scope.edit);
+    		   
+    	   };
 
         /**
          * @ngdoc method

@@ -6,9 +6,9 @@
     .module('gcms.recipient')
     .controller('ProfileListCtrl', ProfileSearch);
 
-  ProfileSearch.$inject = ['ProfileSearch','$scope','$stateParams','$state','myService','Templates','Country','IdentityRequest'];
+  ProfileSearch.$inject = ['ProfileSearch','$scope','$stateParams','$state','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail'];
 
-    function ProfileSearch(ProfileSearch,$scope,$stateParams,$state,myService,Templates,Country,IdentityRequest) {
+    function ProfileSearch(ProfileSearch,$scope,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail) {
     	
         var params = {};
         $scope.orderByField = 'firstName';
@@ -20,6 +20,7 @@
         var ids = [];
         var criteria = {};
         $scope.alerts = [];
+        $scope.profile = {};
        
         
         $scope.profile_types = [{
@@ -30,6 +31,46 @@
 	        value: 'HCO'
 	    }];
         
+        $scope.userProfileData = function(){        	
+        	
+        	 UserProfile.query().$promise
+            .then(function(profiles) {
+              $scope.profiles_data = profiles;  
+           
+              LoggedUserDetail.query().$promise
+              .then(function(loggedInUser) {
+                $scope.logged_In_User = loggedInUser;  
+             
+                for(var i in $scope.profiles_data){
+                    if ($scope.profiles_data[i].userName == $scope.logged_In_User.userName){
+                  	  $scope.loggedInUserCountry = $scope.profiles_data[i].countryId ;
+                  	  $scope.loggedInUserCountryName = $scope.profiles_data[i].countryName ;
+                    }
+                  }
+                $scope.request.profileCountry = $scope.loggedInUserCountryName;
+                $scope.request.country = $scope.loggedInUserCountryName;
+                
+              }).catch(function(){
+              console.log('couldnt fetch user profiles');           	
+              });
+             
+            }).catch(function(){
+            console.log('couldnt fetch user profiles');
+           	
+            });
+        	
+        	
+         	  
+       
+        };
+        
+        $scope.userProfileData();
+       
+        
+        
+        
+        
+       /* $scope.profile.profile_types = $scope.profile_types; */
         $scope.request = {};
    	 
         var updateCountry = function(result){
@@ -48,6 +89,7 @@
         $scope.submit = function(request) {
             
         	params =  request;
+        	$scope.profile.country = request.country;        	
         	$scope.selectedids = [];
         	
         	
@@ -248,18 +290,83 @@
             }
             
             
+           
+            $scope.emaildetails = {};
+            
+            $scope.generateEmail=function(reqID,item){
+            	
+           	 var  emailTo = 'emailTo';
+   	    	 var  emailFrom = 'emailFrom';
+   	    	 var  message = 'message';
+   	    	 var  emailCC = 'emailCC';
+   	    	 var  requestID = 'requestID';
+   	    	 var  subject = 'subject';
+   	    	 var emaildetails = {};
+   	    	 
+            	Review.query().$promise.then(function(result,item) {
+    	    		console.log(result);
+    	    		for(var i in result){
+    	                if (result[i].countries.id == item.country){
+    	              	 $scope.countryReviwer = result[i].cntryReviewer;             
+    	                }
+    	              } 
+    	    	});
+    	    	
+    	    	   $scope.emaildetails[emailTo] = 'Divya.VenkataSubbarao@pfizer.com';
+    		    	$scope.emaildetails[emailFrom] = 'Divya.VenkataSubbarao@pfizer.com';
+    		    	$scope.emaildetails[message] = 'Please review';
+    		    	$scope.emaildetails[requestID] = reqID;
+    		    	$scope.emaildetails[subject] = 'Need to review for a profile with request id '+reqID;
+    		    	emaildetails = $scope.emaildetails;
+    	   	    	 
+      	    	
+      	    
+      	    	EmailGeneration.save(emaildetails).$promise
+                .then(function(response) {
+                    if(response.$promise.$$state.status == 1)
+                	{
+                    	console.log(response);
+                    }
+                    else
+                    	{
+                    	console.log(response);
+                    	}
+                   
+                  });
+            };
+            
          $scope.create = function(item){
         	 var request = item;
-  	    	request.profileTypeId = item.profileTypeId;
+   	    	 var reqID = {};   	  
+   	  	 
+   	    	 
+  	    	request.profileTypeId = item.profileTypeId.Name;
   	    	IdentityRequest.save(request).$promise
               .then(function(result) {
                   if(result.$promise.$$state.status == 1)
               	{
-                  	$scope.responseOnSave = "Saved successfully";
+                  	/*$scope.responseOnSave = "Saved successfully";*/
+                	  
+                  	reqID = result.id;
+                  	$scope.generateEmail(reqID,item);  
+                  	alert("Saved successfully");
+                  	item.firstName = '';
+                  	item.profileTypeId = '';
+                  	item.lastName = '';
+                  	item.organizationName = '';
+                  	item.city = '';
+                  	item.country = '';
+                  	item.specility = '';
+                  	item.address = '';
+                  	item.notes = '';
+                  	
                   	}
                  
                 }).catch(function(){
-              	  $scope.responseOnUnsave = "Unable to save record";
+              	  /*$scope.responseOnUnsave = "Unable to save record";*/
+              	   alert("Unable to save record"); 
+              	   
+              	   
                 });
           };
                 

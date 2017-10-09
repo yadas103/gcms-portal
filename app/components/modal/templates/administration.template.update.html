@@ -22,7 +22,7 @@
       <div class="form-group">
          <label for="dates_range" class="col-sm-3 control-label">Dates Range:</label>
          <div class="col-sm-9">          
-            <select ng-model="item.dates_rages" ng-click="foo();" ng-dropdown" style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
                <option value="Y">Y</option>
                <option value="N">N</option>
             </select>
@@ -37,6 +37,7 @@
               
               
          </div>
+         
       </div>
       <div class="form-group">
          <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
@@ -54,6 +55,6 @@
 </div>
 <div class="modal-footer">
    <button class="btn btn-primary" ng-click="ok()"
-      ng-disabled="taskForm.$invalid">Update</button>
-   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      ng-disabled="adminForm.$invalid">Update</button>
+   <button class="btn btn-warning" ng-click="cancel()" ng-disabled="adminForm.$invalid">Cancel</button>
 </div>

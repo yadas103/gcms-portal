@@ -6,7 +6,7 @@
 
 	<div class="panel-body" style="padding:27px;">
 
-
+<div ng-include="'app/filemanager/templates' + '/modals.html'"></div>
 		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
 			class="table table-bordered table-striped table-highlight">
 			<thead style="background-color: #337ab7; color: white">
@@ -57,7 +57,7 @@
 						<table class="table table-bordered table-striped table-highlight">
 							<thead style="background-color: #337ab7; color: white">
 								<tr>
-									<th><gcms-modal
+									<th ><gcms-modal
 											template="administration.template.add.html"
 											controller="ModalDefaultCtrl" ok="createTemplate"
 											alt="Add Templates"> <span
@@ -83,26 +83,36 @@
 											template="administration.template.update.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="updateTemplate" alt="Edit Template {{temp.id}}">
-										<span class="glyphicon glyphicon-pencil"
+										<span class="fa fa-pencil"
 											style="color: #337ab7; margin-left: 20px;"></span> </gcms-modal> <gcms-modal
 											template="administration.template.delete.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deleteTemplate" alt="Delete Template {{temp.id}}">
-										<span class="glyphicon glyphicon-trash"
+										<span class="fa fa-trash"
 											style="color: #337ab7; margin-left: 20px;"></span></td>
 
 
 
 									</td>
-									<td>{{temp.tmpl_name}} {{temp.id}}</td>
+									<td style="word-break: break-all ; width: 200px;">{{temp.tmpl_name}}</td>
 									<td>{{temp.tmpl_code}}</td>
-									<td>{{temp.tmpl_desc}}</td>
+									<td style="word-break: break-all ; width: 250px;">{{temp.tmpl_desc}}</td>
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
 									<td>
-										<div ng-if="temp.tmpl_location==undefined">Upload</div>
-										<div ng-if="temp.tmpl_location!=undefined">View Change</div>
+									
+										<div ng-if="temp.tmpl_location==undefined">
+
+											<div ng-controller="FileManagerController">
+												<a herf="" ng-show="config.allowedActions.upload"
+													ng-click="modal('uploadfile')"> Upload </a>
+											</div>
+
+										</div>
+										<div ng-if="temp.tmpl_location!=undefined">View
+											Change</div>
+										
 									</td>
 								</tr>
 
@@ -133,7 +143,7 @@
   
   <div class="panel-body">
 	<table class="table table-bordered table-striped table-highlight">
-      <thead style="background-color: #337ab7; color: white">
+      <thead>
         <tr>
 		<th>
 		  <gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
@@ -152,13 +162,13 @@
         <tr class="adminRole" ng-repeat="profile in profiles | orderBy:'userName'">
           <td 
             class="cursor-pointer" style="padding-right:10px">
-              <a ng-click="go(profile)"><i class="fa fa-pencil"></i></a>
+             <a ng-click="go(profile)"><span class="fa fa-pencil" style="color: #337ab7; margin-left: 20px;"></span></a> 
+                        
               <gcms-modal template="admin.role.delete.html" controller="ModalDefaultCtrl"
               content="profile" ok="delete" alt="delete user">
-              <i class="fa fa-trash"></i>
+            	  <span class="fa fa-trash" style="color: #337ab7; margin-left: 20px;"></span>
             </gcms-modal>
           </td>
-          
 
           <td>{{profile.userName}}</td>
           <td>{{profile.countryISOCode}}</td>

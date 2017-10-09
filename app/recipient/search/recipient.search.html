@@ -50,7 +50,7 @@
         <span class="btn btn-default" role="button" data-toggle="tooltip"  data-placement="top" title="download" ng-click="list()"><i class="fa fa-download"></i></span>
       </a>
        </gcms-modal>
-               <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" open="">
+               <gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" ok="validations" content="profile">
          <span class="btn btn-default" role="button" data-toggle="tooltip" data-placement="top" title="create request"><i class="fa fa-plus"></i></span>
        </gcms-modal>
 			</div>
@@ -109,7 +109,7 @@
                   <!-- <td colspan="10" class="text-center">
                      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
                      </td> -->
-                  <td colspan="10" class="text-center">
+                  <td colspan="8" class="text-center">
                      <div st-items-by-page="20" st-pagination="" st-template="app/recipient/list/pagination.custom.html"></div>
                       <div>{{responseOnSearch}}</div>
                   </td>

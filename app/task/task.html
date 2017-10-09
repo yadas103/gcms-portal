@@ -55,7 +55,7 @@
 						<button type="button" ng-show="uploader.progress==100" class="btn btn-success "
 							ng-click="upload()"
 							style="color: white;">
-							<span class="fa fa-spinner"></span> Process PDFs
+							<span class="fa fa-spin fa-spinner "></span> Validate PDFs
 						</button>
 						
 						<gcms-modal template="bulk.upload.html"
@@ -92,18 +92,15 @@
 
 			<div class="col-sm-5">
 				<ul style="font-size: 12px;">
-				 <li>Based on the QR code printed on the top-right corner of
+				 <li>Based on the Task id printed on the top-right corner of
 						each form, the platform will try to <strong>automatically
 							match the documents with the task.</strong>
-					</li>
-					<li>A successful match will remove your task. if unsuccessful,
-						the task will remain and you will manually attach the signed
-						document.</li>
+					</li>					
 					<li>The platform accepts <strong>only PDF files</strong></li>
 					<li>There are <b>scanned copies</b> of the EFPIA cross-border
-						consent forms<b>signed by the HCP/HCO</b>
+						consent forms <b>signed by the HCP/HCO</b>
 					<li>Being the process facilitator between Transparency Team
-						and the HCP / HCO,<strong>you are the responsible</strong> for the
+						and the HCP / HCO,<strong> you are the responsible</strong> for the
 						file content accuracy
 					</li>
 					<li><strong>Do not upload unsigned files!</strong></li>
@@ -200,11 +197,11 @@
 							<td><gcms-modal template="task.update.html"
 									controller="ModalDefaultCtrl" content="con" ok="update"
 									alt="Edit Task {{con.id}}"> <span
-									class="glyphicon glyphicon-pencil" style="color: #337ab7;"></span>
+									class="fa fa-pencil" style="color: #337ab7;"></span>
 								</gcms-modal> <gcms-modal template="task.delete.html"
 									controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 									alt="Delete Task {{con.id}}"> <span
-									class="glyphicon glyphicon-trash" style="color: #337ab7;"></span></td>
+									class="fa fa-trash" style="color: #337ab7;"></span></td>
 							<td>{{con.id}}</td>
 							<td>{{con.consannexid.bpid.id}}</td>
 							<td>{{con.consannexid.bpid.lastName}}</td>
@@ -233,7 +230,7 @@
 							</td>
 							<td>
 								<div ng-switch="con.taskstatus">
-									<div ng-switch-when="INCOMPLETED">
+									<div ng-switch-when="INCOMPLETE">
 										<gcms-modal template="task.reassign.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateReassign"
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
@@ -249,52 +246,280 @@
 										<span ng-mouseover="value(con)"> <a
 											ng-json-export-excel data="dldata"
 											report-fields="{											
-											'consannexid.bpid.id': 'TR Party ID',
+											'Record_type':'Record_type',
 											'consannexid.bpid.profileType': 'Party_Type',
 											'consannexid.bpid.organisationName': 'Organization',
 											'consannexid.bpid.lastName': 'Party Last Name',
 											'consannexid.bpid.firstName': 'Party First Name',
+											'Party Middle Name':'Party Middle Name',
+											'Party Credential':'Party Credential',
+											'Party Primary Specialty':'Party Primary Specialty',
+											'Party Title':'Party Title',
+											'Party Prefix':'Party Prefix',
+											'Party Suffix Name':'Party Suffix Name',
+											'Party Email Address':'Party Email Address',
+											'Party Role/Type of Attendee':'Party Role/Type of Attendee',
+											'Source System Identifier for Party':'Source System Identifier for Party',
+											'Party ID_1':'Party ID_1',
+											'Party ID Type_1':'Party ID Type_1',
+											'Party ID_2':'Party ID_2',
+											'Party ID Type_2':'Party ID Type_2',
+											'Party ID_3':'Party ID_3',
+											'Party ID Type_3':'Party ID Type_3',
+											'Party ID_4':'Party ID_4',
+											'Party ID Type_4':'Party ID Type_4',
+											'Party ID_5':'Party ID_5',
+											'Party ID Type_5':'Party ID Type_5',
+											'Party ID_6':'Party ID_6',
+											'Party ID Type_6':'Party ID Type_6',
+											'Party ID_7':'Party ID_7',
+											'Party ID Type_7':'Party ID Type_7',
+											'Party ID_8':'Party ID_8',
+											'Party ID Type_8':'Party ID Type_8',
+											'Party ID_9':'Party ID_9',
+											'Party ID Type_9':'Party ID Type_9',
+											'Party ID_10':'Party ID_10',
+											'Party ID Type_10':'Party ID Type_10',
+											'Party Address Type':'Party Address Type',
 											'AddressType': 'AddressType',
 											'consannexid.bpid.address': 'Party Address Line 1',
 											'consannexid.bpid.address2': 'Party Address Line 2',
 											'consannexid.bpid.address3': 'Party Address Line 3',
 											'consannexid.bpid.address4': 'Party Address Line 4',
+											'Party Region':'Party Region',
+											'Party County':'Party County',
+											'Party Province':'Party Province',
+											'Party Canton':'Party Canton',
 											'consannexid.bpid.city': 'Party City',
+											'Party Postal/Zip Code':'Party Postal/Zip Code',
+											'Party State':'Party State',
 											'consannexid.profilecountry.code': 'Party Postal/Zip Code',
 											'consannexid.profilecountry.isoCode': 'Party Country Code (2 character ISO)',
+											'Source System Identifier for Party_s Address':'Source System Identifier for Party_s Address',
+											'Consent_editor':'Consent_editor',
+											'Consent_required':'Consent_required',
 											'consannexid.consentstatus.consentStatus': 'Consent_Status',
 											'consannexid.consentstartdate': 'Consent_Start_Date',
 											'consannexid.consentenddate': 'Consent_End_Date',
-											'Source System Code[P]': 'Source System Code[P]'											
+											'Active Flag SAP':'Active Flag SAP',
+											'Parent Institution ID':'Parent Institution ID', 
+											'Parent Institution Type':'Parent Institution Type',
+											'FCPA Type':'FCPA Type',
+											'File Name':'File Name',
+											'Source System Code[P]': 'Source System Code[P]',
+											'Source Sub-System Code':'Source Sub-System Code',
+											'Custom/Flex Field 1':'Custom/Flex Field 1',
+											'Custom/Flex Field 2':'Custom/Flex Field 2',
+											'Custom/Flex Field 3':'Custom/Flex Field 3',
+											'Custom/Flex Field 4':'Custom/Flex Field 4',
+											'Custom/Flex Field 5':'Custom/Flex Field 5',
+											'Custom/Flex Field 6':'Custom/Flex Field 6',
+											'Custom/Flex Field 7':'Custom/Flex Field 7',
+											'Custom/Flex Field 8':'Custom/Flex Field 8',
+											'Custom/Flex Field 9':'Custom/Flex Field 9',
+											'Custom/Flex Field 10':'Custom/Flex Field 10',
+											'Custom/Flex Field 11':'Custom/Flex Field 11',
+											'Custom/Flex Field 12':'Custom/Flex Field 12',
+											'Custom/Flex Field 13':'Custom/Flex Field 13',
+											'Custom/Flex Field 14':'Custom/Flex Field 14',
+											'Custom/Flex Field 15':'Custom/Flex Field 15',
+											'Custom/Flex Field 16':'Custom/Flex Field 16',
+											'Custom/Flex Field 17':'Custom/Flex Field 17',
+											'Custom/Flex Field 18':'Custom/Flex Field 18',
+											'Custom/Flex Field 19':'Custom/Flex Field 19',
+											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
 											}"
-											filename="'DLU-P'"> DLU-P </a> <a ng-json-export-excel
+											filename="'Data'"> DLU-P </a>
+											 <a ng-json-export-excel
 											data="dldata"
 											report-fields="{
 											'consannexid.eventname': 'Event Name',
+											'Name of Event Venue': 'Name of Event Venue',
+											'Event Co-ordinator': 'Event Co-ordinator',
+											'Event Start Date': 'Event Start Date',
+											'Event End Date' : 'Event End Date',
+											'Event Agenda' : 'Event Agenda',
+											'Event Managed by Pfizer?': 'Event Managed by Pfizer?',
+											'Event Type' : 'Event Type',     
+											'Count of Covered Recipient Attendees': 'Count of Covered Recipient Attendees',
+											'Count of non Covered Recipient Attendees': 'Count of non Covered Recipient Attendees',
+											'Count of Pfizer employee attendees': 'Count of Pfizer employee attendees',
+											'Count of total invited': 'Count of total invited',
+											'Source System Identifier for Event': 'Source System Identifier for Event',
+											'Event Address Line 1': 'Event Address Line 1',
+											'Event Address Line 2': 'Event Address Line 2',
+											'Event Address Line 3': 'Event Address Line 3',
+											'Event Address Line 4': 'Event Address Line 4',
+											'Event Region':'Event Region',
+											'Event County':'Event County',
+											'Event Province':'Event Province',   
+											'Event Canton':'Event Canton',
+											'Event City':'Event City',
+											'Event Postal/Zip Code':'Event Postal/Zip Code',
+											'Event State':'Event State',
+											'Event Country Code (2 character ISO)':'Event Country Code (2 character ISO)',
+											'Transaction Currency': 'Transaction Currency',
+											'Covered Recipient Expense Amount in Transaction Currency': 'Covered Recipient Expense Amount in Transaction Currency',
+											'Expense Type Code' : 'Expense Type Code',
+											'Transaction Reportable Date': 'Transaction Reportable Date',										
 											'consannexid.profilecountry.code': 'Transaction Reporting Country',
+									       	'VAT': 'VAT',
+											'Withholding Tax':'Withholding Tax',
 											'consannexid.consentstatus.consentName': 'Consent',
+								         	'Source System Identifier for Transfer of Value':'Source System Identifier for Transfer of Value ', 
+											'Payment Method':'Payment Method',
+											'Check Number':'Check Number',
+											'Purpose of Payment or Event':'Purpose of Payment or Event',
+											'Pfizer Legal Entity':'Pfizer Legal Entity',
 											'consannexid.pocode': 'Purchase Order Number',
+									        'GL Code':'GL Code',
+									        'Is the payment made to person or organization?':'Is the payment made to person or organization?',
 											'consannexid.bpid.id': 'Covered Recipient ID',
 											'consannexid.bpid.profileType': 'Covered Recipient ID Type',
+										  	'Covered Recipient Licensed State':'Covered Recipient Licensed State',	
 											'consannexid.bpid.lastName': 'Covered Recipient Last Name/Organization Name for HCO',
 											'consannexid.bpid.firstName': 'Covered Recipient First Name',
+										    'Covered Recipient Middle Name':'Covered Recipient Middle Name',
+											'Covered Recipient Credential':'Covered Recipient Credential',
+											'Covered Recipient Primary Specialty':'Covered Recipient Primary Specialty',
+											'Covered Recipient Suffix Name':'Covered Recipient Suffix Name',
+											'Covered Recipient Email Address':'Covered Recipient Email Address',   
+											'Covered Recipient Role/Type of Attendee':'Covered Recipient Role/Type of Attendee',
+											'Source System Identifier for Covered Recipient':'Source System Identifier for Covered Recipient',
 											'consannexid.bpid.address': 'Covered Recipient Address Line 1',
 											'consannexid.bpid.address2': 'Covered Recipient Address Line 2',
 											'consannexid.bpid.address3': 'Covered Recipient Address Line 3',
 											'consannexid.bpid.address4': 'Covered Recipient Address Line 4',
+                       						'Covered Recipient Region':'Covered Recipient Region',
+											'Covered Recipient County':'Covered Recipient County',
+											'Covered Recipient Province':'Covered Recipient Province',
+											'Covered Recipient Canton':'Covered Recipient Canton',
 											'consannexid.bpid.city': 'Covered Recipient City',
+											'Covered Recipient State':'Covered Recipient State',
+											'Covered Recipient Postal/Zip Code':'Covered Recipient Postal/Zip Code',
+                       						'Source System Identifier for Covered Recipient Address':'Source System Identifier for Covered Recipient Address',
+                       						'Hotel/Lodging Name':'Hotel/Lodging Name',
+											'Hotel/Lodging Check In Date':'Hotel/Lodging Check In Date',
+											'Hotel/Lodging Check Out Date':'Hotel/Lodging Check Out Date',  
+											'Number of accomodation nights':'Number of accomodation nights',
+											'Hotel/Lodging Address':'Hotel/Lodging Address',
+											'FCPA Reference/In-country FCPA Number/FCPA Project ID':'FCPA Reference/In-country FCPA Number/FCPA Project ID',
+											'FCPA Transaction Type':'FCPA Transaction Type',
+											'FCPA Transaction Type for Reporting':'FCPA Transaction Type for Reporting',
+											'FCPA Vendor Type':'FCPA Vendor Type',
+                       						'Product 1':'Product 1',
+											'Product 2':'Product 2',
+											'Product 3':'Product 3',
+											'Product 4':'Product 4',
+											'Product 5':'Product 5',
+											'Name of Research Study':'Name of Research Study',     
+											'Research Objectives/Context of Research':'Research Objectives/Context of Research',
+											'Research Type/PreClinicalResearchIndicator':'Research Type/PreClinicalResearchIndicator',
+											'Research Expenditure Category':'Research Expenditure Category',
+                       						'Research Information Link(ex. web URL)':'Research Information Link(ex. web URL)',
+											'Clinical Trials .GOV Identifier (NCT)':'Clinical Trials .GOV Identifier (NCT)',
+                       						'Protocol ID/Protocol Number':'Protocol ID/Protocol Number',
+											'Protocol Program Code':'Protocol Program Code',
+                       						'Site Number':'Site Number',
+											'Site Status':'Site Status',
+											'Enrollment Number':'Enrollment Number',
+											'PI Disclose Indicator':'PI Disclose Indicator',
+											'Delay in Publication Reason':'Delay in Publication Reason ',   
+											'Payee As on the Check':'Payee As on the Check',
+                       						'Payee ID':'Payee ID',
+											'Payee ID Type':'Payee ID Type',
+											'Source System Payee Identifier':'Source System Payee Identifier',
+                       						'Payee Address Line 1':'Payee Address Line 1',
+											'Payee Address Line 2':'Payee Address Line 2',
+											'Payee Address Line 3':'Payee Address Line 3',
+											'Payee Address Line 4':'Payee Address Line 4',
+											'Payee Region':'Payee Region',
+											'Payee County':'Payee County',
+											'Payee Province':'Payee Province',
+											'Payee Canton':'Payee Canton',     
+											'Payee City':'Payee City',
+											'Payee Postal/Zip Code':'Payee Postal/Zip Code',
+											'Payee Country Code (2 character ISO)':'Payee Country Code (2 character ISO)',
+											'Payee State':'Payee State',
+                       						'Source Item ID':'Source Item ID',
+											'Pfizer Item ID':'Pfizer Item ID',
+											'Item Description':'Item Description',
+											'Item Quantity Distributed':'Item Quantity Distributed',
+											'Item Quantity Requested':'Item Quantity Requested',
+											'Requestor ID':'Requestor ID',
+											'Requestor Last Name':'Requestor Last Name',
+											'Requestor Middle Name':'Requestor Middle Name',      
+											'Requestor Email Address':'Requestor Email Address',
+											'Requestor Territory ID':'Requestor Territory ID',
+											'Data Provider Name':'Data Provider Name',
+											'Name of Contact at Data Provider':'Name of Contact at Data Provider',
+											'Phone Number of Contact at Data Provider':'Phone Number of Contact at Data Provider',
+                       						'Email of Contact at Data Provider':'Email of Contact at Data Provider',
+											'Transaction Comments': 'Transaction Comments',
+											'File Name':'File Name',
+											'Transaction Reportable Indicator': 'Transaction Reportable Indicator',
+											'Transaction Reportable Comment': 'Transaction Reportable Comment',
+                       						'Source Sub-System Code': 'Source Sub-System Code',                                                                                                                     
+											'Custom/Flex Field 1': 'Custom/Flex Field 1',      
+											'Custom/Flex Field 2': 'Custom/Flex Field 2',
+											'Custom/Flex Field 3': 'Custom/Flex Field 3',
+											'Custom/Flex Field 4': 'Custom/Flex Field 4',
+											'Custom/Flex Field 5': 'Custom/Flex Field 5',
+											'Custom/Flex Field 6': 'Custom/Flex Field 6',
+											'Custom/Flex Field 7': 'Custom/Flex Field 7',
+											'Custom/Flex Field 8': 'Custom/Flex Field 8',
+											'Custom/Flex Field 9': 'Custom/Flex Field 9',
+											'Custom/Flex Field 10': 'Custom/Flex Field 10',
+											'Custom/Flex Field 11': 'Custom/Flex Field 11',
+											'Custom/Flex Field 12': 'Custom/Flex Field 12',
+											'Custom/Flex Field 13': 'Custom/Flex Field 13',
+											'Custom/Flex Field 14': 'Custom/Flex Field 14',
+											'Custom/Flex Field 15': 'Custom/Flex Field 15',
+											'Custom/Flex Field 16': 'Custom/Flex Field 16',
+											'Custom/Flex Field 17': 'Custom/Flex Field 17',
+											'Custom/Flex Field 18': 'Custom/Flex Field 18',
+											'Custom/Flex Field 19': 'Custom/Flex Field 19',
+											'Custom/Flex Field 20': 'Custom/Flex Field 20',
+											'Custom/Flex Field 21': 'Custom/Flex Field 21',
+											'Custom/Flex Field 22': 'Custom/Flex Field 22',
+											'Custom/Flex Field 23': 'Custom/Flex Field 23',
+											'Custom/Flex Field 24': 'Custom/Flex Field 24',  
+											'Custom/Flex Field 25': 'Custom/Flex Field 25',
+											'Custom/Flex Field 26': 'Custom/Flex Field 26',
+											'Custom/Flex Field 27': 'Custom/Flex Field 27',
+											'Custom/Flex Field 28': 'Custom/Flex Field 28',
+											'Custom/Flex Field 29': 'Custom/Flex Field 29',
+											'Custom/Flex Field 30': 'Custom/Flex Field 30',
+											'Custom/Flex Field 31': 'Custom/Flex Field 31',
+											'Custom/Flex Field 32': 'Custom/Flex Field 32',
+											'Custom/Flex Field 33': 'Custom/Flex Field 33',
+											'Custom/Flex Field 34': 'Custom/Flex Field 34',
+											'Custom/Flex Field 35': 'Custom/Flex Field 35',
+											'Custom/Flex Field 36': 'Custom/Flex Field 36',
+											'Custom/Flex Field 37': 'Custom/Flex Field 37',
+											'Custom/Flex Field 38': 'Custom/Flex Field 38',
+											'Custom/Flex Field 39': 'Custom/Flex Field 39',
+											'Custom/Flex Field 40': 'Custom/Flex Field 40',
+											'Custom/Flex Field 41': 'Custom/Flex Field 41',
+											'Custom/Flex Field 42': 'Custom/Flex Field 42',
+											'Custom/Flex Field 43': 'Custom/Flex Field 43',
+											'Custom/Flex Field 44': 'Custom/Flex Field 44',
+											'Custom/Flex Field 45': 'Custom/Flex Field 45',
+											'Custom/Flex Field 46': 'Custom/Flex Field 46',
+											'Custom/Flex Field 47': 'Custom/Flex Field 47',
+											'Custom/Flex Field 48': 'Custom/Flex Field 48',
+											'Custom/Flex Field 49': 'Custom/Flex Field 49',
+											'Custom/Flex Field 50':'Custom/Flex Field 50',		
 											'Transaction Comments': 'Transaction Comments',
 											'Source System Code[T]': 'Source System Code[T]'
 											}"
-											filename="'DLU-T'"> DLU-T </a>
+											filename="'Data'"> DLU-T </a> 
 										</span>
 									</div>
 									<div ng-switch-when="DELETED">
 										<gcms-modal template="task.undelete.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
-											alt="{{con.id}}"> <span
-											class="glyphicon glyphicon-undo"
-											style="color: #337ab7; margin-left: 20px; margin-top: 8px;"></span>
+											alt="{{con.id}}"> <span>Undelete</span>
 										</gcms-modal>
 									</div>
 								</div>

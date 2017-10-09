@@ -2,7 +2,7 @@
   <li class="dropdown">
 
     <a class="dropdown-toggle toggle-nav-exPadding pull-right" data-toggle="dropdown">
-      <h6 ng-repeat="(id,profile) in profiles | filter: { countryId : currentProfile.countryId }">
+      <h6 class="nav-details" ng-repeat="(id,profile) in profiles | filter: { countryId : currentProfile.countryId }">
         <i class="famfamfam-flag-{{profile.countryISOCode.toLowerCase()}}"></i>
         Welcome, {{ fullName }}
         <i class="fa fa-user fa user-space"></i>

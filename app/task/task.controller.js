@@ -13,54 +13,37 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','LoggedUserDetail'];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','LoggedUserDetail','UserDetail'];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail,UserDetail){
 	  
 	  console.log("Inside controller");
+var   assigned=$scope.assigned;
+        var updateUserDetail = function(result){
+            $scope.user = result;
+          };
 	  
+          var loadUserDetail = function(){
+            $scope.user = [];
+            UserDetail.query().$promise.then(updateUserDetail);
+          };
 
-		$scope.add = function(newValue) {
-			var obj = {};
-			obj.Name = newValue;
-			obj.Value = newValue;
-			$scope.Groups.push(obj);
-			$scope.group.name = obj;
-			$scope.newValue = '';
-		}
+          loadUserDetail();
 
-		$scope.Groups = [ {
-			Name : 'Wrong Name selected',
-			Value : 'd1'
-		}, {
-			Name : 'Event cancelled',
-			Value : 'A2'
-		}, {
-			Name : 'No Payment',
-			Value : 'c3'
-		}, {
-			Name : 'Other reason',
-			Value : 'new'
-		} ];
-		$scope.group = {
-			name : ""
-		}
-      
-	  
+          $scope.$on('$localeChangeSuccess', loadUserDetail);
 	  /**
 		 * selim
-		 * 
 		 * @ngdoc method
 		 * @name value
 		 * @methodOf this method used for getting logged in user details
 		 * @description Gets data
 		 * 
-		 * var getloggedUserData = function(){ return
-		 * LoggedUserDetail.query().$promise.then(function(l){ $scope.loggeduser =
-		 * l.userProfiles[0]; }); };
-		 */	  
-	  
+	      var getloggedUserData = function(){		    
+		     return LoggedUserDetail.query().$promise.then(function(l){
+		       $scope.loggeduser = l.userProfiles[0];		       
+		      });
+		  };*/	  
 	  
  	  
 	  /**
@@ -90,7 +73,8 @@
 		    
 		     return Task.query().$promise.then(function(task){
 		       $scope.TaskAttributes = task;
-		       console.log(task);
+		       
+		      // console.log(task);
 		      });
 		  };	  
 	  getTaskData();
@@ -213,6 +197,7 @@
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.assignedto = item.assignedto;
+                              con.updatedDate = new Date();
 				}
 			});
 			Task.update({
@@ -226,7 +211,7 @@
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.deleted = 'false';
-					con.taskstatus = "INCOMPLETED";
+					con.taskstatus = "INCOMPLETE";
 					con.deleteReason = item.deleteReason;
 					con.deleteReasonDesc = item.deleteReasonDesc;
 					con.updatedDate = new Date();

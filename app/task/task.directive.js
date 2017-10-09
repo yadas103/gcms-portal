@@ -48,7 +48,8 @@
                   temp.sort();
 
                   scope.distinctItems = scope.distinctItems.concat(temp);
-                  scope.selectedOption = scope.distinctItems[0];
+                  //scope.selectedOption = scope.distinctItems[3];
+                  scope.selectedOption = 'INCOMPLETE';
                   scope.optionChanged(scope.selectedOption);
                 }
               }, true);

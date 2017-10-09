@@ -27,7 +27,7 @@ var rev = require('gulp-rev');
 
 var templateCache = require('gulp-angular-templatecache');
 
-gulp.task('usemin', ['move-templates','move-meta','move-config', 'move-assets','move-famfamfam', 'move-fonts', 'install', 'build','templates'], function () {
+gulp.task('usemin', ['move-templates','move-meta','move-config', 'move-assets','move-famfamfam', 'move-fonts', 'build','templates'], function () {
   return gulp.src('./*.html')
       .pipe(usemin({
         css: [minifyCss(), 'concat', rev()],
@@ -62,7 +62,7 @@ gulp.task('move-config', ['clean:build'], function(){
 gulp.task('move-assets', ['clean:build'], function(){
   return gulp.src(['./assets/**/*.ico',
                    './assets/**/*.png',
-                   './assets/vendor/angular-i18n/*.js'],  {base: './assets/'})
+                   './assets/vendor/**/*.js'],  {base: './assets/'})
   .pipe(gulp.dest('./build/assets/'));
 });
 gulp.task('move-famfamfam', ['clean:build'], function(){

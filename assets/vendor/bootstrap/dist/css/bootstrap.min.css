@@ -170,6 +170,9 @@ fieldset {
     margin: 0 2px;
     border: 1px solid silver
 }
+.nav-details{
+	font-size: 12px;
+}
 #formrequest{
 	    border-radius: 5px;
 }
@@ -910,7 +913,7 @@ html {
 }
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.42857143;
     color: #333;
     background-color: #fff
@@ -5682,7 +5685,10 @@ button.close {
 .modal-header {
     min-height: 16.43px;
     padding: 15px;
-    border-bottom: 1px solid #e5e5e5
+    border-bottom: 1px solid #e5e5e5;
+     background-color: #337ab7;
+    color: white;
+     padding: 5px;
 }
 .modal-header .close {
     margin-top: -2px

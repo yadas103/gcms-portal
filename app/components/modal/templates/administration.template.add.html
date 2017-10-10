@@ -13,9 +13,10 @@
       <div class="form-group">
          <label for="templateType" class="col-sm-3 control-label">Template Type:</label>
          <div class="col-sm-9">
-            <select ng-model="item.tmpl_type" ng-click="foo();" ng-dropdown" style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
-               <option   value="Y">InCountry</option>
-               <option   value="N">CrossBorder</option>
+            <select ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+               <option value="">Select..</option>
+               <option value="InCountry">InCountry</option>
+               <option value="CrossBorder">CrossBorder</option>
             </select>
          </div>
       </div>
@@ -37,7 +38,8 @@
       <div class="form-group">
          <label for="consentValidityPeriod" class="col-sm-3 control-label" style="padding-left:4px;">Consent Validity Period :</label>
          <div class="col-sm-9">
-            <select ng-model="item.dates_rages" ng-click="foo();" ng-dropdown" style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+               <option value="">Select..</option>
                <option value="Y">Y</option>
                <option value="N">N</option>
             </select>

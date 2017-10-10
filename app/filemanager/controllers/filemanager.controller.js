@@ -2,8 +2,8 @@
   'use strict'
   angular.module('dctmNgFileManager')
     .controller('FileManagerController', [
-      '$scope', '$rootScope', '$window', '$translate', 'fileManagerConfig', 'item', 'permit', 'fileNavigator', 'apiMiddleware', 'dctmClient', 'dctmConstants',
-      function ($scope, $rootScope, $window, $translate, fileManagerConfig, Item, Permit, FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
+      '$scope', '$rootScope', '$window', '$translate','fileManagerConfig', 'item', 'permit', 'fileNavigator', 'apiMiddleware', 'dctmClient', 'dctmConstants',
+      function ($scope, $rootScope, $window, $translate,fileManagerConfig, Item, Permit, FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
         var $storage = $window.localStorage
         $scope.config = fileManagerConfig
         $scope.reverse = false
@@ -14,14 +14,15 @@
         }
         $scope.query = ''
         $scope.search = ''
-        $scope.fileNavigator = new FileNavigator()
-        $scope.apiMiddleware = new ApiMiddleware()
+        $scope.fileNavigator = new FileNavigator();
+        $scope.apiMiddleware = new ApiMiddleware();
         $scope.uploadFileList = []
         $scope.viewTemplate = $storage.getItem('viewTemplate') || 'main-table.html'
         $scope.fileList = []
         $scope.temps = []
         $scope.dctmConstants = dctmConstants
-
+       
+        $scope.taskGbl=''
         $scope.getRepositoryList = function () {
           $scope.apiMiddleware.listRepositories()
         }
@@ -122,7 +123,8 @@
         	$scope.apiMiddleware.login().then(function () {
 	                $scope.fileNavigator.refresh()
 	                $scope.modal('signin', true)
-	                
+	               // console.log("Test in upload=="+$scope.taskGbl)
+	               // console.log("Test in upload=="+$scope.taskGbl.id)
 	                var repoLink =$scope.config.repoLink
 	                var path =$scope.config.folderPath
                     //getFolderObjectByPath
@@ -131,12 +133,16 @@
 		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		            $scope.modal('uploadfile', true)
 		            var link =respn.data.links[0]
-		            var docLink = link.href;
-		            console.log(docLink);
-		            $storage.setItem(dctmConstants.DOC_LINK, docLink)
-		            var cacheLink = $storage.getItem(dctmConstants.DOC_LINK)
-		            console.log(cacheLink);
-		            
+		            var docLink = link.href;		            
+		            //console.log("Temp location "+$scope.item.tmpl_location);
+		            //console.log("AnnexID"+$scope.item.consannexid);
+		            if($scope.item.consannexid == undefined){
+		            	console.log("inside if") 
+		            	$scope.item.tmpl_location=docLink;
+		            }else{
+		            	console.log("inside else")
+		            	$scope.item.consannexid.annnexlocation=docLink;
+		            }
 		          }, function (resp) {
 		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files')
 		            $scope.apiMiddleware.error = errorMsg
@@ -161,18 +167,32 @@
           })
         }
 
-        $scope.download = function () {
-          /*var item = $scope.singleSelection()
-          if ($scope.selectionHas('dir')) {
-            return
-          }*/
-        	 return $scope.apiMiddleware.download()
-
-          /*if (item) {
-            return $scope.apiMiddleware.download(item)
-          }
-          return $scope.apiMiddleware.downloadMultiple($scope.temps)*/
-        }
+        $scope.download = function (obj) {    		
+    		$scope.link=obj;
+    		console.log("$scope  "+$scope.link)
+    		console.log("$scope  " , $scope.link.id)
+    		console.log("$scope  "+$scope.link.consannexid)
+    		var location
+    		if($scope.link.consannexid == undefined){
+    		console.log("Inside IF ");
+    		 location=$scope.link.tmpl_location
+    		}else if($scope.link.annnexlocation == ''){
+    			console.log("Inside ELSE IF ");
+    			location=$scope.link.annnexlocation
+    		}else{
+    			console.log("Inside ELSE ");
+    			location=$scope.link.consannexid.annnexlocation
+    		}
+    		//var location=$scope.link.consannexid.annnexlocation
+    		// var cacheDocLink = $storage.getItem(dctmConstants.DOC_LINK)
+    		// console.log(cacheDocLink);
+    		console.log(location)
+            //$scope.apiMiddleware.getDocumentByLink(cacheDocLink).then(function (resp) { 
+            $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
+            var doc=resp.data;
+            return $scope.apiMiddleware.getDocumentDownload(doc)
+            	})
+            }
 
         $scope.openImagePreview = function () {
           var item = $scope.singleSelection()
@@ -444,7 +464,11 @@
           }
         }
 
+        
+        
         $scope.modal = function (id, hide, returnElement) {
+        	
+        
           var element = $('#' + id)
           element.modal(hide ? 'hide' : 'show')
           $scope.apiMiddleware.error = ''

@@ -241,16 +241,16 @@
             dctmConstants.QUERY_PARAMS.FORMAT, document.properties.a_content_type)
         }
 
-        ApiMiddleware.prototype.download = function () {
-         /* if (item.isFolder()) {
+        /*ApiMiddleware.prototype.download = function () {
+          if (item.isFolder()) {
             return
-          }*/
-         /* var docum= 'http://dctmrest-dev.pfizer.com/dctm-rest/repositories/gnosis71_dev/documents/09003cd4811becd2'
+          }
+          var docum= 'http://dctmrest-dev.pfizer.com/dctm-rest/repositories/gnosis71_dev/documents/09003cd4811becd2'
         	  dctmClient.get(docum).then(function (resp) {
                   defer.resolve(resp)
               }, function (error) {
                 defer.reject(error)
-              })*/ 
+              }) 
           //return dctmClient.getPrimaryContentMedia(item.model.object).then(function (content) {
           return dctmClient.getPrimaryContentMedia().then(function (content) {
             // if you have to overcome cors issue, open url in a new window
@@ -258,8 +258,21 @@
             var bin = new Blob([content.data])
             saveAs(bin, 'sample')
           })
-        }
+        }*/
 
+        ApiMiddleware.prototype.getDocumentDownload = function (doc) {
+        	return dctmClient.getPrimaryContentMedia(doc).then(function (content) {
+                var bin = new Blob([content.data])
+                var docName=doc.properties.object_name
+                //saveAs(bin, 'sample.pdf')
+                saveAs(bin, docName)
+              })
+        }
+		
+		    ApiMiddleware.prototype.getDocumentByLink = function (cacheDocLink) {
+            return dctmClient.getDocumentByLink(cacheDocLink)
+        }
+        
         ApiMiddleware.prototype.getPermissionSet = function (item) {
           return dctmClient.getPermissionSet(item.model.object)
         }

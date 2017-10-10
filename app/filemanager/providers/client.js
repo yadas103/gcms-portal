@@ -459,31 +459,27 @@
           })
           return delayed
         },
-        'getPrimaryContentMedia': function getPrimaryContentMedia () {
-        	
-          var self = this
-          var defer = this.clientBase.q.defer()
-          var promise = defer.promise
-          
-          var documLink= 'http://dctmrest-dev.pfizer.com/dctm-rest/repositories/gnosis71_dev/documents/09003cd4811becd2'
-         	 
-              this.get(documLink).then(function (resp) {
-               var document = resp.data
-              // var contentMediaUrl = findLinkInLinksArray(contentMeta.links, dctmConstants.LINK_RELATIONS.CONTENT_MEDIA)
-                     //   defer.resolve(self.getBinary(contentMediaUrl))
-                      })
-          this.getPrimaryContentMeta(document, dctmConstants.QUERY_PARAMS.MEDIA_URL_POLICY, 'local').then(function (resp) {
-            var contentMeta = resp.data
-            var contentMediaUrl = findLinkInLinksArray(contentMeta.links, dctmConstants.LINK_RELATIONS.CONTENT_MEDIA)
-            defer.resolve(self.getBinary(contentMediaUrl))
-          })
-          return promise
+        'getDocumentByLink': function getDocumentByLink (cacheDocLink) {
+        	//var cacheLink = localStorage.getItem(dctmConstants.DOC_LINK)
+
+        	return this.get(cacheDocLink)
         },
-        'getPrimaryContentMeta': function getPrimaryContentMeta (document) {
-          var link = findLinkInLinksArray(document.links, dctmConstants.LINK_RELATIONS.PRIMARY_CONTENT)
-          link = appendURLParams(link, arguments)
-          return this.get(link)
-        },
+        'getPrimaryContentMedia': function getPrimaryContentMedia (document) {
+            var self = this
+            var defer = this.clientBase.q.defer()
+            var promise = defer.promise
+            this.getPrimaryContentMeta(document, dctmConstants.QUERY_PARAMS.MEDIA_URL_POLICY, 'local').then(function (resp) {
+              var contentMeta = resp.data
+              var contentMediaUrl = findLinkInLinksArray(contentMeta.links, dctmConstants.LINK_RELATIONS.CONTENT_MEDIA)
+              defer.resolve(self.getBinary(contentMediaUrl))
+            })
+            return promise
+          },
+          'getPrimaryContentMeta': function getPrimaryContentMeta (document) {
+            var link = findLinkInLinksArray(document.links, dctmConstants.LINK_RELATIONS.PRIMARY_CONTENT)
+            link = appendURLParams(link, arguments)
+            return this.get(link)
+          } ,
         'setContent': function setContent (document, binary) {
           var link = findLinkInLinksArray(document.links, dctmConstants.LINK_RELATIONS.CONTENTS)
           link = appendURLParams(link, arguments)

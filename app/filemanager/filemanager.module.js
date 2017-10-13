@@ -1,6 +1,6 @@
 (function(window, angular, $) {
     'use strict';
-    angular.module('dctmNgFileManager', ['pascalprecht.translate']);
+    angular.module('dctmNgFileManager', ['pascalprecht.translate','gcms.components.data']);
 
     /**
      * jQuery inits

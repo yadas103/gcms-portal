@@ -1,5 +1,5 @@
-;(function (angular) {
-  'use strict'
+(function (angular) {
+  'use strict';
   angular.module('dctmNgFileManager').factory('item', ['fileManagerConfig', function (fileManagerConfig) {
     var Item = function (model, path) {
       var rawModel = {
@@ -16,51 +16,51 @@
         content: model && model.content || '',
         recursive: false,
         fullPath: function () {
-          var path = this.path.filter(Boolean)
-          return ('/' + path.join('/') + '/' + this.name).replace(/\/\//, '/')
+          var path = this.path.filter(Boolean);
+          return ('/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
         }
-      }
+      };
 
-      this.error = ''
-      this.processing = false
+      this.error = '';
+      this.processing = false;
 
-      this.model = angular.copy(rawModel)
-      this.tempModel = angular.copy(rawModel)
-    }
+      this.model = angular.copy(rawModel);
+      this.tempModel = angular.copy(rawModel);
+    };
 
     Item.prototype.update = function () {
-      angular.extend(this.model, angular.copy(this.tempModel))
-    }
+      angular.extend(this.model, angular.copy(this.tempModel));
+    };
 
     Item.prototype.revert = function () {
-      angular.extend(this.tempModel, angular.copy(this.model))
-      this.error = ''
-    }
+      angular.extend(this.tempModel, angular.copy(this.model));
+      this.error = '';
+    };
 
     Item.prototype.isFolder = function () {
-      return this.model.type === 'dir'
-    }
+      return this.model.type === 'dir';
+    };
 
     Item.prototype.isEditable = function () {
-      return !this.isFolder() && fileManagerConfig.isEditableFilePattern.test(this.model.name)
-    }
+      return !this.isFolder() && fileManagerConfig.isEditableFilePattern.test(this.model.name);
+    };
 
     Item.prototype.isImage = function () {
-      return fileManagerConfig.isImageFilePattern.test(this.model.name)
-    }
+      return fileManagerConfig.isImageFilePattern.test(this.model.name);
+    };
 
     Item.prototype.isPdf = function () {
-      return fileManagerConfig.isPdfFilePattern.test(this.model.name)
-    }
+      return fileManagerConfig.isPdfFilePattern.test(this.model.name);
+    };
 
     Item.prototype.isCompressible = function () {
-      return this.isFolder()
-    }
+      return this.isFolder();
+    };
 
     Item.prototype.isExtractable = function () {
-      return !this.isFolder() && fileManagerConfig.isExtractableFilePattern.test(this.model.name)
-    }
+      return !this.isFolder() && fileManagerConfig.isExtractableFilePattern.test(this.model.name);
+    };
 
-    return Item
-  }])
+    return Item;
+  }]);
 })(angular);

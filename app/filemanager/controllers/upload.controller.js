@@ -29,11 +29,6 @@
       $scope.maxLength = 100;
       
       
-      
-    
-      
-      //hide popovers in case we came from there
-      //$('.popover-link').popover('hide');
       $('.popover').hide();
       
       /**

@@ -1,7 +1,7 @@
-;(function (angular) {
-  'use strict'
+(function (angular) {
+  'use strict';
   angular.module('dctmNgFileManager').config(['$translateProvider', function ($translateProvider) {
-    $translateProvider.useSanitizeValueStrategy(null)
+    $translateProvider.useSanitizeValueStrategy(null);
 
     $translateProvider.translations('en', {
       filemanager: 'File Manager',
@@ -109,7 +109,7 @@
       basic: 'Basic',
       extend: 'Extend',
       markForDelete: 'Mark for delete'
-    })
+    });
 
     $translateProvider.translations('he', {
       filemanager: 'מנהל קבצים',
@@ -199,7 +199,7 @@
       preview: 'הצגת פריט',
       open: 'פתח',
       new_folder: 'תיקיה חדשה'
-    })
+    });
 
     $translateProvider.translations('pt', {
       filemanager: 'Gerenciador de arquivos',
@@ -290,7 +290,7 @@
       open: 'Abrir',
       these_elements: 'estes {{total}} elements',
       new_folder: 'Nova pasta'
-    })
+    });
 
     $translateProvider.translations('es', {
       filemanager: 'Administrador de archivos',
@@ -381,7 +381,7 @@
       open: 'Abrir',
       these_elements: 'estos {{total}} elementos',
       new_folder: 'Nueva carpeta'
-    })
+    });
 
     $translateProvider.translations('fr', {
       filemanager: 'Gestionnaire de fichier',
@@ -472,7 +472,7 @@
       open: 'Ouvrir',
       these_elements: 'ces {{total}} éléments',
       new_folder: 'Nouveau dossier'
-    })
+    });
 
     $translateProvider.translations('de', {
       filemanager: 'Dateimanager',
@@ -563,7 +563,7 @@
       open: 'Öffnen',
       these_elements: 'diese {{total}} elemente',
       new_folder: 'Neuer ordner'
-    })
+    });
 
     $translateProvider.translations('sk', {
       filemanager: 'Správca súborov',
@@ -654,7 +654,7 @@
       open: 'Otvoriť',
       these_elements: 'týchto {{total}} prvkov',
       new_folder: 'Nový priečinok'
-    })
+    });
     $translateProvider.translations('zh', {
       filemanager: '文档管理器',
       language: '语言',
@@ -744,6 +744,6 @@
       open: '打开',
       these_elements: '共 {{total}} 个',
       new_folder: '新文件夹'
-    })
-  }])
+    });
+  }]);
 })(angular);

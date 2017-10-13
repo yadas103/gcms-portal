@@ -50,12 +50,12 @@
                                                            >View </a> 
 
 							</td>
-							<td>{{ identity.profileTypeId }}</td>
-							<td>{{ identity.firstName}}</td>
-							<td>{{ identity.lastName }}</td>
-							<td>{{ identity.organizationName}}</td>
-							<td>{{ identity.country}}</td>
-							<td>{{ identity.status }}</td>
+							<td style="word-break: break-all;">{{ identity.profileTypeId }}</td>
+							<td style="word-break: break-all;">{{ identity.firstName}}</td>
+							<td style="word-break: break-all;">{{ identity.lastName }}</td>
+							<td style="word-break: break-all;">{{ identity.organizationName}}</td>
+							<td style="word-break: break-all;">{{ identity.country}}</td>
+							<td style="word-break: break-all;">{{ identity.status }}</td>
 
 							<td>
 								<div ng-switch="identity.status">
@@ -73,33 +73,36 @@
 							</td>
 
 						</tr>
+						<div class="container">
+						<div class="row">
+						
 						<tr ng-if="identity.expanded" ng-repeat-end="">
 							<td colspan="12">
 								<table class="table table-hover table-condensed table-striped">
 									<tr>
-										<td style="padding-left: 63px;">ProfileTypeId: {{
-											identity.profileTypeId }}</td>
+										<td style="padding-left: 63px;">ProfileTypeId:<span  style="margin-left: 86px;">  {{
+											identity.profileTypeId }}</span></td>
 
-										<td style="padding-left: 63px;">FirstName: {{
-											identity.firstName}}</td>
+										<td style="padding-left: 63px;">FirstName:<span  style="margin-left: 86px;"> {{
+											identity.firstName}}</span></td>
 									</tr>
 									<tr>
-										<td style="padding-left: 63px;">LastName: {{
-											identity.lastName }}</td>
-										<td style="padding-left: 63px;">OrganizationName: {{
-											identity.organizationName}}</td>
+										<td style="padding-left: 63px;">LastName:<span  style="margin-left: 86px;">  {{
+											identity.lastName }}</span></td>
+										<td style="padding-left: 63px;">OrganizationName:<span style="margin-left: 39px;"> {{
+											identity.organizationName}}</span></td>
 									</tr>
 
 									<tr>
-										<td style="padding-left: 63px;">Country: {{
-											identity.country }}</td>
-										<td style="padding-left: 63px;">Address: {{
-											identity.address}}</td>
+										<td style="padding-left: 63px;">Country: <span  style="margin-left: 86px;"> {{
+											identity.country }}</span></td>
+										<td style="padding-left: 63px;">Address:<span style="margin-left: 95px;"> {{
+											identity.address}}</span></td>
 									</tr>
 									<tr>
 
-										<td style="padding-left: 63px;">Speciality: {{
-											identity.specility}}</td>
+										<td style="padding-left: 63px;">Speciality:<span  style="margin-left: 86px;">  {{
+											identity.specility}}</span></td>
 										<td style="padding-left: 63px;">Notes:{{ identity.notes}}</td>
 
 									</tr>
@@ -119,6 +122,9 @@
 								</table>
 							</td>
 						</tr>
+					
+						</div>
+						</div>
 					</tbody>
 					<tfoot>
 						<tr>

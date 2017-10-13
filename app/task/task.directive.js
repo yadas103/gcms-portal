@@ -36,7 +36,7 @@
 
                 if (newValue) {
                   var temp = [];
-                  scope.distinctItems = ['All'];
+                  scope.distinctItems = ['ALL'];
 
                   angular.forEach(scope.collection, function(item) {
                     var value = item[predicate];
@@ -61,7 +61,7 @@
 
                 query.distinct = selectedOption;
 
-                if (query.distinct === 'All') {
+                if (query.distinct === 'ALL') {
                   query.distinct = '';
                 }
 

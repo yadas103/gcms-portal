@@ -1,5 +1,5 @@
-;(function (angular) {
-  'use strict'
+(function (angular) {
+  'use strict';
   angular.module('dctmNgFileManager')
     .provider('fileManagerConfig', function () {
       var values = {
@@ -48,14 +48,14 @@
         isExtractableFilePattern: /\.(gz|tar|rar|g?zip)$/i,
         isPdfFilePattern: /\.(pdf)$/i,
         tplPath: 'app/filemanager/templates'
-      }
+      };
 
       return {
         $get: function () {
-          return values
+          return values;
         },
         set: function (constants) {
-          angular.extend(values, constants)
+          angular.extend(values, constants);
         }
       }
     })

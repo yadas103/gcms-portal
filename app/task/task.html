@@ -17,16 +17,11 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="panel-body">
-					<!-- <div>
-						<gcms-modal template="bulk.upload.html"
-							controller="ModalDefaultCtrl" ok="upload" content="uploader" 
-							alt="Upload images"> <span class="btn btn-default"
-							role="button">Select PDF file(s) to upload</span> </gcms-modal>
 
-					</div> -->
 					<div>
 						<label class="fileContainer"> <a class="btn btn-default"
-							role="button">Select files...</a> <input type="file"
+							role="button" ng-hide="alerts.length >0 == true"  >Select files...</a>
+							<input type="file"
 							ngf-select="" ng-model="picFile" name="file"
 							ngf-pattern="'image/*,application/pdf'" nv-file-select
 							uploader="uploader" multiple="" accept="application/pdf" />
@@ -43,45 +38,35 @@
 							</div>
 						</div>
 						
-						
-						<button type="button" ng-show="uploader.getNotUploadedItems().length " class="btn btn-success "
+						<div ng-if="uploader.getNotUploadedItems().length"  ng-init="uploader.uploadAll()" >
+						 <a href="" >Uploading...</a>
+						</div>
+						 <!-- <button type="button" ng-show="uploader.getNotUploadedItems().length " class="btn btn-success "
 							ng-click="uploader.uploadAll()"
 							style="color: white;">
 							<span class="fa fa-upload"></span> Upload PDFs
-						</button>
+						</button> -->
 						
-						{{uploader.queue.isSuccess}}
 						
-						<button type="button" ng-show="uploader.progress==100" class="btn btn-success "
+						<div ng-if="uploader.progress==100""  ng-init="upload()" >
+						  <a href=""><span class="fa fa-spin fa-spinner "></span>
+						  Validating...</a>
+						</div>
+						 <!-- <button type="button" ng-show="uploader.progress==100" class="btn btn-success "
 							ng-click="upload()"
 							style="color: white;">
-							<span class="fa fa-spin fa-spinner "></span> Validate PDFs
-						</button>
+							<span class="fa fa-spinner "></span> Validate PDFs
+						</button>  -->
 						
 						<gcms-modal template="bulk.upload.html"
 							controller="ModalDefaultCtrl" ok="" content="Result"
 							alt="Upload images"> 
-							<button ng-show="alerts.length > 0 == true" class="btn btn-success"
-							style="color: white;">Uploaded PDF's Status</button></gcms-modal>
+							<a  ng-show="alerts.length > 0 == true" class="btn btn-default"
+							role="button" >Uploaded PDF's Status</a>
+
+						</gcms-modal>  
 						
-						<!--
-						<button type="button" ng-show="uploader.getNotUploadedItems().length == true" class="btn btn-primary "
-							ng-click="uploader.uploadAll()"
-							ng-disabled="!uploader.getNotUploadedItems().length"
-							disabled="disabled" style="color: white;">
-							<span class="fa fa-upload"></span> Upload PDFs
-						</button>
-						<button type="button" ng-show="uploader.progress" class="btn btn-primary "
-							ng-click="upload()"
-							ng-disabled="!uploader.progress"
-							disabled="disabled" style="color: white;">
-							<span class="fa fa-spinner"></span> Process PDFs
-						</button>
-						 <button type="button" class="btn btn-success"
-							ng-click="upload()" ng-disabled="!uploader.queue.length"
-							disabled="disabled" style="background-color: green;">
-							<span class="class=" fa fa-spinner fa-spin"></span>Process PDFs
-						</button> -->
+						
 									
 
 					</div>
@@ -114,7 +99,7 @@
 
 	</div>
 </div>
-<div ng-include="'app/filemanager/templates' + '/modals.html'"></div> 
+ <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
 <div class="panel panel-primary table-responsive">
 	<div class="panel-heading">Upload your documents - Manual Match</div>
 	<div class="panel-body">
@@ -216,36 +201,64 @@
 							<td>{{con.createdBy}}</td>
 							<td>
 								<div ng-if="con.consannexid.annnexlocation==undefined">
+									<gcms-upload template="modals2.html"
+										controller="ModalDefaultCtrl2" content="con" ok="update"
+										alt="Edit Task {{con.id}}"> <span> Upload</span>
+									</gcms-upload>
+								</div> 
 								
-								<div ng-controller="FileManagerController">
-    							<a herf="" ng-show="config.allowedActions.upload" ng-click="modal('uploadfile')">
-        						 Upload
+								 <div ng-if="con.consannexid.annnexlocation!=undefined">
+									<div ng-show="true" ng-controller="FileManagerController">
+									
+										<a href="" ng-click="download(con)"> View </a>
+									</div>
+									<gcms-upload template="modals2.html"
+										controller="ModalDefaultCtrl2" content="con" ok="update"
+										alt="Edit Task {{con.id}}"> <span>Change</span>
+									</gcms-upload>
+
+								</div> 
+								 <!-- <div ng-controller="FileManagerController">
+										<a herf="" ng-show="config.allowedActions.upload"
+											ng-click="modal1('uploadfile', con)"> Upload </a>
+								
+										<div ng-show="true" ng-controller="FileManagerController">
+											<button type="button" class="glyphicon glyphicon-cloud-download" ng-click="download()">{{'download' | translate}}</button>
+											<a href=""  ng-click="download(con.consannex.annexlocation)"> download
+												
      				    		</a>                    
 								</div>
 								
-								</div>
-								<div ng-if="con.consannexid.annnexlocation!=undefined">View
-									Change</div>
+									</div>  --> 
+								
 
 							</td>
 							<td>
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
+									<div data-ng-if ="loggeduser.roleId='5'"> 
 										<gcms-modal template="task.reassign.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateReassign"
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
 										<span>Reassign</span> </gcms-modal>
 									</div>
+									</div>
 									<div ng-switch-when="COMPLETED">
+									<div data-ng-if ="loggeduser.roleId='5'"> 
+									    <span ng-mouseover="value(con)" >
 										<gcms-modal template="task.revoke.html"
 											controller="ModalDefaultCtrl" content="con" ok="revoke"
 											alt="Revoke Consent{{con.id}}"> <span>Revoke</span>
 										</gcms-modal>
-
+										</span>
+										<br/>
+										<br/>
 										<!-- 'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status' -->
-										<span ng-mouseover="value(con)"> <a
+										<div>
+										<span ng-mouseover="mouseIN(con)" ng-mouseout="mouseOUT(con)" >
+										 <a
 											ng-json-export-excel data="dldata"
-											report-fields="{											
+											report-fields="{
 											'Record_type':'Record_type',
 											'consannexid.bpid.profileType': 'Party_Type',
 											'consannexid.bpid.organisationName': 'Organization',
@@ -362,23 +375,23 @@
 											'Covered Recipient Expense Amount in Transaction Currency': 'Covered Recipient Expense Amount in Transaction Currency',
 											'Expense Type Code' : 'Expense Type Code',
 											'Transaction Reportable Date': 'Transaction Reportable Date',										
-											'consannexid.profilecountry.code': 'Transaction Reporting Country',
+									       'consannexid.profilecountry.code': 'Transaction Reporting Country',
 									       	'VAT': 'VAT',
 											'Withholding Tax':'Withholding Tax',
-											'consannexid.consentstatus.consentName': 'Consent',
+								         'consannexid.consentstatus.consentName': 'Consent',
 								         	'Source System Identifier for Transfer of Value':'Source System Identifier for Transfer of Value ', 
 											'Payment Method':'Payment Method',
 											'Check Number':'Check Number',
 											'Purpose of Payment or Event':'Purpose of Payment or Event',
 											'Pfizer Legal Entity':'Pfizer Legal Entity',
-											'consannexid.pocode': 'Purchase Order Number',
+									                    'consannexid.pocode': 'Purchase Order Number',
 									        'GL Code':'GL Code',
 									        'Is the payment made to person or organization?':'Is the payment made to person or organization?',
-											'consannexid.bpid.id': 'Covered Recipient ID',
-											'consannexid.bpid.profileType': 'Covered Recipient ID Type',
+										           'consannexid.bpid.id': 'Covered Recipient ID',
+										  'consannexid.bpid.profileType': 'Covered Recipient ID Type',	
 										  	'Covered Recipient Licensed State':'Covered Recipient Licensed State',	
-											'consannexid.bpid.lastName': 'Covered Recipient Last Name/Organization Name for HCO',
-											'consannexid.bpid.firstName': 'Covered Recipient First Name',
+								                     'consannexid.bpid.lastName': 'Covered Recipient Last Name/Organization Name for HCO',
+										    'consannexid.bpid.firstName': 'Covered Recipient First Name',
 										    'Covered Recipient Middle Name':'Covered Recipient Middle Name',
 											'Covered Recipient Credential':'Covered Recipient Credential',
 											'Covered Recipient Primary Specialty':'Covered Recipient Primary Specialty',
@@ -386,15 +399,15 @@
 											'Covered Recipient Email Address':'Covered Recipient Email Address',   
 											'Covered Recipient Role/Type of Attendee':'Covered Recipient Role/Type of Attendee',
 											'Source System Identifier for Covered Recipient':'Source System Identifier for Covered Recipient',
-											'consannexid.bpid.address': 'Covered Recipient Address Line 1',
-											'consannexid.bpid.address2': 'Covered Recipient Address Line 2',
-											'consannexid.bpid.address3': 'Covered Recipient Address Line 3',
-											'consannexid.bpid.address4': 'Covered Recipient Address Line 4',
+										      'consannexid.bpid.address': 'Covered Recipient Address Line 1',
+										     'consannexid.bpid.address2': 'Covered Recipient Address Line 2',
+									             'consannexid.bpid.address3': 'Covered Recipient Address Line 3',
+									             'consannexid.bpid.address4': 'Covered Recipient Address Line 4',
                        						'Covered Recipient Region':'Covered Recipient Region',
 											'Covered Recipient County':'Covered Recipient County',
 											'Covered Recipient Province':'Covered Recipient Province',
 											'Covered Recipient Canton':'Covered Recipient Canton',
-											'consannexid.bpid.city': 'Covered Recipient City',
+                       						'consannexid.bpid.city': 'Covered Recipient City',		
 											'Covered Recipient State':'Covered Recipient State',
 											'Covered Recipient Postal/Zip Code':'Covered Recipient Postal/Zip Code',
                        						'Source System Identifier for Covered Recipient Address':'Source System Identifier for Covered Recipient Address',
@@ -455,7 +468,7 @@
 											'Name of Contact at Data Provider':'Name of Contact at Data Provider',
 											'Phone Number of Contact at Data Provider':'Phone Number of Contact at Data Provider',
                        						'Email of Contact at Data Provider':'Email of Contact at Data Provider',
-											'Transaction Comments': 'Transaction Comments',
+											'Transaction Comments':'Transaction Comments',
 											'File Name':'File Name',
 											'Transaction Reportable Indicator': 'Transaction Reportable Indicator',
 											'Transaction Reportable Comment': 'Transaction Reportable Comment',
@@ -510,17 +523,21 @@
 											'Custom/Flex Field 48': 'Custom/Flex Field 48',
 											'Custom/Flex Field 49': 'Custom/Flex Field 49',
 											'Custom/Flex Field 50':'Custom/Flex Field 50',		
-											'Transaction Comments': 'Transaction Comments',
+										    'Transaction Comments': 'Transaction Comments',
 											'Source System Code[T]': 'Source System Code[T]'
 											}"
-											filename="'Data'"> DLU-T </a> 
+											filename="'Data'"> DLU-T </a>
 										</span>
+										</div>
+										</div>
 									</div>
 									<div ng-switch-when="DELETED">
-										<gcms-modal template="task.undelete.html"
-											controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
-											alt="{{con.id}}"> <span>Undelete</span>
-										</gcms-modal>
+										<div data-ng-if ="loggeduser.roleId='5'"> 
+											<gcms-modal template="task.undelete.html"
+												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
+												alt="{{con.id}}"> <span>Undelete</span>
+											</gcms-modal>
+										</div>
 									</div>
 								</div>
 

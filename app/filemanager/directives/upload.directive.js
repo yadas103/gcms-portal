@@ -75,7 +75,7 @@
             * Resolves the promise returned by the modal instance result
             */
            $scope.resolve = function(item) {
-        	 // $scope.modelBeingEdited = item;
+        	 
              $scope.ok()(item);
              console.log("in resove" +item)
            };

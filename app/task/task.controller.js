@@ -19,7 +19,7 @@
   function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail,UserDetail){
 	  
 	  console.log("Inside controller");
-var   assigned=$scope.assigned;
+		var assigned=$scope.assigned;
         var updateUserDetail = function(result){
             $scope.user = result;
           };
@@ -29,23 +29,23 @@ var   assigned=$scope.assigned;
             UserDetail.query().$promise.then(updateUserDetail);
           };
 
-          loadUserDetail();
+          /*loadUserDetail();
 
-          $scope.$on('$localeChangeSuccess', loadUserDetail);
-	  /**
-		 * selim
-		 * @ngdoc method
-		 * @name value
-		 * @methodOf this method used for getting logged in user details
-		 * @description Gets data
-		 * 
-	      var getloggedUserData = function(){		    
-		     return LoggedUserDetail.query().$promise.then(function(l){
-		       $scope.loggeduser = l.userProfiles[0];		       
-		      });
-		  };*/	  
-	  
- 	  
+          $scope.$on('$localeChangeSuccess', loadUserDetail);*/
+          
+         	var updateLoggedUserDetail = function(result){
+              $scope.loggeduser= result;
+            };
+
+            var loadLoggedUserDetail = function(){
+              $scope.loggeduser= [];
+              LoggedUserDetail.query().$promise.then(updateLoggedUserDetail);
+            };
+
+            loadUserDetail();
+
+            $scope.$on('$localeChangeSuccess', loadLoggedUserDetail);
+          
 	  /**
 	   	 * selim 
 	     * @ngdoc method
@@ -54,14 +54,27 @@ var   assigned=$scope.assigned;
 	     * @description Gets data
 	     */
 	  $scope.dldata=[];
-	  $scope.value=function(con){            
-		  con['AddressType']='primary Address';
+	  $scope.mouseIN=function(con){            
+		  /*con['AddressType']='primary Address';
 		  con['Source System Code[P]']='DLU-P-GCMS';
 		  con['Source System Code[T]']='DLU-T-GCMS';
-		  con['Transaction Comments']='Consent update from GCMS';
+		  con['Transaction Comments']='Consent update from GCMS';*/
 	      $scope.dldata = [con];
+	      console.log("value ",con);
 	  }
 	 
+	  $scope.mouseOUT=function(con){
+		  $scope.con=con;
+	     // delete con['Address Type'];
+	     // delete con['Source System Code[P]'];
+	     // delete con['Source System Code[T]'];
+	     // delete con['Transaction Comments'];
+	     
+	      console.log("value2 ",con);
+	  }
+	  $scope.value=function(con){
+		  $scope.con=con;
+	  }
 	  /**
 	     * selim
 	     * @name getTaskData
@@ -143,7 +156,7 @@ var   assigned=$scope.assigned;
 	         angular.forEach($scope.TaskAttributes, function(con){
 	            	
 	         if (con.id === item.id) {
-	           con.consannexid.consentstatus.id=item.consannexid.consentstatus.id;
+	       
 	           con.updatedDate = new Date();      
 	              }
 	            });
@@ -197,7 +210,7 @@ var   assigned=$scope.assigned;
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.assignedto = item.assignedto;
-                              con.updatedDate = new Date();
+                     con.updatedDate = new Date();
 				}
 			});
 			Task.update({

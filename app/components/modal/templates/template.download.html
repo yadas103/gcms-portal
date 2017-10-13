@@ -1,19 +1,50 @@
-<div class="modal-content" style="width: 140%;">
-	<div class="modal-header">
-		<h3 class="modal-title" style="font-size: medium; padding-left: 10px;">Set
-			Additional details</h3>
-	</div>
-	<div class="modal-body table-responsive">
-		<p style="font-size: 12px;">It is very important to give us the
-			required details. Event Name allows us to match multiple payments to
-			the same profile. PO Code and ACM Code will give us the ability to
-			identify the right invoices. Enter this information in the proper
-			columns of the below list. Once done press Save Changes button.</p>
-		<gcms-annex></gcms-annex>
-	</div>
-
-	<div class="modal-footer">
-		<button class="btn btn-warning" ng-click="cancel()">Close</button>
-	</div>
-
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium;padding-left: 10px;">Set Additional details</h3>
 </div>
+<div class="modal-body">
+	<p style="font-size: 12px;">
+	It is very important to give us the required details. Event Name allows us to match multiple payments to the same profile. PO Code and ACM Code will give us the ability to identify the right invoices. 
+Enter this information in the proper columns of the below list. Once done press Save Changes button.
+	</p>
+	<div ng-controller = "ProfileListCtrl">
+ <form name="generateAnnex">
+  <table class="table table-bordered table-striped table-highlight">
+  <div class=" class="panel panel-primary table-responsive">
+	<thead style="background-color:#337ab7;color:white;">
+	<tr  class="panel-title" style="font-size: 14px;">
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 25px;">Template Type</th>	
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">Last Name/Organizations Name*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 25px;">First Name*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 25px;">Event Description*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 25px;">TR ID*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 25px;">PO Code</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">ACM/ InterAct Code</th>
+    </tr>
+	</thead>
+	
+	<tbody>
+	<tr ng-repeat = "i in item.checkedIds"  >
+	<td>	
+	<select class="form-control" ng-model="item.request[i.id].tmpl_id" ng-options="template.id as template.tmpl_name for template in item.templates | filter:customArrayFilter" required><option value="" ng-show="{{empty}}"></option></select>			
+    </td>			
+ 	<td ng-model="item.request[i.id].lastName" >{{i.lastName}}{{i.organisationName}}</td>
+    <td ng-model="item.request[i.id].firstName">{{i.firstName}}</td>	             
+    <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="item.request[i.id].eventname" required></td>
+    <td ng-model="item.request[i.id].id" >{{i.id}}</td>
+	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" required> </td>
+ 	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" required></td>
+ 	
+ 	</tr>
+	</tbody>	
+	</div>
+	</table>	
+</form>	
+	<span style="margin-left: 339px;"><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</span>
+	</div>
+</div>
+	
+	
+	

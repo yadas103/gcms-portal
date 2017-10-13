@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
 
-	<form name="taskForm" class="form-horizontal" novalidate>
+	<form name="taskForm" class="form-horizontal" novalidate ng-controller ="FileManagerController">
 
 		<div class="form-group"
 			ng-if="!item.consannexid.bpid.profileType || item.consannexid.bpid.profileType === 'HCP'">
@@ -79,11 +79,19 @@
 					ng-model="item.consannexid.revocationReason">
 			</div>
 		</div>
-
-		<gcms-modal template="recipient.upload.html"
+		
+		
+		<input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" onchange="angular.element(this).scope().uploadFiles()" />
+          <!-- <div ng-include data-src="'error-bar'" class="clearfix"></div> -->
+          <div ng-show="apiMiddleware.inprocess">
+            <span class="label label-warning">{{"uploading" | translate}} ...</span>
+          </div>
+        
+        {{item.consannexid.annnexlocation}}
+		<!-- <gcms-modal template="recipient.upload.html"
 			controller="ModalDefaultCtrl" ok="upload" content="uploader"
 			alt="Upload images"> <span class="btn btn-default"
-			role="button">Upload Proof of Revocation</span> </gcms-modal>
+			role="button">Upload Proof of Revocation</span> </gcms-modal> -->
 
 
 	</form>

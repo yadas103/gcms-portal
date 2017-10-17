@@ -133,7 +133,10 @@
    		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
    		       $scope.uploader.clearQueue();
    		       console.log(result)		       
-   		      });
+   		      }).catch(function(){
+     		    	$scope.uploader.clearQueue();  
+       		    	$scope.error="File(s) not able to process ";
+       		      });
    		  //};
             
           }

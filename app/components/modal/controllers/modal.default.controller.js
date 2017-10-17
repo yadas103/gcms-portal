@@ -38,12 +38,13 @@
     	      $scope.openedStart = true;
     	    });
     	  };
+    	  $scope.openedStart = false;
     	  $scope.endDate = function() {
       	    $timeout(function() {
       	      $scope.openedEnd = true;
       	    });
       	  };
-      
+      	$scope.openedEnd = false;
     
       
       //hide popovers in case we came from there

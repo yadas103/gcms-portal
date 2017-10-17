@@ -133,14 +133,17 @@
 		            if($scope.item.consannexid == undefined){
 		            	console.log("Consent annex id is null") ;
 		            	$scope.item.tmpl_location=docLink;
+		            	$scope.success="File Uploaded Successfully"
 		            }else{
 		            	console.log("Consent annex id is not null");
 		            	$scope.item.consannexid.annnexlocation=docLink;
 		            	$scope.item.taskstatus="COMPLETED";
+		            	$scope.success="File Uploaded Successfully"
 		            }
 		          }, function (resp) {
 		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
 		            $scope.apiMiddleware.error = errorMsg;
+		            $scope.error="File is not able to upload ";
 		          });	
 	                }, function (resp) {
 	                  self.apiMiddleware.parseError(resp.data);
@@ -174,9 +177,6 @@
         		if($scope.link.consannexid == undefined){
 	        		console.log("Inside IF ");
 	        		location=$scope.link.tmpl_location;
-        		}else if($scope.link.annnexlocation == ''){
-        			console.log("Inside ELSE IF ");
-        			location=$scope.link.annnexlocation;
         		}else{
         			console.log("Inside ELSE ");
         			location=$scope.link.consannexid.annnexlocation;

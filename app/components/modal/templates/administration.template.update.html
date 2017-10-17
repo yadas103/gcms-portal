@@ -29,7 +29,8 @@
             </select>  -->
          </div>
       </div>
-      <div class="form-group" ng-if="item.dates_rages=='Y'" >
+      <div ng-show="item.dates_rages=='Y'" >
+      <div class="form-group" >
          <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity Start Date:</label>
          <div class="col-sm-9">
               <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart"  close-text="Close" />                          
@@ -40,18 +41,17 @@
          </div>
          
       </div>
-      <div class="form-group" ng-if="item.dates_rages=='Y'">
+      <div class="form-group">
          <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
          <div class="col-sm-9">
-            <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" is-open="openedEnd"  close-text="Close" />                           
+            <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" min-date="item.validity_start_date" is-open="openedEnd"  close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
               <i class="fa fa-calendar"></i></button>  
               
          </div>
       </div>
-      <!--  <input type="date" id="endDate" name="endDate" class="form-control" ng-model="item.consannexid.consentenddate"  />
-         <span class="error" ng-show="searchForm.validFrom.$error.date">Not a valid date!</span> min="{{to.minDate | date:'yyyy-MM-dd'}}" max="{{to.maxDate | date:'yyyy-MM-dd'}}-->
-</div>
+      </div>
+      </div>
 </form>
 </div>
 <div class="modal-footer">

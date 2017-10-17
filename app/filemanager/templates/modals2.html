@@ -8,30 +8,36 @@
 <div class="modal-body">
 
   
-      <form ng-controller ="FileManagerController">
+      <form ng-submit="uploadFiles()" ng-controller ="FileManagerController">
        
         <div class="modal-body">
+        <span style="color:green;">{{success}}</span>
+        <span style="color:red;">{{error}}</span>
+          
           <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
-          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" onchange="angular.element(this).scope().uploadFiles()" />
+          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" style="padding-top: 3px;"/> <!-- onchange="angular.element(this).scope().uploadFiles() -->
           <!-- <div ng-include data-src="'error-bar'" class="clearfix"></div> -->
+          <button type="submit" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess" style="margin-top: 8px;">{{'upload' | translate}}</button>
+          
           <div ng-show="apiMiddleware.inprocess">
             <span class="label label-warning">{{"uploading" | translate}} ...</span>
           </div>
-          <!-- <div ng-show="!apiMiddleware.inprocess">
-          <button type="submit" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess">{{'upload' | translate}}</button>
-          </div> -->
-          {{item.consannexid.annnexlocation}} 
-          {{item.tmpl_location}}         
+       
+          
+          
+                 
         </div>
 
             <div class="modal-footer" >
            
             
            <div ng-if="item.consannexid==undefined">
-           <button class="btn btn-primary" ng-disabled="item.tmpl_location==undefined || !uploadFileList.length "  ng-click="ok()" >{{'upload' | translate}}</button>          
+           <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           <button class="btn btn-primary" ng-disabled="item.tmpl_location==undefined || !uploadFileList.length "  ng-click="ok()" >Save</button>          
           </div>
           <div ng-if="item.consannexid != undefined">
-           <button class="btn btn-primary" ng-disabled="item.consannexid.annnexlocation==undefined || !uploadFileList.length "  ng-click="ok()" >{{'upload' | translate}}</button>
+           <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           <button class="btn btn-primary" ng-disabled="item.consannexid.annnexlocation==undefined || !uploadFileList.length "  ng-click="ok()" >Save</button>
            </div>
           
   <!-- <button class="btn btn-primary" ng-click="ok()" >OK</button> uploadFiles() -->

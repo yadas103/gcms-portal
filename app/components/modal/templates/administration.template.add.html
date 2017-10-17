@@ -7,29 +7,31 @@
       <div class="form-group">
          <label for="templateName" class="col-sm-3 control-label">Template Name:</label>
          <div class="col-sm-9">
-            <input ng-maxlength="50" type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="max 50 char">
+            <input ng-maxlength="50" type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="Max 60 character" required>
          </div>
       </div>
       <div class="form-group">
          <label for="templateType" class="col-sm-3 control-label">Template Type:</label>
          <div class="col-sm-9">
-            <select ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
-               <option value="">Select..</option>
-               <option value="InCountry">InCountry</option>
-               <option value="CrossBorder">CrossBorder</option>
+            <select ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+               <option value="">Please select</option>
+               <option value="InCountry-HCO">InCountry - HCO</option>
+               <option value="InCountry-HCP">InCountry - HCP</option>
+               <option value="CrossBorder-HCO" ng-hide="item.dates_rages=='Y'">CrossBorder - HCO</option>
+               <option value="CrossBorder-HCP" ng-hide="item.dates_rages=='Y'">CrossBorder - HCP</option>
             </select>
          </div>
       </div>
       <div class="form-group">
          <label for="templatePage" class="col-sm-3 control-label">Template Consent Page:</label>
          <div class="col-sm-9">
-            <input type="number" min=1 max=10 class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="provide consent page number" required >
+            <input type="number" min=1 max=10 class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="Provide consent page number" required >
          </div>
       </div>
       <div class="form-group">
          <label for="templateDesc" class="col-sm-3 control-label">Template Description:</label>
          <div class="col-sm-9">
-         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control" ng-model="item.tmpl_desc" > 
+         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control" ng-model="item.tmpl_desc" required> 
           
             </textarea>
             <!-- <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" > -->
@@ -38,27 +40,35 @@
       <div class="form-group">
          <label for="consentValidityPeriod" class="col-sm-3 control-label" style="padding-left:4px;">Consent Validity Period :</label>
          <div class="col-sm-9">
-            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
-               <option value="">Select..</option>
-               <option value="Y">Y</option>
+            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+               <option value="" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Please select</option>
+               <option value="Y" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Y</option>
                <option value="N">N</option>
             </select>
          </div>
       </div>
-      <!-- <div class="form-group">
-         <label for="consentValidityPeriod" class="col-sm-3 control-label" style="margin-left: -139px;">Consent</label>
+      <div class="form-group" ng-if="item.dates_rages=='Y'" >
+         <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity Start Date:</label>
+         <div class="col-sm-9">
+              <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date"  is-open="openedStart" ng-required="true" close-text="Close" />                          
+              <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
+              <i class="fa fa-calendar"></i></button>              
+         </div>
+         <!--min-date="mindate"-->
+      </div>
+      <div class="form-group" ng-if="item.dates_rages=='Y'">
+         <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" >
-          <select ng-model="item.dates_rages" ng-click="foo();" ng-dropdown style="margin-left: -3px;">
-         <option value="Y">Y</option>
-         <option value="N">N</option>
-         </select> 
+            <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
+              <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
+              <i class="fa fa-calendar"></i></button>  
+              
+         </div>
          </div> 
-         <input type="text" class="form-control" id="datesrages" name="datesrages" ng-model="item.dates_rages" placeholder="" >        
-         </div> -->
+      
    </form>
 </div>
 <div class="modal-footer">
    <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminTemplateForm.$invalid">Add Template</button>
-   <button class="btn btn-warning" ng-click="cancel()" ng-disabled="adminTemplateForm.$invalid">Cancel</button>
+   <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
 </div>

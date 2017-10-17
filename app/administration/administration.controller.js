@@ -134,8 +134,20 @@
 			            	  $scope.counter++;
 			              }
 			            });		        	
-		        	item.tmpl_code=$scope.isoCode+"-"+$scope.counter;
-		        	item.tmpl_status="Pending"; 
+		        	
+		        	var temptype=item.tmpl_type;
+		        	console.log("Template Type"+temptype);
+		        	if(item.tmpl_type=="InCountry-HCP"){
+		        		item.tmpl_code=$scope.isoCode+"LP"+"-"+$scope.counter;
+		        	} else if(item.tmpl_type=="InCountry-HCO"){
+		        		item.tmpl_code=$scope.isoCode+"LO"+"-"+$scope.counter;
+		        	} else if(item.tmpl_type=="CrossBorder-HCP"){
+		        		item.tmpl_code=$scope.isoCode+"GP"+"-"+$scope.counter;
+		        	} else if(item.tmpl_type=="CrossBorder-HCO"){
+		        		item.tmpl_code=$scope.isoCode+"GO"+"-"+$scope.counter;
+		        	}	
+		        	item.tmpl_status="ACTIVE"; 
+		        	console.log(item.tmpl_code);
 		            $scope.Templates.push(item);
 		            
 		            Templates.save(item).$promise.then(getTemplateData);
@@ -160,6 +172,25 @@
 		            Templates.update({ id:item.id }, item);
 		          };
 		          
+		          /**selim
+					 * @ngdoc method
+					 * @name deactivate
+					 * @methodOf template update
+					 * @description Updates Template
+					 * @param {object}
+					 *            item Template to update
+		 */
+		          $scope.deactivateTemplate = function(item) {
+		            angular.forEach($scope.Templates, function(temp){
+		              if (temp.id === item.id) {
+		                // do nessasary work here if needed
+		            	  item.tmpl_status="INACTIVE";
+		              }
+		            });
+		            console.log(item.id);
+		            
+		            Templates.update({ id:item.id }, item);
+		          };
 		          /**selim
 					 * @ngdoc method
 					 * @name delete

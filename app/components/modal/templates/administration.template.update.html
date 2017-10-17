@@ -22,16 +22,17 @@
       <div class="form-group">
          <label for="dates_range" class="col-sm-3 control-label">Dates Range:</label>
          <div class="col-sm-9">          
-            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
+               <input type="text" class="form-control" id="dates_rages" ng-model="item.dates_rages" ng-readonly="true">
+             <!-- <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;">
                <option value="Y">Y</option>
                <option value="N">N</option>
-            </select>
+            </select>  -->
          </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-if="item.dates_rages=='Y'" >
          <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity Start Date:</label>
          <div class="col-sm-9">
-              <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart" ng-required="true" close-text="Close" />                          
+              <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart"  close-text="Close" />                          
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
               <i class="fa fa-calendar"></i></button> 
               
@@ -39,10 +40,10 @@
          </div>
          
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-if="item.dates_rages=='Y'">
          <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
          <div class="col-sm-9">
-            <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
+            <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" is-open="openedEnd"  close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
               <i class="fa fa-calendar"></i></button>  
               
@@ -56,5 +57,5 @@
 <div class="modal-footer">
    <button class="btn btn-primary" ng-click="ok()"
       ng-disabled="adminForm.$invalid">Update</button>
-   <button class="btn btn-warning" ng-click="cancel()" ng-disabled="adminForm.$invalid">Cancel</button>
+   <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
 </div>

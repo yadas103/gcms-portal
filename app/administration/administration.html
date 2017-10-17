@@ -70,8 +70,9 @@
 									<th>Template Code</th>
 									<th>Template Description</th>
 									<th>Dates Range</th>
-									<th>Start Date</th>
-									<th>End Date</th>
+									<th>Validity Start Date</th>
+									<th>Validity End Date</th>
+									<th>Template Status</th>
 									<th>Template Upload</th>
 									<!-- data-ng-if="temp.cntry_id.id==con.countries.id" -->
 								</tr>
@@ -83,16 +84,25 @@
 									<td><gcms-modal
 											template="administration.template.update.html"
 											controller="ModalDefaultCtrl" content="temp"
-											ok="updateTemplate" alt="Edit Template {{temp.id}}">
+											ok="updateTemplate" alt="Edit Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-pencil"
-											style="color: #337ab7; margin-left: 20px;"></span> </gcms-modal> <gcms-modal
+											style="color: #337ab7;margin-left:20px"></span> </gcms-modal>
+											 <gcms-modal
 											template="administration.template.delete.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deleteTemplate" alt="Delete Template {{temp.id}}">
 										<span class="fa fa-trash"
-											style="color: #337ab7; margin-left: 20px;"></span></td>
+											style="color: #337ab7;margin-left:20px""></span> </gcms-modal>											
+										<gcms-modal
+											template="administration.template.deactivate.html"
+											controller="ModalDefaultCtrl" content="temp"
+											ok="deactivateTemplate" alt="Deactivate Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
+										<span class="fa fa-ban fa-inverse"
+											style="color: #337ab7;margin-left:20px""></span> </gcms-modal>
 
 
+										<!-- ng-hide="IsVisible"<span><button ng-click="showHide()">show</button>
+										<i class="fa fa-toggle-on" aria-hidden="true"></i></span> -->
 
 									</td>
 									<td style="word-break: break-all ; width: 200px;">{{temp.tmpl_name}}</td>
@@ -101,6 +111,7 @@
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
+									<td>{{temp.tmpl_status}}</td>
 									<td >
 									
 									
@@ -109,16 +120,16 @@
 										
 										<div ng-if="temp.tmpl_location==undefined">
 									<gcms-upload template="modals2.html"
-										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate">
+										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
 										 <span>Upload</span>
 									</gcms-upload>
 								</div>
 								
 								
 								<div ng-if="temp.tmpl_location!=undefined" >								    
-										<a href="" ng-click="download(temp)"> View </a>
+										<a href="" ng-click="download(temp)" ng-show="temp.tmpl_status=='ACTIVE'"> View </a>
 									<gcms-upload template="modals2.html"
-										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate">
+										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
 										 <span>Change</span>
 									</gcms-upload>
 

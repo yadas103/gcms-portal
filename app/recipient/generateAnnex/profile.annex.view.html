@@ -1,17 +1,17 @@
- <div  ng-model = "downloadMsg">{{msg}}</div>
+ <div  ng-model = "downloadMsg" style="color:maroon;font-size: 13px;">{{msg}}</div>
   <form name="generateAnnex">
   <table class="table table-bordered table-striped table-highlight">
   <div class=" class="panel panel-primary table-responsive">
 	<thead style="background-color:#337ab7;color:white;">
 	<tr  class="panel-title" style="font-size: 14px;">
-	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 39px;">Template Type</th>
+	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 10px;">Template Type</th>
 	
 	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">Last Name/Organizations Name*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 25px;">First Name*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 39px;">Event Description*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 39px;">TR ID*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 39px;">PO Code</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 23px;">ACM/ InterAct Code</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">First Name*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">Event Description*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">TR ID*</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">PO Code</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">ACM/ InterAct Code</th>
 	<th></th>
 	
 	</tr>
@@ -20,21 +20,23 @@
 	<tbody>
 	<tr ng-repeat = "i in checkedIds"  >
 	<td>
-	<select ng-model="request.tmpl_id" class="form-control">
-	<option ng-repeat="template in templates | filter:customArrayFilter">{{template.tmpl_name}}</option>
-	</select>				
+	<!-- <select ng-model="checkedIds.request[i.id].tmpl_id" class="form-control">
+	<option ng-repeat="template.id as template.tmpl_name fortemplate in templates | filter:customArrayFilter">{{template.tmpl_name}}</option>
+	</select>	 -->
+	<select class="form-control" ng-model="checkedIds.request[i.id].tmpl_id" ng-options="template.id as template.tmpl_name for template in templates | filter:customArrayFilter"><option value="" ng-show="{{empty}}"></option></select>
+	
+				
     </td>			
- 	<td ng-model="request.lastName">{{i.lastName}}</td>
-    <td ng-model="request.firstName">{{i.firstName}}</td>	             
-    <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="request.eventname"></td>
-    <td ng-model="request.id" >{{i.id}}</td>
-	<td><input type="text" id="pocode" placeholder="" ng-model="request.pocode" class="form-control"> </td>
- 	<td><input type="text" id="acmcode" placeholder="" ng-model="request.acmcode" class="form-control"></td>
+ 	<td ng-model="checkedIds.request[i.id].lastName">{{i.lastName}}{{i.organisationName}}</td>
+    <td ng-model="checkedIds.request[i.id].firstName">{{i.firstName}}</td>	             
+    <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="checkedIds.request[i.id].eventname"></td>
+    <td ng-model="checkedIds.request[i.id].id" >{{i.id}}</td>
+	<td><input type="text" id="pocode" placeholder="" ng-model="checkedIds.request[i.id].pocode" class="form-control"> </td>
+ 	<td><input type="text" id="acmcode" placeholder="" ng-model="checkedIds.request[i.id].acmcode" class="form-control"></td>
  	<td><button class="btn btn-xs btn-primary" type="button" ng-click="submit(request)">Generate</button></td>
  	</tr>
 	</tbody>	
-	<tfoot>	
-	</tfoot>
 	</div>
 	</table>
+	<button class="btn btn-xs btn-primary" type="button" ng-click="submittry()">Generate</button>
 </form>	

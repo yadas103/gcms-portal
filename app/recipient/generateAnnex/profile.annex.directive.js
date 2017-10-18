@@ -16,7 +16,7 @@
              },
         templateUrl: 'app/recipient/generateAnnex/profile.annex.view.html',
         controller: function($scope) {        	
-           
+        
             $scope.generateConsentAnnex = {};
             $scope.id = [];  
             $scope.checked = [];
@@ -75,8 +75,10 @@
                 
               
                   var y = 0;
-                  $scope.submit = function(request){                 	
-                	
+                  
+                  $scope.submit = function(request){ 
+                	  
+                	for(y in $scope.checkedIds ){
                 	 var values = $scope.checkedIds;               	 
                 	 var profilecountry = 'profilecountry';
                 	 var payercountry = 'payercountry';
@@ -97,10 +99,54 @@
                    }).catch(function(){
                  	  $scope.msg = "Unable to generate PDF";
                    });
-                	 y++;
+                  }
+                	 //y++;
                 	 
                 	  
   				};
+  				
+  				$scope.submittry = function(){ 
+  					console.log($scope.checkedIds);
+  					var values = $scope.checkedIds;               	 
+  					var profilecountry = 'profilecountry';
+  					var payercountry = 'payercountry';
+  					var profileType = 'profileType';
+  					var bpid = 'bpid';
+  					var tmpl_id = 'tmpl_id';
+  					var eventname = 'eventname';
+  					
+  					var modifiedparams = {};
+  					  					
+  					for(y in $scope.checkedIds ){
+  						if(y!="request"){
+  					var currentId = values[y].id; 	
+  					
+  				
+  					modifiedparams['payercountry'] = {id: JSON.stringify($scope.profileCountry_Id)};
+  					modifiedparams['profilecountry'] = {id: JSON.stringify($scope.id.collectingCtry)};
+  					modifiedparams['profileType'] = $scope.searchCriteria.profileType;
+  					modifiedparams['bpid'] = {id: currentId};
+  					modifiedparams['tmpl_id'] = {id: JSON.stringify($scope.checkedIds.request[currentId].tmpl_id)};
+  					modifiedparams['eventname'] = $scope.checkedIds.request[currentId].eventname;
+  					modifiedparams['pocode'] = $scope.checkedIds.request[currentId].pocode;
+  					modifiedparams['acmcode'] = $scope.checkedIds.request[currentId].acmcode;
+  					console.log(modifiedparams);
+  				  	 ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
+                         if(result.$promise.$$state.status == 1)
+                     	{
+                     	$scope.msg = "You can see the generated PDF in your Downloads folder";
+                     	}
+                    
+                   }).catch(function(){
+                 	  $scope.msg = "Unable to generate PDF";
+                   });
+  						}
+  						
+  					}
+  					
+  					
+  				};
+  				
               
                
         }

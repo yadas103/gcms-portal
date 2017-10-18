@@ -29,9 +29,9 @@
             UserDetail.query().$promise.then(updateUserDetail);
           };
 
-          /*loadUserDetail();
+          loadUserDetail();
 
-          $scope.$on('$localeChangeSuccess', loadUserDetail);*/
+          $scope.$on('$localeChangeSuccess', loadUserDetail);
           
          	var updateLoggedUserDetail = function(result){
               $scope.loggeduser= result;

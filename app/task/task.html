@@ -169,14 +169,33 @@
 					<tbody data-ng-repeat="con in displayedCollection" ng-switch
 						on="con.taskstatus">
 						<tr>
-							<td><gcms-modal template="task.update.html"
+						
+      <td>
+                                          <div ng-switch="con.taskstatus">
+                                                      <div ng-switch-when="INCOMPLETE">
+                                                      <gcms-modal template="task.update.html"
+									controller="ModalDefaultCtrl" content="con" ok="update"
+									alt="Edit Task {{con.id}}"> <span
+									class="fa fa-pencil" style="color: #337ab7;"></span>
+								</gcms-modal>  <gcms-modal template="task.delete.html"
+									controller="ModalDefaultCtrl" content="con" ok="updateDelete"
+									alt="Delete Task {{con.id}}"> <span
+									class="fa fa-trash" style="color: #337ab7;"></span>
+                                                      </div>
+                                                      <div ng-switch-when="COMPLETED">
+                                                      <gcms-modal template="task.update.html"
 									controller="ModalDefaultCtrl" content="con" ok="update"
 									alt="Edit Task {{con.id}}"> <span
 									class="fa fa-pencil" style="color: #337ab7;"></span>
 								</gcms-modal> <gcms-modal template="task.delete.html"
 									controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 									alt="Delete Task {{con.id}}"> <span
-									class="fa fa-trash" style="color: #337ab7;"></span></td>
+									class="fa fa-trash" style="color: #337ab7;"></span>
+                                                      </div>
+                                                      </div>
+
+            </td>
+						
 							<td>{{con.id}}</td>
 							<td>{{con.consannexid.bpid.id}}</td>
 							<td>{{con.consannexid.bpid.lastName}}</td>
@@ -190,13 +209,33 @@
 							<td>{{con.taskstatus}}</td>
 							<td>{{con.createdBy}}</td>
 							<td>
+                                          <div ng-switch="con.taskstatus">
+                                                      <div ng-switch-when="INCOMPLETE">
 								<div ng-if="con.consannexid.annnexlocation==undefined">
 									<gcms-upload template="modals2.html"
 										controller="ModalDefaultCtrl2" content="con" ok="update"
 										alt="Edit Task {{con.id}}"> <span> Upload</span>
 									</gcms-upload>
 								</div> 
+                                                <div ng-if="con.consannexid.annnexlocation!=undefined">
+									<div ng-show="true" ng-controller="FileManagerController">
 								
+										<a href="" ng-click="download(con)"> View </a>
+									</div>
+									<gcms-upload template="modals2.html"
+										controller="ModalDefaultCtrl2" content="con" ok="update"
+										alt="Edit Task {{con.id}}"> <span>Change</span>
+									</gcms-upload>
+
+								</div> 
+                                     </div>
+                                     <div ng-switch-when="COMPLETED">
+                                               <div ng-if="con.consannexid.annnexlocation==undefined">
+									<gcms-upload template="modals2.html"
+										controller="ModalDefaultCtrl2" content="con" ok="update"
+										alt="Edit Task {{con.id}}"> <span> Upload</span>
+									</gcms-upload>
+								</div> 
 								 <div ng-if="con.consannexid.annnexlocation!=undefined">
 									<div ng-show="true" ng-controller="FileManagerController">
 									
@@ -208,6 +247,10 @@
 									</gcms-upload>
 
 								</div> 
+                                     </div>
+                                        </div>
+                                        
+							
 								 <!-- <div ng-controller="FileManagerController">
 										<a herf="" ng-show="config.allowedActions.upload"
 											ng-click="modal1('uploadfile', con)"> Upload </a>

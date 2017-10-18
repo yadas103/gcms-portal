@@ -6,9 +6,9 @@
     .module('gcms.recipient')
     .controller('ProfileListCtrl', ProfileSearch);
 
-  ProfileSearch.$inject = ['ProfileSearch','$scope','$http','$stateParams','$state','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex'];
+  ProfileSearch.$inject = ['ProfileSearch','$scope','$http','$stateParams','$state','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf'];
 
-    function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl) {
+    function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf) {
     	
         var params = {};
         $scope.orderByField = 'firstName';
@@ -112,12 +112,11 @@
         	
                 ProfileSearch.get(params).$promise
                 .then(function(profileSearch) {
-                  $scope.profileSearch = profileSearch; 
+                  $scope.profileSearch = profileSearch;
                   if($scope.search !== undefined){
                 	  $scope.search = undefined;
                   }
                   $scope.isReset = true;
-                  
                  
                 }).catch(function(){
                 	$scope.responseOnSearch = "No records to show"
@@ -129,7 +128,7 @@
              
           
           };
-         
+       
         // set criteria
        
           
@@ -326,16 +325,16 @@
                
               });
     		};
+
             
-            	
         	$scope.getReviewerDetails = function(reqID){
-           	 var  emailTo = 'emailTo';
-   	    	 var  emailFrom = 'emailFrom';
-   	    	 var  message = 'message';
-   	    	 var  emailCC = 'emailCC';
-   	    	 var  requestID = 'requestID';
-   	    	 var  subject = 'subject';
-   	    	 var emaildetails = {};
+        	  	 var  emailTo = 'emailTo';
+       	    	 var  emailFrom = 'emailFrom';
+       	    	 var  message = 'message';
+       	    	 var  emailCC = 'emailCC';
+       	    	 var  requestID = 'requestID';
+       	    	 var  subject = 'subject';
+       	    	 var emaildetails = {};
        	    	 var resultcontent = {};
        	    	 var fn = ($scope.resultcopy.firstName == null)? '' : $scope.resultcopy.firstName;
         		 var ln = ($scope.resultcopy.lastName == null)? '' : $scope.resultcopy.lastName;
@@ -345,22 +344,22 @@
     		Review.query().$promise.then(function(result) {            	
     		if(result.$promise.$$state.status == 1){
     		resultcontent = result;
-    	    		for(var i in result){
+    		for(var i in result){
     			if(i != "$promise" && i != "$resolved"){
     			 if (result[i].countries.name == $scope.countryCopy){
-    	              	 $scope.countryReviwer = result[i].cntryReviewer;             
-    	                }
-    	              } 
+                  	 $scope.countryReviwer = result[i].cntryReviewer;             
+                    }
+    			}
               }
     		$http.get('./emailproperties.json').then(function (response) {
     		  console.log(response);
     		     if( response.data.production.value === 'yes'){
-    	    	
-    		    	 $scope.emaildetails[emailTo] = $scope.countryReviwer; // Need to replace it with email id
-    		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User.userName; // Need replace it with logged in user email id
+    		    	 
+    		    	 $scope.emaildetails[emailTo] = $scope.countryReviwer; 
+    		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User.userName; 
     		     }
     		     else if(response.data.development.value === 'yes'){
-    	   	    	 
+    		    	 
     		    	$scope.emaildetails[emailTo] = response.data.development.emailTo;
     			    $scope.emaildetails[emailFrom] = response.data.development.emailFrom;
     		     }
@@ -370,10 +369,7 @@
     			    $scope.emaildetails[emailFrom] = response.data.testing.emailFrom;
     		     }
     		     if(fn != ''){
-    		     $scope.emaildetails[message] = "To: "+$scope.countryReviwer+"<br/>"+
-    		    	"CC: "+$scope.logged_In_User.userName+"<br/>"+
-    		    	"<br/>"+
-    		    	"This is to inform you that the below profile creation request has been submitted for you to review.<br/>"+
+    		     $scope.emaildetails[message] = "This is to inform you that the below profile creation request has been submitted for you to review.<br/>"+
     		    	"<br/>"+
     		    	"First Name: "+fn+"<br/>"+
     		    	"<br/>"+
@@ -386,7 +382,7 @@
     		    	"Specility: "+$scope.resultcopy.specility+"<br/>"+
     		    	"<br/>"+
     		    	"Note for Reviewer: "+notes+"<br/>"+
-      	    	
+    		    	
     		    	"<br/>"+
     		    	"Please review  the request and create an entry in TRS application. If the profile already exist, please map the TR ID in GCMS and proceed rejecting the request.<br/>"+
     		    	"<br/>"+
@@ -411,7 +407,7 @@
         		    	"Specility: "+$scope.resultcopy.specility+"<br/>"+
         		    	"<br/>"+
         		    	"Note for Reviewer: "+notes+"<br/>"+
-      	    
+        		    	
         		    	"<br/>"+
         		    	"Please review  the request and create an entry in TRS application. If the profile already exist, please map the TR ID in GCMS and proceed rejecting the request.<br/>"+
         		    	"<br/>"+
@@ -420,28 +416,29 @@
         		    	"<br/>"+
         		    	"<br/>"+
         		    	"This email was auto-generated by the GCMS System. Please do not reply to this email. If you need support with the GCMS Application, please raise a request for GCMS Support using the following Link<br/>";
-                    }
+        		         }
     		        $scope.emaildetails[requestID] = reqID;
     		    	$scope.emaildetails[subject] = 'Request ID: '+reqID +' '+ $scope.profile_type_id +' Profile Review Request for '+$scope.countryCopy;
     		    	emaildetails = $scope.emaildetails;
     		    	$scope.generateEmail(emaildetails);
     		         });    			    	
-                    	}
-                   
-                  });
-            };
+    	 	      }
+        	    });
+        	  };
             
-         $scope.create = function(item){        	
+        
+            
+         $scope.create = function(item){   
         	 $scope.responseOnSave = '';
         	 $scope.responseOnUnsave = '';
         	 var request = item;
-   	    	 var reqID = {};   	  
-   	  	 
+   	    	 var reqID = {};
+   	 
   	    	IdentityRequest.save(request).$promise
               .then(function(result) {
                   if(result.$promise.$$state.status == 1)
               	{
-                	  
+                  	                	  
                   	reqID = result.id;
                   	$scope.countryCopy = result.country;
                   	$scope.profile_type_id = result.profileTypeId;
@@ -467,8 +464,7 @@
               	   
                 }); 
           };
-          
-    
+             
       	   
       
           $scope.list = function(){
@@ -549,6 +545,7 @@
                                 
         
               
+                
             
              
  				
@@ -558,11 +555,39 @@
 					$scope.responseOnUnsave = '';
 					var values = $scope.checkedIds;               	 
 					var modifiedparams = {};
+					$scope.created = false;
 					
 				
-					  					
-					for(var y in $scope.checkedIds ){
-						if(y!="request"){
+					 $scope.getPDFs = function(modifiedparams,y){
+						 return ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
+		                       if(result.$promise.$$state.status == 1)
+		                   	{
+		                    	   console.log(result);		                    	
+		                               y++;
+		                               $scope.createTask(y);		                    	
+		                   	$scope.msg = "You can see the generated PDF in your Downloads folder";
+		                   
+		                   	
+		                   	}
+		                  
+		                 }).catch(function(){
+		               	  $scope.responseOnUnsave = "Unable to generate PDF";
+		                 });
+					};
+					  
+					$scope.downloadAsZip = function(){
+						var link = 'http://localhost:8080/gcms-service/consent-annex-pdf/consentFilesZip.zip';
+                 	   $http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
+                 		   console.log(response);
+                 		   var bin = new Blob([response.data]);
+                            var docName = 'consentFilesZip.zip';           
+                            saveAs(bin, docName);                        							
+	                    	   });
+					}
+					
+					var y = 0;
+					$scope.createTask = function(y){
+						if(y<$scope.checkedIds.length){
 					var currentId = values[y].id; 	
 					
 				
@@ -575,31 +600,29 @@
 					modifiedparams['pocode'] = item.request[currentId].pocode;
 					modifiedparams['acmcode'] = item.request[currentId].acmcode;
 					console.log(modifiedparams);
-				  	 ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
-                       if(result.$promise.$$state.status == 1)
-                   	{
-                   	$scope.msg = "You can see the generated PDF in your Downloads folder";
-                   	
-                   	}
-                  
-                 }).catch(function(){
-               	  $scope.responseOnUnsave = "Unable to generate PDF";
-                 });
+					$scope.getPDFs(modifiedparams,y);
+				  	
 						}
+						else
+							{
+							$scope.downloadAsZip();
+							return;
+							}
 						
+					};
+					
+					if(y==0){
+					$scope.createTask(y);
 					}
 					
+				
 					
 				};
-				
-            
-             
-      
-          //********************************
+
           
           $scope.submitid = function(id) {
      		 
-              $state.go('profile-detail-view', {id:id} );
+              $state.go('profile-detail-view', {id} );
             };
           
        

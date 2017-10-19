@@ -1,0 +1,74 @@
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium;">Uploaded File details
+		<div ng-if="item.consannexid==undefined">Template Code :
+			{{item.tmpl_code}}</div>
+		<div ng-if="item.consannexid != undefined">Task ID : {{item.id}}
+		</div>
+	</h3>
+  
+</div>
+
+<div class="modal-body">
+
+  
+      <form ng-submit="uploadFiles()" id="uploadfile" ng-controller ="FileManagerController">
+       
+        <div class="modal-body">
+        <span style="color:green;">{{success}}</span>
+        <span style="color:red;">{{error}}</span>
+           <div ng-show="item.consannexid==undefined">
+          
+          <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
+          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".doc,.docx" style="padding-top: 3px;"/> 
+          <!-- onchange="angular.element(this).scope().uploadFiles() -->
+     
+               </div>
+          <div ng-show="item.consannexid != undefined">
+        
+          <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
+          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
+          </div> 
+          <!-- 
+          <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
+          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" />
+          <div ng-include data-src="'error-bar'" class="clearfix"></div>
+           -->
+           
+          <div ng-show="!apiMiddleware.inprocess">
+          <button type="submit" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess" style="margin-top: 8px;">{{'upload' | translate}}</button>
+          </div>
+          <div ng-show="apiMiddleware.inprocess">
+            <span class="label label-warning">{{"uploading" | translate}} ...</span>
+          </div>
+
+          
+                 
+        </div>
+
+            <div class="modal-footer" >
+            
+             
+            
+           <div ng-show="item.consannexid==undefined">
+           <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           <button class="btn btn-primary" ng-disabled="item.tmpl_location==undefined "  ng-click="ok()" >Save</button>          
+          </div>
+          <div ng-show="item.consannexid != undefined">
+           <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           <button class="btn btn-primary" ng-disabled="item.consannexid.annnexlocation==undefined"  ng-click="ok()" >Save</button>
+           </div>
+          
+  <!-- <button class="btn btn-primary" ng-click="ok()" >OK</button> uploadFiles() -->
+  
+</div>
+          
+          
+       
+        
+      </form>
+     
+   
+</div>
+
+ 

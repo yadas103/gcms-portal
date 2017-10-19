@@ -122,10 +122,8 @@
 	                $scope.fileNavigator.refresh();
 	                $scope.modal('signin', true);
 	                var repoLink =$scope.config.repoLink;
-	                var path =$scope.config.folderPath;
-                   
-	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   	
-	              
+	                var path =$scope.config.folderPath;                 
+	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
 		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		            $scope.modal('uploadfile', true);
 		            var link =respn.data.links[0];
@@ -148,9 +146,36 @@
 	                }, function (resp) {
 	                  self.apiMiddleware.parseError(resp.data);
 	                });
-	                
-		          
-                
+	                              
+              }, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+              });
+        };
+        
+        $scope.uploadFilesR = function () {
+        	console.log("uploadFilesR");
+        	
+        	$scope.apiMiddleware.login().then(function () {
+	                $scope.fileNavigator.refresh();
+	                $scope.modal('signin', true);
+	                var repoLink =$scope.config.repoLink;
+	                var path =$scope.config.folderPath;                 
+	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+		           
+		            var link =respn.data.links[0];
+		            var docLink = link.href;		            
+		            	$scope.item.revocationDocLink=docLink;
+		            	$scope.success="File Uploaded Successfully"		           
+		          }, function (resp) {
+		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+		            $scope.apiMiddleware.error = errorMsg;
+		            $scope.error="File is not able to upload ";
+		          });	
+	                }, function (resp) {
+	                  self.apiMiddleware.parseError(resp.data);
+	                });
+	                              
               }, function (resp) {
                 $scope.apiMiddleware.parseError(resp.data);
               });
@@ -188,9 +213,34 @@
                 	});
         	}, function (resp) {
             $scope.apiMiddleware.parseError(resp.data);
+            $scope.error="File is not able to download ";
+            console.log("File is not able to download ");
           });
        };
-
+       
+       $scope.downloadCH = function (obj) {    		
+   		$scope.link=obj;
+   		console.log("$scope  "+$scope.link);
+   		console.log("$scope  " , $scope.link.id);
+       	$scope.apiMiddleware.login().then(function () {
+       		 $scope.fileNavigator.refresh();
+	             $scope.modal('signin', true);
+       		
+       		
+	        	var location=$scope.link.annnexlocation;
+	        	console.log(location);
+               $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
+               var doc=resp.data;
+               return $scope.apiMiddleware.getDocumentDownload(doc);
+               $scope.success="File Downloaded Successfully";	
+               console.log("File Downloaded Successfully");
+               	});
+       	}, function (resp) {
+           $scope.apiMiddleware.parseError(resp.data);
+           $scope.error="File is not able to download ";
+           console.log("File is not able to download ");
+         });
+      };
         $scope.openImagePreview = function () {
           var item = $scope.singleSelection();
           $scope.apiMiddleware.inprocess = true;

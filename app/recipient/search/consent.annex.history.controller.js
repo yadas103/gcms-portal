@@ -26,9 +26,10 @@
        
        $scope.ConsentAttributes = consent;
        console.log(consent);
-
+       
        
       });
+     
     };
     
     

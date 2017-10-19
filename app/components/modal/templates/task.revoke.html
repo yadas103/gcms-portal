@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
 
-	<form name="taskForm" class="form-horizontal" novalidate ng-controller ="FileManagerController">
+	<form name="taskForm"  class="form-horizontal" novalidate>
 
 		<div class="form-group"
 			ng-if="!item.consannexid.bpid.profileType || item.consannexid.bpid.profileType === 'HCP'">
@@ -49,28 +49,21 @@
 		</div>
 
 
-
-		<div class="form-group">
-			<label for="consentstartDate" class="col-sm-3 control-label">Consent
-				Start Date:</label>
-			<div class="col-sm-9">
-				<input id="consentStartDate" name="consentStartDate"
-					class="form-control"
-					ng-model="item.consannexid.consentstartdate | date:'dd/MM/yyyy'"
-					ng-readonly="true" />
-
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="consentendDate" class="col-sm-3 control-label">Consent
-				End Date:</label>
-			<div class="col-sm-9">
-				<input id="consentEndDate" name="consentEndDate"
-					class="form-control"
-					ng-model="item.consannexid.consentenddate | date:'dd/MM/yyyy'"
-					ng-readonly="true" />
-			</div>
-		</div>
+		 <div class="form-group" >
+    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
+       <div class="col-sm-9">       
+    	<!-- <input type="date" class="form-control" ng-model="item.consannexid.consentstartdate" value="{{item.consannexid.consentstartdate}}" min="{{item.consannexid.consentstartdate}}" /> --> 
+    	<input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" ng-readonly="true" />                             
+    </div>
+  </div>
+		<div class="form-group" >
+    <label for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
+    <div class="col-sm-9">
+       <!-- <input type="date"  class="form-control" ng-model="item.consannexid.consentenddate"  value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate}}" /> -->
+       <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" ng-readonly="true" />                           
+             
+    </div> 
+  </div>
 		<div class="form-group">
 			<label for="revocationReason" class="col-sm-3 control-label" style="padding-left: 9px;">Reason
 				for Revocation:</label>
@@ -80,14 +73,21 @@
 			</div>
 		</div>
 		
+		<div ng-controller ="FileManagerController" >
 		
-		<input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" onchange="angular.element(this).scope().uploadFiles()" />
-          <!-- <div ng-include data-src="'error-bar'" class="clearfix"></div> -->
+		  <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
+          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
+          
+           <div ng-show="!apiMiddleware.inprocess">
+          <button  ng-click="uploadFilesR()" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess" style="margin-top: 8px;">{{'upload' | translate}}</button>
+          </div>
           <div ng-show="apiMiddleware.inprocess">
             <span class="label label-warning">{{"uploading" | translate}} ...</span>
           </div>
+         <span style="color:green;">{{success}}</span>
+         <span style="color:red;">{{error}}</span>
         
-        {{item.consannexid.annnexlocation}}
+        </div>
 		<!-- <gcms-modal template="recipient.upload.html"
 			controller="ModalDefaultCtrl" ok="upload" content="uploader"
 			alt="Upload images"> <span class="btn btn-default"

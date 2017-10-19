@@ -5,7 +5,7 @@
                   <table class="table table-hover ">
                   <div class="table-responsive">
                         <!-- st-set-filter="myStrictFilter" -->
-                        <table st-table="ConsentAttributes" st-safe-src="ConsentAttributes" class="table table-bordered table-striped table-highlight">
+                        <table st-table="ConsentAttributes" class="table table-bordered table-striped table-highlight">
                               <thead>
                                <tr style="color:white;background-color:#337ab7;">
                                           <th>HCP/O Name</th>
@@ -22,16 +22,22 @@
                               <tbody data-ng-repeat="field in ConsentAttributes">
                                 <tr data-ng-if="field.bpid.id==id">
                                                                         <td>{{field.bpid.firstName}} {{field.bpid.lastName}}</td>
-                                                <td>{{field.consentstatus.updatedDate}}</td>
-                                                <td>{{field.consentstatus.consentStatusCode}}</td>
+                                                					<td>{{field.consentstatus.updatedDate}}</td>
+                                                					<td>{{field.consentstatus.consentStatusCode}}</td>
                                                                   <td>{{field.consentstatus.consentName}}</td>
                                                                   <td>{{field.consentstartdate}}</td>
                                                                   <td>{{field.consentenddate}}</td>
                                                                   <td>{{field.eventname}}</td>
                                                                   <td>{{field.createdBy}}</td>
-                                                <td><a href="">View</a></td>
-                                
-                                </tr>
+																  <td><div ng-show="true" ng-controller="FileManagerController">
+																 	<a href="" ng-click="downloadCH(field)"> View </a>
+																   </div></td>
+
+						</tr>
+						<tr data-ng-if="field.bpid.id!=id">
+						
+						<!-- <span style="color:red;">{{error}}</span> --> 
+						</tr>
                               </tbody>
                               
                               <tfoot>

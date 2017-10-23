@@ -139,7 +139,7 @@
      * @description Updates the specified user profile
      */
     $scope.save = function(item){
-      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin-roles'); });
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin'); });
     };
 
     /**

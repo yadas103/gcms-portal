@@ -40,9 +40,9 @@
   function ConsentAnnex($resource, localeMapper, ENVIRONMENT) {
 
     return $resource(
-      ENVIRONMENT.SERVICE_URI + ':locale/consent-annex:name' + ENVIRONMENT.SERVICE_EXT,
+      ENVIRONMENT.SERVICE_URI + ':locale/consent-annex/:id' + ENVIRONMENT.SERVICE_EXT,
       {
-        name: '@name',
+        id: '@id',
         locale: function(){ return localeMapper.getCurrentISOCode(); },
       },
       { 

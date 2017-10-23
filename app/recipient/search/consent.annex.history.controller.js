@@ -14,37 +14,40 @@
     
 	console.log("Inside controller");
 	
-	var Profileid=$stateParams.id;
+	var profileid=$stateParams.id;
 	
-	$scope.id=$stateParams.id;
+	//$scope.id=$stateParams.id;
 	  
-	console.log(Profileid);
-	console.log($scope.id);
+	console.log(profileid);
+	//console.log($scope.id);
 	
     var getData = function(){
-     return ConsentAnnex.query().$promise.then(function(consent){
-       
+     return ConsentAnnex.query({id : profileid}).$promise.then(function(consent){  
+    	 if(consent.length>0){
        $scope.ConsentAttributes = consent;
-       console.log(consent);
-       
-       
+    	 }else{
+    		 $scope.error = "No Records Found";
+    	 }
+       console.log(consent); 
+      }).catch(function(){
+    	  console.log("No Record Found");
+    	  $scope.error = "No Record Found";
       });
      
     };
-    
-    
+    getData();
+    $scope.displayedCollection = [].concat($scope.ConsentAttributes);
    
-    var getProfileData = function(){
+   /* var getProfileData = function(){
         return Profile.query().$promise.then(function(Profile){
           $scope.ProfileAttribute= Profile;
           
          });
     };
-  
-    getData();
-    getProfileData();
+
+    getProfileData();*/
+    
     console.log(getData);
- 
     $scope.$on('$localeChangeSuccess', getData);
 
   }

@@ -278,7 +278,14 @@
 				profile.deleteRecord = false;
 				profile.deleted = false;
 
-				UserProfile.save(profile).$promise.then(getData);
+				//UserProfile.save(profile).$promise.then(getData);
+				// Added to display success message once the new role added.
+				UserProfile.save(profile).$promise.then(function(result){
+					getData();
+					$scope.success='User role saved successfully';
+					}).catch(function(){
+						  $scope.error='User not saved';
+					  });
 			  });
 			};
 

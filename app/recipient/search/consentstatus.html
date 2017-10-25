@@ -1,40 +1,41 @@
-<div class="panel panel-primary table-responsive">
+<<div class="panel panel-primary table-responsive">
       <div class="panel-heading">Consent History</div>
       <div class="panel-body">
                  <span style="color:red;"> {{error}}</span>
+
+                 <div><h4 style="color:#337ab7;font-size: medium;">HCP/O Name  : {{ConsentAttributes[0].bpid.firstName}} {{ConsentAttributes[0].bpid.lastName}}</h4></div>
+                 
                   <table class="table table-hover ">
                   <div class="table-responsive">
                         
                         <table st-table="displayedCollection" st-safe-src="ConsentAttributes" class="table table-bordered table-striped table-highlight">
                               <thead>
                                <tr style="color:white;background-color:#337ab7;">
-                                          <th>HCP/O Name</th>
-                                         <th>Consent Updated Date</th>
-                                   <th>Consent Code</th>
+                                   <!-- <th>HCP/O Name</th> -->
+                                   <th>Event Name</th>
                                    <th>Consent Status</th>
                                    <th>Consent Start Date</th>
-                                   <th>Consent End Date</th>
-                                   <th>Consent Event Name</th>
+                                   <th>Consent End Date</th>                                 
                                    <th>Initiated By</th>
-                                   <th>Document</th>
+                                   <th st-sort="updatedDate" st-sort-default='reverse'>Consent Updated Date</th>
+                                   <th>Link to Document</th>
                                    </tr>
                               </thead>
                               <tbody data-ng-repeat="field in displayedCollection">
-                                <!-- <tr data-ng-if="field.bpid.id==id"> -->
+
                                 <tr>
-                                                                  <td>{{field.bpid.firstName}} {{field.bpid.lastName}}</td>
-                                                				  <td>{{field.consentstatus.updatedDate | date:'dd-MM-yyyy'}}</td>
-                                                				  <td>{{field.consentstatus.consentStatusCode}}</td>
+                                         				  
+                                                				  <td>{{field.eventname}}</td>
                                                                   <td>{{field.consentstatus.consentName}}</td>
                                                                   <td>{{field.consentstartdate | date:'dd-MM-yyyy'}}</td>
-                                                                  <td>{{field.consentenddate | date:'dd-MM-yyyy'}}</td>
-                                                                  <td>{{field.eventname}}</td>
+                                                                  <td>{{field.consentenddate | date:'dd-MM-yyyy'}}</td>  
                                                                   <td>{{field.createdBy}}</td>
+                                                                  <td>{{field.updatedDate | date:'dd-MM-yyyy'}}</td>
 																  <td>
-																  <div ng-if="con.consannexid.annnexlocation==undefined">
+																  <div ng-if="field.annnexlocation==undefined">
 																   <span style="color:red;">No Document Uploaded</span>
 																  </div>
-																  <div ng-if="con.consannexid.annnexlocation!=undefined">
+																  <div ng-if="field.annnexlocation!=undefined">
 																  <div ng-show="true" ng-controller="FileManagerController">
 																 	<a href="" ng-click="downloadCH(field)"> View </a>
 																   </div>
@@ -48,7 +49,7 @@
                               <tfoot>
                                     <tr>
                                           <td colspan="10" class="text-center">
-                                                <div st-items-by-page="5" st-pagination=""
+                                                <div st-items-by-page="10" st-pagination=""
                                                       st-template="app/task/pagination.custom.html"></div>
                                           </td>
                                     </tr>
@@ -60,7 +61,6 @@
       </table>
 </div>
 </div>
-
 
 
 

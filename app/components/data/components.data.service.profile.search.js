@@ -32,12 +32,14 @@
   function ProfileSearch($resource, ENVIRONMENT) {
 
     return $resource(
-      ENVIRONMENT.SERVICE_URI + 'profile-results/:country/:profileType/:profileCountry/:lastName/:city',
+      ENVIRONMENT.SERVICE_URI + 'profile-results/:country/:profileType/:profileCountry/:lastName/:city/:firstName/:address',
       {
     	  country: '@country',
     	  profileType: '@profileType',
     	  lastName: '@lastName',
-    	  city: '@city'
+    	  city: '@city',
+    	  firstName: '@firstName',
+    	  address: '@address'
         },
         {
             get:    { method:'GET', isArray:true },

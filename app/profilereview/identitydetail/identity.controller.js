@@ -14,7 +14,6 @@
 
   IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$state','$stateParams','Profile1','LoggedUserDetail'];
 
-  
   function IdentityController(IdentityRequestView,$scope,$rootScope,$state,$stateParams,Profile1,LoggedUserDetail){
 	  
 	  

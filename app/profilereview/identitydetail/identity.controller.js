@@ -8,7 +8,6 @@
 (function () {
   'use strict';
 
-
   angular
     .module('gcms.identity')
     .controller('identityCtrl', IdentityController);

@@ -160,7 +160,8 @@
 	            	
 	         if (con.id === item.id) {
 	       
-	           con.updatedDate = new Date();      
+	           con.updatedDate = new Date(); 
+	           con.consannexid.updatedDate = new Date();
 	              }
 	            });
 	            Task.update({ id:item.id }, item);

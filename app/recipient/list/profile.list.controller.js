@@ -93,6 +93,7 @@
         $scope.$on('$localeChangeSuccess', loadCountry);
         var collecting_country_id = {};
         var profile_country_id = {};
+       
         
         $scope.submit = function(request) {
         	$scope.responseOnSearch = '';
@@ -100,7 +101,8 @@
         	$scope.profile.country = request.country;        	
         	$scope.selectedids = [];
         	$scope.cntryValue = request.country;
-       	
+        	 var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","profileCountry":""};
+        	 
         	for(var i in $scope.counties){
                 if ($scope.counties[i].name == request.profileCountry){
               	  collecting_country_id = $scope.counties[i].id;              
@@ -109,8 +111,14 @@
                 	  profile_country_id = $scope.counties[i].id;              
                   }
               } 
-        	
-                ProfileSearch.get(params).$promise
+        	data.country = params.country;
+        	data.profileType = params.profileType;
+        	data.lastName = params.lastName !== undefined ? params.lastName : 'lastName';
+        	data.city = params.city !== undefined ? params.city : 'city';
+        	data.firstName = params.firstName !== undefined ? params.firstName : 'firstName';
+        	data.address = params.address !== undefined ? params.address : 'address';
+        	data.profileCountry = params.profileCountry;
+                ProfileSearch.get(data).$promise
                 .then(function(profileSearch) {
                   $scope.profileSearch = profileSearch;
                   if($scope.search !== undefined){
@@ -556,13 +564,14 @@
 					var values = $scope.checkedIds;               	 
 					var modifiedparams = {};
 					$scope.created = false;
-					
+					$scope.createdBy = {};
 				
 					 $scope.getPDFs = function(modifiedparams,y){
 						 return ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
 		                       if(result.$promise.$$state.status == 1)
 		                   	{
-		                    	   console.log(result);		                    	
+		                    	   console.log(result);	
+		                    	   $scope.createdBy = result.createdBy;
 		                               y++;
 		                               $scope.createTask(y);		                    	
 		                   	$scope.msg = "You can see the generated PDF in your Downloads folder";
@@ -576,13 +585,18 @@
 					};
 					  
 					$scope.downloadAsZip = function(){
-						var link = 'http://localhost:8080/gcms-service/consent-annex-pdf/consentFilesZip.zip';
+						$http.get('./config.json').then(function (response) {
+						var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI + 'consent-annex-pdf/'+$scope.createdBy;
+						console.log(link);
+						
                  	   $http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
                  		   console.log(response);
                  		   var bin = new Blob([response.data]);
                             var docName = 'consentFilesZip.zip';           
                             saveAs(bin, docName);                        							
 	                    	   });
+                 	   
+						});
 					}
 					
 					var y = 0;
@@ -599,6 +613,8 @@
 					modifiedparams['eventname'] = item.request[currentId].eventname;
 					modifiedparams['pocode'] = item.request[currentId].pocode;
 					modifiedparams['acmcode'] = item.request[currentId].acmcode;
+					modifiedparams['consentstartdate'] = item.request[currentId].consentstartdate;
+					modifiedparams['consentenddate'] = item.request[currentId].consentenddate;
 					console.log(modifiedparams);
 					$scope.getPDFs(modifiedparams,y);
 				  	

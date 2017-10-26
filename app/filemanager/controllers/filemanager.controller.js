@@ -164,8 +164,8 @@
 		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		           
 		            var link =respn.data.links[0];
-		            var docLink = link.href;		            
-		            	$scope.item.revocationDocLink=docLink;
+		            var docLink = link.href;
+		            	$scope.item.consannexid.revocationDocLink=docLink;
 		            	$scope.success="File Uploaded Successfully"		           
 		          }, function (resp) {
 		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');

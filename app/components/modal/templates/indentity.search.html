@@ -5,6 +5,7 @@
   
    <div class="col-sm-24">
 <div class="modal-body">
+ <form name="identityform"  novalidate  class="form-horizontal">
 	<div class="panel panel-primary">
 		<div ng-controller="identityCtrl">
 			<table class="table table-hover">
@@ -48,6 +49,7 @@
 						<td><button class="btn btn-primary"
 								ng-click="updateApprove(item)" value="{{item.identity.id}}" style="    margin-left: -9px;margin-top: 1px;">Approve</button>
 								
+								
 							</td>
 					<td>
 								<button class="btn btn-primary" ng-click="updateDismiss(item)"
@@ -62,13 +64,20 @@
 			</table>
 		</div>
 	</div>
+	</form>
+	<div  style="float: right;
+    margin-top: -18px;">
+   <td><button class="btn btn-primary" ng-click="ok()" ng-disabled="identityform.$invalid">
+		Ok</button></td>
+		<td><button class="btn btn-primary" ng-click="cancel()" ng-disabled="identityform.$invalid">
+		Cancel</button></td>
+		</div>
+	
 </div>
 
 </div>
 
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">
-		Close
-</div>
+
+
 
 

@@ -143,48 +143,29 @@
        * @methodOf trs.recipient.directive:trsRecipientSearch
        * @description Builds criteria and submits recipient search form
        */
-      $scope.validate= function(item) {
-      	 console.log("Inside Validate");
-        console.log(item.id);
-        var id  ={id:item.bpid};
-        console.log(id);
-      var updateProfile1= function(result) {
-            $scope.profile1 = result;
-            item.notes="";
-            console.log(item.status);
-           // item.bpid="";
-            console.log( $scope.profile1);
-            var ide=$scope.profile1;
-        	if(ide!=0)
-            
-        	{
-        		item.notes="Validated";
-        		console.log(item.notes);
-        	}
-           else {
-        		item.notes=" not Validated";
-        		console.log(item.notes);
-        	}
-            
-      };
-		  var getDataProfile = function() {
-	            $scope.profile1 = [];
-	            
-	            Profile1.get(id).$promise
-	                        .then(updateProfile1);
-	           
-	      };
-	     
-	      getDataProfile();
-		  console.log("hiiiii");
-		  item.notes=" Not-Validated";
-		  item.status="";
-		  console.log( item.notes);
-	  $scope.$on('$localeChangeSuccess', getDataProfile);
-	 console.log($scope.profile1);
-	
- 
-      };
+      
+      $scope.validate = function(item){   
+     	
+    	  var id  ={id:item.bpid};
+    	  Profile1.get(id).$promise
+           .then(function(result) {
+               if(result.$promise.$$state.status == 1)
+           	{
+            	   {
+               		item.notes="Validated";
+               		console.log(item.notes);
+               	}
+               	
+               	}
+              
+             }).catch(function(){
+          	  
+            	 item.notes=" Not Validated";
+         		console.log(item.notes);
+           	   
+           	   
+             }); 
+       };
       /*$scope.validateDismiss = function(item) {
        	 console.log("Inside ValidateDismiss");
          console.log(item.id);

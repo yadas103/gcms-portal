@@ -50,6 +50,7 @@
                                                            >View </a> 
 
 							</td>
+							
 							<td style="word-break: break-all;">{{ identity.profileTypeId }}</td>
 							<td style="word-break: break-all;">{{ identity.firstName}}</td>
 							<td style="word-break: break-all;">{{ identity.lastName }}</td>
@@ -65,7 +66,7 @@
 									<div ng-switch-default>
 										<gcms-modal template="indentity.search.html"
 											ng-init="item=identity" controller="ModalDefaultCtrl"
-											content="identity" open="" >
+											content="identity"  ok="close" >
 										<a href="">Approve/Reject</a> </gcms-modal>
 									</div>
 									

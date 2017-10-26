@@ -53,7 +53,10 @@
                   id : item.id
             }, item);
       };
-    
+      $scope.close=function(item){
+    	  console.log("Inside close",item);
+    	 }
+      
         $scope.updateApprove = function(item) {
         	console.log("inside updateApprove");
         	 console.log($scope.profile1);

@@ -109,9 +109,7 @@
         ApiMiddleware.prototype.getConfigFile = function() {
            
         	return UIConfig.query().$promise.then(function(result){
-            	console.log(result);
-            	console.log(result.gnosisRestServiceUrl);
-                console.log(result.userName);
+            	
               return result;
             });           
           };

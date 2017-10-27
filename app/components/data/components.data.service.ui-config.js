@@ -38,11 +38,11 @@
   function UIConfig($resource, ENVIRONMENT) {
 
     return $resource(
-      ENVIRONMENT.SERVICE_URI + 'ui-config' + ENVIRONMENT.SERVICE_EXT,
+      ENVIRONMENT.SERVICE_URI + 'config-file' + ENVIRONMENT.SERVICE_EXT,
       {
       },
       {
-        query: { method:'GET', array: false }
+        query: { method:'GET' }
       }
     );
   }

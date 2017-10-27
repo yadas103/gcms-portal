@@ -3,7 +3,7 @@
  * @name gcms.components.data.service:identityRequest
  *
  * @description
- * Represents an user profile data service.
+ * Represents an identityRequest data service.
  *
  *```js
  * function myCtrl($scope, identityRequest){
@@ -27,21 +27,15 @@
    * @ngdoc method
    * @name identityRequest
    * @methodOf gcms.components.data.service:identityRequest
-   * @description Constructor for the user profile data service
+   * @description Constructor for the ProfileRequest data service
    * @param {object} $resource A factory which creates a resource object
       that lets you interact with RESTful server-side data sources
    * @param {object} ENVIRONMENT The configuration object which supplies a
       consistent service uri to use across the application
-   * @returns {object} The user profile data service
+   * @returns {object} The ProfileRequest data service
    */
   function IdentityRequestView($resource, localeMapper, ENVIRONMENT)  {
 
-    /*var hydrateidentityRequests = function(response) {
-      var collections = $rootScope.session.collections
-      var profiles = response.data;
-
-    };
-*/
   return $resource(
       ENVIRONMENT.SERVICE_URI + ':locale/profileRequest/:id' + ENVIRONMENT.SERVICE_EXT,
       {

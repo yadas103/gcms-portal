@@ -3,11 +3,11 @@
 
   angular
     .module('gcms.components.data')
-    .factory('Profile1', Profile1);
+    .factory('ValidatedProfile', ValidatedProfile);
 
-  Profile1.$inject = ['$resource','localeMapper', 'ENVIRONMENT'];
+  ValidatedProfile.$inject = ['$resource','localeMapper', 'ENVIRONMENT'];
   
-  function Profile1($resource,localeMapper, ENVIRONMENT) {
+  function ValidatedProfile($resource,localeMapper, ENVIRONMENT) {
 
 	return $resource(
       ENVIRONMENT.SERVICE_URI + ':locale/identityProfiles/:id' + ENVIRONMENT.SERVICE_EXT,

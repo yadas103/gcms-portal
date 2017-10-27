@@ -1,8 +1,8 @@
 (function (angular) {
   'use strict';
   angular.module('dctmNgFileManager')
-    .service('apiMiddleware', ['$http', '$q', '$window', 'fileManagerConfig', 'dctmClient', 'dctmConstants',
-      function ($http, $q, $window, fileManagerConfig, dctmClient, dctmConstants) {
+    .service('apiMiddleware', ['$http', '$q', '$window', 'fileManagerConfig', 'dctmClient', 'dctmConstants','UIConfig',
+      function ($http, $q, $window, fileManagerConfig, dctmClient, dctmConstants,UIConfig) {
         var ApiMiddleware = function () {
           this.inprocess = false;
           this.error = '';
@@ -105,14 +105,26 @@
               });
           });
         };
-
-        ApiMiddleware.prototype.login = function () {
-          var loginInfo = {
+        //Start : Changes added to read the login info from config file on server
+        ApiMiddleware.prototype.getConfigFile = function() {
+           
+        	return UIConfig.query().$promise.then(function(result){
+            	console.log(result);
+            	console.log(result.gnosisRestServiceUrl);
+                console.log(result.userName);
+              return result;
+            });           
+          };
+        //End : Changes added to read the login info from config file on server
+          
+        //Changes added to login method to read the login info from config file on server   
+        ApiMiddleware.prototype.login = function (loginInfo) {
+        /*  var loginInfo = {
             baseUri: fileManagerConfig.rootContext,
             repoName: fileManagerConfig.repositoryName,
             username: fileManagerConfig.username,
             password: fileManagerConfig.password
-          };
+          };*/
           return dctmClient.login(loginInfo).then(function () {
             fileManagerConfig.signedin = true;
           });

@@ -1,3 +1,20 @@
+/**
+ * @ngdoc service
+ * @name gcms.components.data.service:business.profile
+ *
+ * @description
+ * Represents an business profile data service.
+ *
+ *```js
+ * function myCtrl($scope, ValidatedProfile){
+ *   $scope.identityRequests = [];
+ *   ValidatedProfile.query().$promise.then(function(result){
+ *     $scope.ValidatedProfile = result;
+ *   });
+ * }
+ *```
+ */
+
 (function() {
   'use strict';
 

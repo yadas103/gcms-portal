@@ -117,12 +117,25 @@
 
         $scope.uploadFiles = function () {
         	console.log("uploadFiles");
-        	
-        	$scope.apiMiddleware.login().then(function () {
+        	//Start : Changes added to read the login info from config file on server
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: result.password, 
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		//End : Changes added to read the login info from config file on server	 
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+
 	                $scope.fileNavigator.refresh();
 	                $scope.modal('signin', true);
-	                var repoLink =$scope.config.repoLink;
-	                var path =$scope.config.folderPath;                 
+	              //Start : Changes added to read the login info from config file on server 
+	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
+	                var path =loginInfo.folderPath;
+	              //Start : End added to read the login info from config file on server 
 	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
 		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		            $scope.modal('uploadfile', true);
@@ -146,20 +159,39 @@
 	                }, function (resp) {
 	                  self.apiMiddleware.parseError(resp.data);
 	                });
-	                              
-              }, function (resp) {
+	                            
+             		
+             	}, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                   });
+           //Start : Changes added to read the login info from config file on server 	 
+        	}, function (resp) {
                 $scope.apiMiddleware.parseError(resp.data);
-              });
+            });
+        	//End : Changes added to read the login info from config file on server 
+        
         };
         
         $scope.uploadFilesR = function () {
         	console.log("uploadFilesR");
-        	
-        	$scope.apiMiddleware.login().then(function () {
+        	//Start : Changes added to read the login info from config file on server
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: result.password, 
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        	//End : Changes added to read the login info from config file on server 
+             $scope.apiMiddleware.login(loginInfo).then(function () {
 	                $scope.fileNavigator.refresh();
 	                $scope.modal('signin', true);
-	                var repoLink =$scope.config.repoLink;
-	                var path =$scope.config.folderPath;                 
+	              //Start : Changes added to read the login info from config file on server 
+	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
+	                var path =loginInfo.folderPath; 
+	              //End : Changes added to read the login info from config file on server 
 	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
 		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		           
@@ -177,9 +209,17 @@
 	                });
 	                              
               }, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                   });
+           //Start : Changes added to read the login info from config file on server 	 
+        	}, function (resp) {
                 $scope.apiMiddleware.parseError(resp.data);
-              });
+            });
+        	//End : Changes added to read the login info from config file on server 
+        	
+        
         };
+        
 
         $scope.remove = function () {
           $scope.apiMiddleware.remove($scope.temps).then(function () {
@@ -195,7 +235,19 @@
     		console.log("$scope  "+$scope.link);
     		console.log("$scope  " , $scope.link.id);
     		console.log("$scope  "+$scope.link.consannexid);
-        	$scope.apiMiddleware.login().then(function () {
+    		//Start : Changes added to read the login info from config file on server
+    		$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: result.password, 
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		//End : Changes added to read the login info from config file on server	 
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+
         		 $scope.fileNavigator.refresh();
 	             $scope.modal('signin', true);
         		var location;
@@ -211,18 +263,41 @@
                 var doc=resp.data;
                 return $scope.apiMiddleware.getDocumentDownload(doc);
                 	});
+        	
+            	 
+             }, function (resp) {
+                 $scope.apiMiddleware.parseError(resp.data);
+                 $scope.error="File is not able to download ";
+                 console.log("File is not able to download ");
+               });
+        	
+           //Start : Changes added to read the login info from config file on server 
         	}, function (resp) {
-            $scope.apiMiddleware.parseError(resp.data);
-            $scope.error="File is not able to download ";
-            console.log("File is not able to download ");
-          });
+                $scope.apiMiddleware.parseError(resp.data);
+            });
+    		//End : Changes added to read the login info from config file on server 
+    	
        };
+       
        
        $scope.downloadCH = function (obj) {    		
    		$scope.link=obj;
    		console.log("$scope  "+$scope.link);
    		console.log("$scope  " , $scope.link.id);
-       	$scope.apiMiddleware.login().then(function () {
+   		
+   			//Start : Changes added to read the login info from config file on server
+		$scope.apiMiddleware.getConfigFile().then(function (result) {
+    		
+    		var loginInfo = {
+    		            baseUri: result.gnosisRestServiceUrl,
+    		            repoName: result.repositoryName,
+    		            username: result.userName,
+    		            password: result.password, 
+    		            folderPath: result.gnosisFolderPath
+    		          };
+    		//End : Changes added to read the login info from config file on server	 
+         $scope.apiMiddleware.login(loginInfo).then(function () {
+
        		 $scope.fileNavigator.refresh();
 	             $scope.modal('signin', true);
        		
@@ -235,12 +310,21 @@
                $scope.success="File Downloaded Successfully";	
                console.log("File Downloaded Successfully");
                	});
-       	}, function (resp) {
-           $scope.apiMiddleware.parseError(resp.data);
-           $scope.error="File is not able to download ";
-           console.log("File is not able to download ");
-         });
+       	
+         }, function (resp) {
+             $scope.apiMiddleware.parseError(resp.data);
+             $scope.error="File is not able to download ";
+             console.log("File is not able to download ");
+           });
+       //Start : Changes added to read the login info from config file on server 	 
+    	}, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+        });
+		//End : Changes added to read the login info from config file on server 
+		
       };
+      
+        
         $scope.openImagePreview = function () {
           var item = $scope.singleSelection();
           $scope.apiMiddleware.inprocess = true;

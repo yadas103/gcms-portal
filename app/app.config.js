@@ -40,11 +40,9 @@
         templateUrl: 'app/no-permission.html'
       })	  
       .state('landing', {
-          	resolve: {},
-              //url: '/',
-              //templateUrl: 'app/landing/landing.html',
+          	resolve: {},             
               url: '/',    
-              templateUrl: 'app/recipient/search/recipient.search.html',
+              templateUrl: 'app/profile/search/profile.search.html',
               controller: 'ProfileListCtrl',
               data: {
                 section: 'Home',
@@ -54,7 +52,7 @@
       .state('profile-results', {
         resolve: {},
         url: '/profile-results/?:criteria',
-        templateUrl: 'app/recipient/search/recipient.search.html',
+        templateUrl: 'app/profile/search/profile.search.html',
         controller: 'ProfileListCtrl',
         params: {
           criteria: {}
@@ -116,8 +114,8 @@
       })
       .state('profile-detail-view', {
 			resolve: {},
-			url: '/recipient-detail/:id',
-			templateUrl: 'app/recipient/search/consentstatus.html',
+			url: '/profile-detail/:id',
+			templateUrl: 'app/profile/search/consentstatus.html',
 			controller: 'ConsentAnnexCtrl', 
 			data: {
 			section: 'Home',

@@ -36,7 +36,7 @@
       'gcms.components.uniqueidupload',
       'gcms.components.validator',	  
       'gcms.landing',
-	  'gcms.recipient',
+	  'gcms.profile',
 	  'gcms.identity',
 	  'gcms.task',
 	  'gcms.administration',

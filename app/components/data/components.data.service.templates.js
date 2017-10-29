@@ -7,7 +7,7 @@
 
   Templates.$inject = ['$resource','$locale','localeMapper', 'ENVIRONMENT'];
   /**
-   * khans129
+   * VENKAD09
    * @ngdoc method
    * @name Template
    * @methodOf gcms.components.data.service:Template

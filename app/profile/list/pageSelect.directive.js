@@ -1,4 +1,13 @@
-angular.module('gcms.recipient')
+/**
+ * @ngdoc overview
+ * @name gcms.profile.pageSelect
+ *
+ * @requires gcms.profile
+ *
+ * @description Pagination
+ */
+
+angular.module('gcms.profile')
     .directive('pageSelect', function() {
       return {
         restrict: 'E',

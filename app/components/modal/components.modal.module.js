@@ -16,8 +16,7 @@
   angular
     .module('gcms.components.modal', [
       'ui.bootstrap',
-      'gcms.components.data',
-      'gcms.recipient'
+      'gcms.components.data'
     ]);
 
 })();

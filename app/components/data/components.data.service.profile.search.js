@@ -1,6 +1,6 @@
 /**
  * @ngdoc service
- * @name gcms.components.data.service.recipient:RecipientBulkUnlock
+ * @name gcms.components.data.service.profile.search:ProfileSearch
  *
  * @description
  * Represents a bulk unlock data service for recipients.
@@ -16,30 +16,27 @@
 
   /**
    * @ngdoc method
-   * @name RecipientBulkUnlock
-   * @methodOf gcms.components.data.service.recipient:RecipientBulkUnlock
-   * @description This data service sends an array of recipient ids to be unlocked by the service layer
+   * @name ProfileSearch
+   * @methodOf gcms.components.data.service.profile.search:ProfileSearch
+   * @description This data service sends parameters country,profileType,profileCountry,lastName,city,firstName,address,id
    * @param {object} $resource A factory which creates a resource object
       that lets you interact with RESTful server-side data sources
-   * @param {object} $locale A service which provides localization rules
-      for various Angular components
-   * @param {object} localeMapper A service used to get an ISO code from a locale
-      or a locale from an ISO code
    * @param {object} ENVIRONMENT The configuration object which supplies a
       consistent service uri to use across the application
-   * @returns {object} The bulk unlock data service
+   * @returns {object} Profiles
    */
   function ProfileSearch($resource, ENVIRONMENT) {
 
     return $resource(
-      ENVIRONMENT.SERVICE_URI + 'profile-results/:country/:profileType/:profileCountry/:lastName/:city/:firstName/:address',
+      ENVIRONMENT.SERVICE_URI + 'profile-results/:country/:profileType/:profileCountry/:lastName/:city/:firstName/:address/:id',
       {
     	  country: '@country',
     	  profileType: '@profileType',
     	  lastName: '@lastName',
     	  city: '@city',
     	  firstName: '@firstName',
-    	  address: '@address'
+    	  address: '@address',
+    	  id: '@id'
         },
         {
             get:    { method:'GET', isArray:true },

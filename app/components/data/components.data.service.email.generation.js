@@ -1,3 +1,6 @@
+/**
+ * Service to send email
+ */
 (function() {
   'use strict';
 

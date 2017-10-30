@@ -3,18 +3,9 @@
   angular.module('dctmNgFileManager')
     .provider('fileManagerConfig', function () {
       var values = {
-        appName: 'Documentum AngularJS File Manager for Documentum REST Sample',
+        appName: 'Documentum REST Service',
         defaultLang: 'en',
-
-      //  rootContext: 'http://dctmrest-dev.pfizer.com/dctm-rest',
-      //  repositories: ['gnosis71_dev'],
-      //  repositoryName: 'gnosis71_dev',
-      // repository: 'gnosis71_dev',
-      //  username: 'srvamr-gcmsacct',
-     //   password: 'Pfe26811',
         signedin: false,
-     //   repoLink:'http://dctmrest-dev.pfizer.com/dctm-rest/repositories/gnosis71_dev',
-     //   folderPath:'/GCMS Consent Forms Repository/Consent docs',
         searchForm: true,
         sidebar: true,
         breadcrumb: true,

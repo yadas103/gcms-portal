@@ -117,7 +117,7 @@
 
         $scope.uploadFiles = function () {
         	console.log("uploadFiles");
-        	//Start : Changes added to read the login info from config file on server
+        	
         	$scope.apiMiddleware.getConfigFile().then(function (result) {
         		
         		var loginInfo = {
@@ -127,20 +127,19 @@
         		            password: result.password, 
         		            folderPath: result.gnosisFolderPath
         		          };
-        		//End : Changes added to read the login info from config file on server	 
+        		
              $scope.apiMiddleware.login(loginInfo).then(function () {
             	 	$scope.warning='';
      				$scope.error='';
      				$scope.success='';
 	                $scope.fileNavigator.refresh();
 	                $scope.modal('signin', true);
-	              //Start : Changes added to read the login info from config file on server 
+	             
 	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
 	                var path =loginInfo.folderPath;
-	              //Start : End added to read the login info from config file on server 
-	                
+	             
 	                if($scope.item.consannexid== undefined ){
-	                	//Log : Checking for documentation type
+	                	
 	                	if($scope.uploadFileList[0].name.includes('.doc')){	                		
 	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
 	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
@@ -165,7 +164,7 @@
 	                	}
 	                	
 	                }else{
-	                	//Log : Checking for documentation type
+	                	
                 		if($scope.uploadFileList[0].name.includes('.pdf')){
                 			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
             		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
@@ -195,17 +194,17 @@
              	}, function (resp) {
                      $scope.apiMiddleware.parseError(resp.data);
                    });
-           //Start : Changes added to read the login info from config file on server 	 
+         	 
         	}, function (resp) {
                 $scope.apiMiddleware.parseError(resp.data);
             });
-        	//End : Changes added to read the login info from config file on server 
+        	
         
         };
         
         $scope.uploadFilesR = function () {
         	console.log("uploadFilesR");
-        	//Start : Changes added to read the login info from config file on server
+        	
         	$scope.apiMiddleware.getConfigFile().then(function (result) {
         		
         		var loginInfo = {
@@ -215,14 +214,14 @@
         		            password: result.password, 
         		            folderPath: result.gnosisFolderPath
         		          };
-        	//End : Changes added to read the login info from config file on server 
+        	
              $scope.apiMiddleware.login(loginInfo).then(function () {
 	                $scope.fileNavigator.refresh();
 	                $scope.modal('signin', true);
-	              //Start : Changes added to read the login info from config file on server 
+	             
 	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
 	                var path =loginInfo.folderPath; 
-	              //End : Changes added to read the login info from config file on server 
+	              
 	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
 		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 		           
@@ -242,11 +241,11 @@
               }, function (resp) {
                      $scope.apiMiddleware.parseError(resp.data);
                    });
-           //Start : Changes added to read the login info from config file on server 	 
+           
         	}, function (resp) {
                 $scope.apiMiddleware.parseError(resp.data);
             });
-        	//End : Changes added to read the login info from config file on server 
+        	
         	
         
         };
@@ -266,7 +265,7 @@
     		console.log("$scope  "+$scope.link);
     		console.log("$scope  " , $scope.link.id);
     		console.log("$scope  "+$scope.link.consannexid);
-    		//Start : Changes added to read the login info from config file on server
+    	
     		$scope.apiMiddleware.getConfigFile().then(function (result) {
         		
         		var loginInfo = {
@@ -276,7 +275,7 @@
         		            password: result.password, 
         		            folderPath: result.gnosisFolderPath
         		          };
-        		//End : Changes added to read the login info from config file on server	 
+        		 
              $scope.apiMiddleware.login(loginInfo).then(function () {
 
         		 $scope.fileNavigator.refresh();
@@ -302,11 +301,11 @@
                  console.log("File is not able to download ");
                });
         	
-           //Start : Changes added to read the login info from config file on server 
+          
         	}, function (resp) {
                 $scope.apiMiddleware.parseError(resp.data);
             });
-    		//End : Changes added to read the login info from config file on server 
+    		
     	
        };
        
@@ -316,7 +315,7 @@
    		console.log("$scope  "+$scope.link);
    		console.log("$scope  " , $scope.link.id);
    		
-   			//Start : Changes added to read the login info from config file on server
+   			
 		$scope.apiMiddleware.getConfigFile().then(function (result) {
     		
     		var loginInfo = {
@@ -326,7 +325,7 @@
     		            password: result.password, 
     		            folderPath: result.gnosisFolderPath
     		          };
-    		//End : Changes added to read the login info from config file on server	 
+    		 
          $scope.apiMiddleware.login(loginInfo).then(function () {
 
        		 $scope.fileNavigator.refresh();
@@ -347,11 +346,11 @@
              $scope.error="File is not able to download ";
              console.log("File is not able to download ");
            });
-       //Start : Changes added to read the login info from config file on server 	 
+       	 
     	}, function (resp) {
             $scope.apiMiddleware.parseError(resp.data);
         });
-		//End : Changes added to read the login info from config file on server 
+		
 		
       };
       

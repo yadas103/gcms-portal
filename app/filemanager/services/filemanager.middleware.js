@@ -105,7 +105,7 @@
               });
           });
         };
-        //Start : Changes added to read the login info from config file on server
+      
         ApiMiddleware.prototype.getConfigFile = function() {
            
         	return UIConfig.query().$promise.then(function(result){
@@ -113,16 +113,9 @@
               return result;
             });           
           };
-        //End : Changes added to read the login info from config file on server
+       
           
-        //Changes added to login method to read the login info from config file on server   
         ApiMiddleware.prototype.login = function (loginInfo) {
-        /*  var loginInfo = {
-            baseUri: fileManagerConfig.rootContext,
-            repoName: fileManagerConfig.repositoryName,
-            username: fileManagerConfig.username,
-            password: fileManagerConfig.password
-          };*/
           return dctmClient.login(loginInfo).then(function () {
             fileManagerConfig.signedin = true;
           });

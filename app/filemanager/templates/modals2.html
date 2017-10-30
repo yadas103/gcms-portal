@@ -18,14 +18,14 @@
         <span style="color:green;">{{success}}</span>
         <span style="color:red;">{{error}}</span>
            <div ng-show="item.consannexid==undefined">
-          
+          <span style="color:red;">{{warning}}</span>
           <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
           <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".doc,.docx" style="padding-top: 3px;"/> 
           <!-- onchange="angular.element(this).scope().uploadFiles() -->
      
                </div>
           <div ng-show="item.consannexid != undefined">
-        
+          <span style="color:red;">{{warning}}</span>
           <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
           <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
           </div> 

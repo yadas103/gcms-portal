@@ -129,38 +129,69 @@
         		          };
         		//End : Changes added to read the login info from config file on server	 
              $scope.apiMiddleware.login(loginInfo).then(function () {
-
+            	 	$scope.warning='';
+     				$scope.error='';
+     				$scope.success='';
 	                $scope.fileNavigator.refresh();
 	                $scope.modal('signin', true);
 	              //Start : Changes added to read the login info from config file on server 
 	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
 	                var path =loginInfo.folderPath;
 	              //Start : End added to read the login info from config file on server 
-	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
-		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
-		            $scope.modal('uploadfile', true);
-		            var link =respn.data.links[0];
-		            var docLink = link.href;		            
-		            if($scope.item.consannexid == undefined){
-		            	console.log("Consent annex id is null") ;
-		            	$scope.item.tmpl_location=docLink;
-		            	$scope.success="File Uploaded Successfully"
-		            }else{
-		            	console.log("Consent annex id is not null");
-		            	$scope.item.consannexid.annnexlocation=docLink;
-		            	$scope.item.taskstatus="COMPLETED";
-		            	$scope.success="File Uploaded Successfully"
-		            }
-		          }, function (resp) {
-		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
-		            $scope.apiMiddleware.error = errorMsg;
-		            $scope.error="File is not able to upload ";
-		          });	
-	                }, function (resp) {
-	                  self.apiMiddleware.parseError(resp.data);
-	                });
-	                            
-             		
+	                
+	                if($scope.item.consannexid== undefined ){
+	                	//Log : Checking for documentation type
+	                	if($scope.uploadFileList[0].name.includes('.doc')){	                		
+	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+	        		            $scope.modal('uploadfile', true);
+	        		            var link =respn.data.links[0];
+	        		            var docLink = link.href;		            	        		            
+	        		            console.log("Function calling from Template module") ;
+	        		            $scope.item.tmpl_location=docLink;
+	        		            $scope.success="File Uploaded Successfully"	        		            
+	        		          }, function (resp) {
+	        		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+	        		            $scope.apiMiddleware.error = errorMsg;
+	        		            $scope.error="File is not able to upload ";
+	        		          });	
+	        	                }, function (resp) {
+	        	                  self.apiMiddleware.parseError(resp.data);
+	        	                });
+	                		
+	                	}else{
+	                		$scope.warning="File type should be .doc/.docx ext";
+	                		console.log("File type should be doc type");
+	                	}
+	                	
+	                }else{
+	                	//Log : Checking for documentation type
+                		if($scope.uploadFileList[0].name.includes('.pdf')){
+                			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+            		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+            		            $scope.modal('uploadfile', true);
+            		            var link =respn.data.links[0];
+            		            var docLink = link.href;		            
+            		            console.log("Function calling from Task module");
+            		            $scope.item.consannexid.annnexlocation=docLink;
+            		            $scope.item.taskstatus="COMPLETED";
+            		            $scope.success="File Uploaded Successfully"
+            		            
+            		          }, function (resp) {
+            		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+            		            $scope.apiMiddleware.error = errorMsg;
+            		            $scope.error="File is not able to upload ";
+            		          });	
+            	                }, function (resp) {
+            	                  self.apiMiddleware.parseError(resp.data);
+            	                });
+                		
+                	     }else{
+                	    	 $scope.warning="File type should be .pdf ext";
+                	    	 console.log("File should be pdf type")
+                	}
+                	
+                }	
              	}, function (resp) {
                      $scope.apiMiddleware.parseError(resp.data);
                    });

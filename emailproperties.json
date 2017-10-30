@@ -1,0 +1,5 @@
+{ 
+  "production": {"value":"yes" ,"emailTo":"","emailFrom":""},
+  "testing": {"value":"no" ,"emailTo":"DL-WSRM-GCMS-Project@pfizer.com","emailFrom":"Apoorva.Mallkkagol@pfizer.com"},
+  "development": {"value":"no" ,"emailTo":"Divya.VenkataSubbarao@pfizer.com","emailFrom":"Divya.VenkataSubbarao@pfizer.com"}
+}

@@ -18,7 +18,9 @@
   
   function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail,UserDetail){
 	  
-	  console.log("Inside controller");
+	  console.log("Inside task controller");
+	  	$scope.success='';
+		$scope.error='';
 		var assigned=$scope.assigned;
         var updateUserDetail = function(result){
             $scope.user = result;
@@ -49,16 +51,23 @@
 	  /**
 	   	 * selim 
 	     * @ngdoc method
-	     * @name value
 	     * @methodOf this method used for DLU-P/T excel generation
 	     * @description Gets data
 	     */
-	  $scope.dldata=[];
+
+                
+          $scope.selected = [];     	  
+          $scope.select = function(id) {		    
+          		    var found = $scope.selected.indexOf(id);
+          		    if(found == -1) $scope.selected.push(id);		    
+          		    else $scope.selected.splice(found, 1);	    
+          }
+	  /*$scope.dldata=[];
 	  $scope.mouseIN=function(con){            
-		  /*con['AddressType']='primary Address';
+		  con['AddressType']='primary Address';
 		  con['Source System Code[P]']='DLU-P-GCMS';
 		  con['Source System Code[T]']='DLU-T-GCMS';
-		  con['Transaction Comments']='Consent update from GCMS';*/
+		  con['Transaction Comments']='Consent update from GCMS';
 	      $scope.dldata = [con];
 	      console.log("value ",con);
 	  }
@@ -74,7 +83,7 @@
 	  }
 	  $scope.value=function(con){
 		  $scope.con=con;
-	  }
+	  }*/
 	  /**
 	     * selim
 	     * @name getTaskData
@@ -128,6 +137,8 @@
       $scope.upload = function() {
    	   console.log("Inside upload");
           //if ($scope.uploader.queue.length > 0) {
+   	   $scope.success='';
+ 	   $scope.error='';
        	   return FileMonitor.query().$promise.then(function(result){
    		       $scope.Result = result;
    		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
@@ -155,7 +166,9 @@
          */
 		 $scope.update = function(item) {
 			 console.log("Inside update function");
-			 console.log(item.id);	 
+			 console.log(item.id);
+			 $scope.success='';
+			 $scope.error='';
 	         angular.forEach($scope.TaskAttributes, function(con){
 	            	
 	         if (con.id === item.id) {
@@ -164,7 +177,19 @@
 	           con.consannexid.updatedDate = new Date();
 	              }
 	            });
-	            Task.update({ id:item.id }, item);
+	           // Task.update({ id:item.id }, item);
+	         	Task.update({ id:item.id }, item).$promise.then(function(response){
+	            	console.log(response);
+	            	if(response.$promise.$$state.status==1)
+	            		{
+	            		$scope.success= item.id + " task has been updated successfully";
+	            		}else{
+	            		$scope.error= item.id + " task failed to update";
+	            		}
+	 		      }).catch(function(){
+	     		    	 
+	 		    	 $scope.error= item.id + " task failed to update";
+	       		   });
 	          };
 	          
 	          
@@ -178,7 +203,9 @@
            */
   		 $scope.revoke = function(item) {
   			 console.log("Inside revoke function");
-  			 console.log(item.id);	 
+  			 console.log(item.id);
+  			$scope.success='';
+			$scope.error='';
   	         angular.forEach($scope.TaskAttributes, function(con){
   	            	
   	         if (con.id === item.id) {
@@ -186,7 +213,19 @@
   	           con.updatedDate = new Date();      
   	              }
   	            });            
-  	            Task.update({ id:item.id }, item);
+  	           // Task.update({ id:item.id }, item);
+  	         	Task.update({ id:item.id }, item).$promise.then(function(response){
+ 	           	console.log(response);
+ 	           	if(response.$promise.$$state.status==1)
+ 	           		{
+ 	           		$scope.success= item.id + " task has been revoked ";
+ 	           		}else{
+ 	           		$scope.error= item.id + " task failed to revoke";
+ 	           		}
+ 			      }).catch(function(){
+	     		    	 
+ 			    	 $scope.error= item.id + " task failed to revoke";
+ 	       		   });
   	          };  
 	          
 	      
@@ -195,6 +234,8 @@
   	     $scope.updateDelete = function(item) {
 			console.log("Inside updateDelete function");
 			console.log(item.id);
+			$scope.success='';
+			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.deleted = 'true';
@@ -204,27 +245,55 @@
 					con.updatedDate = new Date();
 				}
 			});
-			Task.update({
-				id : item.id
-			}, item);
+			Task.update({ id:item.id }, item).$promise.then(function(response){
+	           	console.log(response);
+	           	if(response.$promise.$$state.status==1)
+	           		{
+	           		$scope.success= item.id + " task has been deleted ";
+	           		}else{
+	           		$scope.error= item.id + " task failed to delete";
+	           		}
+			      }).catch(function(){
+	     		    	 
+			    	  $scope.error= item.id + " task failed to delete";
+	 	       		   });
+			//Task.update({
+			//	id : item.id
+			//}, item);
 		};
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");
 			console.log(item.id);
+			$scope.success='';
+			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.assignedto = item.assignedto;
                      con.updatedDate = new Date();
 				}
 			});
-			Task.update({
-				id : item.id
-			}, item);
+			Task.update({ id:item.id }, item).$promise.then(function(response){
+	           	console.log(response);
+	           	if(response.$promise.$$state.status==1)
+	           		{
+	           		$scope.success= item.id + " task has been reassigned to "+ item.assignedto;
+	           		}else{
+	           		$scope.error= item.id + " task failed to reassigned";
+	           		}
+			      }).catch(function(){
+	     		    	 
+			    	  $scope.error= item.id + " task failed to reassigned";
+	 	       		   });
+			//Task.update({
+			//	id : item.id
+			//}, item);
 		};
 
 		$scope.updateUnDelete = function(item) {
 			console.log("Inside updateDelete function");
 			console.log(item.id);
+			$scope.success='';
+			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
 					con.deleted = 'false';
@@ -234,9 +303,21 @@
 					con.updatedDate = new Date();
 				}
 			});
-			Task.update({
-				id : item.id
-			}, item);
+			//Task.update({
+			//	id : item.id
+			//}, item);
+			Task.update({ id:item.id }, item).$promise.then(function(response){
+	           	console.log(response);
+	           	if(response.$promise.$$state.status==1)
+	           		{
+	           		$scope.success= item.id + " task has been undeleted";
+	           		}else{
+	           		$scope.error= item.id + " task failed to undelete";
+	           		}
+			      }).catch(function(){
+	     		    	 
+			    	  $scope.error= item.id + " task failed to undelete";
+	 	       		   });
 		};
 		 	          
 		 

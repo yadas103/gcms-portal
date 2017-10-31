@@ -94,7 +94,8 @@
 	<div class="panel-heading">Upload your documents - Manual Match</div>
 	<div class="panel-body">
 
-
+		<span style="color:green">{{success}}</span>
+    	<span style="color:red">{{error}}</span> 
 		<table class="table table-hover ">
 			<div class="table-responsive">
 				<!-- st-set-filter="myStrictFilter" -->
@@ -170,31 +171,24 @@
 						on="con.taskstatus">
 						<tr>
 						
-      <td>
-                                          <div ng-switch="con.taskstatus">
-                                                      <div ng-switch-when="INCOMPLETE">
-                                                      <gcms-modal template="task.update.html"
-									controller="ModalDefaultCtrl" content="con" ok="update"
-									alt="Edit Task {{con.id}}"> <span
-									class="fa fa-pencil" style="color: #337ab7;"></span>
-								</gcms-modal>  <gcms-modal template="task.delete.html"
-									controller="ModalDefaultCtrl" content="con" ok="updateDelete"
-									alt="Delete Task {{con.id}}"> <span
-									class="fa fa-trash" style="color: #337ab7;"></span>
-                                                      </div>
-                                                      <div ng-switch-when="COMPLETED">
-                                                      <gcms-modal template="task.update.html"
-									controller="ModalDefaultCtrl" content="con" ok="update"
-									alt="Edit Task {{con.id}}"> <span
-									class="fa fa-pencil" style="color: #337ab7;"></span>
-								</gcms-modal> <gcms-modal template="task.delete.html"
-									controller="ModalDefaultCtrl" content="con" ok="updateDelete"
-									alt="Delete Task {{con.id}}"> <span
-									class="fa fa-trash" style="color: #337ab7;"></span>
-                                                      </div>
-                                                      </div>
+    					<td>
+								<div ng-show="con.taskstatus !='DELETED'">
 
-            </td>
+									<gcms-modal template="task.update.html"
+										controller="ModalDefaultCtrl" content="con" ok="update"
+										alt="Edit Task {{con.id}}"> <span
+										class="fa fa-pencil" style="color: #337ab7;"></span> </gcms-modal>
+									<gcms-modal template="task.delete.html"
+										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
+										alt="Delete Task {{con.id}}"> <span
+										class="fa fa-trash" style="color: #337ab7;"></span>
+								</div>
+								<div ng-show="con.taskstatus =='COMPLETED'">
+									<span row-select="con" ng-click="select(con)">  <input
+											 type="checkbox" />	 							     
+								</div>
+
+							</td>
 						
 							<td>{{con.id}}</td>
 							<td>{{con.consannexid.bpid.id}}</td>
@@ -209,67 +203,36 @@
 							<td>{{con.taskstatus}}</td>
 							<td>{{con.createdBy}}</td>
 							<td>
-                                          <div ng-switch="con.taskstatus">
-                                                      <div ng-switch-when="INCOMPLETE">
-								<div ng-if="con.consannexid.annnexlocation==undefined">
-									<gcms-upload template="modals2.html"
-										controller="ModalDefaultCtrl2" content="con" ok="update"
-										alt="Edit Task {{con.id}}"> <span> Upload</span>
-									</gcms-upload>
-								</div> 
-                                                <div ng-if="con.consannexid.annnexlocation!=undefined">
-									<div ng-show="true" ng-controller="FileManagerController">
-								
-										<a href="" ng-click="download(con)"> View </a>
-									</div>
-									<gcms-upload template="modals2.html"
-										controller="ModalDefaultCtrl2" content="con" ok="update"
-										alt="Edit Task {{con.id}}"> <span>Change</span>
-									</gcms-upload>
+								<div ng-show="con.taskstatus !='DELETED'">
 
-								</div> 
-                                     </div>
-                                     <div ng-switch-when="COMPLETED">
-                                               <div ng-if="con.consannexid.annnexlocation==undefined">
-									<gcms-upload template="modals2.html"
-										controller="ModalDefaultCtrl2" content="con" ok="update"
-										alt="Edit Task {{con.id}}"> <span> Upload</span>
-									</gcms-upload>
-								</div> 
-								 <div ng-if="con.consannexid.annnexlocation!=undefined">
-									<div ng-show="true" ng-controller="FileManagerController">
-									
-										<a href="" ng-click="download(con)"> View </a>
+									<div ng-if="con.consannexid.annnexlocation==undefined">
+										<gcms-upload template="modals2.html"
+											controller="ModalDefaultCtrl2" content="con" ok="update"
+											alt="Edit Task {{con.id}}"> <span>
+											Upload</span> </gcms-upload>
 									</div>
-									<gcms-upload template="modals2.html"
-										controller="ModalDefaultCtrl2" content="con" ok="update"
-										alt="Edit Task {{con.id}}"> <span>Change</span>
-									</gcms-upload>
-
-								</div> 
-                                     </div>
-                                        </div>
-                                        
-							
-								 <!-- <div ng-controller="FileManagerController">
-										<a herf="" ng-show="config.allowedActions.upload"
-											ng-click="modal1('uploadfile', con)"> Upload </a>
-								
+									<div ng-if="con.consannexid.annnexlocation!=undefined">
 										<div ng-show="true" ng-controller="FileManagerController">
-											<button type="button" class="glyphicon glyphicon-cloud-download" ng-click="download()">{{'download' | translate}}</button>
-											<a href=""  ng-click="download(con.consannex.annexlocation)"> download
-												
-     				    		</a>                    
+
+											<a href="" ng-click="download(con)"> View </a>
+										</div>
+										<gcms-upload template="modals2.html"
+											controller="ModalDefaultCtrl2" content="con" ok="update"
+											alt="Edit Task {{con.id}}"> <span>Change</span>
+										</gcms-upload>
+
+									</div>
+
 								</div>
-								
-									</div>  --> 
-								
+
+
+
 
 							</td>
 							<td>
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
-									<div data-ng-if ="loggeduser.roleId='5'"> 
+									<div data-ng-if ="loggeduser.roleId=='5'"> 
 										<gcms-modal template="task.reassign.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateReassign"
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
@@ -277,21 +240,36 @@
 									</div>
 									</div>
 									<div ng-switch-when="COMPLETED">
-									<div data-ng-if ="loggeduser.roleId='5'"> 
+									<div data-ng-if ="loggeduser.roleId=='5'"> 
 									    <span ng-mouseover="value(con)" >
 										<gcms-modal template="task.revoke.html"
 											controller="ModalDefaultCtrl" content="con" ok="revoke"
 											alt="Revoke Consent{{con.id}}"> <span>Revoke</span>
 										</gcms-modal>
 										</span>
-										<br/>
-										<br/>
-										<!-- 'id': 'Task ID', 'consannexid.eventname': 'Event Name', 'taskstatus': 'Task Status' -->
-										<div>
-										<span ng-mouseover="mouseIN(con)" ng-mouseout="mouseOUT(con)" >
-										 <a
-											ng-json-export-excel data="dldata"
-											report-fields="{
+										</div>
+									</div>
+									<div ng-switch-when="DELETED">
+										<div data-ng-if ="loggeduser.roleId='5'"> 
+											<gcms-modal template="task.undelete.html"
+												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
+												alt="{{con.id}}"> <span>Undelete</span>
+											</gcms-modal>
+										</div>
+									</div>
+								</div>
+
+							</td>
+
+						</tr>
+
+					</tbody>
+					<tfoot>
+						<tr ng-show="selected.length != '0'">
+							<td colspan="2">
+								<button class="btn btn-primary" ng-json-export-excel
+									data="selected"
+									report-fields="{
 											'Record_type':'Record_type',
 											'consannexid.bpid.profileType': 'Party_Type',
 											'consannexid.bpid.organisationName': 'Organization',
@@ -375,10 +353,12 @@
 											'Custom/Flex Field 19':'Custom/Flex Field 19',
 											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
 											}"
-											filename="'Data'"> DLU-P </a>
-											 <a ng-json-export-excel
-											data="dldata"
-											report-fields="{
+									filename="'Data'">Generate DLU-P</button>
+							</td>
+							<td colspan="2">
+								<button class="btn btn-primary" ng-json-export-excel
+									data="selected"
+									report-fields="{
 											'consannexid.eventname': 'Event Name',
 											'Name of Event Venue': 'Name of Event Venue',
 											'Event Co-ordinator': 'Event Co-ordinator',
@@ -559,27 +539,10 @@
 										    'Transaction Comments': 'Transaction Comments',
 											'Source System Code[T]': 'Source System Code[T]'
 											}"
-											filename="'Data'"> DLU-T </a>
-										</span>
-										</div>
-										</div>
-									</div>
-									<div ng-switch-when="DELETED">
-										<div data-ng-if ="loggeduser.roleId='5'"> 
-											<gcms-modal template="task.undelete.html"
-												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
-												alt="{{con.id}}"> <span>Undelete</span>
-											</gcms-modal>
-										</div>
-									</div>
-								</div>
-
+									filename="'Data'">Generate DLU-T</button>
 							</td>
 
 						</tr>
-
-					</tbody>
-					<tfoot>
 						<tr>
 							<td colspan="13" class="text-center">
 								<div st-items-by-page="5" st-pagination=""

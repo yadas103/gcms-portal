@@ -71,6 +71,14 @@
    </form>
 </div>
 <div class="modal-footer">
-   <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminTemplateForm.$invalid">Add Template</button>
-   <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
+	<div ng-hide="item.dates_rages=='N'">
+		<button class="btn btn-primary" ng-click="ok()"
+			ng-disabled="adminTemplateForm.$invalid">Add Template</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</div>
+
+	<div ng-show="item.dates_rages=='N'">
+		<button class="btn btn-primary" ng-click="ok()">Add Template</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</div>
 </div>

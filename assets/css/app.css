@@ -310,7 +310,7 @@ label {
 .results .popover.bottom > .arrow {margin-left:191px;}
 tr.exchangelist:hover {cursor: pointer;}
 
-/*Covered Recipient Detail
+/*
 **********************************/
 .recipient-header-info {
 	padding-left: 50px;
@@ -543,4 +543,20 @@ textarea.ng-invalid,
 .pagination li a input {
   padding: 0;
   margin: -5px 0;
+}
+
+.st-sort-ascent:before {
+    content: '\25B2';
+}
+
+.st-sort-descent:before {
+    content: '\25BC';
+}
+
+.lr-drop-target-before{
+  border-left: 2px solid orange;
+}
+
+.lr-drop-target-after{
+  border-right: 2px solid orange;
 }

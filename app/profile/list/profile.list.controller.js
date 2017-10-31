@@ -36,7 +36,9 @@
 		var profile_country_id = {};
 		$scope.id = [];                
 		$scope.templId = {};
-
+		$scope.readOnlyCC = false;
+		$scope.readOnlyPC = false;
+		$scope.request.profileType = 'HCP';
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -57,13 +59,23 @@
 					$scope.logged_In_User = loggedInUser;  
 
 					for(var i in $scope.profiles_data){
-						if ($scope.profiles_data[i].userName == $scope.logged_In_User.userName){
+						if ($scope.profiles_data[i].userName == $scope.logged_In_User.userName){							
 							$scope.loggedInUserCountry = $scope.profiles_data[i].countryId ;
 							$scope.loggedInUserCountryName = $scope.profiles_data[i].countryName ;
-						}
+							$scope.loggedInUserRole = $scope.profiles_data[i].roleId;
+						}						
 					}
-					$scope.request.collectingCountry = $scope.loggedInUserCountryName;
-					$scope.request.country = $scope.loggedInUserCountryName;
+					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
+						$scope.request.collectingCountry = $scope.loggedInUserCountryName;
+						$scope.request.country = $scope.loggedInUserCountryName;
+						$scope.readOnlyCC = true;
+						$scope.readOnlyPC = true;
+					}
+					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5){	
+						$scope.request.collectingCountry = $scope.loggedInUserCountryName;
+						$scope.readOnlyCC = true;
+					}
+				
 					$scope.profile.country = $scope.loggedInUserCountryName;
 
 				}).catch(function(){
@@ -95,7 +107,7 @@
 
 		//Function to search for requested profiles
 		$scope.submit = function(request) {
-			$scope.responseOnSearch = '';
+			$scope.responseOnSearch = '';			
 			params =  request;
 			$scope.profile.country = request.country;        	
 			$scope.selectedids = [];

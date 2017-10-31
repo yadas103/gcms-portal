@@ -3,9 +3,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">Search Details</h3>
 	</div>
-
-	<!-- <gcms-profile-search></gcms-profile-search>	 -->
-	<!-- <gcms-templates></gcms-templates> -->
+	
 	<div class="panel-body-con">
 		<div ng-model="downloadMsg" style="color: green; font-size: 13px;"
 			role="alert">{{msg}}</div>
@@ -17,64 +15,64 @@
 			style="margin-right: -12px; margin-left: 32px;">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-3" id="search-drop" style="width: 264px;">
-						<select ng-model="request.collectingCountry"
-							style="width: 200px; height: 27px;" required>
-							<option ng-repeat="con in counties">{{con.name}}</option>
+					<div class="col-sm-3" id="search-drop" style="margin-left: -63px;width: 264px;">
+						<select ng-model="request.collectingCountry" class="drop-receipi"
+							style="margin-left: 37px;" ng-disabled="readOnlyCC" required>
+							<option ng-repeat="con in counties" >{{con.name}}</option>
 						</select>
 						<!-- <gcms-lov list="country" value="request.profileCountry" state ="critical"></gcms-lov> -->
-						<label style="font-size: 12px;">Collecting Country</label><br>
+						<label style="font-size: 12px;margin-left: 37px;"">Collecting Country</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop"
-						style="width: 264px; height: 27px; margin-left: -36px;">
-						<select ng-model="request.country"
-							style="width: 264px; height: 27px;" required>
-							<option ng-repeat="rep in counties">{{rep.name}}</option>
-						</select> <label style="font-size: 12px;">Reporting Country</label><br>
+						style="margin-left: 0px;">
+						<select ng-model="request.country" class="drop-receipi"
+							style="margin-left: 60px;"ng-disabled="readOnlyPC" required>
+							<option value = "">Please select</option>
+							<option ng-repeat="rep in counties" >{{rep.name}}</option>
+						</select> <label style="font-size: 12px;margin-left: 60px;">Reporting Country</label><br>
 					</div>
-					<div class="col-sm-3 form-group" id="search-drop"
-						style="margin-right: 17px; margin-left: 34px;">
-						<select ng-model="request.profileType"
-							style="width: 264px; height: 27px;" required>
+					<div class="col-sm-3 form-group" id="search-drop" style="margin-left: 50px;">
+						<select ng-model="request.profileType" class="drop-receipi"
+							style="margin-left: 23px;" required>							 						
 							<option ng-repeat="prof in profile_types">{{prof.name}}</option>
-						</select>
-						<!-- <gcms-lov list="recipientTypeString" value="request.profileType" state ="critical"></gcms-lov> -->
-						<label style="font-size: 12px;">Business Party Type</label><br>
+						</select>						
+						<label style="font-size: 12px;margin-left: 23px;">Business Party Type</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop"
-						style="margin-left: -20px; width: 283px;">
+						style="width: 283px;margin-left: 28px;">
 						<input type="text" class="form-control" id="id"
-							ng-model="request.id"> <label for="id"
+							ng-model="request.id" style="height: 25px;"> <label for="id"
 							style="font-size: 12px;">TR ID</label><br>
 					</div>
 				</div>
 
-				<div class="col-sm-2 form-group" id="search-drop"
-					style="width: 233px;">
+				<div class="col-sm-3 form-group" id="search-drop"
+					style="width: 233px;margin-left: -35px;">
 					<input type="text" class="form-control" id="firstName"
-						ng-model="request.firstName" style=""width: 200px; height: 27px;">
-					<label for="firstName" style="font-size: 12px;">First Name</label><br>
+						ng-model="request.firstName" style="width: 264px; height: 25px;margin-left: -4px;">
+					<label for="firstName" style="font-size: 12px;margin-left: -4px;">First Name</label><br>
 				</div>
-				<div class="col-sm-3 form-group" style="width: 264px; height: 27px;">
+				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
 					<input type="text" class="form-control" id="address"
 						ng-model="request.address"
-						style="margin-left: 28px; margin-top: 6px; width: 265px;">
-					<label for="address" style="font-size: 12px; margin-left: 27px;">Address</label><br>
+						style="margin-left: 79px;margin-top: 6px;width: 264px; height: 25px;">
+					<label for="address" style="font-size: 12px;margin-left: 79px;">Address</label><br>
 				</div>
 				<div class="col-sm-3 form-group" id="search-drop"
-					style="margin-left: 72px; width: 280px;">
+					style="margin-left: 71px;width: 280px;">
 					<input type="text" class="form-control" id="lastName"
-						ng-model="request.lastName"> <label for="lastname"
-						style="font-size: 12px;">Last Name/Organization Name</label><br>
+						ng-model="request.lastName" style="width: 264px;margin-left: 48px; height: 25px;">
+						<label for="lastname"
+						style="font-size: 12px;margin-left: 48px;">Last Name/Organization Name</label><br>
 				</div>
 				<div class="col-sm-1 form-group" id="search-drop"
-					style="margin-left: 21px; width: 278px;">
+					style="margin-left: 68px;width: 283px; height: 25px;">
 					<input type="text" class="form-control" id="city"
 						ng-model="request.city"> <label for="city"
 						style="font-size: 12px;">City</label><br>
 				</div>
-				<div class="col-sm-2" class="form-group"
-					style="margin-right: 15px; float: right; padding-left: -1px; margin-top: 3px;">
+				<div class="col-sm-4" class="form-group"
+					style="float: right; margin-top: 12px;">
 					<button type="submit" class="btn btn-lg btn-default"
 						ng-click="submit(request)" alt="Search" data-toggle="tooltip"
 						data-placement="top" title="search"
@@ -86,12 +84,11 @@
 					<span class="btn btn-default" role="button" data-toggle="tooltip"
 						data-placement="top" title="download" ng-click="list()"><i
 						class="fa fa-download"></i></span> </a> </gcms-modal>
+						
 					<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<span class="btn btn-default" role="button" data-toggle="tooltip"
-						data-placement="top" title="create request"><i
-						class="fa fa-plus"></i></span> </gcms-modal>
-				</div>
+					<a href=""><i>Cannot find a profile? Create a request here</i> </a></gcms-modal>
+				
 			</div>
 	</div>
 	</form>
@@ -107,44 +104,44 @@
 				<thead>
 					<tr style="color: white; background-color: #337ab7;">
 						<th
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Select</th>
+							style="font-size: 13px; font-family: sans-serif; "></th>
 						<th ng-click="orderByField='id'; reverseSort = !reverseSort"
 							st-sort="id"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px; width: 77px;">TR
+							style="font-size: 13px; font-family: sans-serif;  width: 77px;">TR
 							ID</th>
 						<th
 							ng-click="orderByField='profileType'; reverseSort = !reverseSort"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 33px; width: 86px;"
+							style="font-size: 13px; font-family: sans-serif;  width: 86px;"
 							st-sort="profileType">Profile Type</th>
 						<th ng-click="orderByField='lastName'; reverseSort = !reverseSort"
 							st-sort="lastName"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Last
-							Name</th>
+							style="font-size: 13px; font-family: sans-serif;"
+							ng-hide="request.profileType==='HCO'">Last Name</th>
 						<th
 							ng-click="orderByField='firstName'; reverseSort = !reverseSort"
 							st-sort="firstName"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">First
-							Name</th>
+							style="font-size: 13px; font-family: sans-serif; "
+							ng-hide="request.profileType==='HCO'">First Name</th>
 						<th
 							ng-click="orderByField='organisationName'; reverseSort = !reverseSort"
 							st-sort="organisationName"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Organization
-							Name</th>
+							style="font-size: 13px; font-family: sans-serif;"
+							ng-hide="request.profileType==='HCP'">Organization Name</th>
 						<th ng-click="orderByField='city'; reverseSort = !reverseSort"
 							st-sort="city"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">City
+							style="font-size: 13px; font-family: sans-serif;">City
 							Name</th>
 						<th ng-click="orderByField='address'; reverseSort = !reverseSort"
 							st-sort="address"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Address</th>
+							style="font-size: 13px; font-family: sans-serif;">Address</th>
 						<th
 							ng-click="orderByField='specialty'; reverseSort = !reverseSort"
 							st-sort="specialty"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 35px;">Specialty</th>
+							style="font-size: 13px; font-family: sans-serif;">Specialty</th>
 						<th
 							ng-click="orderByField='specialty'; reverseSort = !reverseSort"
 							st-sort="specialty"
-							style="font-size: 13px; font-family: sans-serif; padding-bottom: 11px;">Consent
+							style="font-size: 13px; font-family: sans-serif;">Consent
 							History</th>
 					</tr>
 					<tr>
@@ -154,11 +151,11 @@
 						<th><input ng-model="search.profileType"
 							st-search="profileType" placeholder=" " class="form-control"
 							type="search" /></th>
-						<th><input ng-model="search.lastName" st-search="lastName"
+						<th ng-hide="request.profileType==='HCO'"><input ng-model="search.lastName" st-search="lastName"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.firstName" st-search="firstName"
+						<th ng-hide="request.profileType==='HCO'"><input ng-model="search.firstName" st-search="firstName"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.organisationName"
+						<th ng-hide="request.profileType==='HCP'"><input ng-model="search.organisationName"
 							st-search="organisationName" placeholder=" " class="form-control"
 							type="search" /></th>
 						<th><input ng-model="search.city" st-search="city"
@@ -177,11 +174,11 @@
 							ng-model="checkboxes.items[pro.id]"></td>
 						<td>{{pro.id}}</td>
 						<td>{{pro.profileType}}</td>
-						<td style="word-break: break-all;">{{pro.lastName}}</td>
-						<td style="word-break: break-all;">{{pro.firstName}}</td>
-						<td style="word-break: break-all;">{{pro.organisationName}}</td>
-						<td style="word-break: break-all;">{{pro.city}}</td>
-						<td style="word-break: break-all;">{{pro.address}}</td>
+						<td class="reci-name" style="word-break: break-all;" ng-hide="request.profileType==='HCO'">{{pro.lastName}}</td>
+						<td class="reci-name" style="word-break: break-all;" ng-hide="request.profileType==='HCO'">{{pro.firstName}}</td>
+						<td class="reci-name" style="word-break: break-all;" ng-hide="request.profileType==='HCP'">{{pro.organisationName}}</td>
+						<td class="reci-name" style="word-break: break-all;">{{pro.city}}</td>
+						<td class="reci-name" style="word-break: break-all;">{{pro.address}}</td>
 						<td style="word-break: break-all;"></td>
 						<td><a href="" type="submit" data-ng-click="submitid(pro.id)">
 								View </a></td>

@@ -18,10 +18,7 @@
                 <div class="form-group">
                     <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;">Profile Type:*</label>
                     <div class="col-sm-9">
-					<select ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" style="width: 388px;
-                     border-radius: 3px;
-                     height: 30px;
-                     border: 1px solid #cccccc;" required><option value="" ng-show="{{empty}}"></option></select>                      
+					<select ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" class="drop-receipi" style="width: 395px;" required><option value="" ng-show="{{empty}}"></option></select>                      
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -54,7 +51,7 @@
 				<div class="form-group">
                     <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px;">Profile Country:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <select class="form-control" ng-model="item.country" required>
+                        <select class="form-control" ng-model="item.country" class="drop-receipi" style="width: 395px;" required>
                   			<option ng-repeat="contry in counties">{{contry.name}}</option>
                			</select>               			
                     </div>

@@ -1,5 +1,5 @@
-<!-- Generate Consent Annex -->
-<div class="modal-content" style="width:132%;">
+<div class="modal-content" style="width:166%;
+    left: -25%;">
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
   <h3 class="modal-title" style="font-size: medium;padding-left: 10px;">Set Additional details</h3>
@@ -15,43 +15,42 @@ Enter this information in the proper columns of the below list. Once done press 
   <div class=" class="panel panel-primary table-responsive">
 	<thead style="background-color:#337ab7;color:white;">
 	<tr  class="panel-title" style="font-size: 14px;">
-	<th style="font-size: 13px; font-family: sans-serif; padding-bottom: 36px;">Template Type</th>	
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 10px;">Last Name/Organizations Name*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 25px;">First Name*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 36px;">Event Description*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 36px;">TR ID*</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 36px;">PO Code</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 24px;">ACM/ InterAct Code</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 24px;">Start Date</th>
-		<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 24px;">End Date</th>
+	<th style="font-size: 13px; font-family: sans-serif;">Template Type</th>	
+	<th style="font-size: 12px; font-family: sans-serif;">Last Name/Organizations Name*</th>
+	<th style="font-size: 12px; font-family: sans-serif;">First Name*</th>
+	<th style="font-size: 12px; font-family: sans-serif;">Event Description*</th>
+	<th style="font-size: 12px; font-family: sans-serif;">TR ID*</th>
+	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
+	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
+	<th style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
+		<th style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
     </tr>
 	</thead>
 	
 	<tbody>
 	<tr ng-repeat = "i in item.checkedIds"  >
 	<td>	
-	<select class="form-control" ng-model="item.request[i.id].tmpl_id" ng-options="template.id as template.tmpl_name for template in item.templates | filter:customArrayFilter" required><option value="" ng-show="{{empty}}"></option></select>			
+	<select class="form-control" ng-model="item.request[i.id].tmpl_id" ng-options="template.id as template.tmpl_name for template in item.templates | filter:customArrayFilter" required style="width: 126px;"><option value="" ng-show="{{empty}}"></option></select>			
     </td>			
  	<td ng-model="item.request[i.id].lastName" >{{i.lastName}}{{i.organisationName}}</td>
     <td ng-model="item.request[i.id].firstName">{{i.firstName}}</td>	             
-    <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="item.request[i.id].eventname" required></td>
+    <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="item.request[i.id].eventname" required style="width: 114px;"></td>
     <td ng-model="item.request[i.id].id" >{{i.id}}</td>
-	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control"> </td>
- 	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control"></td>
- 	<td><input type="text" id="consentstartdate" ng-model="item.request[i.id].consentstartdate" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" is-open="openedStart"  close-text="Close" required/>              
-         <button style="height:27px; margin-top: -44px; margin-left: 88px;" class="btn btn-default btn" ng-click="startDate()">
-         <i class="fa fa-calendar"></i></button>
-    </td>
-    <td><input type="text" id="consentenddate" ng-model="item.request[i.id].consentenddate" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" is-open="openedEnd"  close-text="Close" required/>                           
-         <button style="height:27px; margin-top: -44px; margin-left: 88px;" class="btn btn-default b1" ng-click="endDate()">
-         <i class="fa fa-calendar"></i></button>
-    </td> 
+	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" required style="width: 75px;"> </td>
+ 	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" required></td>
+ 	<td><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" is-open="openedStart"  close-text="Close" /> 
+ <button style="height:19px; margin-top: -47px; margin-left:69px; padding: 1px;background-color: white;" class="btn btn-default-b1" ng-click="startDate()">	
+             
+              <i class="fa fa-calendar"></i></td>
+              <td><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" is-open="openedEnd"  close-text="Close" />                           
+              <button style="height:19px; margin-top: -47px; margin-left:69px; padding: 1px;background-color: white;" class="btn btn-default-b1" ng-click="endDate()">
+              <i class="fa fa-calendar"></i></button></td> 
  	</tr>
 	</tbody>	
 	</div>
 	</table>	
 </form>	
-	<span style="margin-left: 339px;"><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>
+	<span style="margin-left: 728px;"><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>
 	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 	</span>
 	</div>

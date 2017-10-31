@@ -35,19 +35,11 @@
 
           $scope.$on('$localeChangeSuccess', loadUserDetail);
           
-         	var updateLoggedUserDetail = function(result){
-              $scope.loggeduser= result;
-            };
-
-            var loadLoggedUserDetail = function(){
-              $scope.loggeduser= [];
-              LoggedUserDetail.query().$promise.then(updateLoggedUserDetail);
-            };
-
-            loadUserDetail();
-
-            $scope.$on('$localeChangeSuccess', loadLoggedUserDetail);
-          
+          LoggedUserDetail.query().$promise
+          .then(function(loggedInUser) {
+            $scope.loggeduser = loggedInUser;
+            console.log($scope.loggeduser);
+          });
 	  /**
 	   	 * selim 
 	     * @ngdoc method

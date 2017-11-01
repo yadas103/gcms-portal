@@ -62,7 +62,7 @@
        * @description validate bpid entered in the TextBox in approve and reject pop up screen 
        */
 
-      $scope.validation=" Not Validated";
+      $scope.validation=" ";
       $scope.validate = function(item){     	
     	  var id  ={id:item.bpid};
     	  ValidatedProfile.get(id).$promise

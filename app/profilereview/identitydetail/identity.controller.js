@@ -61,7 +61,8 @@
        * @name validate
        * @description validate bpid entered in the TextBox in approve and reject pop up screen 
        */
- 
+
+      $scope.validation=" Not Validated";
       $scope.validate = function(item){     	
     	  var id  ={id:item.bpid};
     	  ValidatedProfile.get(id).$promise
@@ -69,14 +70,14 @@
                if(result.$promise.$$state.status == 1)
            	{
             	   {
-            		   item.notes="Validated";
+            		   $scope.validation="Validated";
                	}
                	
                	}
               
              }).catch(function(){
           	  
-            	 item.notes=" Not Validated";
+            	 $scope.validation=" Not Validated";
 
              }); 
        }; 
@@ -89,7 +90,7 @@
       $scope.resultcopy = {};
       $scope.profile_status={};
       $scope.TRID={};
-      
+     
       $scope.generateEmail = function(emaildetails){
       	EmailGeneration.save(emaildetails).$promise
       .then(function(response) {
@@ -266,13 +267,12 @@
       
         $scope.updateApprove = function(item) {
         	
-        	if( item.notes==="Validated")
+        	if( $scope.validation==="Validated")
         		
         	{
         		
         		 item.status="Approve";
             	 item.updatedDate = new Date();
-            	 item.notes="";
             		 var reqID = {};
             	 reqID = item.id;
                	$scope.countryCopy = item.country;
@@ -283,7 +283,6 @@
                	$scope.TRID=item.bpid;
         	}else{
         		item.bpid="";
-        		item.notes=""
         	}
 
            IdentityRequestView.update({ id:item.id },item);
@@ -298,11 +297,10 @@
            */
           
           $scope.updateDismiss = function(item) {
-       	if(item.notes==="Validated")
+       	if($scope.validation==="Validated")
        	{
        		 item.status="Reject";
            	 item.updatedDate = new Date();
-           	 item.notes=""
            		var reqID = {};
         	 reqID = item.id;
            	$scope.countryCopy = item.country;
@@ -314,7 +312,6 @@
        	}
        	else{
     		item.bpid="";
-    		item.notes=""
     	}
          	IdentityRequestView.update({ id:item.id }, item);
           };

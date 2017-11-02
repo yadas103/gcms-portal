@@ -94,19 +94,24 @@
 			 * @name update
 			 * @description update reviewer table
 			 */
-			$scope.update = function(item) {			
-				 console.log("Inside update function");				  
-		         angular.forEach($scope.ReviewAttributes, function(con){
-		            console.log(con);	
-		         if (con.id === item.id) {
-		           con.countries.id=item.countries.id;
-		           console.log(con.id);
-		           con.updatedDate = new Date();      
-		              }
-		            }); 		         
-		         Review.update({ id:item.id }, item);
-		          };
-		          
+	  $scope.update = function(item) {			
+			 console.log("Inside update function");				  
+	         angular.forEach($scope.ReviewAttributes, function(con){
+	            console.log(con);	
+	         if (con.id === item.id) {
+	           con.countries.id=item.countries.id;
+	           console.log(con.id);
+	           con.updatedDate = new Date();      
+	              }
+	            }); 		         
+	         Review.update({ id:item.id }, item).$promise.then($scope.getProfileReviewerPersmission);
+	          };
+	         //Reloads page once Identity Reviewer is updated.	          		        	  
+	       $scope.getProfileReviewerPersmission = function(currentProfile){			        		  
+	        	$window.location.reload();		        		          		
+	          };								
+	          
+	          
 		          /**
 					 * @author: selim
 					 * @ngdoc method

@@ -22,6 +22,7 @@
 	function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf) {
 
 		var params = {};
+		console.log("Inside Profile.list.controller");
 		$scope.orderByField = 'firstName';
 		$scope.reverseSort = false;
 		$scope.selectedids = [];  
@@ -314,7 +315,7 @@
 			$scope.responseOnUnsave = '';
 			var request = item;
 			var reqID = {};
-
+			request.profileTypeId = item.profileTypeId.Name;
 			IdentityRequest.save(request).$promise
 			.then(function(result) {
 				if(result.$promise.$$state.status == 1)
@@ -409,15 +410,18 @@
 			var values = $scope.checkedIds;               	 
 			var modifiedparams = {};
 			$scope.created = false;
+			$scope.createdBy = {};
 
 			//Create Consent Annex rows
 			$scope.getPDFs = function(modifiedparams,y){
 				return ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
 					if(result.$promise.$$state.status == 1)
-					{	                    	
-						y++;
+					{	 
+						$scope.createdBy = result.createdBy;
+						y++;						
 						$scope.createTask(y);		                    	
 						$scope.msg = "You can see the generated PDF in your Downloads folder";
+						console.log(result);
 					}
 
 				}).catch(function(){
@@ -426,12 +430,15 @@
 			};
 			//Downloads multiple PDFs as zip 
 			$scope.downloadAsZip = function(){
-				var link = 'http://localhost:8080/gcms-service/consent-annex-pdf/consentFilesZip.zip';
-				$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
-					var bin = new Blob([response.data]);
-					var docName = 'consentFilesZip.zip';           
-					saveAs(bin, docName);                        							
-				});
+				$http.get('./config.json').then(function (response) {
+					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-annex-pdf/'+ $scope.createdBy;
+					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
+						var bin = new Blob([response.data]);
+						var docName = 'consentFilesZip.zip';           
+						saveAs(bin, docName);                        							
+					});	
+					
+				});			
 			}
 
 			var y = 0;
@@ -439,7 +446,7 @@
 				if(y<$scope.checkedIds.length){
 					var currentId = values[y].id; 	
 					//Creating Object to send it to Consent Annex				
-					modifiedparams['payercountry'] = {id: JSON.stringify($scope.id.collectingCountry)};
+					modifiedparams['payercountry'] = {id: JSON.stringify($scope.id.collectingCtry)};
 					modifiedparams['profilecountry'] = {id: JSON.stringify($scope.id.profileCountry)};
 					modifiedparams['profileType'] = $scope.searchCriteria.profileType;
 					modifiedparams['bpid'] = {id: currentId};

@@ -101,7 +101,7 @@
               <ul class="nav navbar-nav">
                 <li gcms-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6 class="nav-details">Home</h6></a></li>
                 <li gcms-secure section-name="Tasks" action-name="browse"><a ui-sref="task"><h6 class="nav-details">Tasks</h6></a></li>
-                <li><a ui-sref="profilereview"><h6 class="nav-details">Profile Review</h6></a></li>                
+                <li ng-show = "profileReviewTabShow" gcms-secure section-name="Profile Review" action-name="browse"><a ui-sref="profilereview"><h6 class="nav-details">Profile Review</h6></a></li>                
                  <li gcms-secure section-name="Administration" action-name="browse"><a ui-sref="admin"><h6 class="nav-details">Administration</h6></a></li>
                   <li gcms-secure section-name="Help and Support" action-name="browse"><a ui-sref="help"><h6 class="nav-details">Help and Support</h6></a></li>
               </ul>

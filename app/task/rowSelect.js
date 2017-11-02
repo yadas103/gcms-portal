@@ -36,5 +36,5 @@ function rowSelect() {
 }
 
 angular
-  .module('app')
+  .module('gcms.task')
   .directive('rowSelect', rowSelect)

@@ -2,7 +2,7 @@
  * @ngdoc overview
  * @name gcms.profile.controls
  *
- * @requires gcms.profile..data
+ * @requires gcms.components.controls
  *
  * @description
  * Represents reusable controls.

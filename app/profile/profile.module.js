@@ -10,5 +10,5 @@
   'use strict';
 
   angular
-    .module('gcms.profile', ['gcms.profile.controls','smart-table']); 
+    .module('gcms.profile', ['smart-table']); 
 }());

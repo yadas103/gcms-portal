@@ -40,6 +40,7 @@
 		$scope.readOnlyCC = false;
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';
+		$scope.setDates = false;
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -376,19 +377,30 @@
 
 		//Filters templates based on Reporting Country 
 		$scope.customArrayFilter = function (result) {
+			$scope.allTemplates = result;
 			$scope.id = myService.get();
 			$scope.checkedIds = $scope.id.selid.checked;
 			$scope.checkedIds = JSON.parse($scope.checkedIds);
 			$scope.cntryValue = $scope.id.selectedParams.selection;
 			$scope.searchCriteria = JSON.parse($scope.cntryValue);
-			$scope.cntryValue = $scope.searchCriteria.country;             	 
-
-			if(result.cntry_id.name == $scope.cntryValue){
+			$scope.cntryValue = $scope.searchCriteria.country;
+			$scope.crossInCountry = $scope.id.collectingCtry==$scope.id.profileCountry? 'InCountry' : 'CrossBorder';
+			$scope.profileTypeSelected = $scope.searchCriteria.profileType;
+			$scope.templateTypeSelected = $scope.crossInCountry+'-'+$scope.profileTypeSelected;
+		
+			if(result.cntry_id.name == $scope.cntryValue && result.tmpl_status == "ACTIVE" && (result.tmpl_type == $scope.templateTypeSelected )){
 				$scope.templId = result.id;
 				$scope.profileCountry_Id = result.cntry_id.id;
-			}              	
-			return (result.cntry_id.name == $scope.cntryValue);
+				$scope.daterange = result.dates_rages;
+				if($scope.daterange == 'Y' ){
+					$scope.setDates = true;
+				}
+				
+			}
+			
+			return ((result.cntry_id.name == $scope.cntryValue) && (result.tmpl_status == "ACTIVE") && (result.tmpl_type == $scope.templateTypeSelected ));
 		}
+			
 
 		var loadTemplates = function(){
 			$scope.templates = [];
@@ -418,10 +430,9 @@
 					if(result.$promise.$$state.status == 1)
 					{	 
 						$scope.createdBy = result.createdBy;
-						y++;						
-						$scope.createTask(y);		                    	
-						$scope.msg = "You can see the generated PDF in your Downloads folder";
-						console.log(result);
+						y++;
+						$scope.responseOnSave = "Record saved"
+						$scope.createTask(y);		                    													
 					}
 
 				}).catch(function(){
@@ -434,8 +445,11 @@
 					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-annex-pdf/'+ $scope.createdBy;
 					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
 						var bin = new Blob([response.data]);
-						var docName = 'consentFilesZip.zip';           
-						saveAs(bin, docName);                        							
+						var docName = 'Consent Files.zip';           
+						saveAs(bin, docName); 
+						$scope.msg = "You can see the generated PDF in your Downloads folder";
+					}).catch(function(){
+						$scope.responseOnUnsave = "Unable to generate PDF";
 					});	
 					
 				});			

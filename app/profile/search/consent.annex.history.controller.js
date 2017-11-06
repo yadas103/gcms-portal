@@ -21,23 +21,31 @@
 
 
   function ConsentAnnex($rootScope, $scope, $state,$location,$stateParams,ConsentAnnex,Profile){    
-	console.log("Inside controller");	
-	var Profileid=$stateParams.id;	
-	$scope.id=$stateParams.id;
+	console.log("Inside controller");
+	
+	var profileid=$stateParams.id;
+ 
+	console.log(profileid);
+
     var getData = function(){
-     return ConsentAnnex.query().$promise.then(function(consent){      
-       $scope.ConsentAttributes = consent;     
+     return ConsentAnnex.query({id : profileid}).$promise.then(function(consent){  
+    	 if(consent.length>0){
+       $scope.ConsentAttributes = consent;
+
+    	 }else{
+    		 $scope.error = "No Records Found";
+    	 }
+       console.log(consent); 
+      }).catch(function(){
+    	  console.log("No Records Found");
+    	  $scope.error = "No Records Found";
       });
      
     };
-  
-    var getProfileData = function(){
-        return Profile.query().$promise.then(function(Profile){
-          $scope.ProfileAttribute= Profile;         
-         });
-    };  
     getData();
-    getProfileData();
+    $scope.displayedCollection = [].concat($scope.ConsentAttributes);
+   
+    console.log(getData);
     $scope.$on('$localeChangeSuccess', getData);
   }
 })();

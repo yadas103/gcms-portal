@@ -29,8 +29,27 @@
         locale: function(){ return localeMapper.getCurrentISOCode(); },
       },
       { 
+    	  get: {
+    		  method:'GET',
+    		  params:{	
+    			  		taskId:'@taskId',
+    			  		trId:'@trId',    			  		
+    			  		lastName:'@lastName',
+    			  		firstName:'@firstName',
+    			  		country:'@country',
+    			  		eventName:'@eventName',
+    			  		consentStaus:'@consentStaus',
+    			  		taskStatus:'@taskStatus',
+    			  		initiatedBy:'@initiatedBy',
+    			  		page:'@page',
+    			  		size:'@size',
+    			  		sort:'@sort',
+    			  		reverse:'@reverse'
+    				  },
+    		  isArray:false
+    		  },  
     	update: { method:'PUT' },
-        query:  { method:'GET', isArray:true }
+        query:  { method:'GET', isArray:false }
       }
     );
 

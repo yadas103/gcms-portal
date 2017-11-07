@@ -12,10 +12,10 @@
     .module('gcms.administration')
     .controller('AdminCtrl', AdminController);
 
-  AdminController.$inject = ['$rootScope','$scope','$state','localeMapper','Review','Templates','UserProfile', 'UserDetail', 'Role'];
+  AdminController.$inject = ['$rootScope','$scope','$state','localeMapper','Review','Templates','UserProfile', 'UserDetail', 'Role','$window'];
 
   
-  function AdminController($rootScope, $scope,$state,localeMapper,Review,Templates,UserProfile, UserDetail, Role){
+  function AdminController($rootScope, $scope,$state,localeMapper,Review,Templates,UserProfile, UserDetail, Role,$window){
 	  
 	  console.log("Inside controller");
 	    // private variables

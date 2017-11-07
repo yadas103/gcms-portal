@@ -365,7 +365,7 @@
 			$scope.searchCriteria = JSON.parse($scope.cntryValue);
 			$scope.cntryValue = $scope.searchCriteria.country;
 			$scope.dataToSend.checkedIds = $scope.checkedIds;
-			$scope.dataToSend.templates = $scope.templates;
+			$scope.dataToSend.templates = $scope.templates;			
 
 		};
 
@@ -387,7 +387,7 @@
 			$scope.crossInCountry = $scope.id.collectingCtry==$scope.id.profileCountry? 'InCountry' : 'CrossBorder';
 			$scope.profileTypeSelected = $scope.searchCriteria.profileType;
 			$scope.templateTypeSelected = $scope.crossInCountry+'-'+$scope.profileTypeSelected;
-		
+				
 			if(result.cntry_id.name == $scope.cntryValue && result.tmpl_status == "ACTIVE" && (result.tmpl_type == $scope.templateTypeSelected )){
 				$scope.templId = result.id;
 				$scope.profileCountry_Id = result.cntry_id.id;
@@ -395,12 +395,18 @@
 				if($scope.daterange == 'Y' ){
 					$scope.setDates = true;
 				}
-				
+				if(result.tmpl_location == null){
+					$scope.notInRepo = "No template uploaded in Repositry"
+				}
 			}
 			
 			return ((result.cntry_id.name == $scope.cntryValue) && (result.tmpl_status == "ACTIVE") && (result.tmpl_type == $scope.templateTypeSelected ));
 		}
+		
+		$scope.efpiaFilter = function(countries){
+			return (countries.efpiaCntryFlag == 'Y');
 			
+		};
 
 		var loadTemplates = function(){
 			$scope.templates = [];
@@ -414,6 +420,11 @@
 		$scope.update = function(item) {
 			$scope.templates = item;
 			Templates.update({ id: item.id }, item);     
+		};
+		
+		//Validations for  Start Date/End Date
+		$scope.startDate = function(){
+			
 		};
 		//Creates Task and Generates PDF
 		$scope.submittry = function(item){ 

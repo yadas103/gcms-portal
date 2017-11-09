@@ -48,7 +48,7 @@
     .module('gcms.components.session')
     .directive('gcmsSession', Session);
 
-    Session.$inject = ['$log', '$rootScope','$state','$interval'];
+    Session.$inject = ['$log', '$rootScope','$state','$interval','Review'];
 
     /**
      * @ngdoc method
@@ -57,7 +57,7 @@
      * @description Constructor for the session directive
      * @returns {object} Session directive
      */
-    function Session($log, $rootScope, $state, $interval) {
+    function Session($log, $rootScope, $state, $interval,Review) {
       return {
         restrict: 'E',
         scope: {
@@ -72,7 +72,8 @@
           $scope.columnsArray = [];
           $scope.fullName = false;
           $scope.colWidth = '300px';
-
+          $rootScope.profileReviewTabShow = false;
+          
           var setColumns = function(){
             $scope.columns = Math.ceil($scope.profiles.length/$scope.limit);
             $scope.columnsArray = [];
@@ -110,6 +111,7 @@
            */
           user.getCurrentProfile().then(function(currentProfile){
             $scope.currentProfile = currentProfile;
+            $scope.getReviewersData(currentProfile);
             user.setProfile(currentProfile);
           });
 
@@ -128,6 +130,20 @@
             });
           };
 
+          $scope.getReviewersData = function(currentProfile){		  								
+      		   Review.query().$promise.then(function(review){		    	 					
+      		       $scope.ReviewAttributes = review;								
+      		    for(var i in $scope.ReviewAttributes){								
+      		    	if($scope.ReviewAttributes[i].cntryReviewer != null){							
+      	   				if ($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && $scope.ReviewAttributes[i].cntryReviewer.includes(currentProfile.userName)){						
+      	   					$rootScope.profileReviewTabShow = true;	
+      	   					}				
+      	   				}							
+   			}							    		       								
+      		       });	    		   
+      		  };								
+
+          
           $interval(user.getCurrentProfile(),1000*60*10); //call get profile every 10 minutes to keep the session alive
 
         }

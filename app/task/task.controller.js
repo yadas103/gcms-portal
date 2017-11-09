@@ -21,6 +21,43 @@
 	  console.log("Inside task controller");
 	  	$scope.success='';
 		$scope.error='';
+		
+		$scope.itemsByPage = 6;
+		  $scope.callServer = function(tableState) {
+			$scope.success='';
+		    $scope.error='';  
+		    $scope.isLoading = true;
+		    var pagination = tableState.pagination;
+		    var search = tableState.search;
+		    var sort = tableState.sort;
+		    var predicate = sort.predicate;
+		    var reverse = sort.reverse || false;
+		    var start = pagination.start || 0;
+		    var number = pagination.number || $scope.itemsByPage;
+		    
+		    console.log(tableState);
+		    return Task.get({
+		    	taskId :tableState.search.predicateObject.id,	    	
+		    	trId :tableState.search.predicateObject.trid,
+		    	lastName : tableState.search.predicateObject.lastname,
+		    	firstName :tableState.search.predicateObject.firstname,
+		    	country : tableState.search.predicateObject.country,
+		    	eventName :tableState.search.predicateObject.eventname,
+		    	consentStaus : tableState.search.predicateObject.consentstaus,
+		    	taskStatus : tableState.search.predicateObject.taskstatus,
+		    	initiatedBy :tableState.search.predicateObject.initiatedby,	    	
+		        page : 1+(start/number),
+		        size : number,
+		        sort : predicate,
+		        reverse : reverse 
+		        }).$promise.then(function(task) {
+		        	$scope.TaskAttributes = task.currentPageData;	
+		        	tableState.pagination.numberOfPages =Math.ceil(task.totalRecordsCount/$scope.itemsByPage);
+		            $scope.isLoading = false;
+		        });
+		    
+		  }
+		
 		var assigned=$scope.assigned;
         var updateUserDetail = function(result){
             $scope.user = result;
@@ -83,7 +120,7 @@
 	     * @description Gets data
 	     */
       
-	  var getTaskData = function(){
+	  /*var getTaskData = function(){
 		    
 		     return Task.query().$promise.then(function(task){
 		       $scope.TaskAttributes = task;
@@ -92,7 +129,7 @@
 		      });
 		  };	  
 	  getTaskData();
-	  $scope.displayedCollection = [].concat($scope.TaskAttributes);
+	  $scope.displayedCollection = [].concat($scope.TaskAttributes);*/
 	  
 	  /**
 	   *  selim
@@ -313,7 +350,7 @@
 		};
 		 	          
 		 
-		 $scope.$on('$localeChangeSuccess', getTaskData);
+		// $scope.$on('$localeChangeSuccess', getTaskData);
 		   
 		   
 		  

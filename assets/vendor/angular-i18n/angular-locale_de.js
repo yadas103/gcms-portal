@@ -35,18 +35,18 @@ $provide.value("$locale", {
       "Samstag"
     ],
     "MONTH": [
-      "Januar",
-      "Februar",
-      "M\u00e4rz",
+      "January",
+      "February",
+      "March",
       "April",
-      "Mai",
+      "May",
       "Juni",
       "Juli",
       "August",
       "September",
-      "Oktober",
+      "October",
       "November",
-      "Dezember"
+      "December"
     ],
     "SHORTDAY": [
       "So.",
@@ -60,16 +60,16 @@ $provide.value("$locale", {
     "SHORTMONTH": [
       "Jan.",
       "Feb.",
-      "M\u00e4rz",
+      "Mar",
       "Apr.",
-      "Mai",
-      "Juni",
-      "Juli",
+      "May",
+      "June",
+      "July",
       "Aug.",
       "Sep.",
-      "Okt.",
+      "Oct.",
       "Nov.",
-      "Dez."
+      "Dec."
     ],
     "fullDate": "EEEE, d. MMMM y",
     "longDate": "d. MMMM y",

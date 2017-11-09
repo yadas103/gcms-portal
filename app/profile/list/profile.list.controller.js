@@ -22,6 +22,7 @@
 	function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf) {
 
 		var params = {};
+		console.log("Inside Profile.list.controller");
 		$scope.orderByField = 'firstName';
 		$scope.reverseSort = false;
 		$scope.selectedids = [];  
@@ -39,6 +40,7 @@
 		$scope.readOnlyCC = false;
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';
+		$scope.setDates = false;
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -314,7 +316,7 @@
 			$scope.responseOnUnsave = '';
 			var request = item;
 			var reqID = {};
-
+			request.profileTypeId = item.profileTypeId.Name;
 			IdentityRequest.save(request).$promise
 			.then(function(result) {
 				if(result.$promise.$$state.status == 1)
@@ -363,7 +365,7 @@
 			$scope.searchCriteria = JSON.parse($scope.cntryValue);
 			$scope.cntryValue = $scope.searchCriteria.country;
 			$scope.dataToSend.checkedIds = $scope.checkedIds;
-			$scope.dataToSend.templates = $scope.templates;
+			$scope.dataToSend.templates = $scope.templates;			
 
 		};
 
@@ -375,19 +377,36 @@
 
 		//Filters templates based on Reporting Country 
 		$scope.customArrayFilter = function (result) {
+			$scope.allTemplates = result;
 			$scope.id = myService.get();
 			$scope.checkedIds = $scope.id.selid.checked;
 			$scope.checkedIds = JSON.parse($scope.checkedIds);
 			$scope.cntryValue = $scope.id.selectedParams.selection;
 			$scope.searchCriteria = JSON.parse($scope.cntryValue);
-			$scope.cntryValue = $scope.searchCriteria.country;             	 
-
-			if(result.cntry_id.name == $scope.cntryValue){
+			$scope.cntryValue = $scope.searchCriteria.country;
+			$scope.crossInCountry = $scope.id.collectingCtry==$scope.id.profileCountry? 'InCountry' : 'CrossBorder';
+			$scope.profileTypeSelected = $scope.searchCriteria.profileType;
+			$scope.templateTypeSelected = $scope.crossInCountry+'-'+$scope.profileTypeSelected;
+				
+			if(result.cntry_id.name == $scope.cntryValue && result.tmpl_status == "ACTIVE" && (result.tmpl_type == $scope.templateTypeSelected )){
 				$scope.templId = result.id;
 				$scope.profileCountry_Id = result.cntry_id.id;
-			}              	
-			return (result.cntry_id.name == $scope.cntryValue);
+				$scope.daterange = result.dates_rages;
+				if($scope.daterange == 'Y' ){
+					$scope.setDates = true;
+				}
+				if(result.tmpl_location == null){
+					$scope.notInRepo = "No template uploaded in Repositry"
+				}
+			}
+			
+			return ((result.cntry_id.name == $scope.cntryValue) && (result.tmpl_status == "ACTIVE") && (result.tmpl_type == $scope.templateTypeSelected ));
 		}
+		
+		$scope.efpiaFilter = function(countries){
+			return (countries.efpiaCntryFlag == 'Y');
+			
+		};
 
 		var loadTemplates = function(){
 			$scope.templates = [];
@@ -402,6 +421,11 @@
 			$scope.templates = item;
 			Templates.update({ id: item.id }, item);     
 		};
+		
+		//Validations for  Start Date/End Date
+		$scope.startDate = function(){
+			
+		};
 		//Creates Task and Generates PDF
 		$scope.submittry = function(item){ 
 			$scope.msg = '';
@@ -409,15 +433,17 @@
 			var values = $scope.checkedIds;               	 
 			var modifiedparams = {};
 			$scope.created = false;
+			$scope.createdBy = {};
 
 			//Create Consent Annex rows
 			$scope.getPDFs = function(modifiedparams,y){
 				return ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
 					if(result.$promise.$$state.status == 1)
-					{	                    	
+					{	 
+						$scope.createdBy = result.createdBy;
 						y++;
-						$scope.createTask(y);		                    	
-						$scope.msg = "You can see the generated PDF in your Downloads folder";
+						$scope.responseOnSave = "Record saved"
+						$scope.createTask(y);		                    													
 					}
 
 				}).catch(function(){
@@ -426,12 +452,18 @@
 			};
 			//Downloads multiple PDFs as zip 
 			$scope.downloadAsZip = function(){
-				var link = 'http://localhost:8080/gcms-service/consent-annex-pdf/consentFilesZip.zip';
-				$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
-					var bin = new Blob([response.data]);
-					var docName = 'consentFilesZip.zip';           
-					saveAs(bin, docName);                        							
-				});
+				$http.get('./config.json').then(function (response) {
+					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-annex-pdf/'+ $scope.createdBy;
+					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
+						var bin = new Blob([response.data]);
+						var docName = 'Consent Files.zip';           
+						saveAs(bin, docName); 
+						$scope.msg = "You can see the generated PDF in your Downloads folder";
+					}).catch(function(){
+						$scope.responseOnUnsave = "Unable to generate PDF";
+					});	
+					
+				});			
 			}
 
 			var y = 0;
@@ -439,7 +471,7 @@
 				if(y<$scope.checkedIds.length){
 					var currentId = values[y].id; 	
 					//Creating Object to send it to Consent Annex				
-					modifiedparams['payercountry'] = {id: JSON.stringify($scope.id.collectingCountry)};
+					modifiedparams['payercountry'] = {id: JSON.stringify($scope.id.collectingCtry)};
 					modifiedparams['profilecountry'] = {id: JSON.stringify($scope.id.profileCountry)};
 					modifiedparams['profileType'] = $scope.searchCriteria.profileType;
 					modifiedparams['bpid'] = {id: currentId};

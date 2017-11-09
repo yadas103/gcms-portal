@@ -9,8 +9,13 @@
 	It is very important to give us the required details. Event Name allows us to match multiple payments to the same profile. PO Code and ACM Code will give us the ability to identify the right invoices. 
 Enter this information in the proper columns of the below list. Once done press Save Changes button.
 	</p>
+	
 	<div ng-controller = "ProfileListCtrl">
  <form name="generateAnnex">
+ <div ng-model="error" style="color: maroon; font-size: 13px;"
+			role="alert">{{notemplate}}</div>
+ <div ng-model="error" style="color: maroon; font-size: 13px;"
+			role="alert">{{notInRepo}}</div>
   <table class="table table-bordered table-striped table-highlight">
   <div class=" class="panel panel-primary table-responsive">
 	<thead style="background-color:#337ab7;color:white;">
@@ -19,11 +24,11 @@ Enter this information in the proper columns of the below list. Once done press 
 	<th style="font-size: 12px; font-family: sans-serif;">Last Name/Organizations Name*</th>
 	<th style="font-size: 12px; font-family: sans-serif;">First Name*</th>
 	<th style="font-size: 12px; font-family: sans-serif;">Event Description*</th>
-	<th style="font-size: 12px; font-family: sans-serif;">TR ID*</th>
+	<th  ng-hide="true" style="font-size: 12px; font-family: sans-serif;">TR ID*</th>
 	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
 	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
-	<th style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
-		<th style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
+	<th ng-show="setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
+	<th ng-show="setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
     </tr>
 	</thead>
 	
@@ -35,14 +40,14 @@ Enter this information in the proper columns of the below list. Once done press 
  	<td ng-model="item.request[i.id].lastName" >{{i.lastName}}{{i.organisationName}}</td>
     <td ng-model="item.request[i.id].firstName">{{i.firstName}}</td>	             
     <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="item.request[i.id].eventname" required style="width: 114px;"></td>
-    <td ng-model="item.request[i.id].id" >{{i.id}}</td>
-	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" required style="width: 75px;"> </td>
- 	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" required></td>
- 	<td><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" is-open="openedStart"  close-text="Close" /> 
+    <td ng-model="item.request[i.id].id" ng-hide="true" >{{i.id}}</td>
+	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" ng-required='!item.request[i.id].acmcode' style="width: 75px;"> </td>
+ 	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" ng-required='!item.request[i.id].pocode'></td>
+    	<td ng-show="setDates"><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.request[i.id].consentstartdate" is-open="openedStart"  close-text="Close" /> 
  <button style="height:19px; margin-top: -47px; margin-left:69px; padding: 1px;background-color: white;" class="btn btn-default-b1" ng-click="startDate()">	
              
               <i class="fa fa-calendar"></i></td>
-              <td><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" is-open="openedEnd"  close-text="Close" />                           
+              <td ng-show="setDates"><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.request[i.id].consentenddate" is-open="openedEnd"  close-text="Close" />                           
               <button style="height:19px; margin-top: -47px; margin-left:69px; padding: 1px;background-color: white;" class="btn btn-default-b1" ng-click="endDate()">
               <i class="fa fa-calendar"></i></button></td> 
  	</tr>

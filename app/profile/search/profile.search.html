@@ -87,7 +87,7 @@
 						
 					<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href=""><i>Cannot find a profile? Create a request here</i> </a></gcms-modal>
+					<a href=""><i>Cannot find a profile? Create a request here</i></a></gcms-modal>
 				
 			</div>
 	</div>
@@ -105,11 +105,14 @@
 					<tr style="color: white; background-color: #337ab7;">
 						<th
 							style="font-size: 13px; font-family: sans-serif; "></th>
-						<th ng-click="orderByField='id'; reverseSort = !reverseSort"
+						<th 
+							ng-hide = "true"
+						    ng-click="orderByField='id'; reverseSort = !reverseSort"
 							st-sort="id"
 							style="font-size: 13px; font-family: sans-serif;  width: 77px;">TR
 							ID</th>
-						<th
+						<th 
+							ng-hide = "true"
 							ng-click="orderByField='profileType'; reverseSort = !reverseSort"
 							style="font-size: 13px; font-family: sans-serif;  width: 86px;"
 							st-sort="profileType">Profile Type</th>
@@ -146,9 +149,9 @@
 					</tr>
 					<tr>
 						<th></th>
-						<th><input ng-model="search.id" st-search="id"
+						<th ng-hide = "true"><input ng-model="search.id" st-search="id"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.profileType"
+						<th ng-hide = "true"><input ng-model="search.profileType"
 							st-search="profileType" placeholder=" " class="form-control"
 							type="search" /></th>
 						<th ng-hide="request.profileType==='HCO'"><input ng-model="search.lastName" st-search="lastName"
@@ -172,8 +175,8 @@
 						data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
 						<td><input type="checkbox"
 							ng-model="checkboxes.items[pro.id]"></td>
-						<td>{{pro.id}}</td>
-						<td>{{pro.profileType}}</td>
+						<td ng-hide = "true">{{pro.id}}</td>
+						<td ng-hide = "true">{{pro.profileType}}</td>
 						<td class="reci-name" style="word-break: break-all;" ng-hide="request.profileType==='HCO'">{{pro.lastName}}</td>
 						<td class="reci-name" style="word-break: break-all;" ng-hide="request.profileType==='HCO'">{{pro.firstName}}</td>
 						<td class="reci-name" style="word-break: break-all;" ng-hide="request.profileType==='HCP'">{{pro.organisationName}}</td>
@@ -190,7 +193,7 @@
 						<!-- <td colspan="10" class="text-center">
                      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
                      </td> -->
-						<td colspan="9" class="text-center">
+						<td colspan="7" class="text-center">
 							<div st-items-by-page="20" st-pagination=""
 								st-template="app/profile/list/pagination.custom.html"></div>
 							<div>{{responseOnSearch}}</div>

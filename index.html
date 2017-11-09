@@ -100,8 +100,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li gcms-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6 class="nav-details">Home</h6></a></li>
-                <li gcms-secure section-name="Tasks" action-name="browse"><a ui-sref="task"><h6 class="nav-details">Tasks</h6></a></li>
-                <li><a ui-sref="profilereview"><h6 class="nav-details">Profile Review</h6></a></li>                
+                <li gcms-secure section-name="Tasks" action-name="browse"><a ui-sref="task"><h6 class="nav-details">Manage Consent</h6></a></li>
+                <li ng-show = "profileReviewTabShow" gcms-secure section-name="Profile Review" action-name="browse"><a ui-sref="profilereview"><h6 class="nav-details">Profile Review</h6></a></li>                
                  <li gcms-secure section-name="Administration" action-name="browse"><a ui-sref="admin"><h6 class="nav-details">Administration</h6></a></li>
                   <li gcms-secure section-name="Help and Support" action-name="browse"><a ui-sref="help"><h6 class="nav-details">Help and Support</h6></a></li>
               </ul>
@@ -292,12 +292,8 @@
   
   <!-- Profile Review module -->
   <script src="app/profilereview/profilereview.module.js"></script>
-  <script src="app/profilereview/profilereview.controller.js"></script>  
-  <script src="app/profilereview/profilereview.module.js"></script>
   <script src="app/profilereview/components/controls/identity.controls.module.js"></script>
   <script src="app/profilereview/identitydetail/identity.controller.js"></script>
-  <script src="app/profilereview/identitysearch/identityprofile.directive.js"></script>
-  <script src="app/profilereview/identitysearch/identitysearch.controller.js"></script>
   
    <!-- task module khans129-->
   <script src="app/task/task.module.js"></script>
@@ -328,10 +324,9 @@
   
   
   <script src="app/components/data/components.data.service.profile.search.js"></script>
-  <script src="app/components/data/components.data.service.templates.js"></script>  
-    
+  <script src="app/components/data/components.data.service.templates.js"></script>     
+   <!-- <script src="app/profile/components/controls/profile.controls.module.js"></script> --> 
   <script src="app/profile/profile.module.js"></script>
-  <script src="app/profile/components/controls/profile.controls.module.js"></script>
   <script src="app/profile/list/profile.list.controller.js"></script>
   <script src="app/components/controls/dropdown/components.dropdownnew.directive.js"></script>
   <script src="app/profile/list/profile.list.controller.js"></script>	
@@ -342,17 +337,18 @@
 
 <!-- for file upload -->
 
-	<script src="app/filemanager/filemanager.module.js"></script>
+  <script src="app/filemanager/filemanager.module.js"></script>
   <script src="app/filemanager/services/filemanager.middleware.js"></script>
   <script src="app/filemanager/services/filemanager.navigator.js"></script>
   <script src="app/filemanager/providers/client.js"></script>
   <script src="app/filemanager/providers/config.js"></script>
   <script src="app/filemanager/providers/translations.js"></script>
-  <script src="app/filemanager/filters/filters.js"></script>
   <script src="app/filemanager/entities/permit.js"></script>
   <script src="app/filemanager/entities/item.js"></script>
   <script src="app/filemanager/directives/directives.js"></script>
+  <script src="app/filemanager/directives/upload.directive.js"></script>
   <script src="app/filemanager/controllers/filemanager.controller.js"></script>
+  <script src="app/filemanager/controllers/upload.controller.js"></script>
   <script src="app/filemanager/controllers/selector.controller.js"></script>
 
 </body>

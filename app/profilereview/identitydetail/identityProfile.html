@@ -10,7 +10,7 @@
 					class="table table-bordered table-striped table-highlight">
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
-							<th class="pro-rev" style="padding-bottom: 18px;">#</th>
+							<th class="pro-rev" style="padding-bottom: 18px;"> </th>
 							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="profileTypeId">Profile Type Id</th>
 							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="firstName">First Name</th>
 							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="lastName">Last Name</th>
@@ -60,8 +60,8 @@
 							<td>
 								<div ng-switch="identity.status">
 
-									<div ng-switch-when="Approve">Approve/Reject</div>
-									<div ng-switch-when="Reject">Approve/Reject</div>
+									<div ng-switch-when="Approved">Approve/Reject</div>
+									<div ng-switch-when="Rejected">Approve/Reject</div>
 									<div ng-switch-default>
 										<gcms-modal template="indentity.search.html"
 											ng-init="item=identity" controller="ModalDefaultCtrl"

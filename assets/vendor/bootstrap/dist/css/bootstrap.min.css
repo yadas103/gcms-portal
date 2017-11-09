@@ -936,7 +936,7 @@ textarea {
     padding-bottom: 5px;
     border-radius: 4px;
     border: 1px solid #dddddd;
-    font-size: inherit;
+    font-size: smaller;
     padding-top:4px;
     line-height: inherit
 }
@@ -1430,6 +1430,9 @@ pre code {
     background-color: transparent;
     border-radius: 0
 }
+.recipient-checkbox{
+	margin-top:1px
+}
 .pre-scrollable {
     max-height: 340px;
     overflow-y: scroll
@@ -1452,7 +1455,7 @@ pre code {
 }
 @media (min-width: 1200px) {
     .container {
-        width: 1170px
+        width: 93%
     }
 }
 .container-fluid {
@@ -2240,7 +2243,7 @@ th {
 }
 .drop-receipi{
 	height: 25px;
-	width: 264px;
+	width: 250px;
 }
 .table>tbody+tbody {
     border-top: 2px solid #ddd
@@ -2472,7 +2475,7 @@ input[type=search] {
 }
 input[type=radio],
 input[type=checkbox] {
-    margin: 4px 0 0;
+    margin: 1px 0 0;
     margin-top: 1px \9;
     line-height: normal
 }
@@ -2503,6 +2506,8 @@ output {
 }
 #search-drop{
 	margin-top: 6px;
+	margin-right: 3px;
+	margin-bottom: -3px
 }
 .table-admini1{
 	width: 84px;
@@ -2514,6 +2519,12 @@ output {
 }
 .checkbo{
 	    margin-left: 13px;
+}
+.recipi-view{
+	    padding-left: 40px
+}
+#pannel-search{
+	    margin-bottom: -12px;
 }
 #eyes{
 	color: #337ab7;
@@ -3277,7 +3288,7 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-lg,
 .btn-group-lg>.btn {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.33;
     border-radius: 6px
 }
@@ -3294,6 +3305,13 @@ fieldset[disabled] .btn-link:focus {
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px
+}
+.create-button{
+	float: right;
+    padding-right: 59px
+}
+#search-details-box{
+	    margin-bottom: -18px;
 }
 .btn-block {
     display: block;
@@ -6277,8 +6295,15 @@ button.close {
 .pull-right {
     float: right!important
 }
-.pull-left {
+ .pull-left {
+	font-size: 12px;
+	margin-bottom: 15px;
+	margin-top: -15px;
     float: left!important
+}
+.reci-msg{
+	color:green;
+	font-size: 13px;
 }
 .pull-left{
 	font-size: 12px;
@@ -6307,6 +6332,11 @@ button.close {
 }
 .affix {
     position: fixed
+}
+@media (max-width: 767px) {
+    .form-horizontal{
+        display: inline-block!important
+    }
 }
 @-ms-viewport {
     width: device-width
@@ -6346,7 +6376,27 @@ button.close {
         display: table-cell!important
     }
 }
+@media (max-width: 480px) {
+    .visible-xs {
+        display: block!important
+    }
+    table.visible-xs {
+        display: table
+    }
+    tr.visible-xs {
+        display: table-row!important
+    }
+    th.visible-xs,
+    td.visible-xs {
+        display: table-cell!important
+    }
+}
 @media (max-width: 767px) {
+    .visible-xs-block {
+        display: block!important
+    }
+}
+@media (max-width: 480px) {
     .visible-xs-block {
         display: block!important
     }

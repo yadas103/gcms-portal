@@ -15,7 +15,6 @@
   IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile','LoggedUserDetail'];
 
   function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile,LoggedUserDetail){
-
       var updateIdentityRequestView = function(result) {
             $scope.identityRequestView = result;
       };

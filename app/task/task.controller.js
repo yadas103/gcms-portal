@@ -13,14 +13,16 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','LoggedUserDetail','UserDetail'];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','UserDetail' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,LoggedUserDetail,UserDetail){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,UserDetail ){
 	  
 	  console.log("Inside task controller");
 	  	$scope.success='';
 		$scope.error='';
+		 $scope.currentProfile={};
+		 var mydata= $rootScope.loggedInUserRoleId;
 		
 		$scope.itemsByPage = 6;
 		  $scope.callServer = function(tableState) {
@@ -72,11 +74,6 @@
 
           $scope.$on('$localeChangeSuccess', loadUserDetail);
           
-          LoggedUserDetail.query().$promise
-          .then(function(loggedInUser) {
-            $scope.loggeduser = loggedInUser;
-            console.log($scope.loggeduser);
-          });
 	  /**
 	   	 * selim 
 	     * @ngdoc method

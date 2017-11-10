@@ -105,73 +105,51 @@
 					st-pipe="callServer" 
 					class="table table-bordered table-striped table-highlight">
 					<thead>
-						<tr class="taskth"
-							style="color: white; background-color: #337ab7;">
-							<th	st-sort="id"
-								style="font-size: 13px; font-family: sans-serif;">Action</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">Task
-								ID</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">TR
-								ID</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">Last
-								Name/Org Name</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">First
-								Name</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">Profile
-								Country</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">Event
-								Name</th>
-							<th style="font-size: 13px; font-family: sans-serif;">Consent
-								Status</th>
-							<th 
-								style="font-size: 13px; font-family: sans-serif;">Consent
-								Updated Date</th>
-							<th
-								style="font-size: 13px; font-family: sans-serif;">Task
-								Status</th>
-							<th style="font-size: 13px; font-family: sans-serif;">Initiated
-								By</th>
-							<th style="font-size: 13px; font-family: sans-serif;">Document
-								Upload</th>
-								
-							     <th 
-								style="font-size: 13px; font-family: sans-serif;">Activity								
-								</th>
-								
+						<tr style="color: white; background-color: #337ab7;">
+							<th>Action</th>
+							<th st-sort="payercountry">Payer Country</th>
+							<th st-sort="lastname">Last Name/Org Name</th>
+							<th st-sort="firstname">First Name</th>
+							<th st-sort="profilecountry">Profile Country</th>
+							<th st-sort="eventname">Event Name</th>
+							<th st-sort="consentstaus">Consent Status</th>
+							<th st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
+							<th st-sort="initiatedby">Task Owner</th> 
+							<th st-sort="taskstatus">Task Status</th>
+							<th>Document Upload</th>
+							<th>Activity</th>							 
+							<th>#</th>
 								
 						</tr>
 						<tr>
 							<th></th>
-							<th><input st-search="id" placeholder=""
-								class="form-control" type="search" /></th>
-							<th><input st-search="trid" placeholder=""
+							<th><input st-search="pyercountry" placeholder=""
 								class="form-control" type="search" /></th>
 							<th><input st-search="lastname" placeholder=""
 								class="form-control" type="search" /></th>
 							<th><input st-search="firstname" placeholder=""
 								class="form-control" type="search" /></th>
-							<th><input st-search="country" placeholder=""
+							<th><input st-search="profilecountry" placeholder=""
 								class="form-control" type="search" /></th>
 							<th><input st-search="eventname" placeholder=""
 								class="form-control" type="search" /></th>
 							<th><input st-search="consentstaus" placeholder=""
 								class="form-control" type="search" /></th>
-							<th></th>
-							<th><select st-search="taskstatus">
-									<option value="INCOMPLETE">INCOMPLETE</option>
-									<option value="COMPLETED">COMPLETED</option>
-									<option value="DELETED">DELETED</option>
-							</select></th>
-							<th><input st-search="initiatedby" placeholder=""
+							<th><input st-search="updateddate" placeholder=""
 								class="form-control" type="search" /></th>
+								<th><input st-search="initiatedby" placeholder=""
+								class="form-control" type="search" /></th> 
+							<th><select st-search="taskstatus">
+									<option value="INCOMPLETE">Incomplete</option>
+									<option value="COMPLETED">Completed</option>
+									<option value="DELETED">Deleted</option>
+							</select> 							
+							<!-- <select st-search="taskstatus">													
+								<option ng-repeat="status in Groupsearch">{{status.name}}</option>
+								</select> --> 							
+							</th>							 
 							<th></th>
-							
+							<th></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -189,32 +167,27 @@
 									<gcms-modal template="task.delete.html"
 										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 										alt="Delete Task {{con.id}}"> <span
-										class="fa fa-trash" style="color: #337ab7;"></span>
+										class="fa fa-trash" style="color: #337ab7;"></span></gcms-modal>
 								</div>
-								<div ng-show="con.taskstatus =='COMPLETED'">
-									<span row-select="con" ng-click="select(con)">  <input
-											 type="checkbox" />	 							     
-								</div>
+								
 
-							</td>
-						
-							<td>{{con.id}}</td>
-							<td>{{con.consannexid.bpid.id}}</td>
-							<td>{{con.consannexid.bpid.lastName}}</td>
-							<td>{{con.consannexid.bpid.firstName}}</td>
-							<td>{{con.consannexid.profilecountry.name}}</td>
-							<td style="word-break: break-all ; width: 120px;">{{con.consannexid.eventname}}</td>
-							<!-- <td>{{con.consannexid.consentstatus.consentName}}</td>  -->
-							<td><gcms-idname id="con.consannexid.consentstatus.id"
-									list="consentType"></gcms-idname></td>
+							</td>						
+							<td class="tasktd">{{con.consannexid.payercountry.name }}</td>
+							<td class="tasktd" style="word-break: break-all ; width: 120px;">{{con.consannexid.bpid.lastName}}</td>
+							<td class="tasktd">{{con.consannexid.bpid.firstName}}</td>
+							<td class="tasktd">{{con.consannexid.profilecountry.name}}</td>
+							<td class="tasktd" style="word-break: break-all ; width: 120px;">{{con.consannexid.eventname}}</td>
+							<td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td> 
+							<!-- <td><gcms-idname id="con.consannexid.consentstatus.id"
+									list="consentType"></gcms-idname></td> -->
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
-							<td>{{con.taskstatus}}</td>
-							<td>{{con.createdBy}}</td>
+							<td class="tasktd">{{con.createdBy}}</td>
+							<td class="tasktd" style="width: 60px;">{{con.taskstatus}}
 							<td>
 								<div ng-show="con.taskstatus !='DELETED'">
 
 									<div ng-if="con.consannexid.annnexlocation==undefined">
-										<gcms-upload template="modals2.html"
+										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
 											alt="Edit Task {{con.id}}"> <span>
 											Upload</span> </gcms-upload>
@@ -224,7 +197,7 @@
 
 											<a href="" ng-click="download(con)"> View </a>
 										</div>
-										<gcms-upload template="modals2.html"
+										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
 											alt="Edit Task {{con.id}}"> <span>Change</span>
 										</gcms-upload>
@@ -271,13 +244,19 @@
 								</div>
 
 							</td>
+							<td>
+							<div ng-show="con.taskstatus =='COMPLETED'">
+									<span row-select="con" ng-click="select(con)">  <input
+											 type="checkbox" />	 							     
+								</div>
+							</td>
 
 						</tr>
 
 					</tbody>
 					<tfoot>
 						<tr ng-show="selected.length != '0'">
-							<td colspan="2">
+							<td colspan="14">
 								<button class="btn btn-primary" ng-json-export-excel
 									data="selected"
 									report-fields="{
@@ -555,8 +534,8 @@
 
 						</tr>
 						<tr>
-							<td colspan="13" class="text-center">
-								<div st-items-by-page="5" st-pagination=""
+							<td colspan="14" class="text-center">
+								<div st-items-by-page='itemsByPage' st-pagination=""
 									st-template="app/task/pagination.custom.html"></div>
 							</td>
 						</tr>

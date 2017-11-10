@@ -13,21 +13,49 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','UserDetail' ];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','UserDetail','CONFIG','toasty' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,UserDetail ){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,UserDetail,CONFIG,toasty ){
 	  
 	  console.log("Inside task controller");
-	  	$scope.success='';
-		$scope.error='';
+	  	
+
+	    var internalError = function(){
+	        toasty.error({
+	          title: 'Error',
+	          msg: 'Internal Server Error!',
+	          showClose: true,
+	          clickToClose: true,
+	          timeout: 5000,
+	          sound: false,
+	          html: false,
+	          shake: false,
+	          theme: 'bootstrap'
+	        });
+	      };
+	      var unspecifiedError = function(){
+	          toasty.error({
+	            title: 'Error',
+	            msg: 'Unspecified error!',
+	            showClose: true,
+	            clickToClose: true,
+	            timeout: 5000,
+	            sound: false,
+	            html: false,
+	            shake: false,
+	            theme: 'bootstrap'
+	          });
+	        };
+	  
 		 $scope.currentProfile={};
 		 var mydata= $rootScope.loggedInUserRoleId;
-		
-		$scope.itemsByPage = 6;
-		  $scope.callServer = function(tableState) {
-			$scope.success='';
-		    $scope.error='';  
+		 
+		 $scope.Groupsearch=CONFIG.completionStatus;
+		 $scope.selected = [];
+		 $scope.itemsByPage = 6;
+		 $scope.callServer = function(tableState) {
+			$scope.selected = [];  
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
@@ -39,11 +67,10 @@
 		    
 		    console.log(tableState);
 		    return Task.get({
-		    	taskId :tableState.search.predicateObject.id,	    	
-		    	trId :tableState.search.predicateObject.trid,
+		    	payercountry :tableState.search.predicateObject.pyercountry,
 		    	lastName : tableState.search.predicateObject.lastname,
 		    	firstName :tableState.search.predicateObject.firstname,
-		    	country : tableState.search.predicateObject.country,
+		    	profilecountry : tableState.search.predicateObject.profilecountry,
 		    	eventName :tableState.search.predicateObject.eventname,
 		    	consentStaus : tableState.search.predicateObject.consentstaus,
 		    	taskStatus : tableState.search.predicateObject.taskstatus,
@@ -82,7 +109,7 @@
 	     */
 
                 
-          $scope.selected = [];     	  
+             	  
           $scope.select = function(id) {		    
           		    var found = $scope.selected.indexOf(id);
           		    if(found == -1) $scope.selected.push(id);		    
@@ -171,8 +198,19 @@
    		       $scope.uploader.clearQueue();
    		       console.log(result)		       
    		      }).catch(function(){
-     		    	$scope.uploader.clearQueue();  
-       		    	$scope.error="File(s) not able to process ";
+     		    	$scope.uploader.clearQueue(); 
+     		    	toasty.error({
+   			          title: 'Error',
+   			          msg: 'File(s) proccessing failed ! Internal Server Error',
+   			          showClose: true,
+   			          clickToClose: true,
+   			          timeout: 5000,
+   			          sound: false,
+   			          html: false,
+   			          shake: false,
+   			          theme: 'bootstrap'
+   			        });
+       		    	//$scope.error="File(s) not able to process ";
        		      });
    		  //};
             
@@ -208,14 +246,23 @@
 	            	console.log(response);
 	            	if(response.$promise.$$state.status==1)
 	            		{
-	            		$scope.success= item.id + " task has been updated successfully";
+	            		toasty.success({
+	            	        title: 'Success',
+	            	        msg: 'Task Updated !',
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: 'bootstrap'
+	            	      });
+	            		//$scope.success= item.id + " task has been updated successfully";
 	            		}else{
-	            		$scope.error= item.id + " task failed to update";
+	            			unspecifiedError();
+	            		//$scope.error= item.id + " task failed to update";
 	            		}
-	 		      }).catch(function(){
-	     		    	 
-	 		    	 $scope.error= item.id + " task failed to update";
-	       		   });
+	 		      }).catch(internalError);
 	          };
 	          
 	          
@@ -244,14 +291,23 @@
  	           	console.log(response);
  	           	if(response.$promise.$$state.status==1)
  	           		{
- 	           		$scope.success= item.id + " task has been revoked ";
+ 	           	toasty.success({
+        	        title: 'Success',
+        	        msg: 'Task Revoked !',
+        	        showClose: true,
+        	        clickToClose: true,
+        	        timeout: 5000,
+        	        sound: false,
+        	        html: false,
+        	        shake: false,
+        	        theme: 'bootstrap'
+        	      });
+ 	           		//$scope.success= item.id + " task has been revoked ";
  	           		}else{
- 	           		$scope.error= item.id + " task failed to revoke";
+ 	           		unspecifiedError();
+ 	           		//$scope.error= item.id + " task failed to revoke";
  	           		}
- 			      }).catch(function(){
-	     		    	 
- 			    	 $scope.error= item.id + " task failed to revoke";
- 	       		   });
+ 			      }).catch(internalError);
   	          };  
 	          
 	      
@@ -275,14 +331,23 @@
 	           	console.log(response);
 	           	if(response.$promise.$$state.status==1)
 	           		{
-	           		$scope.success= item.id + " task has been deleted ";
+	           		toasty.success({
+	        	        title: 'Success',
+	        	        msg: 'Task Deleted!',
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 5000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: 'bootstrap'
+	        	      });
+	           		//$scope.success= item.id + " task has been deleted ";
 	           		}else{
-	           		$scope.error= item.id + " task failed to delete";
+	           		unspecifiedError();
+	           		//$scope.error= item.id + " task failed to delete";
 	           		}
-			      }).catch(function(){
-	     		    	 
-			    	  $scope.error= item.id + " task failed to delete";
-	 	       		   });
+			      }).catch(internalError);
 			//Task.update({
 			//	id : item.id
 			//}, item);
@@ -302,14 +367,23 @@
 	           	console.log(response);
 	           	if(response.$promise.$$state.status==1)
 	           		{
-	           		$scope.success= item.id + " task has been reassigned to "+ item.assignedto;
+	           		toasty.success({
+	        	        title: 'Success',
+	        	        msg: 'Task Reassigned!',
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 5000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: 'bootstrap'
+	        	      });
+	           		//$scope.success= item.id + " task has been reassigned to "+ item.assignedto;
 	           		}else{
-	           		$scope.error= item.id + " task failed to reassigned";
+	           			unspecifiedError();
+	           		//$scope.error= item.id + " task failed to reassigned";
 	           		}
-			      }).catch(function(){
-	     		    	 
-			    	  $scope.error= item.id + " task failed to reassigned";
-	 	       		   });
+			      }).catch(internalError);
 			//Task.update({
 			//	id : item.id
 			//}, item);
@@ -336,14 +410,23 @@
 	           	console.log(response);
 	           	if(response.$promise.$$state.status==1)
 	           		{
-	           		$scope.success= item.id + " task has been undeleted";
+	           		toasty.success({
+	        	        title: 'Success',
+	        	        msg: 'Task Undeleted!',
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 5000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: 'bootstrap'
+	        	      });
+	           		//$scope.success= item.id + " task has been undeleted";
 	           		}else{
-	           		$scope.error= item.id + " task failed to undelete";
+	           			unspecifiedError();
+	           		//$scope.error= item.id + " task failed to undelete";
 	           		}
-			      }).catch(function(){
-	     		    	 
-			    	  $scope.error= item.id + " task failed to undelete";
-	 	       		   });
+			      }).catch(internalError);
 		};
 		 	          
 		 

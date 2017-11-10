@@ -32,11 +32,10 @@
     	  get: {
     		  method:'GET',
     		  params:{	
-    			  		taskId:'@taskId',
-    			  		trId:'@trId',    			  		
+    			  		pyercountry:'@pyercountry',    			  		
     			  		lastName:'@lastName',
     			  		firstName:'@firstName',
-    			  		country:'@country',
+    			  		profilecountry:'@profilecountry',
     			  		eventName:'@eventName',
     			  		consentStaus:'@consentStaus',
     			  		taskStatus:'@taskStatus',

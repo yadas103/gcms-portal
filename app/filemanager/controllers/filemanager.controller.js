@@ -2,8 +2,8 @@
   'use strict';
   angular.module('dctmNgFileManager')
     .controller('FileManagerController', [
-      '$scope', '$rootScope', '$window', '$translate','fileManagerConfig', 'item', 'permit', 'fileNavigator', 'apiMiddleware', 'dctmClient', 'dctmConstants',
-      function ($scope, $rootScope, $window, $translate,fileManagerConfig, Item, Permit, FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
+      '$scope', '$rootScope', '$window', '$translate','fileManagerConfig','item', 'permit','Templates','Task','toasty', 'fileNavigator', 'apiMiddleware', 'dctmClient', 'dctmConstants',
+      function ($scope, $rootScope, $window, $translate,fileManagerConfig, Item, Permit,Templates, Task ,toasty,FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
         var $storage = $window.localStorage;
         $scope.config = fileManagerConfig;
         $scope.reverse = false;
@@ -40,8 +40,504 @@
           $scope.apiMiddleware.logout();
           $scope.modal('signout', true);
         };
+        
+       
 
-        $scope.prepareNewFolder = function () {
+        $scope.uploadFiles = function (item) {
+        	console.log("uploadFiles");
+        	console.log(item);
+        	
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: result.password, 
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+            	 	$scope.warning='';
+     				$scope.error='';
+     				$scope.success='';
+	                $scope.fileNavigator.refresh();
+	                $scope.modal('signin', true);
+	             
+	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
+	                var path =loginInfo.folderPath;
+	             
+	                if($scope.item.consannexid== undefined ){
+	                	
+	                	if($scope.uploadFileList[0].name.includes('.doc')){	                		
+	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+	        		            $scope.modal('uploadfile', true);
+	        		            var link =respn.data.links[0];
+	        		            var docLink = link.href;		            	        		            
+	        		            console.log("Function calling from Template module") ;
+	        		            $scope.item.tmpl_location=docLink;	        		            
+	        		            Templates.update({ id:item.id },item).$promise.then(function(response){
+	        		            	console.log(response);
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: 'Success',
+	        			           	        msg: 'Template Uploaded Successfully!',
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: 'bootstrap'
+	        			           	      });
+	        		            		//$scope.success= "Template Uploaded Successfully!";
+	        		            		$scope.uploadFileList = [];
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: 'Error',
+	  	        		          	          msg: 'Internal server Error! Failed to update database ',
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: 'bootstrap'
+	  	        		          	        });
+	        		            		//$scope.error= "Template Uploaded to repository But not able to save link to database !";
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: 'Error',
+	        		          	          msg: 'Internal server Error! Failed to update database ',
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: 'bootstrap'
+	        		          	        });
+	        		     		    	//$scope.error="Internal server Error!";
+	        		       		      });        		                   		            
+	        		          }, function (resp) {
+	        		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+	        		            $scope.apiMiddleware.error = errorMsg;
+	        		            toasty.error({
+	          	          	          title: 'Repository Error',
+	          	          	          msg: 'Template  not able to upload ! ',
+	          	          	          showClose: true,
+	          	          	          clickToClose: true,
+	          	          	          timeout: 6000,
+	          	          	          sound: false,
+	          	          	          html: false,
+	          	          	          shake: false,
+	          	          	          theme: 'bootstrap'
+	          	          	        });
+	        		            //$scope.error="Template not able to upload to repository ";
+	        		          });	
+	        	                }, function (resp) {
+	        	                  self.apiMiddleware.parseError(resp.data);
+	        	                });
+	                		
+	                	}else{
+	                		$scope.error="Template should be .doc/.docx type";
+	                		console.log("File type should be doc type");
+	                	}
+	                	
+	                }else{
+	                	
+                		if($scope.uploadFileList[0].name.includes('.pdf')){
+                			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+            		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+            		            $scope.modal('uploadfile', true);
+            		            var link =respn.data.links[0];
+            		            var docLink = link.href;		            
+            		            console.log("Function calling from Task module");
+            		            $scope.item.consannexid.annnexlocation=docLink;
+            		            $scope.item.taskstatus="COMPLETED";
+            		            Task.update({ id:item.id },item).$promise.then(function(response){
+	        		            	console.log(response);
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: 'Success',
+	        			           	        msg: 'Task Status Changed to COMPLETED',
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: 'bootstrap'
+	        			           	      });
+	        		            		$scope.success= "File Uploaded Successfully!" ;
+	        		            		$scope.uploadFileList = [];
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: 'Error',
+	  	        		          	          msg: 'Internal server Error! Failed to update database ',
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: 'bootstrap'
+	  	        		          	        });
+	        		            		//$scope.error= "File Uploaded to repository But not able to save link to database !";
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: 'Error',
+	        		          	          msg: 'Internal server Error! Failed to update database ',
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: 'bootstrap'
+	        		          	        });
+	        		     		    	//$scope.error="Internal server Error!";
+	        		       		      });           		            
+            		            
+            		          }, function (resp) {
+            		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+            		            $scope.apiMiddleware.error = errorMsg;
+            		            toasty.error({
+          	          	          title: 'Repository Error',
+          	          	          msg: 'File is not able to upload ! ',
+          	          	          showClose: true,
+          	          	          clickToClose: true,
+          	          	          timeout: 6000,
+          	          	          sound: false,
+          	          	          html: false,
+          	          	          shake: false,
+          	          	          theme: 'bootstrap'
+          	          	        });
+            		       // $scope.error="File is not able to upload to repository ";
+            		          });	
+            	                }, function (resp) {
+            	                  self.apiMiddleware.parseError(resp.data);
+            	                });
+                		
+                	     }else{
+                	    	 $scope.error="File should be .pdf type";
+                	    	 console.log("File should be pdf type")
+                	}
+                	
+                }	
+             	}, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                     toasty.error({
+            	          title: 'Error',
+            	          msg: 'Repository Login error ! Uploading Failed',
+            	          showClose: true,
+            	          clickToClose: true,
+            	          timeout: 6000,
+            	          sound: false,
+            	          html: false,
+            	          shake: false,
+            	          theme: 'bootstrap'
+            	        });
+                     //$scope.error="Repository Login error !";
+                   });
+         	 
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+      	          title: 'Error',
+      	          msg: 'Not able to read Configuration file! Uploading failed',
+      	          showClose: true,
+      	          clickToClose: true,
+      	          timeout: 6000,
+      	          sound: false,
+      	          html: false,
+      	          shake: false,
+      	          theme: 'bootstrap'
+      	        });                
+               // $scope.error="Not able to read configuration file !";
+            });
+        	
+        
+        };
+        
+        $scope.uploadFilesR = function () {
+        	console.log("uploadFilesR");
+        	
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: result.password, 
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        	
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+	                $scope.fileNavigator.refresh();
+	                $scope.modal('signin', true);
+	             
+	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
+	                var path =loginInfo.folderPath; 
+	              
+	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+		           
+		            var link =respn.data.links[0];
+		            var docLink = link.href;
+		            	$scope.item.consannexid.revocationDocLink=docLink;
+		            	toasty.success({
+		           	        title: 'Success',
+		           	        msg: 'File Uploaded Successfully!',
+		           	        showClose: true,
+		           	        clickToClose: true,
+		           	        timeout: 5000,
+		           	        sound: false,
+		           	        html: false,
+		           	        shake: false,
+		           	        theme: 'bootstrap'
+		           	      });
+		            	//$scope.success="File Uploaded Successfully"		           
+		          }, function (resp) {
+		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+		            $scope.apiMiddleware.error = errorMsg;
+		            toasty.error({
+	          	          title: 'Repository Error',
+	          	          msg: 'File is not able to upload ! ',
+	          	          showClose: true,
+	          	          clickToClose: true,
+	          	          timeout: 6000,
+	          	          sound: false,
+	          	          html: false,
+	          	          shake: false,
+	          	          theme: 'bootstrap'
+	          	        });
+		            //$scope.error="File is not able to upload ";
+		          });	
+	                }, function (resp) {
+	                  self.apiMiddleware.parseError(resp.data);
+	                });
+	                              
+              }, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                     toasty.error({
+             	          title: 'Error',
+             	          msg: 'Repository Login error ! Uploading Failed',
+             	          showClose: true,
+             	          clickToClose: true,
+             	          timeout: 6000,
+             	          sound: false,
+             	          html: false,
+             	          shake: false,
+             	          theme: 'bootstrap'
+             	        });
+                     //$scope.error="Repository Login error !";
+                   });
+           
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+      	          title: 'Error',
+      	          msg: 'Not able to read Configuration file! Uploading failed',
+      	          showClose: true,
+      	          clickToClose: true,
+      	          timeout: 6000,
+      	          sound: false,
+      	          html: false,
+      	          shake: false,
+      	          theme: 'bootstrap'
+      	        });
+                //$scope.error="Not able to read configuration file !";
+            });
+        	
+        	
+        
+        };
+        
+
+       
+        $scope.download = function (obj) {    		
+    		$scope.link=obj;
+    		console.log("$scope  "+$scope.link);
+    		console.log("$scope  " , $scope.link.id);
+    		console.log("$scope  "+$scope.link.consannexid);
+    	
+    		$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: result.password, 
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		 
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+
+        		 $scope.fileNavigator.refresh();
+	             $scope.modal('signin', true);
+        		var location;
+        		if($scope.link.consannexid == undefined){
+	        		console.log("Inside IF ");
+	        		location=$scope.link.tmpl_location;
+        		}else{
+        			console.log("Inside ELSE ");
+        			location=$scope.link.consannexid.annnexlocation;
+        		}
+        		console.log(location);
+                $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
+                var doc=resp.data;
+                return $scope.apiMiddleware.getDocumentDownload(doc).then(function (resp) {
+                toasty.success({
+           	        title: 'Success',
+           	        msg: 'Downloaded Successfully!',
+           	        showClose: true,
+           	        clickToClose: true,
+           	        timeout: 5000,
+           	        sound: false,
+           	        html: false,
+           	        shake: false,
+           	        theme: 'bootstrap'
+           	      });
+                });
+                	});
+        	
+            	 
+             }, function (resp) {
+                 $scope.apiMiddleware.parseError(resp.data);
+                 //$scope.error="File is not able to download ";
+                 console.log("File is not able to download ");
+                 toasty.error({
+          	          title: 'Error',
+          	          msg: 'Repository Login error ! Downloading Failed',
+          	          showClose: true,
+          	          clickToClose: true,
+          	          timeout: 6000,
+          	          sound: false,
+          	          html: false,
+          	          shake: false,
+          	          theme: 'bootstrap'
+          	        });
+               });
+        	
+          
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+        	          title: 'Error',
+        	          msg: 'Not able to read Configuration file! Downloading failed',
+        	          showClose: true,
+        	          clickToClose: true,
+        	          timeout: 6000,
+        	          sound: false,
+        	          html: false,
+        	          shake: false,
+        	          theme: 'bootstrap'
+        	        });
+            });
+    		
+    	
+       };
+       
+       
+       $scope.downloadCH = function (obj) {    		
+   		$scope.link=obj;
+   		console.log("$scope  "+$scope.link);
+   		console.log("$scope  " , $scope.link.id);
+   		
+   			
+		$scope.apiMiddleware.getConfigFile().then(function (result) {
+    		
+    		var loginInfo = {
+    		            baseUri: result.gnosisRestServiceUrl,
+    		            repoName: result.repositoryName,
+    		            username: result.userName,
+    		            password: result.password, 
+    		            folderPath: result.gnosisFolderPath
+    		          };
+    		 
+         $scope.apiMiddleware.login(loginInfo).then(function () {
+
+       		 $scope.fileNavigator.refresh();
+	             $scope.modal('signin', true);
+       		
+       		
+	        	var location=$scope.link.annnexlocation;
+	        	console.log(location);
+               $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
+               var doc=resp.data;
+               return $scope.apiMiddleware.getDocumentDownload(doc).then(function (resp) {
+               toasty.success({
+       	        title: 'Success',
+       	        msg: 'Downloaded Successfully!',
+       	        showClose: true,
+       	        clickToClose: true,
+       	        timeout: 5000,
+       	        sound: false,
+       	        html: false,
+       	        shake: false,
+       	        theme: 'bootstrap'
+       	      });
+               });
+               //$scope.success="File Downloaded Successfully";	
+               console.log("File Downloaded Successfully");
+               	});
+       	
+         }, function (resp) {
+             $scope.apiMiddleware.parseError(resp.data);
+             //$scope.error="File is not able to download ";
+             console.log("File is not able to download ");
+             toasty.error({
+   	          title: 'Error',
+   	          msg: 'Repository Login error! Download Failed',
+   	          showClose: true,
+   	          clickToClose: true,
+   	          timeout: 6000,
+   	          sound: false,
+   	          html: false,
+   	          shake: false,
+   	          theme: 'bootstrap'
+   	        });
+           });
+       	 
+    	}, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+            toasty.error({
+  	          title: 'Error',
+  	          msg: 'Not able to read Configuration file! Download failed',
+  	          showClose: true,
+  	          clickToClose: true,
+  	          timeout: 6000,
+  	          sound: false,
+  	          html: false,
+  	          shake: false,
+  	          theme: 'bootstrap'
+  	        });
+        });
+		
+		
+      };
+    
+      
+      
+      
+      
+      $scope.remove = function () {
+          $scope.apiMiddleware.remove($scope.temps).then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal('remove', true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+      
+      $scope.prepareNewFolder = function () {
           var item = new Item($scope.fileNavigator.folderObject, $scope.fileNavigator.currentPath);
           $scope.temps = [item];
           return item;
@@ -114,247 +610,6 @@
               $scope.apiMiddleware.parseError(resp.data);
             });
         };
-
-        $scope.uploadFiles = function () {
-        	console.log("uploadFiles");
-        	
-        	$scope.apiMiddleware.getConfigFile().then(function (result) {
-        		
-        		var loginInfo = {
-        		            baseUri: result.gnosisRestServiceUrl,
-        		            repoName: result.repositoryName,
-        		            username: result.userName,
-        		            password: result.password, 
-        		            folderPath: result.gnosisFolderPath
-        		          };
-        		
-             $scope.apiMiddleware.login(loginInfo).then(function () {
-            	 	$scope.warning='';
-     				$scope.error='';
-     				$scope.success='';
-	                $scope.fileNavigator.refresh();
-	                $scope.modal('signin', true);
-	             
-	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
-	                var path =loginInfo.folderPath;
-	             
-	                if($scope.item.consannexid== undefined ){
-	                	
-	                	if($scope.uploadFileList[0].name.includes('.doc')){	                		
-	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
-	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
-	        		            $scope.modal('uploadfile', true);
-	        		            var link =respn.data.links[0];
-	        		            var docLink = link.href;		            	        		            
-	        		            console.log("Function calling from Template module") ;
-	        		            $scope.item.tmpl_location=docLink;
-	        		            $scope.success="File Uploaded Successfully"	        		            
-	        		          }, function (resp) {
-	        		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
-	        		            $scope.apiMiddleware.error = errorMsg;
-	        		            $scope.error="File is not able to upload ";
-	        		          });	
-	        	                }, function (resp) {
-	        	                  self.apiMiddleware.parseError(resp.data);
-	        	                });
-	                		
-	                	}else{
-	                		$scope.warning="File type should be .doc/.docx ext";
-	                		console.log("File type should be doc type");
-	                	}
-	                	
-	                }else{
-	                	
-                		if($scope.uploadFileList[0].name.includes('.pdf')){
-                			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
-            		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
-            		            $scope.modal('uploadfile', true);
-            		            var link =respn.data.links[0];
-            		            var docLink = link.href;		            
-            		            console.log("Function calling from Task module");
-            		            $scope.item.consannexid.annnexlocation=docLink;
-            		            $scope.item.taskstatus="COMPLETED";
-            		            $scope.success="File Uploaded Successfully"
-            		            
-            		          }, function (resp) {
-            		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
-            		            $scope.apiMiddleware.error = errorMsg;
-            		            $scope.error="File is not able to upload ";
-            		          });	
-            	                }, function (resp) {
-            	                  self.apiMiddleware.parseError(resp.data);
-            	                });
-                		
-                	     }else{
-                	    	 $scope.warning="File type should be .pdf ext";
-                	    	 console.log("File should be pdf type")
-                	}
-                	
-                }	
-             	}, function (resp) {
-                     $scope.apiMiddleware.parseError(resp.data);
-                   });
-         	 
-        	}, function (resp) {
-                $scope.apiMiddleware.parseError(resp.data);
-            });
-        	
-        
-        };
-        
-        $scope.uploadFilesR = function () {
-        	console.log("uploadFilesR");
-        	
-        	$scope.apiMiddleware.getConfigFile().then(function (result) {
-        		
-        		var loginInfo = {
-        		            baseUri: result.gnosisRestServiceUrl,
-        		            repoName: result.repositoryName,
-        		            username: result.userName,
-        		            password: result.password, 
-        		            folderPath: result.gnosisFolderPath
-        		          };
-        	
-             $scope.apiMiddleware.login(loginInfo).then(function () {
-	                $scope.fileNavigator.refresh();
-	                $scope.modal('signin', true);
-	             
-	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
-	                var path =loginInfo.folderPath; 
-	              
-	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
-		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
-		           
-		            var link =respn.data.links[0];
-		            var docLink = link.href;
-		            	$scope.item.consannexid.revocationDocLink=docLink;
-		            	$scope.success="File Uploaded Successfully"		           
-		          }, function (resp) {
-		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
-		            $scope.apiMiddleware.error = errorMsg;
-		            $scope.error="File is not able to upload ";
-		          });	
-	                }, function (resp) {
-	                  self.apiMiddleware.parseError(resp.data);
-	                });
-	                              
-              }, function (resp) {
-                     $scope.apiMiddleware.parseError(resp.data);
-                   });
-           
-        	}, function (resp) {
-                $scope.apiMiddleware.parseError(resp.data);
-            });
-        	
-        	
-        
-        };
-        
-
-        $scope.remove = function () {
-          $scope.apiMiddleware.remove($scope.temps).then(function () {
-            $scope.fileNavigator.refresh();
-            $scope.modal('remove', true);
-          }, function (resp) {
-            $scope.apiMiddleware.parseError(resp.data);
-          });
-        };
-
-        $scope.download = function (obj) {    		
-    		$scope.link=obj;
-    		console.log("$scope  "+$scope.link);
-    		console.log("$scope  " , $scope.link.id);
-    		console.log("$scope  "+$scope.link.consannexid);
-    	
-    		$scope.apiMiddleware.getConfigFile().then(function (result) {
-        		
-        		var loginInfo = {
-        		            baseUri: result.gnosisRestServiceUrl,
-        		            repoName: result.repositoryName,
-        		            username: result.userName,
-        		            password: result.password, 
-        		            folderPath: result.gnosisFolderPath
-        		          };
-        		 
-             $scope.apiMiddleware.login(loginInfo).then(function () {
-
-        		 $scope.fileNavigator.refresh();
-	             $scope.modal('signin', true);
-        		var location;
-        		if($scope.link.consannexid == undefined){
-	        		console.log("Inside IF ");
-	        		location=$scope.link.tmpl_location;
-        		}else{
-        			console.log("Inside ELSE ");
-        			location=$scope.link.consannexid.annnexlocation;
-        		}
-        		console.log(location);
-                $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
-                var doc=resp.data;
-                return $scope.apiMiddleware.getDocumentDownload(doc);
-                	});
-        	
-            	 
-             }, function (resp) {
-                 $scope.apiMiddleware.parseError(resp.data);
-                 $scope.error="File is not able to download ";
-                 console.log("File is not able to download ");
-               });
-        	
-          
-        	}, function (resp) {
-                $scope.apiMiddleware.parseError(resp.data);
-            });
-    		
-    	
-       };
-       
-       
-       $scope.downloadCH = function (obj) {    		
-   		$scope.link=obj;
-   		console.log("$scope  "+$scope.link);
-   		console.log("$scope  " , $scope.link.id);
-   		
-   			
-		$scope.apiMiddleware.getConfigFile().then(function (result) {
-    		
-    		var loginInfo = {
-    		            baseUri: result.gnosisRestServiceUrl,
-    		            repoName: result.repositoryName,
-    		            username: result.userName,
-    		            password: result.password, 
-    		            folderPath: result.gnosisFolderPath
-    		          };
-    		 
-         $scope.apiMiddleware.login(loginInfo).then(function () {
-
-       		 $scope.fileNavigator.refresh();
-	             $scope.modal('signin', true);
-       		
-       		
-	        	var location=$scope.link.annnexlocation;
-	        	console.log(location);
-               $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
-               var doc=resp.data;
-               return $scope.apiMiddleware.getDocumentDownload(doc);
-               $scope.success="File Downloaded Successfully";	
-               console.log("File Downloaded Successfully");
-               	});
-       	
-         }, function (resp) {
-             $scope.apiMiddleware.parseError(resp.data);
-             $scope.error="File is not able to download ";
-             console.log("File is not able to download ");
-           });
-       	 
-    	}, function (resp) {
-            $scope.apiMiddleware.parseError(resp.data);
-        });
-		
-		
-      };
-      
-        
         $scope.openImagePreview = function () {
           var item = $scope.singleSelection();
           $scope.apiMiddleware.inprocess = true;

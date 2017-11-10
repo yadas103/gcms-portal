@@ -560,3 +560,16 @@ textarea.ng-invalid,
 .lr-drop-target-after{
   border-right: 2px solid orange;
 }
+
+.tasktd{
+	padding-top: 14px;
+    text-align: left;
+	text-transform:lowercase;  
+}
+ .tasktd:first-letter{
+	text-transform:uppercase;
+} 
+.th{
+	font-family: serif;
+	font-size: 13px;
+}

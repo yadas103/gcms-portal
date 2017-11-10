@@ -65,7 +65,6 @@
         },
         templateUrl: 'app/components/session/components.session.html',
         controller: function($scope) {
-
           var user = $rootScope.session.user;
           $scope.limit = 15;
           $scope.columns = 0;

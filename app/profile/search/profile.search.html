@@ -78,11 +78,11 @@
 					<gcms-modal template="template.download.html"
 						controller="ModalDefaultCtrl" ok="submittry" content="dataToSend">
 					<span class="btn btn-lg btn-default" role="button" data-toggle="tooltip"
-						data-placement="top" title="download" ng-click="list()">Download</span> </a> </gcms-modal></span>
+						data-placement="top" title="download" ng-click="list()">Download</span> </gcms-modal></span>
 						<span class="create-button">
 						<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href=""><i>Cannot find a profile? Create a request here</i></a></gcms-modal>
+					<a href="" ng-click="passCountryName()"><i>Cannot find a profile? Create a request here</i></a></gcms-modal>
 					</span>
 				
 			</div>
@@ -177,9 +177,9 @@
 						<td class="reci-name" style="word-break: break-all;">{{pro.city}}</td>
 						<td class="reci-name" style="word-break: break-all;">{{pro.address}}</td>
 						<td style="word-break: break-all;"></td>
-						<td><a href="" type="submit" data-ng-click="submitid(pro.id)" class="recipi-view">
-								View </a></td>
-
+						<td><gcms-modal template="consentstatus.html"
+						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
+						<a href=""  ng-click="view(pro.id)">View</a></gcms-modal></td>					
 					</tr>
 				</tbody>
 				<tfoot>

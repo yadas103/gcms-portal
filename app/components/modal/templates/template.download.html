@@ -43,19 +43,16 @@ Enter this information in the proper columns of the below list. Once done press 
     <td ng-model="item.request[i.id].id" ng-hide="true" >{{i.id}}</td>
 	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" ng-required='!item.request[i.id].acmcode' style="width: 75px;"> </td>
  	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" ng-required='!item.request[i.id].pocode'></td>
-    	<td ng-show="setDates"><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.request[i.id].consentstartdate" is-open="openedStart"  close-text="Close" /> 
- <button style="height:19px; margin-top: -47px; margin-left:69px; padding: 1px;background-color: white;" class="btn btn-default-b1" ng-click="startDate()">	
-             
-              <i class="fa fa-calendar"></i></td>
-              <td ng-show="setDates"><input type="text" style="width: 86px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.request[i.id].consentenddate" is-open="openedEnd"  close-text="Close" />                           
-              <button style="height:19px; margin-top: -47px; margin-left:69px; padding: 1px;background-color: white;" class="btn btn-default-b1" ng-click="endDate()">
-              <i class="fa fa-calendar"></i></button></td> 
+    	<td ng-show="setDates"><input type="date" style="width: 86px;" class="form-control"  ng-model="item.request[i.id].consentstartdate" is-open="openedStartCA[i.id]"  close-text="Close" /> </td>
+              <td ng-show="setDates"><input type="date" style="width: 86px;" class="form-control"  ng-model="item.request[i.id].consentenddate" is-open="openedEndCA[i.id]"  close-text="Close" />                           
+            </td> 
  	</tr>
 	</tbody>	
 	</div>
 	</table>	
 </form>	
-	<span style="margin-left: 728px;"><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>
+	<span><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>
+	<button class="btn btn-primary" ng-click="copy(item)">Same for all</button>
 	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 	</span>
 	</div>

@@ -17,9 +17,9 @@
 	.module('gcms.profile')
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','$stateParams','$state','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','$stateParams','$state','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf) {
+	function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf,$rootScope) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -41,6 +41,7 @@
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';
 		$scope.setDates = false;
+		$scope.profile.readOnly = false;
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -76,9 +77,7 @@
 					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5){	
 						$scope.request.collectingCountry = $scope.loggedInUserCountryName;
 						$scope.readOnlyCC = true;
-					}
-				
-					$scope.profile.country = $scope.loggedInUserCountryName;
+					}									
 
 				}).catch(function(){
 					console.log('Couldnt fetch user profiles');           	
@@ -89,7 +88,14 @@
 
 			});               
 		};
-
+		
+		//Called on create missing profile to sent country and lock 
+		$scope.passCountryName = function (){
+			$scope.profile.country = $scope.request.collectingCountry;
+			$scope.profile.readOnly = true;
+		};
+		
+		
 		//Calling $scope.userProfileData() to get Logged in User Profile Data
 		$scope.userProfileData();
 
@@ -369,6 +375,34 @@
 
 		};
 
+		$scope.copy = function(item){
+			$scope.copyAcm = {};
+			$scope.copyEventname = {};
+			$scope.copyPocode = {};
+			$scope.copyTmpl_id = {};
+			$scope.copyCSDate = {};
+			$scope.copyCEDate = {};
+ 			for(var i  in $scope.checkedIds){
+				if(item.request.hasOwnProperty($scope.checkedIds[i].id) == true){
+				$scope.copyAcm = item.request[$scope.checkedIds[i].id].acmcode;
+				$scope.copyEventname = item.request[$scope.checkedIds[i].id].eventname;
+				$scope.copyPocode = item.request[$scope.checkedIds[i].id].pocode;
+				$scope.copyTmpl_id = item.request[$scope.checkedIds[i].id].tmpl_id;
+				$scope.copyCSDate = item.request[$scope.checkedIds[i].id].consentstartdate;
+				$scope.copyCEDate = item.request[$scope.checkedIds[i].id].consentenddate;
+				}
+			}
+			//$scope.copyAcm = item.request[$scope.checkedIds[0].id].acmcode;
+			for(var i  in $scope.checkedIds){
+				item.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
+				item.request[$scope.checkedIds[i].id].acmcode = $scope.copyAcm;
+				item.request[$scope.checkedIds[i].id].eventname = $scope.copyEventname;
+				item.request[$scope.checkedIds[i].id].pocode = $scope.copyPocode;
+				item.request[$scope.checkedIds[i].id].tmpl_id = $scope.copyTmpl_id;
+				item.request[$scope.checkedIds[i].id].consentstartdate = $scope.copyCSDate;
+				item.request[$scope.checkedIds[i].id].consentenddate = $scope.copyCEDate;
+			}
+		}
 		//Loads all templates 
 		var updateTemplates = function(result){
 			$scope.templates = result;             
@@ -422,10 +456,8 @@
 			Templates.update({ id: item.id }, item);     
 		};
 		
-		//Validations for  Start Date/End Date
-		$scope.startDate = function(){
-			
-		};
+		
+	
 		//Creates Task and Generates PDF
 		$scope.submittry = function(item){ 
 			$scope.msg = '';
@@ -496,9 +528,16 @@
 				$scope.createTask(y);
 			}														
 		};
+		
 
-		$scope.submitid = function(id) {     		 
+		//Loading History
+		$scope.consentAttributes = {};
+			$scope.view = function(id) { 
+			var profileid = id;
+			$scope.consentAttributes = ConsentAnnex.query({id : profileid});
+			};	
+		/*$scope.submitid = function(id) {     		 
 			$state.go('profile-detail-view', {id} );
-		};                
+		};  */                
 	}
 })();

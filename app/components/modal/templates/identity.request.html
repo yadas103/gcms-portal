@@ -51,8 +51,8 @@
 				<div class="form-group">
                     <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px;">Profile Country:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <select class="form-control" ng-model="item.country" class="drop-receipi" style="width: 395px;" required>
-                  			<option ng-repeat="contry in counties">{{contry.name}}</option>
+                        <select class="form-control" ng-model="item.country" class="drop-receipi" style="width: 395px;" ng-disabled="item.readOnly" required>
+                  			<option ng-repeat="contry in counties |filter : efpiaFilter">{{contry.name}}</option>
                			</select>               			
                     </div>
                 </div>

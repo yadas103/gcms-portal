@@ -73,7 +73,6 @@
           $scope.colWidth = '300px';
           $rootScope.profileReviewTabShow = false;
           $rootScope.loggedInUserRoleId={};
-          
           var setColumns = function(){
             $scope.columns = Math.ceil($scope.profiles.length/$scope.limit);
             $scope.columnsArray = [];

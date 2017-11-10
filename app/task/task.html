@@ -139,10 +139,13 @@
 								By</th>
 							<th style="font-size: 13px; font-family: sans-serif;">Document
 								Upload</th>
-							<th
-								style="font-size: 13px; font-family: sans-serif;">Activity</th>
+								
+							     <th 
+								style="font-size: 13px; font-family: sans-serif;">Activity								
+								</th>
+								
+								
 						</tr>
-
 						<tr>
 							<th></th>
 							<th><input st-search="id" placeholder=""
@@ -168,6 +171,7 @@
 							<th><input st-search="initiatedby" placeholder=""
 								class="form-control" type="search" /></th>
 							<th></th>
+							
 							<th></th>
 						</tr>
 					</thead>
@@ -237,7 +241,7 @@
 							
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
-									 <div data-ng-if ="loggeduser.userProfiles[0].roleId=='5'"> 
+									 <div data-ng-if ="loggedInUserRoleId=='5'"> 
 										<gcms-modal template="task.reassign.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateReassign"
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
@@ -247,7 +251,7 @@
 									
 									<div ng-switch-when="COMPLETED">
 									
-									 <div data-ng-if ="loggeduser.userProfiles[0].roleId=='5'"> 
+									 <div data-ng-if ="loggedInUserRoleId=='5'"> 
 									    <span ng-mouseover="value(con)" >
 										<gcms-modal template="task.revoke.html"
 											controller="ModalDefaultCtrl" content="con" ok="revoke"
@@ -257,7 +261,7 @@
 										</div>
 									</div>
 									<div ng-switch-when="DELETED">
-										 <div data-ng-if ="loggeduser.userProfiles[0].roleId=='5'"> 
+										 <div data-ng-if ="loggedInUserRoleId=='5'"> 
 											<gcms-modal template="task.undelete.html"
 												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
 												alt="{{con.id}}"> <span>Undelete</span>

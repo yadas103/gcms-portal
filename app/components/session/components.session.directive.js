@@ -73,6 +73,7 @@
           $scope.fullName = false;
           $scope.colWidth = '300px';
           $rootScope.profileReviewTabShow = false;
+          $rootScope.loggedInUserRoleId={};
           
           var setColumns = function(){
             $scope.columns = Math.ceil($scope.profiles.length/$scope.limit);
@@ -85,6 +86,7 @@
           $scope.profiles = [];
           user.fullName.then(function(name){
             $scope.fullName = name;
+            
           }).then(function(){
             return user.getCurrentUser;
           }).then(function(user){
@@ -110,7 +112,9 @@
            * @returns {object} current role of a user
            */
           user.getCurrentProfile().then(function(currentProfile){
-            $scope.currentProfile = currentProfile;
+            $scope.currentProfile = currentProfile; 
+            $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
+            
             $scope.getReviewersData(currentProfile);
             user.setProfile(currentProfile);
           });
@@ -126,6 +130,8 @@
           $scope.setProfile = function(profile) {
             $state.go('landing').then(function(){
               $scope.currentProfile = profile;
+              $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
+             
               user.setProfile(profile);
             });
           };

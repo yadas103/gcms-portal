@@ -59,6 +59,7 @@
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
+		    $scope.status=tableState.search.predicateObject.taskstatus;
 		    var sort = tableState.sort;
 		    var predicate = sort.predicate;
 		    var reverse = sort.reverse || false;

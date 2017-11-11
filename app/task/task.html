@@ -106,7 +106,7 @@
 					class="table table-bordered table-striped table-highlight">
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
-							<th>Action</th>
+							<th ng-hide="status=='DELETED'">Action</th>
 							<th st-sort="payercountry">Payer Country</th>
 							<th st-sort="lastname">Last Name/Org Name</th>
 							<th st-sort="firstname">First Name</th>
@@ -118,11 +118,11 @@
 							<th st-sort="taskstatus">Task Status</th>
 							<th>Document Upload</th>
 							<th>Activity</th>							 
-							<th>#</th>
+							<th ng-show="status=='COMPLETED'">DLU P/T</th>
 								
 						</tr>
 						<tr>
-							<th></th>
+							<th ng-hide="status=='DELETED'"></th>
 							<th><input st-search="payercountry" placeholder=""
 								class="form-control" type="search" /></th>
 							<th><input st-search="lastname" placeholder=""
@@ -150,14 +150,14 @@
 							</th>							 
 							<th></th>
 							<th></th>
-							<th></th>
+							<th ng-show="status=='COMPLETED'"></th>
 						</tr>
 					</thead>
 					<tbody data-ng-repeat="con in TaskAttributes" ng-switch
-						on="con.taskstatus">
+						on="con.taskstatus" ng-show="!isLoading">
 						<tr>
 						
-    					<td>
+    					<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">
 
 									<gcms-modal template="task.update.html"
@@ -244,15 +244,20 @@
 								</div>
 
 							</td>
-							<td>
-							<div ng-show="con.taskstatus =='COMPLETED'">
+							<td ng-show="con.taskstatus =='COMPLETED'">
+							
 									<span row-select="con" ng-click="select(con)">  <input
-											 type="checkbox" />	 							     
-								</div>
+											 type="checkbox" /></span>	 							     
+								
 							</td>
 
 						</tr>
 
+					</tbody>
+					<tbody ng-show="isLoading">
+						<tr>
+							<td colspan="14" class="text-center">Loading ...</td>
+						</tr>
 					</tbody>
 					<tfoot>
 						<tr ng-show="selected.length != '0'">
@@ -344,8 +349,7 @@
 											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
 											}"
 									filename="'Data'">Generate DLU-P</button>
-							</td>
-							<td colspan="2">
+							
 								<button class="btn btn-primary" ng-json-export-excel
 									data="selected"
 									report-fields="{

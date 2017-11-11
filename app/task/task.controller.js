@@ -13,10 +13,10 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','UserDetail','CONFIG','toasty' ];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','UserDetail','toasty' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,UserDetail,CONFIG,toasty ){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,UserDetail,toasty ){
 	  
 	  console.log("Inside task controller");
 	  	
@@ -51,10 +51,14 @@
 		 $scope.currentProfile={};
 		 var mydata= $rootScope.loggedInUserRoleId;
 		 
-		 $scope.Groupsearch=CONFIG.completionStatus;
+		 $scope.firstload=false;
 		 $scope.selected = [];
 		 $scope.itemsByPage = 6;
 		 $scope.callServer = function(tableState) {
+			 if(!$scope.firstload){
+				 $scope.firstload=true;
+				 return;
+			 }
 			$scope.selected = [];  
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;

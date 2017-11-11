@@ -32,7 +32,7 @@
     	  get: {
     		  method:'GET',
     		  params:{	
-    			  		pyercountry:'@pyercountry',    			  		
+    			  		payercountry:'@payercountry',    			  		
     			  		lastName:'@lastName',
     			  		firstName:'@firstName',
     			  		profilecountry:'@profilecountry',

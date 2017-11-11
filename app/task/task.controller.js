@@ -67,7 +67,7 @@
 		    
 		    console.log(tableState);
 		    return Task.get({
-		    	payercountry :tableState.search.predicateObject.pyercountry,
+		    	payercountry :tableState.search.predicateObject.payercountry,
 		    	lastName : tableState.search.predicateObject.lastname,
 		    	firstName :tableState.search.predicateObject.firstname,
 		    	profilecountry : tableState.search.predicateObject.profilecountry,

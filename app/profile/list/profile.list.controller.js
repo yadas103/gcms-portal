@@ -384,6 +384,7 @@
 
 		};
 
+		//Copy to selected
 		$scope.copy = function(item){
 			$scope.copyCheckedIds = [];
 			$scope.currentYear = (new Date()).getFullYear();
@@ -392,18 +393,14 @@
 					$scope.copyCheckedIds.push($scope.item.checkedIds[i].id);
 				}
 			}
-			 	
-			for(var i  in $scope.copyCheckedIds){
-				
-				}
-			
+			 				
 			for(var i  in $scope.copyCheckedIds){
 				item.request[$scope.item.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","consentstartdate" : new Date('01/01/'+$scope.currentYear) ,"consentenddate" : new Date('12/31/'+$scope.currentYear)};				
-				item.request[$scope.item.checkedIds[i].id].acmcode = $scope.item.copyAcmcode;
-				item.request[$scope.item.checkedIds[i].id].eventname = $scope.item.copyEventName;
-				item.request[$scope.item.checkedIds[i].id].pocode = $scope.item.copyPocode;
-				item.request[$scope.item.checkedIds[i].id].consentstartdate = $scope.item.copyConsentStartDate == undefined? new Date('01/01/'+$scope.currentYear) : $scope.item.copyConsentStartDate ;
-				item.request[$scope.item.checkedIds[i].id].consentenddate = $scope.item.copyConsentEndDate == undefined? new Date('12/31/'+$scope.currentYear) : $scope.item.copyConsentEndDate;
+				item.request[$scope.copyCheckedIds[i]].acmcode = $scope.item.copyAcmcode;
+				item.request[$scope.copyCheckedIds[i]].eventname = $scope.item.copyEventName;
+				item.request[$scope.copyCheckedIds[i]].pocode = $scope.item.copyPocode;
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = $scope.item.copyConsentStartDate == undefined? new Date('01/01/'+$scope.currentYear) : $scope.item.copyConsentStartDate ;
+				item.request[$scope.copyCheckedIds[i]].consentenddate = $scope.item.copyConsentEndDate == undefined? new Date('12/31/'+$scope.currentYear) : $scope.item.copyConsentEndDate;
 			}
 		}
 		

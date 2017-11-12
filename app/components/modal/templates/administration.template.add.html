@@ -17,8 +17,10 @@
                <option value="">Please select</option>
                <option value="InCountry-HCO">InCountry - HCO</option>
                <option value="InCountry-HCP">InCountry - HCP</option>
-               <option value="CrossBorder-HCO" ng-hide="item.dates_rages=='Y'">CrossBorder - HCO</option>
-               <option value="CrossBorder-HCP" ng-hide="item.dates_rages=='Y'">CrossBorder - HCP</option>
+               <option value="CrossBorder-HCO">CrossBorder - HCO</option>
+               <option value="CrossBorder-HCP">CrossBorder - HCP</option>
+              <!--  <option value="CrossBorder-HCO" ng-hide="item.dates_rages=='Y'">CrossBorder - HCO</option>
+               <option value="CrossBorder-HCP" ng-hide="item.dates_rages=='Y'">CrossBorder - HCP</option> -->
             </select>
          </div>
       </div>
@@ -41,8 +43,10 @@
          <label for="consentValidityPeriod" class="col-sm-3 control-label" style="padding-left:4px;">Consent Validity Period :</label>
          <div class="col-sm-9">
             <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
-               <option value="" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Please select</option>
-               <option value="Y" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Y</option>
+               <!--  <option value="" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Please select</option>
+               <option value="Y" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Y</option> -->
+               <option value="">Please select</option>
+               <option value="Y">Y</option>
                <option value="N">N</option>
             </select>
          </div>

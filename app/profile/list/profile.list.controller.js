@@ -35,12 +35,13 @@
 		$scope.request = {};
 		var collecting_country_id = {};
 		var profile_country_id = {};
+		$scope.setDownload = true;
 		$scope.id = [];                
 		$scope.templId = {};
 		$scope.readOnlyCC = false;
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';
-		$scope.setDates = false;
+		$scope.dataToSend.setDates = false;
 		$scope.profile.readOnly = false;
 		$scope.profile_types = [{
 			name: 'HCP',
@@ -356,8 +357,9 @@
 		};
 
 		//Collects the checked profile id's and related info    
-		$scope.list = function(){        	  
-			$scope.dataToSend = {checkedIds :{},templates :{}};
+		$scope.list = function(){ 
+			$scope.currentYear = new Date();
+			$scope.dataToSend = {checkedIds :{},templates :{},request : {}};
 
 			ids['selid'] =  {checked: JSON.stringify($scope.selectedids)};
 			ids['selectedParams'] = {selection: JSON.stringify(params)}
@@ -371,45 +373,70 @@
 			$scope.searchCriteria = JSON.parse($scope.cntryValue);
 			$scope.cntryValue = $scope.searchCriteria.country;
 			$scope.dataToSend.checkedIds = $scope.checkedIds;
-			$scope.dataToSend.templates = $scope.templates;			
+			$scope.dataToSend.templates = $scope.templates;
+			$scope.currentYear = (new Date()).getFullYear();
+			
+			for(var i  in $scope.checkedIds){
+				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate = new Date('01/01/'+$scope.currentYear);
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = new Date('12/31/'+$scope.currentYear);
+			}
 
 		};
 
 		$scope.copy = function(item){
-			$scope.copyAcm = {};
-			$scope.copyEventname = {};
-			$scope.copyPocode = {};
-			$scope.copyTmpl_id = {};
-			$scope.copyCSDate = {};
-			$scope.copyCEDate = {};
- 			for(var i  in $scope.checkedIds){
-				if(item.request.hasOwnProperty($scope.checkedIds[i].id) == true){
-				$scope.copyAcm = item.request[$scope.checkedIds[i].id].acmcode;
-				$scope.copyEventname = item.request[$scope.checkedIds[i].id].eventname;
-				$scope.copyPocode = item.request[$scope.checkedIds[i].id].pocode;
-				$scope.copyTmpl_id = item.request[$scope.checkedIds[i].id].tmpl_id;
-				$scope.copyCSDate = item.request[$scope.checkedIds[i].id].consentstartdate;
-				$scope.copyCEDate = item.request[$scope.checkedIds[i].id].consentenddate;
+			$scope.copyCheckedIds = [];
+			$scope.currentYear = (new Date()).getFullYear();
+			for(var i  in $scope.item.checkedIds){
+				if(item.checkbox[$scope.item.checkedIds[i].id] == true){
+					$scope.copyCheckedIds.push($scope.item.checkedIds[i].id);
 				}
 			}
-			//$scope.copyAcm = item.request[$scope.checkedIds[0].id].acmcode;
-			for(var i  in $scope.checkedIds){
-				item.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
-				item.request[$scope.checkedIds[i].id].acmcode = $scope.copyAcm;
-				item.request[$scope.checkedIds[i].id].eventname = $scope.copyEventname;
-				item.request[$scope.checkedIds[i].id].pocode = $scope.copyPocode;
-				item.request[$scope.checkedIds[i].id].tmpl_id = $scope.copyTmpl_id;
-				item.request[$scope.checkedIds[i].id].consentstartdate = $scope.copyCSDate;
-				item.request[$scope.checkedIds[i].id].consentenddate = $scope.copyCEDate;
+			 	
+			for(var i  in $scope.copyCheckedIds){
+				
+				}
+			
+			for(var i  in $scope.copyCheckedIds){
+				item.request[$scope.item.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","consentstartdate" : new Date('01/01/'+$scope.currentYear) ,"consentenddate" : new Date('12/31/'+$scope.currentYear)};				
+				item.request[$scope.item.checkedIds[i].id].acmcode = $scope.item.copyAcmcode;
+				item.request[$scope.item.checkedIds[i].id].eventname = $scope.item.copyEventName;
+				item.request[$scope.item.checkedIds[i].id].pocode = $scope.item.copyPocode;
+				item.request[$scope.item.checkedIds[i].id].consentstartdate = $scope.item.copyConsentStartDate == undefined? new Date('01/01/'+$scope.currentYear) : $scope.item.copyConsentStartDate ;
+				item.request[$scope.item.checkedIds[i].id].consentenddate = $scope.item.copyConsentEndDate == undefined? new Date('12/31/'+$scope.currentYear) : $scope.item.copyConsentEndDate;
 			}
 		}
+		
 		//Loads all templates 
 		var updateTemplates = function(result){
 			$scope.templates = result;             
 			$scope.dataToSend.templates = $scope.templates;
 		};
 
-		//Filters templates based on Reporting Country 
+		//Filter on Template
+		$scope.templateFilter = function (result){
+			$scope.crossInCountry = $scope.request.collectingCountry==$scope.request.country? 'InCountry' : 'CrossBorder';
+			$scope.profileTypeSelected = $scope.request.profileType;
+			$scope.templateTypeSelected = $scope.crossInCountry+'-'+$scope.profileTypeSelected;
+			
+			if(result.cntry_id.name == $scope.request.country && result.tmpl_status == "ACTIVE" && (result.tmpl_type == $scope.templateTypeSelected )){							
+				$scope.daterange = result.dates_rages;
+				if($scope.daterange == 'Y' ){
+					$scope.dataToSend.setDates = true;
+				}
+				if(result.tmpl_location == null){
+					$scope.notInRepo = "No template uploaded in Repositry for "+result.tmpl_name;
+				}
+			}
+			
+			return ((result.cntry_id.name == $scope.request.country) && (result.tmpl_status == "ACTIVE") && (result.tmpl_type == $scope.templateTypeSelected ));
+		}
+		
+		$scope.change = function(){
+		 $scope.setDownload = $scope.request.tmpl_id == undefined ? true : false;
+		};
+		
+		//Filters templates based on Reporting Country
 		$scope.customArrayFilter = function (result) {
 			$scope.allTemplates = result;
 			$scope.id = myService.get();
@@ -427,10 +454,10 @@
 				$scope.profileCountry_Id = result.cntry_id.id;
 				$scope.daterange = result.dates_rages;
 				if($scope.daterange == 'Y' ){
-					$scope.setDates = true;
+					$scope.dataToSend.setDates = true;
 				}
 				if(result.tmpl_location == null){
-					$scope.notInRepo = "No template uploaded in Repositry"
+					$scope.notInRepo = "No template uploaded in Repositry" + result.tmpl_name;
 				}
 			}
 			
@@ -507,7 +534,7 @@
 					modifiedparams['profilecountry'] = {id: JSON.stringify($scope.id.profileCountry)};
 					modifiedparams['profileType'] = $scope.searchCriteria.profileType;
 					modifiedparams['bpid'] = {id: currentId};
-					modifiedparams['tmpl_id'] = {id: JSON.stringify(item.request[currentId].tmpl_id)};
+					modifiedparams['tmpl_id'] = {id: JSON.stringify($scope.request.tmpl_id)};
 					modifiedparams['eventname'] = item.request[currentId].eventname;
 					modifiedparams['pocode'] = item.request[currentId].pocode;
 					modifiedparams['acmcode'] = item.request[currentId].acmcode;

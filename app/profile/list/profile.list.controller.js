@@ -553,7 +553,6 @@
 			}														
 		};
 		
-
 		//Loading History
 		 
 		$scope.consentAttributes = {};

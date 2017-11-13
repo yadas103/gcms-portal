@@ -555,13 +555,16 @@
 		
 
 		//Loading History
+		 
 		$scope.consentAttributes = {};
 			$scope.view = function(id) { 
 			var profileid = id;
 			$scope.consentAttributes = ConsentAnnex.query({id : profileid});
+			if($scope.consentAttributes==''){
+			    		 $scope.error = "No Records Found";
+			    		 console.log($scope.error);
+			    	 }
 			};	
-		/*$scope.submitid = function(id) {     		 
-			$state.go('profile-detail-view', {id} );
-		};  */                
+		               
 	}
 })();

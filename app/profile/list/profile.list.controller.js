@@ -554,7 +554,6 @@
 		};
 		
 		//Loading History
-		 
 		$scope.consentAttributes = {};
 			$scope.view = function(id) { 
 			var profileid = id;

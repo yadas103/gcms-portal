@@ -41,8 +41,6 @@
           $scope.modal('signout', true);
         };
         
-       
-
         $scope.uploadFiles = function (item) {
         	console.log("uploadFiles");
         	console.log(item);
@@ -92,7 +90,7 @@
 	        			           	        shake: false,
 	        			           	        theme: 'bootstrap'
 	        			           	      });
-	        		            		//$scope.success= "Template Uploaded Successfully!";
+	        		            		
 	        		            		$scope.uploadFileList = [];
 	        		            		}else{
 	        		            			toasty.error({
@@ -106,7 +104,7 @@
 	  	        		          	          shake: false,
 	  	        		          	          theme: 'bootstrap'
 	  	        		          	        });
-	        		            		//$scope.error= "Template Uploaded to repository But not able to save link to database !";
+	        		            		
 	        		            		}
 	        		 		      }).catch(function(){
 	        		 		    	 toasty.error({
@@ -120,7 +118,7 @@
 	        		          	          shake: false,
 	        		          	          theme: 'bootstrap'
 	        		          	        });
-	        		     		    	//$scope.error="Internal server Error!";
+	        		     		    	
 	        		       		      });        		                   		            
 	        		          }, function (resp) {
 	        		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
@@ -136,7 +134,7 @@
 	          	          	          shake: false,
 	          	          	          theme: 'bootstrap'
 	          	          	        });
-	        		            //$scope.error="Template not able to upload to repository ";
+	        		            
 	        		          });	
 	        	                }, function (resp) {
 	        	                  self.apiMiddleware.parseError(resp.data);
@@ -187,7 +185,7 @@
 	  	        		          	          shake: false,
 	  	        		          	          theme: 'bootstrap'
 	  	        		          	        });
-	        		            		//$scope.error= "File Uploaded to repository But not able to save link to database !";
+	        		            		
 	        		            		}
 	        		 		      }).catch(function(){
 	        		 		    	 toasty.error({
@@ -201,7 +199,7 @@
 	        		          	          shake: false,
 	        		          	          theme: 'bootstrap'
 	        		          	        });
-	        		     		    	//$scope.error="Internal server Error!";
+	        		     		    	
 	        		       		      });           		            
             		            
             		          }, function (resp) {
@@ -218,7 +216,7 @@
           	          	          shake: false,
           	          	          theme: 'bootstrap'
           	          	        });
-            		       // $scope.error="File is not able to upload to repository ";
+            		       
             		          });	
             	                }, function (resp) {
             	                  self.apiMiddleware.parseError(resp.data);
@@ -243,7 +241,7 @@
             	          shake: false,
             	          theme: 'bootstrap'
             	        });
-                     //$scope.error="Repository Login error !";
+                     
                    });
          	 
         	}, function (resp) {
@@ -259,7 +257,7 @@
       	          shake: false,
       	          theme: 'bootstrap'
       	        });                
-               // $scope.error="Not able to read configuration file !";
+               
             });
         	
         
@@ -302,7 +300,7 @@
 		           	        shake: false,
 		           	        theme: 'bootstrap'
 		           	      });
-		            	//$scope.success="File Uploaded Successfully"		           
+		            			           
 		          }, function (resp) {
 		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
 		            $scope.apiMiddleware.error = errorMsg;
@@ -317,7 +315,7 @@
 	          	          shake: false,
 	          	          theme: 'bootstrap'
 	          	        });
-		            //$scope.error="File is not able to upload ";
+		            
 		          });	
 	                }, function (resp) {
 	                  self.apiMiddleware.parseError(resp.data);
@@ -336,7 +334,7 @@
              	          shake: false,
              	          theme: 'bootstrap'
              	        });
-                     //$scope.error="Repository Login error !";
+                     
                    });
            
         	}, function (resp) {
@@ -352,7 +350,7 @@
       	          shake: false,
       	          theme: 'bootstrap'
       	        });
-                //$scope.error="Not able to read configuration file !";
+                
             });
         	
         	
@@ -410,7 +408,7 @@
             	 
              }, function (resp) {
                  $scope.apiMiddleware.parseError(resp.data);
-                 //$scope.error="File is not able to download ";
+                 
                  console.log("File is not able to download ");
                  toasty.error({
           	          title: 'Error',
@@ -484,13 +482,13 @@
        	        theme: 'bootstrap'
        	      });
                });
-               //$scope.success="File Downloaded Successfully";	
+               
                console.log("File Downloaded Successfully");
                	});
        	
          }, function (resp) {
              $scope.apiMiddleware.parseError(resp.data);
-             //$scope.error="File is not able to download ";
+            
              console.log("File is not able to download ");
              toasty.error({
    	          title: 'Error',
@@ -521,12 +519,7 @@
         });
 		
 		
-      };
-    
-      
-      
-      
-      
+      }; 
       $scope.remove = function () {
           $scope.apiMiddleware.remove($scope.temps).then(function () {
             $scope.fileNavigator.refresh();
@@ -534,9 +527,7 @@
           }, function (resp) {
             $scope.apiMiddleware.parseError(resp.data);
           });
-        };
-
-      
+        };      
       $scope.prepareNewFolder = function () {
           var item = new Item($scope.fileNavigator.folderObject, $scope.fileNavigator.currentPath);
           $scope.temps = [item];
@@ -837,13 +828,8 @@
           if (item.isEditable()) {
             return $scope.openEditItem(item);
           }
-        };
-
-        
-        
-        $scope.modal = function (id, hide, returnElement) {
-        	
-        
+        };       
+        $scope.modal = function (id, hide, returnElement) {        	       
           var element = $('#' + id);
           element.modal(hide ? 'hide' : 'show');
           $scope.apiMiddleware.error = '';

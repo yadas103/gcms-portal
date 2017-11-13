@@ -130,12 +130,10 @@
 							st-sort="address"
 							style="font-size: 13px; font-family: sans-serif;">Address</th>
 						<th
-							ng-click="orderByField='specialty'; reverseSort = !reverseSort"
-							st-sort="specialty"
+							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
+							st-sort="specialit"
 							style="font-size: 13px; font-family: sans-serif;">Specialty</th>
-						<th
-							ng-click="orderByField='specialty'; reverseSort = !reverseSort"
-							st-sort="specialty"
+						<th							
 							style="font-size: 13px; font-family: sans-serif;">Consent
 							History</th>
 					</tr>
@@ -157,7 +155,7 @@
 							placeholder=" " class="form-control" type="search" /></th>
 						<th><input ng-model="search.address" st-search="address"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.specialty" st-search="specialty"
+						<th><input ng-model="search.speciality" st-search="speciality"
 							placeholder=" " class="form-control" type="search" /></th>
 						<th></th>
 					</tr>
@@ -174,7 +172,7 @@
 						<td class="reci-name" style="word-break: break-all;">{{pro.organisationName}}</td>
 						<td class="reci-name" style="word-break: break-all;">{{pro.city}}</td>
 						<td class="reci-name" style="word-break: break-all;">{{pro.address}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.specialty}}</td>						
+						<td class="reci-name" style="word-break: break-all;">{{pro.speciality}}</td>						
 						<td><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
 						<a href=""  ng-click="view(pro.id)">View</a></gcms-modal></td>					

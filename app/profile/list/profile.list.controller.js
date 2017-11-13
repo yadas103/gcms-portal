@@ -121,7 +121,7 @@
 			$scope.profile.country = request.country;        	
 			$scope.selectedids = [];
 			$scope.cntryValue = request.country;
-			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","id":""};
+			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":""};
 
 			for(var i in $scope.counties){
 				if ($scope.counties[i].name == request.collectingCountry){
@@ -137,7 +137,7 @@
 			data.city = params.city !== undefined ? params.city : 'city';
 			data.firstName = params.firstName !== undefined ? params.firstName : 'firstName';
 			data.address = params.address !== undefined ? params.address : 'address';
-			data.id = params.id !== undefined ? params.id : "0";
+			data.speciality = params.id !== undefined ? params.speciality : 'speciality';
 			data.collectingCountry = params.collectingCountry;
 			ProfileSearch.get(data).$promise
 			.then(function(profileSearch) {

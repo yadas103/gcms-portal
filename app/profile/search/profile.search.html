@@ -59,15 +59,13 @@
 						<label style="font-size: 12px;margin-left: 3px;">City</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop">
-					<input type="text" class="form-control" id="firstName"
-						ng-model="request.speciality" style="width: 264px; height: 25px;margin-left: -4px;"  ng-readonly="true">
-					<label for="firstName" style="font-size: 12px;margin-left: -2px;">Speciality</label><br>
+					<input type="text" class="form-control" id="speciality"
+						ng-model="request.speciality" style="width: 264px; height: 25px;margin-left: -4px;">
+					<label for="Speciality" style="font-size: 12px;margin-left: -2px;">Speciality</label><br>
 				</div>
 				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
-					<input type="text" class="form-control" id="address"
-						ng-model="request.address"
-						style="margin-left: 17px; margin-top: 6px; width: 264px;height: 25px;" ng-readonly="true">
-					<label for="address" style="font-size: 12px;margin-left:17px;" >Template Type</label><br>
+				<select class="drop-receipi" style="width: 264px;margin-left: 19px;margin-top: 5px;" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;"><option value="" ng-show="{{empty}}"></option></select>
+				<label for="Template Type" style="font-size: 12px;margin-left: 19px;">Template Type</label><br>
 				</div>
 				</div>
 				<div class="form-group">
@@ -78,7 +76,7 @@
 					<gcms-modal template="template.download.html"
 						controller="ModalDefaultCtrl" ok="submittry" content="dataToSend">
 					<span class="btn btn-lg btn-default" role="button" data-toggle="tooltip"
-						data-placement="top" title="download" ng-click="list()">Download</span> </gcms-modal></span>
+						data-placement="top" title="download" ng-click="list()" ng-disabled="setDownload">Download</span> </gcms-modal></span>
 						<span class="create-button">
 						<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">

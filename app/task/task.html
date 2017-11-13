@@ -117,7 +117,9 @@
 							<th st-sort="initiatedby">Task Owner</th> 
 							<th st-sort="taskstatus">Task Status</th>
 							<th>Document Upload</th>
-							<th>Activity</th>							 
+							<th ng-show="loggedInUserRoleId=='5'"
+								style="font-size: 13px; font-family: sans-serif;">Activity								
+								</th>						 
 							<th ng-show="status=='COMPLETED'">DLU P/T</th>
 								
 						</tr>
@@ -149,7 +151,7 @@
 								</select> --> 							
 							</th>							 
 							<th></th>
-							<th></th>
+							<th ng-show="loggedInUserRoleId=='5'"></th>
 							<th ng-show="status=='COMPLETED'"></th>
 						</tr>
 					</thead>
@@ -210,36 +212,36 @@
 
 
 							</td>
-							<td>
+							<td ng-show="loggedInUserRoleId=='5'">
 							
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
-									 <div data-ng-if ="loggedInUserRoleId=='5'"> 
+									
 										<gcms-modal template="task.reassign.html"
 											controller="ModalDefaultCtrl" content="con" ok="updateReassign"
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
 										<span>Reassign</span> </gcms-modal>
-									</div>
+									
 									</div>
 									
 									<div ng-switch-when="COMPLETED">
 									
-									 <div data-ng-if ="loggedInUserRoleId=='5'"> 
+									 
 									    <span ng-mouseover="value(con)" >
 										<gcms-modal template="task.revoke.html"
 											controller="ModalDefaultCtrl" content="con" ok="revoke"
 											alt="Revoke Consent{{con.id}}"> <span>Revoke</span>
 										</gcms-modal>
 										</span>
-										</div>
+										
 									</div>
 									<div ng-switch-when="DELETED">
-										 <div data-ng-if ="loggedInUserRoleId=='5'"> 
+										 
 											<gcms-modal template="task.undelete.html"
 												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
 												alt="{{con.id}}"> <span>Undelete</span>
 											</gcms-modal>
-										</div>
+										
 									</div>
 								</div>
 

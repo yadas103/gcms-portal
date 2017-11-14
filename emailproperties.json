@@ -1,5 +1,5 @@
 { 
   "production": {"value":"no" ,"emailTo":"","emailFrom":""},
-  "testing": {"value":"yes" ,"emailTo":"KASWAS;MALLKA;VENKAD09;KHANS129;","emailFrom":"MALLKA"},
+  "testing": {"value":"yes" ,"emailTo":"PS43;ALIA80;SHIVANNAS;KASWAS;MALLKA;VENKAD09;KHANS129;","emailFrom":"MALLKA"},
   "development": {"value":"no" ,"emailTo":"VENKAD09","emailFrom":"VENKAD09"}
 }

@@ -186,6 +186,7 @@
 		console.log('Here in user-detail***UP4....'+profile);
       setLocale(profile.countryId);
       resetLocalizableCache();
+      $rootScope.currentProfile = profile;
       currentProfile = profile;
       return profile;
     };
@@ -283,12 +284,13 @@
       }
 
       if (!promises.country){
-        promises.country = Country.query().$promise;
+        promises.country = Country.query().$promise;        
       }
 
       return promises.country.then(function(result){
         promises.country = null;
         lovs.countries = result;
+        $rootScope.countries = result;
         return result;
       });
     };

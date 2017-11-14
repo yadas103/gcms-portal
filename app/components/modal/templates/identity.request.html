@@ -7,8 +7,6 @@
 <p style="font-size: 12px;">Before requesting a new profile, please make sure you searched
  using multiple criteria</p>
 	<div ng-controller = "ProfileListCtrl">
-	<!-- <div ng-model = "msg" style="color:green;font-size: 13px;" role="alert">{{responseOnSave}}</div>
-	<div ng-model = "failuremsg" style="color:maroon;font-size: 13px;" role="alert">{{responseOnUnsave}}</div> -->
 		<div ng-if="alerts.length > 0">
 			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
 				close="closeAlert($index)" style="color:maroon;font-size: 13px;"> {{alert.msg}} </alert>

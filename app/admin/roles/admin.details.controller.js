@@ -73,7 +73,7 @@
     .module('gcms.administration')
     .controller('UserRoleCtrl', UserRole);
 
-  UserRole.$inject = ['$rootScope', '$scope', '$stateParams', '$state', 'UserDetail'];
+  UserRole.$inject = ['$rootScope', '$scope', '$stateParams', '$state', 'UserDetail','$window'];
 
   /**
    * @ngdoc method
@@ -86,7 +86,7 @@
    * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
    * @param {object} UserDetail The user detail data service
    */
-  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail,$window){
     // private variables
     var userName = $stateParams.id;
     var defaultProfile = {};
@@ -139,7 +139,8 @@
      * @description Updates the specified user profile
      */
     $scope.save = function(item){
-      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin'); });
+      //UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin'); });
+    	UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $window.location.reload(); });
     };
 
     /**

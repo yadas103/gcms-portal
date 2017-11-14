@@ -1,5 +1,5 @@
 { 
-  "production": {"value":"yes" ,"emailTo":"","emailFrom":""},
-  "testing": {"value":"no" ,"emailTo":"DL-WSRM-GCMS-Project@pfizer.com","emailFrom":"Apoorva.Mallkkagol@pfizer.com"},
-  "development": {"value":"no" ,"emailTo":"Divya.VenkataSubbarao@pfizer.com","emailFrom":"Divya.VenkataSubbarao@pfizer.com"}
+  "production": {"value":"no" ,"emailTo":"","emailFrom":""},
+  "testing": {"value":"yes" ,"emailTo":"KASWAS;MALLKA;VENKAD09;KHANS129;","emailFrom":"MALLKA"},
+  "development": {"value":"no" ,"emailTo":"VENKAD09","emailFrom":"VENKAD09"}
 }

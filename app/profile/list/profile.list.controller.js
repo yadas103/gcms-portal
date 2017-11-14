@@ -17,9 +17,9 @@
 	.module('gcms.profile')
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','$stateParams','$state','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf,$rootScope) {
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexPdf,$rootScope,toasty) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -51,17 +51,57 @@
 			value: 'HCO'
 		}];
 
+		 var internalError = function(){
+		        toasty.error({
+		          title: 'Error',
+		          msg: 'Internal Server Error!',
+		          showClose: true,
+		          clickToClose: true,
+		          timeout: 5000,
+		          sound: false,
+		          html: false,
+		          shake: false,
+		          theme: 'bootstrap'
+		        });
+		      };
+		      var unspecifiedError = function(){
+		          toasty.error({
+		            title: 'Error',
+		            msg: 'Unspecified error!',
+		            showClose: true,
+		            clickToClose: true,
+		            timeout: 5000,
+		            sound: false,
+		            html: false,
+		            shake: false,
+		            theme: 'bootstrap'
+		          });
+		        };
+		        var success = function(){ 
+		        toasty.success({
+        	        title: 'Success',
+        	        msg: 'Success !',
+        	        showClose: true,
+        	        clickToClose: true,
+        	        timeout: 5000,
+        	        sound: false,
+        	        html: false,
+        	        shake: false,
+        	        theme: 'bootstrap'
+        	      });
+		        };
 		//Getting Logged in User Profile
-		$scope.userProfileData = function(){        	
+
+		/*$scope.userProfileData = function(){        	
 
 			UserProfile.query().$promise
 			.then(function(profiles) {
 				$scope.profiles_data = profiles;  
-
+				console.log(profiles);
 				LoggedUserDetail.query().$promise
 				.then(function(loggedInUser) {
 					$scope.logged_In_User = loggedInUser;  
-
+					console.log(loggedInUser);
 					for(var i in $scope.profiles_data){
 						if ($scope.profiles_data[i].userName == $scope.logged_In_User.userName){							
 							$scope.loggedInUserCountry = $scope.profiles_data[i].countryId ;
@@ -88,7 +128,30 @@
 				console.log('Couldnt fetch user profiles');
 
 			});               
+		};*/
+		
+		        $scope.userProfileData = function(){		        	
+					var currentprofile = $rootScope.currentProfile;
+					
+					$scope.loggedInUserCountry = currentprofile.countryId;
+					$scope.loggedInUserCountryName = currentprofile.countryName ;
+					$scope.loggedInUserRole = currentprofile.roleId;
+					$scope.logged_In_User= currentprofile.userName;
+					
+					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
+						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
+						 $scope.request.country = $scope.loggedInUserCountryName;
+						 $scope.readOnlyCC = true;
+						 $scope.readOnlyPC = true;
+					}
+					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5)
+					{	
+						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
+						 $scope.readOnlyCC = true;
+					}											               
 		};
+		
+		
 		
 		//Called on create missing profile to sent country and lock 
 		$scope.passCountryName = function (){
@@ -107,7 +170,8 @@
 
 		var loadCountry = function(){
 			$scope.counties = [];
-			Country.query().$promise.then(updateCountry);
+			$scope.counties = $rootScope.countries;
+			/*Country.query().$promise.then(updateCountry);*/
 		};
 
 		loadCountry();
@@ -246,7 +310,7 @@
 						if( response.data.production.value === 'yes'){
 
 							$scope.emaildetails[emailTo] = $scope.countryReviwer; 
-							$scope.emaildetails[emailFrom] = $scope.logged_In_User.userName; 
+							$scope.emaildetails[emailFrom] = $scope.logged_In_User; 
 						}
 						else if(response.data.development.value === 'yes'){
 
@@ -324,6 +388,7 @@
 			var request = item;
 			var reqID = {};
 			request.profileTypeId = item.profileTypeId.Name;
+			delete request.readOnly;
 			IdentityRequest.save(request).$promise
 			.then(function(result) {
 				if(result.$promise.$$state.status == 1)
@@ -334,8 +399,8 @@
 					$scope.profile_type_id = result.profileTypeId;
 					$scope.resultcopy = result;
 					//Gets Reviewer Details and sends out email to respected Reviewer on save of the requested data
-					$scope.getReviewerDetails(reqID);
-					$scope.responseOnSave = "Saved successfully";
+					$scope.getReviewerDetails(reqID);					
+					success();
 					item.firstName = '';
 					item.profileTypeId = '';
 					item.lastName = '';
@@ -349,8 +414,8 @@
 				}
 
 			}).catch(function(){
-
-				$scope.responseOnUnsave = "Unable to save record"; 
+				
+				internalError();
 
 
 			}); 
@@ -430,7 +495,7 @@
 		}
 		
 		$scope.change = function(){
-		 $scope.setDownload = $scope.request.tmpl_id == undefined ? true : false;
+			$scope.setDownload = $scope.request.tmpl_id == undefined ? true : false;
 		};
 		
 		//Filters templates based on Reporting Country
@@ -497,13 +562,12 @@
 					if(result.$promise.$$state.status == 1)
 					{	 
 						$scope.createdBy = result.createdBy;
-						y++;
-						$scope.responseOnSave = "Record saved"
+						y++;											
 						$scope.createTask(y);		                    													
 					}
 
 				}).catch(function(){
-					$scope.responseOnUnsave = "Unable to generate PDF";
+					internalError();
 				});
 			};
 			//Downloads multiple PDFs as zip 
@@ -514,9 +578,9 @@
 						var bin = new Blob([response.data]);
 						var docName = 'Consent Files.zip';           
 						saveAs(bin, docName); 
-						$scope.msg = "You can see the generated PDF in your Downloads folder";
+						success();
 					}).catch(function(){
-						$scope.responseOnUnsave = "Unable to generate PDF";
+						internalError();
 					});	
 					
 				});			

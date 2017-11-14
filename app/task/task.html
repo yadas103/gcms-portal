@@ -183,7 +183,7 @@
 							<!-- <td><gcms-idname id="con.consannexid.consentstatus.id"
 									list="consentType"></gcms-idname></td> -->
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
-							<td class="tasktd">{{con.createdBy}}</td>
+							<td class="tasktd">{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
 							<td class="tasktd" style="width: 60px;">{{con.taskstatus}}
 							<td>
 								<div ng-show="con.taskstatus !='DELETED'">

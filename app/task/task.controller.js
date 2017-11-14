@@ -51,10 +51,12 @@
 		 $scope.currentProfile={};
 		 var mydata= $rootScope.loggedInUserRoleId;
 		 
+		 $scope.tableState = null;
 		 $scope.firstload=false;
 		 $scope.selected = [];
 		 $scope.itemsByPage = 6;
 		 $scope.callServer = function(tableState) {
+			 $scope.tableState =tableState;
 			 if(!$scope.firstload){
 				 $scope.firstload=true;
 				 return;
@@ -91,7 +93,10 @@
 		        });
 		    
 		  }
-		
+		 var refresh=function(){
+			 $scope.callServer($scope.tableState);
+			 
+		 }
 		var assigned=$scope.assigned;
         var updateUserDetail = function(result){
             $scope.user = result;
@@ -267,7 +272,10 @@
 	            			unspecifiedError();
 	            		//$scope.error= item.id + " task failed to update";
 	            		}
-	 		      }).catch(internalError);
+	 		      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		 });
 	          };
 	          
 	          
@@ -312,7 +320,10 @@
  	           		unspecifiedError();
  	           		//$scope.error= item.id + " task failed to revoke";
  	           		}
- 			      }).catch(internalError);
+ 			      }).catch(function(){
+	 		    	 refresh();
+	 		    	 internalError();	
+	       		      });
   	          };  
 	          
 	      
@@ -352,7 +363,10 @@
 	           		unspecifiedError();
 	           		//$scope.error= item.id + " task failed to delete";
 	           		}
-			      }).catch(internalError);
+			      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		      });
 			//Task.update({
 			//	id : item.id
 			//}, item);
@@ -388,7 +402,10 @@
 	           			unspecifiedError();
 	           		//$scope.error= item.id + " task failed to reassigned";
 	           		}
-			      }).catch(internalError);
+			      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		      });
 			//Task.update({
 			//	id : item.id
 			//}, item);
@@ -431,7 +448,10 @@
 	           			unspecifiedError();
 	           		//$scope.error= item.id + " task failed to undelete";
 	           		}
-			      }).catch(internalError);
+			      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		      });
 		};
 		 	          
 		 

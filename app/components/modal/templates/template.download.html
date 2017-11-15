@@ -11,7 +11,6 @@ Enter this information in the proper columns of the below list. Once done press 
 	</p>
 	
 <div ng-controller = "ProfileListCtrl">
-
 <form name="copyToSelected">
 <table class="table table-bordered table-striped table-highlight">
   <div class=" class="panel panel-primary table-responsive">
@@ -20,8 +19,8 @@ Enter this information in the proper columns of the below list. Once done press 
 	<th style="font-size: 12px; font-family: sans-serif;">Event Description*</th>
 	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
 	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
-	<th ng-show="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
-	<th ng-show="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
+	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
+	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
     </tr>
 	</thead>
 	
@@ -30,8 +29,8 @@ Enter this information in the proper columns of the below list. Once done press 
 	<td><input type="text" id="copyEventName" placeholder="" class="form-control" ng-model="item.copyEventName"></td>
     <td><input type="text" id="copyPocode" placeholder="" ng-model="item.copyPocode" class="form-control" > </td>
  	<td><input type="text" id="copyAcmcode" placeholder="" ng-model="item.copyAcmcode" class="form-control"></td>
-    <td ng-show="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.copyConsentStartDate" /> </td>
-    <td ng-show="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.copyConsentEndDate"/></td> 
+    <td ng-hide="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.copyConsentStartDate" /> </td>
+    <td ng-hide="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.copyConsentEndDate"/></td> 
  	</tr>
 	</tbody>	
 	</div>
@@ -50,8 +49,8 @@ Enter this information in the proper columns of the below list. Once done press 
 	<th  ng-hide="true" style="font-size: 12px; font-family: sans-serif;">TR ID*</th>
 	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
 	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
-	<th ng-show="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
-	<th ng-show="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
+	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date{{item.setDates}}</th>
+	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
     </tr>
 	</thead>
 	
@@ -64,8 +63,8 @@ Enter this information in the proper columns of the below list. Once done press 
     <td ng-model="item.request[i.id].id" ng-hide="true" >{{i.id}}</td>
 	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" ng-required='!item.request[i.id].acmcode' style="width: 75px;"> </td>
  	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" ng-required='!item.request[i.id].pocode'></td>
-    	<td ng-show="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.request[i.id].consentstartdate" is-open="openedStartCA[i.id]"  close-text="Close" /> </td>
-              <td ng-show="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.request[i.id].consentenddate" is-open="openedEndCA[i.id]"  close-text="Close" />                           
+    	<td ng-hide="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.request[i.id].consentstartdate" is-open="openedStartCA[i.id]"  close-text="Close" /> </td>
+              <td ng-hide="item.setDates"><input type="date" style="width: 138px;" class="form-control"  ng-model="item.request[i.id].consentenddate" is-open="openedEndCA[i.id]"  close-text="Close" />                           
             </td> 
  	</tr>
 	</tbody>	

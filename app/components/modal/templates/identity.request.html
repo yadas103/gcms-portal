@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;">Profile Type:*</label>
                     <div class="col-sm-9">
-					<select ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" class="drop-receipi" style="width: 395px;" required><option value="" ng-show="{{empty}}"></option></select>                      
+					<select ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-receipi" style="width: 395px;" required><option value="" ng-show="{{empty}}"></option></select>                      
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -74,10 +74,11 @@
                         	<input type="text" id="notes" ng-maxlength="100" class="form-control" rows="1" ng-model="item.notes">
                     </div>
                 </div>                
-	</form>	
+	
 	<span style="margin-left: 422px;"><button class="btn btn-primary" ng-click="ok()" ng-disabled="saveProfiles.$invalid">Request</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>	
 	</span>
+	</form>	
 	</div>
 	
 </div>	

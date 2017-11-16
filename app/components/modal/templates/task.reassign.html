@@ -11,18 +11,19 @@
 <div ng-controller = "TaskCtrl">  
 <form class="form" class="form-horizontal">
 <div class="form-group">
-  <label for="curtask">Current Task Owner:{{item.assignedto}}</label>
+  <label for="curtask">Current Task Owner:{{item.assignedto.firstName}}{{item.assignedto.lastName}}({{item.assignedto.userName}})</label>
 
 </div>
 
   <div name="taskReassignForm" class="form-group" novalidate>
    <label for="newtask" class="col-sm-3 control-label" >New Assigned To</label>
-                  <select class="form-control" ng-model="item.assignedto" required>
+                 <!--  <select class="form-control" ng-Model="item.assignedto" required>
                   <option value ="">--Select User--</option>
-                  			<option ng-repeat="useritr in user" value="{{useritr.userName}}">{{useritr.userName}}</option>
+                  			<option ng-repeat="useritr in user" Value={{useritr}}>{{useritr.userName}}</option>
   
-               			</select>               			
-
+               			</select>       -->         			
+<select class="form-control" ng-model="item.assignedto" ng-options="useritr.userName for useritr in user track by useritr.userName">
+</select>
     	</div>
    
     	

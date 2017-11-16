@@ -573,3 +573,18 @@ textarea.ng-invalid,
 	font-family: serif;
 	font-size: 13px;
 }
+.ho{
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ 
+}
+.ho:hover {
+  z-index: 1;
+  width: auto;
+   background-color: #FFFFCC; 
+  
+}

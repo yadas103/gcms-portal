@@ -13,14 +13,13 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','UserDetail','toasty' ];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','Users','toasty' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,UserDetail,toasty ){
+  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,Users,toasty ){
 	  
 	  console.log("Inside task controller");
 	  	
-
 	    var internalError = function(){
 	        toasty.error({
 	          title: 'Error',
@@ -98,18 +97,18 @@
 			 
 		 }
 		var assigned=$scope.assigned;
-        var updateUserDetail = function(result){
+        var updateUsers = function(result){
             $scope.user = result;
           };
 	  
-          var loadUserDetail = function(){
+          var loadUsers = function(){
             $scope.user = [];
-            UserDetail.query().$promise.then(updateUserDetail);
+            Users.query().$promise.then(updateUsers);
           };
 
-          loadUserDetail();
+          loadUsers();
 
-          $scope.$on('$localeChangeSuccess', loadUserDetail);
+          $scope.$on('$localeChangeSuccess', loadUsers);
           
 	  /**
 	   	 * selim 
@@ -338,9 +337,10 @@
 				if (con.id === item.id) {
 					con.deleted = 'true';
 					con.taskstatus = "DELETED";
-					con.deleteReason = item.deleteReason;
+					con.deleteReason = item.deleteReason.Name;
 					con.deleteReasonDesc = item.deleteReasonDesc;
 					con.updatedDate = new Date();
+					
 				}
 			});
 			Task.update({ id:item.id }, item).$promise.then(function(response){
@@ -371,15 +371,21 @@
 			//	id : item.id
 			//}, item);
 		};
+	
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");
+			
+			$scope.assignedto=item.assignedto;
 			console.log(item.id);
 			$scope.success='';
 			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
 				if (con.id === item.id) {
-					con.assignedto = item.assignedto;
                      con.updatedDate = new Date();
+                     delete item.assignedto.id;
+                     delete item.assignedto.countryCode;
+                     delete item.assignedto.countryId;
+                     delete item.assignedto.errors;
 				}
 			});
 			Task.update({ id:item.id }, item).$promise.then(function(response){

@@ -18,7 +18,7 @@
             $scope.identityRequestView = result;
            
       };
-     
+ 
       var loadIdentityRequestView = function() {
             $scope.identityRequestView = [];
             IdentityRequestView.query().$promise

@@ -11,18 +11,19 @@
     .module('gcms.identity')
     .controller('identityCtrl', IdentityController);
 
-  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile','LoggedUserDetail'];
+  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile'];
 
-  function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile,LoggedUserDetail){
+  function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile){
       var updateIdentityRequestView = function(result) {
             $scope.identityRequestView = result;
+           
       };
-
+     
       var loadIdentityRequestView = function() {
             $scope.identityRequestView = [];
-            
             IdentityRequestView.query().$promise
                         .then(updateIdentityRequestView);
+            
            
       };
 
@@ -31,20 +32,21 @@
       $scope.displayedCollection = [].concat($scope.identityRequestView);
 
       $scope.$on('$localeChangeSuccess', loadIdentityRequestView);
-
-      /**
+      var currentprofile = $rootScope.currentProfile;
+      $scope.logged_In_User= currentprofile.userName;
+     /* *//**
       * @ngdoc method
       * @name update
       * @description Updates IdentityRequest status
       * @param {object}
       *            item IdentityRequest object
-      */
+      *//*
       $scope.update = function(identityRequestView) {
             $scope.identityRequestView = identityRequestView;
             IdentityRequestView.update({
                   id : item.id
             }, item);
-      };
+      };*/
       /**
        * @ngdoc method
        * @name close
@@ -103,11 +105,8 @@
          
         });
 		};
-
-		 LoggedUserDetail.query().$promise
-         .then(function(loggedInUser) {
-           $scope.logged_In_User = loggedInUser;  
-         });
+		var currentprofile = $rootScope.currentProfile;
+		$scope.logged_In_User= currentprofile.userName;
   	$scope.getSenderDetails = function(reqID){
   	  	 var  emailTo = 'emailTo';
  	    	 var  emailFrom = 'emailFrom';
@@ -130,8 +129,8 @@
 		     if( response.data.production.value === 'yes'){
 		    	 
 		    	 $scope.emaildetails[emailTo] = $scope.profileRequestSender; 
-		    	 
-		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User.userName; 
+		    	
+		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User; 
 		     }
 		     else if(response.data.development.value === 'yes'){
 		    	 
@@ -198,7 +197,7 @@
   		    
   		    	 if($scope.profile_status=="Approved"){
   		    		 $scope.emaildetails[message] = "To: "+ $scope.profileRequestSender+"<br/>"+
-  	  		    	"CC: "+$scope.logged_In_User.userName+"<br/>"+
+  	  		    	"CC: "+$scope.logged_In_User+"<br/>"+
   	  		    	"<br/>"+
   				     "This is to inform you that the below profile creation request has been submitted to me to review.<br/>"+
   				    	"<br/>"+"has been " + $scope.profile_status+" with below Details: " + "<br/>"+
@@ -222,7 +221,7 @@
 		         }
   		    	 else if ($scope.profile_status=="Rejected"){
   		    		 $scope.emaildetails[message] = "To: "+ $scope.profileRequestSender+"<br/>"+
-  	  		    	"CC: "+$scope.logged_In_User.userName+"<br/>"+
+  	  		    	"CC: "+$scope.logged_In_User+"<br/>"+
   	  		    	"<br/>"+
 		    		"This is to inform you that the below profile creation request has been submitted to me to review has been "+
 				    	"<br/>"+ $scope.profile_status+" with below Details: "+ "<br/>"+

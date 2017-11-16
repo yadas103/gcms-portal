@@ -51,7 +51,8 @@
         		            baseUri: result.gnosisRestServiceUrl,
         		            repoName: result.repositoryName,
         		            username: result.userName,
-        		            password: result.password, 
+        		            password: atob(result.password),
+        		            //password: result.password, 
         		            folderPath: result.gnosisFolderPath
         		          };
         		
@@ -272,7 +273,8 @@
         		            baseUri: result.gnosisRestServiceUrl,
         		            repoName: result.repositoryName,
         		            username: result.userName,
-        		            password: result.password, 
+        		            password: atob(result.password),
+        		           // password: result.password, 
         		            folderPath: result.gnosisFolderPath
         		          };
         	
@@ -371,7 +373,8 @@
         		            baseUri: result.gnosisRestServiceUrl,
         		            repoName: result.repositoryName,
         		            username: result.userName,
-        		            password: result.password, 
+        		            password: atob(result.password),
+        		           // password: result.password, 
         		            folderPath: result.gnosisFolderPath
         		          };
         		 
@@ -455,7 +458,8 @@
     		            baseUri: result.gnosisRestServiceUrl,
     		            repoName: result.repositoryName,
     		            username: result.userName,
-    		            password: result.password, 
+    		           // password: result.password, 
+    		            password: atob(result.password),
     		            folderPath: result.gnosisFolderPath
     		          };
     		 

@@ -264,6 +264,7 @@
         
         };
         
+
         $scope.uploadFilesR = function () {
         	console.log("uploadFilesR");
         	

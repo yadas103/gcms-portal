@@ -29,18 +29,20 @@
   <div class="form-group" >
     <label for="middleName" class="col-sm-3 control-label">Consent Status:</label>
     <div class="col-sm-9">
-    	<select >
+    	<!-- <select >
 									<option value="CONSENTTED">CONSENTED</option>
 									<option value="DID NOT CONSENT">DID NOT CONSENT</option>
 									<option value="PENDING">PENDING</option>
-							</select>
-      <!-- <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"></gcms-lov> -->
+							</select> -->
+       <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"></gcms-lov> 
     </div>
   </div>
   <div class="form-group" >
     <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
-       <div class="col-sm-9">  
-       <input type="date" style="width: 138px;" class="form-control"   value={{item.consannexid.consentstartdate}}  />      
+       <div class="col-sm-9">
+       <input type="date" style="width: 138px;" class="form-control"  ng-model="item.consannexid.consentstartdate" value={{item.consannexid.consentstartdate}} is-open=""  close-text="Close" />
+            
+            
     	<!-- <input type="date" class="form-control" ng-model="item.consannexid.consentstartdate" value="{{item.consannexid.consentstartdate}}" min="{{item.consannexid.consentstartdate}}" /> --> 
     	<!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" is-open="openedStart"  close-text="Close" />              
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
@@ -50,8 +52,8 @@
   <div class="form-group" >
     <label for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
     <div class="col-sm-9">
-    <input type="date" style="width: 138px;" class="form-control"   value={{item.consannexid.consentenddate}}  /> 
-       <!-- <input type="date"  class="form-control" ng-model="item.consannexid.consentenddate"  value={{item.consannexid.consentenddate}} min="{{item.consannexid.consentenddate}}" /> -->
+    <!-- <input type="date" style="width: 138px;" class="form-control"   value={{item.consannexid.consentenddate}}  />  -->
+      <input type="date"  class="form-control" ng-model="item.consannexid.consentenddate"  value={{item.consannexid.consentenddate}} is-open=""  close-text="Close" /> 
       <!--  <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" min-date="item.consannexid.consentstartdate" is-open="openedEnd"  close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
               <i class="fa fa-calendar"></i></button> -->

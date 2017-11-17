@@ -179,9 +179,10 @@
 							<td class="tasktd">{{con.consannexid.bpid.firstName}}</td>
 							<td class="tasktd">{{con.consannexid.profilecountry.name}}</td>
 							<td class="tasktd ho" style="width: 110px;">{{con.consannexid.eventname}}</td>
-							<td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td> 
-							<!-- <td><gcms-idname id="con.consannexid.consentstatus.id"
-									list="consentType"></gcms-idname></td> -->
+							<!-- <td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td>--> 
+							 <td>
+							 <gcms-idname id="con.consannexid.consentstatus.id"
+									list="consentType"></gcms-idname></td>
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
 							<td class="tasktd ho" style="width: 110px;">{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
 							<td class="tasktd" style="width: 60px;">{{con.taskstatus}}

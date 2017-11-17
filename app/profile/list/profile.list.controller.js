@@ -93,45 +93,7 @@
         	      });
 		        };
 		//Getting Logged in User Profile
-
-		/*$scope.userProfileData = function(){        	
-
-			UserProfile.query().$promise
-			.then(function(profiles) {
-				$scope.profiles_data = profiles;  
-				console.log(profiles);
-				LoggedUserDetail.query().$promise
-				.then(function(loggedInUser) {
-					$scope.logged_In_User = loggedInUser;  
-					console.log(loggedInUser);
-					for(var i in $scope.profiles_data){
-						if ($scope.profiles_data[i].userName == $scope.logged_In_User.userName){							
-							$scope.loggedInUserCountry = $scope.profiles_data[i].countryId ;
-							$scope.loggedInUserCountryName = $scope.profiles_data[i].countryName ;
-							$scope.loggedInUserRole = $scope.profiles_data[i].roleId;
-						}						
-					}
-					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
-						$scope.request.collectingCountry = $scope.loggedInUserCountryName;
-						$scope.request.country = $scope.loggedInUserCountryName;
-						$scope.readOnlyCC = true;
-						$scope.readOnlyPC = true;
-					}
-					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5){	
-						$scope.request.collectingCountry = $scope.loggedInUserCountryName;
-						$scope.readOnlyCC = true;
-					}									
-
-				}).catch(function(){
-					console.log('Couldnt fetch user profiles');           	
-				});
-
-			}).catch(function(){
-				console.log('Couldnt fetch user profiles');
-
-			});               
-		};*/
-		
+				
 		        $scope.userProfileData = function(){		        	
 					var currentprofile = $rootScope.currentProfile;
 					
@@ -291,15 +253,15 @@
 			var  requestID = 'requestID';
 			var  subject = 'subject';
 			var emaildetails = {};
-			var resultcontent = {};
+			var result = {};
 			var fn = ($scope.resultcopy.firstName == null)? '' : $scope.resultcopy.firstName;
 			var ln = ($scope.resultcopy.lastName == null)? '' : $scope.resultcopy.lastName;
 			var on = ($scope.resultcopy.organizationName == null)? '' : $scope.resultcopy.organizationName;	        		    	
 			var city = ($scope.resultcopy.city == null)? '' : $scope.resultcopy.city ;       		    	
 			var notes = ($scope.resultcopy.notes == null)? '' : $scope.resultcopy.notes;
-			Review.query().$promise.then(function(result) {            	
-				if(result.$promise.$$state.status == 1){
-					resultcontent = result;
+			
+					
+				result = $rootScope.reviewers;
 					for(var i in result){
 						if(i != "$promise" && i != "$resolved"){
 							if (result[i].countries.name == $scope.countryCopy){
@@ -375,8 +337,7 @@
 						emaildetails = $scope.emaildetails;
 						$scope.generateEmail(emaildetails);
 					});    			    	
-				}
-			});
+				
 		};
 		
 		//Create missing profile : Empty First/Last/Org name text box based on the profile type selection
@@ -511,34 +472,7 @@
 			$scope.setDownload = $scope.request.tmpl_id == undefined ? true : false;	
 		};
 		
-		//Filters templates based on Reporting Country
-		/*$scope.customArrayFilter = function (result) {
-			$scope.allTemplates = result;
-			$scope.id = myService.get();
-			$scope.checkedIds = $scope.id.selid.checked;
-			$scope.checkedIds = JSON.parse($scope.checkedIds);
-			$scope.cntryValue = $scope.id.selectedParams.selection;
-			$scope.searchCriteria = JSON.parse($scope.cntryValue);
-			$scope.cntryValue = $scope.searchCriteria.country;
-			$scope.crossInCountry = $scope.id.collectingCtry==$scope.id.profileCountry? 'InCountry' : 'CrossBorder';
-			$scope.profileTypeSelected = $scope.searchCriteria.profileType;
-			$scope.templateTypeSelected = $scope.crossInCountry+'-'+$scope.profileTypeSelected;
-				
-			if(result.cntry_id.name == $scope.cntryValue && result.tmpl_status == "ACTIVE" && (result.tmpl_type == $scope.templateTypeSelected )){
-				$scope.templId = result.id;
-				$scope.profileCountry_Id = result.cntry_id.id;
-				$scope.daterange = result.dates_rages;
-				if($scope.daterange == 'Y' ){
-					$scope.dataToSend.setDates = true;
-				}
-				if(result.tmpl_location == null){
-					$scope.notInRepo = "No template uploaded in Repositry" + result.tmpl_name;
-				}
-			}
-			
-			return ((result.cntry_id.name == $scope.cntryValue) && (result.tmpl_status == "ACTIVE") && (result.tmpl_type == $scope.templateTypeSelected ));
-		}*/
-		
+		//Filters templates based on Reporting Country				
 		$scope.efpiaFilter = function(countries){
 			return (countries.efpiaCntryFlag == 'Y');
 			
@@ -550,12 +484,12 @@
 		};
 
 		loadTemplates();
-
+		
 		$scope.$on('$localeChangeSuccess', loadTemplates);
 
 		$scope.update = function(item) {
 			$scope.templates = item;
-			Templates.update({ id: item.id }, item);     
+			$rootScope.templates = item;
 		};
 		
 		

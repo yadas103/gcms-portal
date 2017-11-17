@@ -12,17 +12,34 @@
     .module('gcms.administration')
     .controller('AdminCtrl', AdminController);
 
-  AdminController.$inject = ['$rootScope','$scope','$state','localeMapper','Review','Templates','UserProfile', 'UserDetail', 'Role','$window'];
+  AdminController.$inject = ['$rootScope','$scope','$state','localeMapper','Review','Templates','UserProfile', 'UserDetail', 'Role','$window','toasty'];
 
   
-  function AdminController($rootScope, $scope,$state,localeMapper,Review,Templates,UserProfile, UserDetail, Role,$window){
+  function AdminController($rootScope, $scope,$state,localeMapper,Review,Templates,UserProfile, UserDetail, Role,$window,toasty){
 	  
-	  console.log("Inside controller");
-	    // private variables
-	    var allUsers = [];
-
-	    // scope variables
-	    $scope.addItem = { users: [], roles: []};
+	  console.log("Inside Admin controller");
+	    
+	  
+	  /**
+		 * @author: selim
+		 * @ngdoc internal error
+		 * @name 
+		 * @description show error message
+		 */
+	    
+	    var internalError = function(){
+	        toasty.error({
+	          title: 'Error',
+	          msg: 'Internal Server Error!',
+	          showClose: true,
+	          clickToClose: true,
+	          timeout: 5000,
+	          sound: false,
+	          html: false,
+	          shake: false,
+	          theme: 'bootstrap'
+	        });
+	      };
 	    
 		/**
 		 * @author: selim
@@ -40,21 +57,7 @@
 		  getReviewData();
 	    
 	    
-	    /**
-		 * @author: selim
-		 * @ngdoc method
-		 * @name getdata
-		 * @methodOf
-		 * @description get all template data
-		 */
-	  var getTemplateData = function(){			  
-		  Templates.query().$promise.then(function(template){			    	 
-		       $scope.Templates = template;			     			       
-		      // $scope.addItem = { temp: $scope.Templates };
-		      // console.log($scope.Templates );
-		       });
-		};
-		  getTemplateData();
+	    
 		  /**
 			 * @author: selim
 			 * @ngdoc method
@@ -63,30 +66,16 @@
 			 * @description partial view of reviewArributes
 			 */
 		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
-	    
+		/**
+		 * @author: selim
+		 * @ngdoc method
+		 * @name update
+		 * @description update reviewer table
+		 */
+      $scope.$on('$localeChangeSuccess', getReviewData);
 		
 	
-	  /**  @author: selim
-		 * @description counter used for maintaining unique template code
-		 */
 	  
-	  $scope.counter = 1;
-	  
-	  /**  @author: selim
-		 * @ngdoc method
-		 * @name value
-		 * @methodOf Button form UI
-		 * @description called for expanding template row and maintaining country id
-		 * @param {object}
-		 *            item country to update
-		 */
-	  $scope.value=function(con){
-		 console.log("Inside value");
-		  con.expanded = true;		  
-		  $scope.id=con.countries.id;
-		  $scope.isoCode=con.countries.isoCode;
-
-	  }
 	  
 	  /**
 		 * @author: selim
@@ -95,30 +84,54 @@
 			 * @description update reviewer table
 			 */
 	  $scope.update = function(item) {			
-			 console.log("Inside update function");				  
-	         angular.forEach($scope.ReviewAttributes, function(con){
-	            console.log(con);	
-	         if (con.id === item.id) {
-	           con.countries.id=item.countries.id;
-	           console.log(con.id);
-	           con.updatedDate = new Date();      
-	              }
-	            }); 		         
-	         Review.update({ id:item.id }, item).$promise.then($scope.getProfileReviewerPersmission);
-	          };
-	         //Reloads page once Identity Reviewer is updated.	          		        	  
+		//Reloads page once Identity Reviewer is updated.	          		        	  
 	       $scope.getProfileReviewerPersmission = function(currentProfile){			        		  
 	        	$window.location.reload();		        		          		
-	          };								
+	          };
+	       };
+	         								
+	          
+	/*****************Template section**********************/          
 	          
 	          
-		          /**
-					 * @author: selim
-					 * @ngdoc method
-					 * @name update
-					 * @description update reviewer table
-					 */
-		          $scope.$on('$localeChangeSuccess', getReviewData);
+	          /**  @author: selim
+	  		 * @description counter used for maintaining unique template code
+	  		 */
+	  	  
+	  	  $scope.counter = 1;
+	  	  
+	  	  /**  @author: selim
+	  		 * @ngdoc method
+	  		 * @name value
+	  		 * @methodOf Button form UI
+	  		 * @description called for expanding template row and maintaining country id
+	  		 * @param {object}
+	  		 *            item country to update
+	  		 */
+	  	  $scope.value=function(con){
+	  		 console.log("Inside value");
+	  		  con.expanded = true;		  
+	  		  $scope.id=con.countries.id;
+	  		  $scope.isoCode=con.countries.isoCode;
+
+	  	  } 
+	          
+	          /**
+	  		 * @author: selim
+	  		 * @ngdoc method
+	  		 * @name getdata
+	  		 * @methodOf
+	  		 * @description get all template data
+	  		 */
+	  	  var getTemplateData = function(){			  
+	  		  Templates.query().$promise.then(function(template){			    	 
+	  		       $scope.Templates = template;			     			       
+	  		      // $scope.addItem = { temp: $scope.Templates };
+	  		      // console.log($scope.Templates );
+	  		       });
+	  		};
+	  		  getTemplateData();
+		          
 
 		          /**selim
 					 * @ngdoc method
@@ -155,7 +168,22 @@
 		        	console.log(item.tmpl_code);
 		            $scope.Templates.push(item);
 		            
-		            Templates.save(item).$promise.then(getTemplateData);
+		            Templates.save(item).$promise.then(function(response){
+		            	getTemplateData();
+		            	toasty.success({
+	            	        title: 'Success',
+	            	        msg: 'Template added !',
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: 'bootstrap'
+	            	      });
+		            }).catch(function(){		 		    	 
+		 		    	 internalError();	
+		       		 });
 		          };
 		          
 		          /**selim
@@ -165,7 +193,7 @@
 					 * @description Updates Template
 					 * @param {object}
 					 *            item Template to update
-		 */
+					 */
 		          $scope.updateTemplate = function(item) {
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
@@ -174,7 +202,22 @@
 		              }
 		            });
 		            console.log(item.id);
-		            Templates.update({ id:item.id }, item);
+		            Templates.update({ id:item.id }, item).$promise.then(function(response){
+		            	toasty.success({
+	            	        title: 'Success',
+	            	        msg: 'Template updated !',
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: 'bootstrap'
+	            	      });
+		            	
+		            }).catch(function(){
+		 		    	 internalError();	
+		       		 });
 		          };
 		          
 		          /**selim
@@ -194,7 +237,23 @@
 		            });
 		            console.log(item.id);
 		            
-		            Templates.update({ id:item.id }, item);
+		            Templates.update({ id:item.id }, item).$promise.then(function(response){
+		            	
+		            	toasty.success({
+	            	        title: 'Success',
+	            	        msg: 'Template deactivated !',
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: 'bootstrap'
+	            	      });
+		            	
+		            }).catch(function(){
+		 		    	 internalError();	
+		       		 });
 		          };
 		          /**selim
 					 * @ngdoc method
@@ -212,9 +271,34 @@
 		              }
 		              index++;
 		       });
-		            Templates.delete({ id:item.id });
+		            Templates.delete({ id:item.id }).$promise.then(function(response){
+		            	toasty.success({
+	            	        title: 'Success',
+	            	        msg: 'Template deleted !',
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: 'bootstrap'
+	            	      });
+		            	
+		            }).catch(function(){
+		 		    	 internalError();	
+		       		 });
 		  };
 		  
+		  
+/*************************Role SECTION**************************************/		  
+		  
+		  
+		  
+		// private variables
+		    var allUsers = [];
+
+		    // scope variables
+		    $scope.addItem = { users: [], roles: []};
 		          /**
 		  		 * @ngdoc method
 		  		 * @name removeExisting

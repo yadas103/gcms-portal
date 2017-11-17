@@ -55,7 +55,8 @@
       <div class="form-group">
          <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity Start Date:</label>
          <div class="col-sm-9">
-         <input type="date" style="width: 138px;" class="form-control"   value={{item.validity_start_date}}  />
+         <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_start_date" value={{item.validity_start_date}} is-open=""  close-text="Close" />
+          
               <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart" ng-required="true" close-text="Close" />                          
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
               <i class="fa fa-calendar"></i></button>   -->            
@@ -65,7 +66,9 @@
       <div class="form-group" >
          <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
          <div class="col-sm-9">
-         <input type="date" style="width: 138px;" class="form-control"  value={{item.validity_end_date}}  />
+         <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_end_date" value={{item.validity_end_date}} is-open=""  close-text="Close" />
+              
+         
             <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" min-date="item.validity_start_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
               <i class="fa fa-calendar"></i></button>  --> 

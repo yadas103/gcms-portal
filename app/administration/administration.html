@@ -10,15 +10,15 @@
 
 
 		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
-			class="table table-bordered table-striped table-highlight">
+			class="table table-bordered table-hover">
 			<thead style="background-color: #337ab7; color: white">
 				<tr>
 					
-					<th style="padding: 20px;width:8%;"></th>
-					<th st-sort="countries.isoCode">Country ISO Code</th>
-					<th st-sort="countries.name">Country Name</th>
-					<th st-sort="cntryContact">Country Contact</th>
-					<th st-sort="cntryReviewer">Identity Reviewers</th>
+					<th style="width:8%;text-align:center"></th>
+					<th style="width: 13%;" st-sort="countries.isoCode">Country ISO Code</th>
+					<th style="width: 13%;" st-sort="countries.name">Country Name</th>
+					<th style="width: 22%;" st-sort="cntryContact">Country Contact</th>
+					<th style="width: 52%;" st-sort="cntryReviewer">Identity Reviewers</th>
 
 				</tr>
 				<tr>
@@ -33,7 +33,7 @@
 			<tbody>
 				<tr ng-repeat-start="con in displayedCollection">
 
-					<td style="width: 139px;"><gcms-modal
+					<td><gcms-modal
 							template="administration.country.update.html"
 							controller="ModalDefaultCtrl" content="con" ok="update"
 							alt="Edit {{con.id}}"> <span
@@ -48,8 +48,8 @@
 						</span></td>
 					<td>{{con.countries.isoCode}}</td>
 					<td>{{con.countries.name}}</td>
-					<td>{{con.cntryContact}}</td>
-					<td style="word-break: break-all ; width: 200px;">{{con.cntryReviewer}}</td>
+					<td style="word-break: break-all ;">{{con.cntryContact}}</td>
+					<td style="word-break: break-all ;">{{con.cntryReviewer}}</td>
 				</tr>
 				<tr ng-if="con.expanded" ng-repeat-end="" ng-controller="FileManagerController">
 					<td></td>
@@ -66,9 +66,9 @@
 											style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
 										</gcms-modal></th>
 
-									<th>Template Name</th>
+									<th style="width: 20%;">Template Name</th>
 									<th>Template Code</th>
-									<th>Template Description</th>
+									<th style="width: 25%;">Template Description</th>
 									<th>Dates Range</th>
 									<th>Validity Start Date</th>
 									<th>Validity End Date</th>
@@ -105,9 +105,9 @@
 										<i class="fa fa-toggle-on" aria-hidden="true"></i></span> -->
 
 									</td>
-									<td style="word-break: break-all ; width: 200px;">{{temp.tmpl_name}}</td>
+									<td style="word-break: break-all ;">{{temp.tmpl_name}}</td>
 									<td>{{temp.tmpl_code}}</td>
-									<td style="word-break: break-all ; width: 250px;">{{temp.tmpl_desc}}</td>
+									<td style="word-break: break-all ;">{{temp.tmpl_desc}}</td>
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>

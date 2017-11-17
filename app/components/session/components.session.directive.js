@@ -143,6 +143,7 @@
           $scope.getReviewersData = function(currentProfile){		  								
       		   Review.query().$promise.then(function(review){		    	 					
       		       $scope.ReviewAttributes = review;
+      		       
       		       $rootScope.reviewers = review;
       		    for(var i in $scope.ReviewAttributes){								
       		    	if($scope.ReviewAttributes[i].cntryReviewer != null){							
@@ -162,3 +163,4 @@
     }
 
 })();
+

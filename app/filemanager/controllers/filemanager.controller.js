@@ -41,6 +41,7 @@
           $scope.modal('signout', true);
         };
         
+
         $scope.uploadFiles = function (item) {
         	console.log("uploadFiles");
         	console.log(item);

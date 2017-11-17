@@ -129,7 +129,13 @@
             $state.go('landing').then(function(){
               $scope.currentProfile = profile;
               $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
-             
+              for(var i in $rootScope.reviewers){								
+    		    	if($rootScope.reviewers[i].cntryReviewer != null){							
+    	   				if ($rootScope.reviewers[i].countries.name == profile.countryName && $rootScope.reviewers[i].cntryReviewer.includes(profile.userName)){						
+    	   					$rootScope.profileReviewTabShow = true;	
+    	   					}				
+    	   				}							
+ 			}	
               user.setProfile(profile);
             });
           };

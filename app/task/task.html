@@ -107,17 +107,17 @@
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
 							<th ng-hide="status=='DELETED'">Action</th>
-							<th st-sort="payercountry">Payer Country</th>
-							<th st-sort="lastname">Last Name/Org Name</th>
-							<th st-sort="firstname">First Name</th>
-							<th st-sort="profilecountry">Profile Country</th>
-							<th st-sort="eventname">Event Name</th>
-							<th st-sort="consentstaus">Consent Status</th>
-							<th st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
-							<th st-sort="initiatedby">Task Owner</th> 
+							<th style="width: 10%;"st-sort="payercountry">Payer Country</th>
+							<th style="width: 15%;" st-sort="lastname">Last Name/Org Name</th>
+							<th style="width: 15%;" st-sort="firstname">First Name</th>
+							<th style="width: 10%;"st-sort="profilecountry">Profile Country</th>
+							<th style="width: 18%;" st-sort="eventname">Event Name</th>
+							<th style="width: 10%;"st-sort="consentstaus">Consent Status</th>
+							<th style="width: 10%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
+							<th style="width: 18%;" st-sort="initiatedby">Task Owner</th> 
 							<th st-sort="taskstatus">Task Status</th>
-							<th>Document Upload</th>
-							<th ng-show="loggedInUserRoleId=='5'"
+							<th ng-hide="status=='DELETED'">Document Upload</th>
+							<th ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"
 								style="font-size: 13px; font-family: sans-serif;">Activity								
 								</th>						 
 							<th ng-show="status=='COMPLETED'">DLU P/T</th>
@@ -150,8 +150,8 @@
 								<option ng-repeat="status in Groupsearch">{{status.name}}</option>
 								</select> --> 							
 							</th>							 
-							<th></th>
-							<th ng-show="loggedInUserRoleId=='5'"></th>
+							<th ng-hide="status=='DELETED'"></th>
+							<th ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"></th>
 							<th ng-show="status=='COMPLETED'"></th>
 						</tr>
 					</thead>
@@ -175,18 +175,18 @@
 
 							</td>						
 							<td class="tasktd">{{con.consannexid.payercountry.name }}</td>
-							<td class="tasktd ho" style="width: 110px;">{{con.consannexid.bpid.lastName}}</td>
-							<td class="tasktd">{{con.consannexid.bpid.firstName}}</td>
+							<td class="tasktd ho" style="word-break: break-all ;" >{{con.consannexid.bpid.lastName}}</td>
+							<td class="tasktd" >{{con.consannexid.bpid.firstName}}</td>
 							<td class="tasktd">{{con.consannexid.profilecountry.name}}</td>
-							<td class="tasktd ho" style="width: 110px;">{{con.consannexid.eventname}}</td>
+							<td class="tasktd ho" style="word-break: break-all ;" >{{con.consannexid.eventname}}</td>
 							<!-- <td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td>--> 
 							 <td>
 							 <gcms-idname id="con.consannexid.consentstatus.id"
 									list="consentType"></gcms-idname></td>
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
-							<td class="tasktd ho" style="width: 110px;">{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
-							<td class="tasktd" style="width: 60px;">{{con.taskstatus}}
-							<td>
+							<td class="tasktd ho" style="word-break: break-all ;" >{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
+							<td class="tasktd" >{{con.taskstatus}}
+							<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">
 
 									<div ng-if="con.consannexid.annnexlocation==undefined">
@@ -213,7 +213,7 @@
 
 
 							</td>
-							<td ng-show="loggedInUserRoleId=='5'">
+							<td ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'" >
 							
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
@@ -225,7 +225,7 @@
 									
 									</div>
 									
-									<div ng-switch-when="COMPLETED">
+									 <div ng-switch-when="COMPLETED">
 									
 									 
 									    <span ng-mouseover="value(con)" >
@@ -235,7 +235,7 @@
 										</gcms-modal>
 										</span>
 										
-									</div>
+									</div> 
 									<div ng-switch-when="DELETED">
 										 
 											<gcms-modal template="task.undelete.html"

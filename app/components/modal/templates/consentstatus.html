@@ -1,12 +1,12 @@
 <!-- Consent History view page -->
- <div class="modal-content" style="width:166%;
-    left: -25%;">    
+   
 <div class="panel panel-primary table-responsive">
-      <div class="panel-heading">Consent History</div>
+      <div class="panel-heading">Consent History: {{item[0].bpid.firstName}} {{item[0].bpid.lastName}} </div>
       <div class="panel-body">
-          
+         
            <div ng-controller = "ProfileListCtrl">
-          {{error}}
+  
+          
                   <table class="table table-hover ">
                   <div class="table-responsive">
                         <!-- st-set-filter="myStrictFilter" -->
@@ -14,31 +14,28 @@
                         <table  class="table table-bordered table-striped table-highlight">
                               <thead>
                                <tr style="color:white;background-color:#337ab7;">
-                                          <th>HCP/O Name</th>
-                                         <th>Consent Updated Date</th>
-                                   <th>Consent Code</th>
-                                   <th>Consent Status</th>
-                                   <th>Consent Start Date</th>
-                                   <th>Consent End Date</th>
-                                   <th>Consent Event Name</th>
-                                   <th >Consent Updated Date</th>
-                                   <th>Document</th>
+                                          
+                                         
+                                   <th style="font-size: 13px; font-family: sans-serif; width:14%;     height: 40px">Consent Event Name</th>
+                                   <th style="font-size: 13px; font-family: sans-serif;  width: 11%;   height: 40px">Consent Status</th>
+                                   <th style="font-size: 13px; font-family: sans-serif;   width: 10%;  height: 40px">Consent Start Date</th>
+                                   <th style="font-size: 13px; font-family: sans-serif;   width: 10% ;height: 40px">Consent End Date</th>
+                                   <th  style="font-size: 13px; font-family: sans-serif;width: 15%;    height: 40px">Consent Updated Date</th>
+                                   <th style="font-size: 13px; font-family: sans-serif;width: 5%;    height: 40px">Document</th>
                                    </tr>
                               </thead>
                                 
-                              <tbody data-ng-repeat="field in item">
+                              <tbody data-ng-repeat="field  in item">
                                 <tr >
-                                                                        <td>{{field.bpid.firstName}} {{field.bpid.lastName}}</td>
-                                                					<td>{{field.consentstatus.updatedDate}}</td>
-                                                					<td>{{field.consentstatus.consentStatusCode}}</td>
+                                                                     <td>{{field.eventname}}</td>  
                                                                   <td>{{field.consentstatus.consentName}}</td>
                                                                   <td>{{field.consentstartdate}}</td>
                                                                   <td>{{field.consentenddate}}</td>
-                                                                  <td>{{field.eventname}}</td>
+                                                                  
                                                                    <td>{{field.updatedDate }}</td>
 																   <td>
 																  <div ng-if="field.annnexlocation==undefined">
-																   <span style="color:red;">No Document Uploaded</span>
+																   <span style="color:red;"></span>
 																  </div>
 																  <div ng-if="field.annnexlocation!=undefined">
 																  <div ng-show="true" ng-controller="FileManagerController">

@@ -1,5 +1,7 @@
+
 <div class="modal-header"
-	style="background-color: #337ab7; color: white;">
+	style="background-color: #337ab7; color: white; ">
+
 	<h3 class="modal-title">Identity Approve/Reject</h3>
 </div>
 
@@ -10,73 +12,55 @@
 		<div ng-controller="identityCtrl">
 			<table class="table table-hover">
 				<tbody>
-					<tr>
-						<td>If HCP/HCO does not exist,please manually create the
-							profile in TR. Once you have the TR ID of <br> the created
-							profile,please enter it in the next text box and press validation
-							button.If the profile is<br> found in TR status will change
-							to validated and then you can press the Approve button to
+					
+						<td >
+						<div class="col-sm-12">
+						If HCP/HCO does not exist,please manually create the
+							profile in TR. <br>  Once you have the TR ID ofthe created
+							profile,please enter it <br>in the next text box and press validation
+							button. <br> If the profile is found in TR status will change
+							to validated <br>  and then you can press the Approve button to
 							complete the acitivity.
+							</div>
 						</td>
-						<td style="padding: 4px;">
-                        
-							<!-- <div ng-switch="item.status">
-								<div ng-switch-when="Validated">
-									<button class="btn btn-primary  ng-disabled"
-										style="background-color: green;">{{item.status}}</button>
-								</div>
-								<div ng-switch-when=" Not-Validated">
-									<button class="btn btn-primary ng-disabled"
-										style="background-color: red;">{{item.status}}</></button>
-								</div>
-                           <div ng-switch-default>
-									<button class="btn btn-primary ng-disabled"
-										style="background-color:green;"></></button>
-								</div>
-							</div> -->
-						</td>
-
-						<td><input type="text" ng-model="item.bpid">
-                          {{validation}}
-						 
-						 {{item.status}}
 						
-								
-						</td>
-     
-						<td><button class="btn btn-primary" ng-click="validate(item)"
-								value="{{item.bpid}}" style="    margin-left: -7px;margin-top: 1px;">Validate</td>
-						<td><button class="btn btn-primary"
-								ng-click="updateApprove(item)" value="{{item.identity.id}}" style="    margin-left: -9px;margin-top: 1px;">Approve</button>
-								
-								
-							</td>
-					<td>
-								<button class="btn btn-primary" ng-click="updateDismiss(item)"
-								value="{{item.identity.id}}" style="    margin-left: -9px;margin-top: 1px;">Reject</button>
-							</td>
-					</tr>
-					<tr>
-					</tr>
-
+						<td>
+						<div class="col-sm-6">
+						<input type="text" ng-model="item.bpid" style="margin-left: -5px;margin-top: -95px;margin-right: -60px;">
+                      
+						<button class="btn btn-primary" ng-click="validate(item)"
+						value="{{item.bpid}}" style=" margin-left: 122px;margin-top: -43px;margin-right: -46px;">Validate
+						</button>
+					<span style="color:green" ng-show="validation=='Validated'">{{validation}}</span>
+					<span style="color:red" ng-show="validation=='Not Validated'">{{validation}}</span>	
+						 </div>
+						 </td>
+    		                      
 				</tbody>
 
 			</table>
-		</div>
-	</div>
-	</form>
-	<div  style="float: right;
+		<div  style="float: right;
     margin-top: -18px;">
-   <td><button class="btn btn-primary" ng-click="ok()" ng-disabled="identityform.$invalid">
-		Ok</button></td>
+   <td><button class="btn btn-primary"
+								ng-click="updateApprove(item)" value="{{item.identity.id}}" style="    margin-left: 7px;margin-top: 21px;margin-bottom: 22px;">Approve</button>
+								</td>
+							<td>
+								<button class="btn btn-primary" ng-click="updateDismiss(item)"
+								value="{{item.identity.id}}" style="    margin-left: 2px;margin-top: 20px;margin-bottom: 22px;">Reject</button>
+							</td>	
 		<td><button class="btn btn-primary" ng-click="cancel()" ng-disabled="identityform.$invalid">
 		Cancel</button></td>
 		</div>
+	</div>
+	</div>
+	
+	
+	</form>
+	</div>
 	
 </div>
 
 </div>
-
 
 
 

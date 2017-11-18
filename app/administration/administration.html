@@ -12,44 +12,45 @@
 		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
 			class="table table-bordered table-hover">
 			<thead style="background-color: #337ab7; color: white">
-				<tr>
+				<tr style="height:6%;">
 					
-					<th style="width:8%;text-align:center"></th>
+					<th style="width:4%;"></th>
 					<th style="width: 13%;" st-sort="countries.isoCode">Country ISO Code</th>
 					<th style="width: 13%;" st-sort="countries.name">Country Name</th>
 					<th style="width: 22%;" st-sort="cntryContact">Country Contact</th>
 					<th style="width: 52%;" st-sort="cntryReviewer">Identity Reviewers</th>
 
 				</tr>
-				<tr>
-				<th></th>
-				<th><input st-search="countries.isoCode" placeholder=" " class="form-control" type="search" /></th>
-				<th><input st-search="countries.name" placeholder=" " class="form-control" type="search" /></th>
-				<th><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></th>
-				<th><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></th>
-				</tr>
+				
 				
 			</thead>
 			<tbody>
+			<tr>
+				<td></td>
+				<td><input st-search="countries.isoCode" placeholder=" " class="form-control" type="search" /></td>
+				<td><input st-search="countries.name" placeholder=" " class="form-control" type="search" /></td>
+				<td><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></td>
+				<td><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></td>
+				</tr>
 				<tr ng-repeat-start="con in displayedCollection">
 
-					<td><gcms-modal
+					<td  style="width: 139px;"><gcms-modal
 							template="administration.country.update.html"
 							controller="ModalDefaultCtrl" content="con" ok="update"
 							alt="Edit {{con.id}}"> <span
-							
-							class="fa fa-pencil" style="color: #337ab7; margin-left: 18px;"></span>
+							title="Edit"
+							class="fa fa-pencil" style="color: #337ab7;"></span>
 						</gcms-modal>
-						<span ng-if="con.expanded" ng-click="con.expanded = false">
-							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 15px; color: #337ab7; padding-left: 9px;"></i>
+						<span ng-if="con.expanded"  title="View/Add template" ng-click="con.expanded = false">
+							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 13px; color: #337ab7; padding-left: 9px;"></i>
 						</span>
-						<span ng-if="!con.expanded" ng-click="value(con)">
-							<i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 15px; color: #337ab7; padding-left: 9px;"></i>
+						<span ng-if="!con.expanded" title="View/Add template"  ng-click="value(con)">
+							<i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 13px; color: #337ab7; padding-left: 9px;"></i>
 						</span></td>
 					<td>{{con.countries.isoCode}}</td>
 					<td>{{con.countries.name}}</td>
 					<td style="word-break: break-all ;">{{con.cntryContact}}</td>
-					<td style="word-break: break-all ;">{{con.cntryReviewer}}</td>
+					<td style="word-break: break-all ;" title="{{con.cntryReviewer}}">{{con.cntryReviewer}}</td>
 				</tr>
 				<tr ng-if="con.expanded" ng-repeat-end="" ng-controller="FileManagerController">
 					<td></td>
@@ -58,12 +59,10 @@
 						<table class="table table-bordered table-striped table-highlight">
 							<thead style="background-color: #337ab7; color: white">
 								<tr>
-									<th ><gcms-modal
+									<th style="text-align: center;"><gcms-modal
 											template="administration.template.add.html"
 											controller="ModalDefaultCtrl" ok="createTemplate"
-											alt="Add Templates"> <span
-											class="btn btn-default" role="button"
-											style="margin-left: 31px;"><i class="fa fa-plus"></i></span>
+											alt="Add Templates"><a href="" title="Add Templates"><i style="color: white;" class="fa fa-plus-circle"></i></a>
 										</gcms-modal></th>
 
 									<th style="width: 20%;">Template Name</th>
@@ -84,20 +83,21 @@
 									<td><gcms-modal
 											template="administration.template.update.html"
 											controller="ModalDefaultCtrl" content="temp"
-											ok="updateTemplate" alt="Edit Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
+											ok="updateTemplate"  alt="Edit Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-pencil"
-											style="color: #337ab7;margin-left:10px"></span> </gcms-modal>
+											style="color: #337ab7;margin-left:10px" title="Edit"></span> </gcms-modal>
 											 <gcms-modal
 											template="administration.template.delete.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deleteTemplate" alt="Delete Template {{temp.id}}">
 										<span class="fa fa-trash"
-											style="color: #337ab7;margin-left:8px""></span> </gcms-modal>											
+											style="color: #337ab7;margin-left:8px" title="Delete"></span> </gcms-modal>											
 										<gcms-modal
 											template="administration.template.deactivate.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deactivateTemplate" alt="Deactivate Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-ban fa-inverse"
+											 title="Deactivate"
 											style="color: #337ab7;margin-left:8px""></span> </gcms-modal>
 
 
@@ -170,14 +170,14 @@
 	<table class="table table-bordered table-striped table-highlight">
       <thead>
         <tr>
-		<th>
+		<th style="width: 50px; text-align: center;">
 		  <gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
-		    <span class="btn btn-default" role="button"><i class="fa fa-plus"></i></span>
+		   <a href="" title="Add Role"><i class="fa fa-plus-circle"></i></a>
 		  </gcms-modal>
 		</th>
 		
-        <th>Username</th>
-          <th>Country</th>
+        <th style="color: #337ab7 !important;">Username</th>
+          <th style="color: #337ab7 !important;">Country</th>
           <th ng-repeat="role in roles">
             <gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" >{{role.roleName}}</gcms-modal>
           </th>
@@ -186,11 +186,11 @@
       <tbody>
         <tr class="adminRole" ng-repeat="profile in profiles | orderBy:'userName'">
           <td style="padding-right:10px">
-             <a ng-click="go(profile)"><span class="fa fa-pencil" style="color: #337ab7; margin-left: 20px;"></span></a> 
+             <a ng-click="go(profile)"><span title="Edit" class="fa fa-pencil" style="color: #337ab7;"></span></a> 
                         
               <gcms-modal template="admin.role.delete.html" controller="ModalDefaultCtrl"
               content="profile" ok="delete" alt="delete user">
-            	  <span class="fa fa-trash" style="color: #337ab7; margin-left: 20px;"></span>
+            	  <span class="fa fa-trash" title="Delete" style="color: #337ab7; margin-left: 8px;"></span>
             </gcms-modal>
           </td>
 

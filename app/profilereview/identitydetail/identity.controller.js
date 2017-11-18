@@ -11,10 +11,23 @@
     .module('gcms.identity')
     .controller('identityCtrl', IdentityController);
 
-  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile'];
+  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile','toasty'];
 
-  function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile){
-      var updateIdentityRequestView = function(result) {
+  function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile,toasty){
+	  var internalError = function(){
+	        toasty.error({
+	          title: 'Error',
+	          msg: 'Internal Server Error!',
+	          showClose: true,
+	          clickToClose: true,
+	          timeout: 5000,
+	          sound: false,
+	          html: false,
+	          shake: false,
+	          theme: 'bootstrap'
+	        });
+	      };
+var updateIdentityRequestView = function(result) {
             $scope.identityRequestView = result;
            
       };
@@ -61,7 +74,7 @@
        * @name validate
        * @description validate bpid entered in the TextBox in approve and reject pop up screen 
        */
-
+      
       $scope.validation=" ";
       $scope.validate = function(item){     	
     	  var id  ={id:item.bpid};
@@ -77,8 +90,8 @@
               
              }).catch(function(){
           	  
-            	 $scope.validation=" Not Validated";
-
+            	 $scope.validation="Not Validated";
+            	
              }); 
        }; 
      
@@ -128,8 +141,8 @@
 		  console.log(response);
 		     if( response.data.production.value === 'yes'){
 		    	 
-		    	 $scope.emaildetails[emailTo] = $scope.profileRequestSender; 
-		    	
+		    	// $scope.emaildetails[emailTo] = $scope.profileRequestSender; 
+		    	 $scope.emaildetails[emailTo] = $scope.logged_In_User;
 		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User; 
 		     }
 		     else if(response.data.development.value === 'yes'){
@@ -283,7 +296,28 @@
         		item.bpid="";
         	}
 
-           IdentityRequestView.update({ id:item.id },item);
+           IdentityRequestView.update({ id:item.id },item).$promise.then(function(response){
+           	console.log(response);
+           	if($scope.profile_status=="Approved"){
+           		toasty.success({
+           	        title: 'Success',
+           	        msg: 'Status : Approved ',
+           	        showClose: true,
+           	        clickToClose: true,
+           	        timeout: 5000,
+           	        sound: false,
+           	        html: false,
+           	        shake: false,
+           	        theme: 'bootstrap'
+           	      })};
+           		$scope.ok(item);
+           		
+           	
+		      }).catch(function(){
+	 		    	 
+	 		    	 internalError();	
+	       		 });
+           
           };
           
           /**
@@ -311,7 +345,27 @@
        	else{
     		item.bpid="";
     	}
-         	IdentityRequestView.update({ id:item.id }, item);
+         	IdentityRequestView.update({ id:item.id }, item).$promise.then(function(response){
+           	console.log(response);
+         	if($scope.profile_status=="Rejected"){
+           		toasty.success({
+           	        title: 'Success',
+           	        msg: 'Status : Rejected',
+           	        showClose: true,
+           	        clickToClose: true,
+           	        timeout: 5000,
+           	        sound: false,
+           	        html: false,
+           	        shake: false,
+           	        theme: 'bootstrap'
+           	      })};
+           		$scope.ok(item);
+           		
+           	
+		      }).catch(function(){
+	 		    	 
+	 		    	 internalError();	
+	       		 });
           };
       
   

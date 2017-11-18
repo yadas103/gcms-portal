@@ -25,46 +25,46 @@
 					</div> 
 					<div class="col-sm-3 form-group" id="search-drop">
 						<select ng-model="request.country" class="drop-receipi"
-							ng-disabled="readOnlyPC" required>
+							ng-disabled="readOnlyPC" title="Reporting Country" required>
 							<option value = "">Please select</option>
 							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option>
 						</select> <label style="font-size: 12px;margin-left: 3px;">Reporting Country</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop">
-						<select ng-model="request.profileType" class="drop-receipi" required>							 						
+						<select ng-model="request.profileType" class="drop-receipi" title="Business Party Type" required>							 						
 							<option ng-repeat="prof in profile_types">{{prof.name}}</option>
 						</select>						
 						<label style="font-size: 12px;margin-left: 2px;">Business Party Type</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop">
 					<input type="text" class="form-control" id="firstName"
-						ng-model="request.firstName" style="width: 264px; height: 25px;margin-left: -4px;">
+						ng-model="request.firstName" style="width: 264px; height: 25px;margin-left: -4px;" title="First Name">
 					<label for="firstName" style="font-size: 12px;margin-left: -2px;">First Name</label><br>
 				</div>
 				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
 					<input type="text" class="form-control" id="address"
 						ng-model="request.address"
-						style="margin-left: 17px; margin-top: 6px; width: 264px;height: 25px;">
+						style="margin-left: 17px; margin-top: 6px; width: 264px;height: 25px;" title="Address"	>
 					<label for="address" style="font-size: 12px;margin-left: 20px;">Address</label><br>
 				</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-3 form-group" id="search-drop">
 						<input type="text" class="form-control" id="lastName"
-						ng-model="request.lastName" style="width: 250px;"> <label style="font-size: 12px;margin-left: 1px;">Last Name/Organization Name</label><br>
+						ng-model="request.lastName" style="width: 250px;"> <label style="font-size: 12px;margin-left: 1px;" title="Last Name / Organization Name">Last Name / Organization Name</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop">
 						<input type="text" class="form-control" id="city"
-						ng-model="request.city" style="width:247px;">						
+						ng-model="request.city" style="width:247px;"  title="City">						
 						<label style="font-size: 12px;margin-left: 3px;">City</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop">
 					<input type="text" class="form-control" id="speciality"
-						ng-model="request.speciality" style="width: 264px; height: 25px;margin-left: -4px;">
+						ng-model="request.speciality" style="width: 264px; height: 25px;margin-left: -4px;" title="Speciality">
 					<label for="Speciality" style="font-size: 12px;margin-left: -2px;">Speciality</label><br>
 				</div>
 				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
-				<select class="drop-receipi" style="width: 264px;margin-left: 19px;margin-top: 5px;" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;"><option value="" ng-show="{{empty}}"></option></select>
+				<select class="drop-receipi" style="width: 264px;margin-left: 19px;margin-top: 5px;" title="Template Type" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;"><option value="" ng-show="{{empty}}"></option></select>
 				<label for="Template Type" style="font-size: 12px;margin-left: 19px;">Template Type</label><br>
 				</div>
 				</div>
@@ -87,7 +87,7 @@
 					<span class="create-button">
 						<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href="" ng-click="passCountryName()"><i>Cannot find a profile? Create a request here</i></a></gcms-modal>
+					<a href="" ng-click="passCountryName()" title="Create request for missing profile"><i>Cannot find a profile? Create a request here</i></a></gcms-modal>
 					</span>
 				
 			</div>
@@ -106,12 +106,12 @@
 				<thead>
 					<tr style="color: white; background-color: #337ab7;">
 						<th
-							style="font-size: 13px; font-family: sans-serif; ">#</th>
+							></th>
 						<th 
 							ng-hide = "true"
 						    ng-click="orderByField='id'; reverseSort = !reverseSort"
 							st-sort="id"
-							style="font-size: 13px; font-family: sans-serif;  width: 77px;">TR
+							style="  width: 77px;">TR
 							ID</th>
 						<th 
 							ng-hide = "true"
@@ -120,29 +120,27 @@
 							st-sort="profileType">Profile Type</th>
 						<th ng-click="orderByField='lastName'; reverseSort = !reverseSort"
 							st-sort="lastName"
-							style="font-size: 13px; font-family: sans-serif;">Last Name</th>
+							>Last Name</th>
 						<th
 							ng-click="orderByField='firstName'; reverseSort = !reverseSort"
 							st-sort="firstName"
-							style="font-size: 13px; font-family: sans-serif;">First Name</th>
+							>First Name</th>
 						<th
 							ng-click="orderByField='organisationName'; reverseSort = !reverseSort"
 							st-sort="organisationName"
-							style="font-size: 13px; font-family: sans-serif;">Organization Name</th>
+							>Organization Name</th>
 						<th ng-click="orderByField='city'; reverseSort = !reverseSort"
 							st-sort="city"
-							style="font-size: 13px; font-family: sans-serif;">City
+							>City
 							Name</th>
 						<th ng-click="orderByField='address'; reverseSort = !reverseSort"
 							st-sort="address"
-							style="font-size: 13px; font-family: sans-serif;">Address</th>
+							>Address</th>
 						<th
 							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
 							st-sort="specialit"
-							style="font-size: 13px; font-family: sans-serif;">Specialty</th>
-						<th							
-							style="font-size: 13px; font-family: sans-serif;">Consent
-							History</th>
+							>Specialty</th>
+						<th>Consent History</th>
 					</tr>
 					<tr>
 						<th></th>
@@ -174,15 +172,15 @@
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
 						<td ng-hide = "true">{{pro.id}}</td>
 						<td ng-hide = "true">{{pro.profileType}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.lastName}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.firstName}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.organisationName}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.city}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.address}}</td>
-						<td class="reci-name" style="word-break: break-all;">{{pro.speciality}}</td>						
-						<td><gcms-modal template="consentstatus.html"
+						<td class="reci-name" style="word-break: break-all;" title="{{pro.lastName}}">{{pro.lastName}}</td>
+						<td class="reci-name" style="word-break: break-all;" title="{{pro.firstName}}">{{pro.firstName}}</td>
+						<td class="reci-name" style="word-break: break-all;" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
+						<td class="reci-name" style="word-break: break-all;" title="{{pro.city}}">{{pro.city}}</td>
+						<td class="reci-name" style="word-break: break-all;" title="{{pro.address}}">{{pro.address}}</td>
+						<td class="reci-name" style="word-break: break-all;" title="{{pro.speciality}}">{{pro.speciality}}</td>						
+						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
-						<a href=""  ng-click="view(pro.id)">View</a></gcms-modal></td>					
+						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id)">View</a></gcms-modal></td>					
 					</tr>
 				</tbody>
 				<tfoot>

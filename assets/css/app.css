@@ -537,7 +537,9 @@ textarea.ng-invalid,
 
 /*Pagination */
 .select-page {
-  width: 50px;
+  width: 41px;
+  height: 20px;
+  font-size: 12px;
   text-align: center;
 }
 .pagination li a input {

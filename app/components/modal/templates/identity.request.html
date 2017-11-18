@@ -3,10 +3,10 @@
     color: white; padding: 5px;">
   <h3 class="modal-title" style="font-size: medium; padding-left: 10px;">Create missing profile</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" >
 <p style="font-size: 12px;">Before requesting a new profile, please make sure you searched
  using multiple criteria</p>
-	<div ng-controller = "ProfileListCtrl">
+	<div ng-controller = "ProfileListCtrl" style="margin-bottom: 95px;">
 		<div ng-if="alerts.length > 0">
 			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
 				close="closeAlert($index)" style="color:maroon;font-size: 13px;"> {{alert.msg}} </alert>
@@ -71,11 +71,11 @@
 			  <div class="form-group" style="margin-bottom: 0px;">
                     <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;margin-top: 10px;">Note for reviewer:</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        	<textarea id="notes" ng-maxlength="1000" class="form-control" rows="1" style="resize: none" ng-model="item.notes"></textarea>
+                        	<textarea id="notes" ng-maxlength="1000" class="form-control" rows="2" style="resize: none" ng-model="item.notes"></textarea>
                     </div>
                 </div>                
-	
-	<span style="margin-left: 422px;"><button class="btn btn-primary" ng-click="ok()" ng-disabled="saveProfiles.$invalid">Request</button>
+	<span style="float: right;margin-top: 18px;margin-right: 14px;">
+	<button class="btn btn-primary" ng-click="ok()" ng-disabled="saveProfiles.$invalid">Request</button>
 	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>	
 	</span>
 	</form>	

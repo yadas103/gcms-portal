@@ -165,26 +165,26 @@
 									<gcms-modal template="task.update.html"
 										controller="ModalDefaultCtrl" content="con" ok="update"
 										alt="Edit Task {{con.id}}"> <span
-										class="fa fa-pencil" style="color: #337ab7;"></span> </gcms-modal>
+										class="fa fa-pencil" style="color: #337ab7;" title="Edit"></span> </gcms-modal>
 									<gcms-modal template="task.delete.html"
 										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 										alt="Delete Task {{con.id}}"> <span
-										class="fa fa-trash" style="color: #337ab7;"></span></gcms-modal>
+										class="fa fa-trash" title="Delete" style="color: #337ab7;margin-left: 8px;"></span></gcms-modal>
 								</div>
 								
 
 							</td>						
 							<td class="tasktd">{{con.consannexid.payercountry.name }}</td>
-							<td class="tasktd ho" style="word-break: break-all ;" >{{con.consannexid.bpid.lastName}}</td>
+							<td class="tasktd ho" style="word-break: break-all ;"  title="{{con.consannexid.bpid.lastName}}" >{{con.consannexid.bpid.lastName}}</td>
 							<td class="tasktd" >{{con.consannexid.bpid.firstName}}</td>
 							<td class="tasktd">{{con.consannexid.profilecountry.name}}</td>
-							<td class="tasktd ho" style="word-break: break-all ;" >{{con.consannexid.eventname}}</td>
+							<td class="tasktd ho" style="word-break: break-all ;"   title="{{con.consannexid.eventname}}">{{con.consannexid.eventname}}</td>
 							<!-- <td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td>--> 
 							 <td>
 							 <gcms-idname id="con.consannexid.consentstatus.id"
 									list="consentType"></gcms-idname></td>
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
-							<td class="tasktd ho" style="word-break: break-all ;" >{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
+							<td class="tasktd ho" style="word-break: break-all ;" title="{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})" >{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
 							<td class="tasktd" >{{con.taskstatus}}
 							<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">

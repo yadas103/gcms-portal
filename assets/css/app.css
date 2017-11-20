@@ -566,8 +566,17 @@ textarea.ng-invalid,
 .tasktd{
 	padding-top: 14px;
     text-align: left;
-	text-transform:lowercase;  
+	text-transform:lowercase;
+	white-space: nowrap;
+  	overflow-x: hidden;
+  	text-overflow: ellipsis;
+  	max-width:20px; 
+  	
 }
+.tasktd:hover {
+  white-space: normal;
+  word-break: break-all ;
+} 
  .tasktd:first-letter{
 	text-transform:uppercase;
 } 
@@ -575,18 +584,6 @@ textarea.ng-invalid,
 	font-family: serif;
 	font-size: 13px;
 }
-/* .ho{
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
- 
+.cap{
+	text-transform:capitalize;
 }
-.ho:hover {
-  z-index: 1;
-  width: auto;
-   background-color: #FFFFCC; 
-  
-} */

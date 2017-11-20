@@ -20,11 +20,11 @@
 
 					<div>
 						<label class="fileContainer"> <a class="btn btn-default"
-							role="button" ng-hide="alerts.length >0 == true"  >Select files...</a>
+							role="button"  >Select files...</a>
 							<input type="file"
 							ngf-select="" ng-model="picFile" name="file"
 							ngf-pattern="'image/*,application/pdf'" nv-file-select
-							uploader="uploader" multiple="" accept="application/pdf" />
+							uploader="uploader" multiple="" accept="application/pdf" ng-readonly="uploader.progress==100" />
 						</label>
 
 					</div>
@@ -42,16 +42,15 @@
 						 <a href="" >Uploading...</a>
 						</div>
 						<div ng-if="uploader.progress==100"  ng-init="upload()" >
-						 <div ng-show="error == undfined">
+						 
 						  <a href=""><span class="fa fa-spin fa-spinner "></span>
-						  Validating...</a>
-						  </div>
-						  <span style="color:red">{{error}}</span>
+						  Validating...</a>						  
+						  
 						</div>
 						<gcms-modal template="bulk.upload.html"
 							controller="ModalDefaultCtrl" ok="" content="Result"
 							alt="Upload images"> 
-							<a  ng-show="alerts.length > 0 == true" class="btn btn-default"
+							<a  ng-show="a == true" class="btn btn-default"
 							role="button" >Uploaded PDF's Status</a>
 
 						</gcms-modal>  
@@ -89,36 +88,34 @@
 
 	</div>
 </div>
- <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
-<div class="panel panel-primary table-responsive">
-	<div class="panel-heading">Upload your documents - Manual Match</div>
+ <div class="panel panel-primary ">
+	<div class="panel-heading " >Upload your documents - Manual Match</div>
 	<div class="panel-body">
 
-		<span style="color:green">{{success}}</span>
-    	<span style="color:red">{{error}}</span> 
-		<table class="table table-hover ">
-			<div class="table-responsive">
+		<!-- <span style="color:green">{{success}}</span>
+    	<span style="color:red">{{error}}</span>  -->
+		
 				<!-- st-set-filter="myStrictFilter" st-set-filter="customFilter" st-table="displayedCollection"
 					st-safe-src="TaskAttributes"-->
 				<table 
 					st-table="TaskAttributes"
 					st-pipe="callServer" 
-					class="table table-hover table-bordered table-sm">
+					class="table table-hover table-condensed table-bordered table-responsive taskTable">
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
 							<th ng-hide="status=='DELETED'">Action</th>
-							<th style="width: 10%;"st-sort="payercountry">Payer Country</th>
-							<th style="width: 15%;" st-sort="lastname">Last Name/Org Name</th>
-							<th style="width: 15%;" st-sort="firstname">First Name</th>
-							<th style="width: 10%;"st-sort="profilecountry">Profile Country</th>
-							<th style="width: 18%;" st-sort="eventname">Event Name</th>
-							<th style="width: 10%;"st-sort="consentstaus">Consent Status</th>
-							<th style="width: 10%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
-							<th style="width: 18%;" st-sort="initiatedby">Task Owner</th> 
-							<th st-sort="taskstatus">Task Status</th>
+							<th style="width:11%;"st-sort="payercountry">Payer Country</th>
+							<th style="width:13%;"st-sort="lastname">Last Name/Org Name</th>
+							<th style="width:13%;" st-sort="firstname">First Name</th>
+							<th style="width:11%;"st-sort="profilecountry">Profile Country</th>
+							<th style="width:15%; st-sort="eventname">Event Name</th>
+							<th style="width:12%;"st-sort="consentstaus">Consent Status</th>
+							<th style="width:10%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
+							<th style="width:13%; st-sort="initiatedby">Task Owner</th> 
+							<th style="width:10%;"st-sort="taskstatus">Task Status</th>
 							<th ng-hide="status=='DELETED'">Document Upload</th>
-							<th ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"
-								style="font-size: 13px; font-family: sans-serif;">Activity								
+							<th style="width:10%;"ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"
+								>Activity								
 								</th>						 
 							<th ng-show="status=='COMPLETED'">DLU P/T</th>
 								
@@ -146,9 +143,7 @@
 									<option value="COMPLETED">Completed</option>
 									<option value="DELETED">Deleted</option>
 							</select> 							
-							<!-- <select st-search="taskstatus">													
-								<option ng-repeat="status in Groupsearch">{{status.name}}</option>
-								</select> --> 							
+														
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
 							<th ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"></th>
@@ -164,27 +159,27 @@
 
 									<gcms-modal template="task.update.html"
 										controller="ModalDefaultCtrl" content="con" ok="update"
-										alt="Edit Task {{con.id}}"> <span
-										class="fa fa-pencil" style="color: #337ab7;" title="Edit"></span> </gcms-modal>
+										alt="Edit Task {{con.id}}"> <span title="Edit Task"
+										class="fa fa-pencil" style="color: #337ab7;margin-left: 1px;"></span> </gcms-modal>
 									<gcms-modal template="task.delete.html"
 										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
-										alt="Delete Task {{con.id}}"> <span
-										class="fa fa-trash" title="Delete" style="color: #337ab7;margin-left: 8px;"></span></gcms-modal>
+										alt="Delete Task {{con.id}}"> <span title="Delete Task"
+										class="fa fa-trash" style="color: #337ab7;margin-left: 12px;"></span></gcms-modal>
 								</div>
 								
 
 							</td>						
 							<td class="tasktd">{{con.consannexid.payercountry.name }}</td>
-							<td class="tasktd ho" style="word-break: break-all ;"  title="{{con.consannexid.bpid.lastName}}" >{{con.consannexid.bpid.lastName}}</td>
+							<td class="tasktd">{{con.consannexid.bpid.lastName}}</td>
 							<td class="tasktd" >{{con.consannexid.bpid.firstName}}</td>
 							<td class="tasktd">{{con.consannexid.profilecountry.name}}</td>
-							<td class="tasktd ho" style="word-break: break-all ;"   title="{{con.consannexid.eventname}}">{{con.consannexid.eventname}}</td>
-							<!-- <td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td>--> 
-							 <td>
+							<td class="tasktd" >{{con.consannexid.eventname}}</td>
+							<!-- style="word-break: break-all ;" <td class="tasktd">{{con.consannexid.consentstatus.consentName}}</td>--> 
+							 <td class="tasktd ">
 							 <gcms-idname id="con.consannexid.consentstatus.id"
 									list="consentType"></gcms-idname></td>
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
-							<td class="tasktd ho" style="word-break: break-all ;" title="{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})" >{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
+							<td class="tasktd ">{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
 							<td class="tasktd" >{{con.taskstatus}}
 							<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">
@@ -192,17 +187,16 @@
 									<div ng-if="con.consannexid.annnexlocation==undefined">
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
-											alt="Edit Task {{con.id}}"> <span>
-											Upload</span> </gcms-upload>
+											> <span title="Upload " class="fa fa-upload" style=" margin-left: 24px;"> </gcms-upload>
 									</div>
 									<div ng-if="con.consannexid.annnexlocation!=undefined">
-										<div ng-show="true" ng-controller="FileManagerController">
+										<span ng-show="true" ng-controller="FileManagerController">
 
-											<a href="" ng-click="download(con)"> View </a>
-										</div>
+											<a href="" ng-click="download(con)"> <span title="Download" class="fa fa-download" style="margin-left: 12px;"></span> </a>
+										</span>
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
-											alt="Edit Task {{con.id}}"> <span>Change</span>
+											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-upload" style=" margin-left: 13px;"></span>
 										</gcms-upload>
 
 									</div>
@@ -250,7 +244,7 @@
 							<td ng-show="con.taskstatus =='COMPLETED'">
 							
 									<span row-select="con" ng-click="select(con)">  <input
-											 type="checkbox" /></span>	 							     
+											 type="checkbox" style="margin-left:7px;"/></span>	 							     
 								
 							</td>
 
@@ -259,7 +253,7 @@
 					</tbody>
 					<tbody ng-show="isLoading">
 						<tr>
-							<td colspan="14" class="text-center">Loading ...</td>
+							<td colspan="14" class="text-center"><span class="fa fa-refresh fa-spin fa-1x" style="color: #337ab7;"></span></td>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -548,12 +542,11 @@
 						</tr>
 					</tfoot>
 				</table>
-			</div>
-		</table>
+			
 
 	</div>
-</div>
-</div>
+ </div>
+
 
 
 

@@ -156,13 +156,13 @@
 		        	var temptype=item.tmpl_type;
 		        	console.log("Template Type"+temptype);
 		        	if(item.tmpl_type=="InCountry-HCP"){
-		        		item.tmpl_code=$scope.isoCode+"LP"+"-"+$scope.counter;
+		        		item.tmpl_code=$scope.isoCode+"LP"+$scope.counter;
 		        	} else if(item.tmpl_type=="InCountry-HCO"){
-		        		item.tmpl_code=$scope.isoCode+"LO"+"-"+$scope.counter;
+		        		item.tmpl_code=$scope.isoCode+"LO"+$scope.counter;
 		        	} else if(item.tmpl_type=="CrossBorder-HCP"){
-		        		item.tmpl_code=$scope.isoCode+"GP"+"-"+$scope.counter;
+		        		item.tmpl_code=$scope.isoCode+"GP"+$scope.counter;
 		        	} else if(item.tmpl_type=="CrossBorder-HCO"){
-		        		item.tmpl_code=$scope.isoCode+"GO"+"-"+$scope.counter;
+		        		item.tmpl_code=$scope.isoCode+"GO"+$scope.counter;
 		        	}	
 		        	item.tmpl_status="ACTIVE"; 
 		        	console.log(item.tmpl_code);

@@ -168,6 +168,7 @@
 	   *  selim
        *  Bulk upload fuctionality
        */
+      $scope.a=false;
       $scope.uploads = [];
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
@@ -198,12 +199,25 @@
         };
       $scope.upload = function() {
    	   console.log("Inside upload");
+   	   $scope.a=false;
           //if ($scope.uploader.queue.length > 0) {
    	   $scope.success='';
  	   $scope.error='';
        	   return FileMonitor.query().$promise.then(function(result){
    		       $scope.Result = result;
-   		       $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
+   		       $scope.a=result.$resolved
+   		    toasty.success({
+    	        title: 'Success',
+    	        msg: 'File Processed ! See results',
+    	        showClose: true,
+    	        clickToClose: true,
+    	        timeout: 15000,
+    	        sound: false,
+    	        html: false,
+    	        shake: false,
+    	        theme: 'bootstrap'
+    	      });
+   		      // $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
    		       $scope.uploader.clearQueue();
    		       console.log(result)		       
    		      }).catch(function(){

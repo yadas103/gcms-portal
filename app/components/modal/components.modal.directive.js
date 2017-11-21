@@ -1,24 +1,24 @@
 /**
- * @ngdoc directive
- * @name gcms.components.modal.directive:gcmsModal
- *
- * @restrict E
- *
- * @description
- * Represents a gcmsModal directive.
- *
- * ```html
- <a ng-click="open()">
+* @ngdoc directive
+* @name gcms.components.modal.directive:gcmsModal
+*
+* @restrict E
+*
+* @description
+* Represents a gcmsModal directive.
+*
+* ```html
+<a ng-click="open()">
    <ng-transclude></ng-transclude>
- </a>
- * ```
- * @param {string} template the name of the template which should be used for the modal
- * @param {string} controller the name of the controller which should be used for the modal
- * @param {string=} content optional content to be used in the modal, if the modal supports it
- * @param {closure=} cancel the callback which is called when the modal is closed with "Cancel"
- * @param {closure=} ok the callback which is called when the modal is closed with "OK"
- */
- (function () {
+</a>
+* ```
+* @param {string} template the name of the template which should be used for the modal
+* @param {string} controller the name of the controller which should be used for the modal
+* @param {string=} content optional content to be used in the modal, if the modal supports it
+* @param {closure=} cancel the callback which is called when the modal is closed with "Cancel"
+* @param {closure=} ok the callback which is called when the modal is closed with "OK"
+*/
+(function () {
 
   'use strict';
 
@@ -49,23 +49,23 @@
       },
       templateUrl: 'app/components/modal/components.modal.html',
       controller: function($scope, $modal) {
-    	  
-    	   /*$scope.cancel = $scope.cancel || function(){
-    		   
-    	   };*/
-    	   
-    	  /*
-    	   * selim
-    	   * methode added for cancel model
-    	   */
-    	  var temp = angular.copy($scope.content);
-    	  $scope.edit = $scope.content;
-    	  
-    	   $scope.cancel = function(){
-    		   console.log("Inside cancel function");
-    		   angular.copy(temp, $scope.edit);
-    		   
-    	   };
+        
+         /*$scope.cancel = $scope.cancel || function(){
+               
+         };*/
+         
+        /*
+         * selim
+         * methode added for cancel model
+         */
+        var temp = angular.copy($scope.content);
+        $scope.edit = $scope.content;
+        
+         $scope.cancel = function(){
+               console.log("Inside cancel function");
+               angular.copy(temp, $scope.edit);
+               
+         };
 
            /**
             * @ngdoc method
@@ -74,9 +74,9 @@
             * @description
             * Resolves the promise returned by the modal instance result
             */
-    	  
+        
            $scope.resolve = function(item) {
-        	 // $scope.modelBeingEdited = item;
+             // $scope.modelBeingEdited = item;
              $scope.ok()(item);
           
              console.log("in resove" +item)
@@ -90,7 +90,7 @@
             * Rejects the promise returned by the modal instance result
             */
            $scope.reject = function() {
-        	   console.log("Inside cancel directive");
+               console.log("Inside cancel directive");
              $scope.cancel();
            };
 
@@ -104,8 +104,8 @@
            $scope.open = function(){
 
              var modalInstance = $modal.open({
-            	 backdrop: 'static',
-            	 keyboard: false,
+                   backdrop: 'static',
+                   keyboard: false,
                templateUrl: 'app/components/modal/templates/' + $scope.template,
                controller: $scope.controller,
                resolve: {
@@ -126,3 +126,4 @@
     };
   }
 })();
+

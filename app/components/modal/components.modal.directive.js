@@ -74,9 +74,11 @@
             * @description
             * Resolves the promise returned by the modal instance result
             */
+    	  
            $scope.resolve = function(item) {
         	 // $scope.modelBeingEdited = item;
              $scope.ok()(item);
+          
              console.log("in resove" +item)
            };
 
@@ -102,11 +104,14 @@
            $scope.open = function(){
 
              var modalInstance = $modal.open({
+            	 backdrop: 'static',
+            	 keyboard: false,
                templateUrl: 'app/components/modal/templates/' + $scope.template,
                controller: $scope.controller,
                resolve: {
                   item: function () {
                     return $scope.content;
+                                  
                   }
                }
              });
@@ -114,7 +119,7 @@
              modalInstance.result
                .then(  $scope.resolve  )
                .catch( $scope.reject   );
-
+                   
              return modalInstance;
            };
       }

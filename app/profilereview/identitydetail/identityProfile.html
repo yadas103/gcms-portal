@@ -43,10 +43,16 @@
 						<tr ng-repeat-start="identity in displayedCollection">
 
 							<td>
-							<a herf="" ng-if="identity.expanded" ng-click="identity.expanded = false" >
+							
+							<gcms-modal template="identity.view.html"
+										controller="ModalDefaultCtrl" content="identity" ok="update"
+										alt="Edit Task {{identity.id}}"> <span
+										style="color: #337ab7;" title="Edit"> View</span> </gcms-modal>
+										
+							<!-- <a herf="" ng-if="identity.expanded" ng-click="identity.expanded = false" >
                                                            Close  </a>
                              <a herf="" ng-if="!identity.expanded" ng-click="identity.expanded = true"
-                                                           >View </a> 
+                                                           >View </a>  -->
 
 							</td>
 							
@@ -78,46 +84,46 @@
 						
 						<tr ng-if="identity.expanded" ng-repeat-end="">
 							<td colspan="12">
-								<table class="table table-hover table-condensed table-striped">
-									<tr>
-										<td style="padding-left: 63px;">ProfileTypeId:<span  style="margin-left: 86px;">  {{
-											identity.profileTypeId }}</span></td>
+								<table class="table table-bordered table-striped table-highlight">
+									<!-- <tr>
+										<td style="padding-left: 80px;">ProfileTypeId:<td  style="margin-left: 86px;">  {{
+											identity.profileTypeId }}</td></td>
 
-										<td style="padding-left: 63px;">FirstName:<span  style="margin-left: 86px;"> {{
-											identity.firstName}}</span></td>
+										<td style="padding-left: 63px;">FirstName:<td  style="margin-left: 86px;"> {{
+											identity.firstName}}</td></td>
 									</tr>
 									<tr>
-										<td style="padding-left: 63px;">LastName:<span  style="margin-left: 86px;">  {{
-											identity.lastName }}</span></td>
-										<td style="padding-left: 63px;">OrganizationName:<span style="margin-left: 39px;"> {{
-											identity.organizationName}}</span></td>
+										<td style="padding-left: 80px;">LastName:<td  style="margin-left: 86px;">  {{
+											identity.lastName }}</td></td>
+										<td style="padding-left: 63px;">OrganizationName:<td style="margin-left: 39px;"> {{
+											identity.organizationName}}</td></td>
 									</tr>
 
 									<tr>
-										<td style="padding-left: 63px;">Country: <span  style="margin-left: 86px;"> {{
-											identity.country }}</span></td>
-										<td style="padding-left: 63px;">Address:<span style="margin-left: 95px;"> {{
-											identity.address}}</span></td>
-									</tr>
-									<tr>
-
-										<td style="padding-left: 63px;">Speciality:<span  style="margin-left: 86px;">  {{
-											identity.specility}}</span></td>
-										<td style="padding-left: 63px;">Notes:{{ identity.notes}}</td>
-
+										<td style="padding-left: 80px;">Country: <td  style="margin-left: 86px;"> {{
+											identity.country }}</td></td>
+										<td style="padding-left: 63px;">Address:<td style="margin-left: 95px;"> {{
+											identity.address}}</td></td>
 									</tr>
 									<tr>
 
-										<td style="padding-left: 63px;">Status: {{
-											identity.status}}</td>
-
-
+										<td style="padding-left: 80px;">Speciality:<td  style="margin-left: 86px;">  {{
+											identity.specility}}</td></td>
+										<td style="padding-left: 63px;">Notes: <td  style="margin-left: 86px;">  {{ identity.notes}}</td></td>
 
 									</tr>
+									<tr>
+
+										<td style="padding-left: 80px;">Status: <td> {{
+											identity.status}}</td></td>
 
 
 
+									</tr> -->
 
+
+									
+									
 
 								</table>
 							</td>

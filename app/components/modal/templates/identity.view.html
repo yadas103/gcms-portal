@@ -1,0 +1,52 @@
+
+<div class="modal-content" >
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium;">Identity View</h3>
+  
+</div>
+
+<div class="modal-body" >
+  <form class="form-horizontal">
+  
+  	<table>
+  	<tr>
+  		<td class="col-sm-3 control-label"><b>ProfileTypeId:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.profileTypeId }}	</td>
+  		<td class="col-sm-3 control-label" ><b>FirstName:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.firstName}}</td>
+  	</tr>	
+  	
+  		<tr>
+  		<td class="col-sm-3 control-label"><b>LastName:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.lastName }}	</td>
+  		<td class="col-sm-3 control-label" ><b>Country:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.country }}</td>
+  	 </tr>
+  	 
+  	 	<tr>
+  		<td class="col-sm-3 control-label"><b>Address:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.address }}	</td>
+  		<td class="col-sm-3 control-label" ><b>Speciality:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.specility }}</td>
+  	 </tr>
+  	
+  		<tr>
+  		<td class="col-sm-3 control-label"><b>Notes:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.notes }}	</td>
+  		<td class="col-sm-3 control-label" ><b>Status:</b></td>
+  		<td class="col-sm-3 control-label" style="text-align:left">{{item.status }}</td>
+  	 </tr>
+
+  
+    </table>
+
+   
+  </form>
+</div>
+<br>
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()" >Close</button>
+</div>
+
+</div>

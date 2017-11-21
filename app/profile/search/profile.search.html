@@ -97,7 +97,7 @@
 </div>
 
 </div>
-<div class="panel panel-primary table-responsive">
+<div class="panel panel-primary">
 	<table class="table table-hover ">
 		<div class="table-responsive">
 			<table st-table="profileSearchCopy" st-safe-src="profileSearch"
@@ -111,7 +111,7 @@
 							ng-hide = "true"
 						    ng-click="orderByField='id'; reverseSort = !reverseSort"
 							st-sort="id"
-							style="  width: 77px;">TR
+							style="width:77px;">TR
 							ID</th>
 						<th 
 							ng-hide = "true"
@@ -140,7 +140,7 @@
 							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
 							st-sort="specialit"
 							>Specialty</th>
-						<th>Consent History</th>
+						<th style="width:80px;">Consent History</th>
 					</tr>
 					<tr>
 						<th></th>
@@ -172,12 +172,12 @@
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
 						<td ng-hide = "true">{{pro.id}}</td>
 						<td ng-hide = "true">{{pro.profileType}}</td>
-						<td class="reci-name" style="word-break: break-all;" title="{{pro.lastName}}">{{pro.lastName}}</td>
-						<td class="reci-name" style="word-break: break-all;" title="{{pro.firstName}}">{{pro.firstName}}</td>
-						<td class="reci-name" style="word-break: break-all;" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
-						<td class="reci-name" style="word-break: break-all;" title="{{pro.city}}">{{pro.city}}</td>
-						<td class="reci-name" style="word-break: break-all;" title="{{pro.address}}">{{pro.address}}</td>
-						<td class="reci-name" style="word-break: break-all;" title="{{pro.speciality}}">{{pro.speciality}}</td>						
+						<td class="tasktd" title="{{pro.lastName}}">{{pro.lastName}}</td>
+						<td class="tasktd" title="{{pro.firstName}}">{{pro.firstName}}</td>
+						<td class="tasktd" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
+						<td class="tasktd" title="{{pro.city}}">{{pro.city}}</td>
+						<td class="tasktd" title="{{pro.address}}">{{pro.address}}</td>
+						<td class="tasktd" title="{{pro.speciality}}">{{pro.speciality}}</td>						
 						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
 						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id)">View</a></gcms-modal></td>					
@@ -188,7 +188,7 @@
 						<!-- <td colspan="10" class="text-center">
                      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5"></div>
                      </td> -->
-						<td colspan="7" class="text-center">
+						<td colspan="8" class="text-center">
 							<div st-items-by-page="20" st-pagination=""
 								st-template="app/profile/list/pagination.custom.html"></div>
 							<div>{{responseOnSearch}}</div>

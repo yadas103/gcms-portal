@@ -6,11 +6,11 @@
 </div>
 <div class="modal-body">
 <form name="taskReassignForm" novalidate>
-<div class="row">
-<div class="col-sm-5">
+
+<div class="form-group">
   <p>Please provide the reason of deleting this task:</p>
 </div>
-<div class="col-sm-5">
+<div class="col-sm-9">
 <select  ng-model="item.deleteReason" ng-options="Group.Name for Group in Groups" ><option  value="" ng-show="{{empty}}"> ---select---</option></select></div>
 <div class="col-sm-6"  ng-show="item.deleteReason.Name == 'Other reason'">  
 <br>
@@ -21,7 +21,7 @@ Enter text here...</textarea>
 
 </form>
 </div>
-</div>
+
  
 
   <div class="modal-footer">

@@ -148,7 +148,7 @@ paddin-left: 7px;
 	width: 100%;
 	padding-top: 10px;
 	/* Set the fixed height of the footer here */
-	height: 120px;
+	height: 54px; /* to decrease copyright*/
 	border-top: 1px solid #ececec;
 	background: none;
 }

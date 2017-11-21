@@ -1,37 +1,37 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: 14px;">
-                         <span> Reassign </span>
+  <h3 class="modal-title" style="font-size: medium;">Reassign
                          
   </h3>
   
 </div>
 
 <div class="modal-body">
-<div ng-controller = "TaskCtrl">  
-<form class="form" class="form-horizontal">
-<div class="form-group">
-  <label for="curtask">Current Task Owner:{{item.assignedto.firstName}}{{item.assignedto.lastName}}({{item.assignedto.userName}})</label>
+  <form name="taskForm"  novalidate  class="form-horizontal" ng-controller = "TaskCtrl">
+    <div class="form-group">
+    <label for="consannexid.eventname" class="col-sm-3 control-label">Current
+					Task Owner :</label>
+    <div class="col-sm-9">
+      <lebel class="form-control" >{{item.assignedto.firstName}}{{item.assignedto.lastName}} ({{item.assignedto.userName}}) </lebel>
+    </div>
+  </div>
+  <div class="form-group" >
+    <label for="consannexid.pocode" class="col-sm-3 control-label">New
+					Assigned To :</label>
+    <div class="col-sm-9">
+     <select class="form-control" ng-model="item.assignedto"
+						ng-options="useritr.userName for useritr in user track by useritr.userName">
+					</select>    </div>
 
-</div>
 
-  <div name="taskReassignForm" class="form-group" novalidate>
-   <label for="newtask" class="col-sm-3 control-label" >New Assigned To</label>
-                 <!--  <select class="form-control" ng-Model="item.assignedto" required>
-                  <option value ="">--Select User--</option>
-                  			<option ng-repeat="useritr in user" Value={{useritr}}>{{useritr.userName}}</option>
-  
-               			</select>       -->         			
-<select class="form-control" ng-model="item.assignedto" ng-options="useritr.userName for useritr in user track by useritr.userName">
-</select>
-    	</div>
+
+      
+
    
-    	
-    
   </form>
 </div>
-</div>
+
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskReassignForm.$invalid">Confirm</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">Confirm</button>
+  <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
 </div>

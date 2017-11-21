@@ -2214,7 +2214,7 @@ th {
 .table {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 20px
+    /*margin-bottom: 20px*/ /*Commented to remove space below footer*/
 }
 .table>thead>tr>th,
 .table>tbody>tr>th,
@@ -2224,7 +2224,7 @@ th {
 .table>tfoot>tr>td {
     padding: 5px;
     line-height: 1.42857143;
-    vertical-align: top;
+    /* vertical-align: top; */
     border-top: 1px solid #ddd
 }
 .table>thead>tr>th {
@@ -4575,7 +4575,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination {
     display: inline-block;
     padding-left: 0;
-    margin: 20px 0;
+    margin: 10px 0;
+    margin-bottom: 5px;/* Added to remove spaces below pagination component*/
     border-radius: 4px
 }
 .pagination>li {
@@ -5751,10 +5752,11 @@ button.close {
 }
 .modal-body {
     position: relative;
-    padding: 15px
+    padding: 15px;
+    padding-bottom: 0px; /* Added to reduce extra spaces before footer in popup*/
 }
 .modal-footer {
-    padding: 15px;
+    padding: 10px; /* Reduced pixel size for popup footer*/
     text-align: right;
     border-top: 1px solid #e5e5e5
 }

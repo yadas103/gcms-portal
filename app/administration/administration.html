@@ -1,9 +1,7 @@
-<h3>Administration</h3>
-
 <div class="panel panel-primary ng-scope">
 	<div class="panel-heading">Manage Countries and Templates</div>
 
-	<div class="panel-body" style="padding:27px;">
+	<div class="panel-body">
 
 <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
 
@@ -48,7 +46,7 @@
 						</span></td>
 					<td>{{con.countries.isoCode}}</td>
 					<td>{{con.countries.name}}</td>
-					<td class="tasktd cap">{{con.cntryContact}}</td>
+					<td class="tasktd">{{con.cntryContact}}</td>
 					<td class="tasktd cap">{{con.cntryReviewer}}</td>
 				</tr>
 				<tr ng-if="con.expanded" ng-repeat-end="" ng-controller="FileManagerController">

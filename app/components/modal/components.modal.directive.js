@@ -111,7 +111,7 @@
                resolve: {
                   item: function () {
                     return $scope.content;
-                                  
+                                 
                   }
                }
              });

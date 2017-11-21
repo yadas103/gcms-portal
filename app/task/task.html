@@ -219,7 +219,7 @@
 									
 									</div>
 									
-									 <div ng-switch-when="COMPLETED">
+									 <!-- <div ng-switch-when="COMPLETED">
 									
 									 
 									    <span ng-mouseover="value(con)" >
@@ -229,7 +229,7 @@
 										</gcms-modal>
 										</span>
 										
-									</div> 
+									</div>  -->
 									<div ng-switch-when="DELETED">
 										 
 											<gcms-modal template="task.undelete.html"
@@ -243,8 +243,8 @@
 							</td>
 							<td ng-show="con.taskstatus =='COMPLETED'">
 							
-									<span row-select="con" ng-click="select(con)">  <input
-											 type="checkbox" style="margin-left:7px;"/></span>	 							     
+									<span row-select="con" ng-click="select(con)">  
+									<input type="checkbox" style="margin-left:7px;"/></span>							     
 								
 							</td>
 

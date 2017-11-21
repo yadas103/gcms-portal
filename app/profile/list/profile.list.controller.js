@@ -162,10 +162,10 @@
 			data.country = params.country;
 			data.profileType = params.profileType;
 			data.lastName = (params.lastName !== undefined && params.lastName !== "" ) ? params.lastName : 'lastName';
-			data.city = params.city !== undefined ? params.city : 'city';
-			data.firstName = params.firstName !== undefined ? params.firstName : 'firstName';
-			data.address = params.address !== undefined ? params.address : 'address';
-			data.speciality = params.speciality !== undefined ? params.speciality : 'speciality';
+			data.city = (params.city !== undefined && params.city !== "") ? params.city : 'city';
+			data.firstName = (params.firstName !== undefined && params.firstName !== "") ? params.firstName : 'firstName';
+			data.address = (params.address !== undefined && params.address !== "" ) ? params.address : 'address';
+			data.speciality = (params.speciality !== undefined && params.speciality !== "") ? params.speciality : 'speciality';
 			data.collectingCountry = params.collectingCountry;
 			ProfileSearch.get(data).$promise
 			.then(function(profileSearch) {

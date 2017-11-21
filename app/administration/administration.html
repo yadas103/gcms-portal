@@ -1,6 +1,5 @@
 <h3>Administration</h3>
 
-<hr />
 <div class="panel panel-primary ng-scope">
 	<div class="panel-heading">Manage Countries and Templates</div>
 
@@ -10,15 +9,15 @@
 
 
 		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
-			class="table table-bordered table-hover">
+			class="table table-bordered table-hover table-condensed">
 			<thead style="background-color: #337ab7; color: white">
 				<tr style="height:6%;">
 					
-					<th style="width:4%;"></th>
-					<th style="width: 13%;" st-sort="countries.isoCode">Country ISO Code</th>
-					<th style="width: 13%;" st-sort="countries.name">Country Name</th>
-					<th style="width: 22%;" st-sort="cntryContact">Country Contact</th>
-					<th style="width: 52%;" st-sort="cntryReviewer">Identity Reviewers</th>
+					<th style="width:8%;text-align:center">Action</th>
+					<th style="width: 15%;" st-sort="countries.isoCode">Country ISO Code</th>
+					<th style="width: 15%;" st-sort="countries.name">Country Name</th>
+					<th style="width: 28%;" st-sort="cntryContact">Country Contact</th>
+					<th style="width: 45%;" st-sort="cntryReviewer">Identity Reviewers</th>
 
 				</tr>
 				
@@ -39,18 +38,18 @@
 							controller="ModalDefaultCtrl" content="con" ok="update"
 							alt="Edit {{con.id}}"> <span
 							title="Edit"
-							class="fa fa-pencil" style="color: #337ab7;"></span>
+							class="fa fa-pencil" style="color: #337ab7;margin-left: 18px;"></span>
 						</gcms-modal>
 						<span ng-if="con.expanded"  title="View/Add template" ng-click="con.expanded = false">
-							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 13px; color: #337ab7; padding-left: 9px;"></i>
+							<i class="fa fa-arrow-down" aria-hidden="true" style=" font-size: 15px; color: #337ab7; padding-left: 9px;"></i>
 						</span>
 						<span ng-if="!con.expanded" title="View/Add template"  ng-click="value(con)">
-							<i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 13px; color: #337ab7; padding-left: 9px;"></i>
+							<i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 15px; color: #337ab7; padding-left: 9px;"></i>
 						</span></td>
 					<td>{{con.countries.isoCode}}</td>
 					<td>{{con.countries.name}}</td>
-					<td style="word-break: break-all ;">{{con.cntryContact}}</td>
-					<td style="word-break: break-all ;" title="{{con.cntryReviewer}}">{{con.cntryReviewer}}</td>
+					<td class="tasktd cap">{{con.cntryContact}}</td>
+					<td class="tasktd cap">{{con.cntryReviewer}}</td>
 				</tr>
 				<tr ng-if="con.expanded" ng-repeat-end="" ng-controller="FileManagerController">
 					<td></td>
@@ -59,10 +58,10 @@
 						<table class="table table-bordered table-striped table-highlight">
 							<thead style="background-color: #337ab7; color: white">
 								<tr>
-									<th style="text-align: center;"><gcms-modal
+									<th style="text-align: center; width: 7%;"><gcms-modal
 											template="administration.template.add.html"
 											controller="ModalDefaultCtrl" ok="createTemplate"
-											alt="Add Templates"><a href="" title="Add Templates"><i style="color: white;" class="fa fa-plus-circle"></i></a>
+											alt="Add Templates"><a href="" title="Add Templates"><i style="color: white; margin-top: 8px;" class="fa fa-plus-circle fa-2x"></i></a>
 										</gcms-modal></th>
 
 									<th style="width: 20%;">Template Name</th>
@@ -85,33 +84,33 @@
 											controller="ModalDefaultCtrl" content="temp"
 											ok="updateTemplate"  alt="Edit Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-pencil"
-											style="color: #337ab7;margin-left:10px" title="Edit"></span> </gcms-modal>
+											style="color: #337ab7;margin-left:2px" title="Edit Template"></span> </gcms-modal>
 											 <gcms-modal
 											template="administration.template.delete.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deleteTemplate" alt="Delete Template {{temp.id}}">
 										<span class="fa fa-trash"
-											style="color: #337ab7;margin-left:8px" title="Delete"></span> </gcms-modal>											
+											style="color: #337ab7; margin-left: 7px;" title="Delete Template"></span> </gcms-modal>											
 										<gcms-modal
 											template="administration.template.deactivate.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="deactivateTemplate" alt="Deactivate Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-ban fa-inverse"
-											 title="Deactivate"
-											style="color: #337ab7;margin-left:8px""></span> </gcms-modal>
+											 title="Deactivate Template"
+											style="color: #337ab7; margin-left: 9px;"></span> </gcms-modal>
 
 
 										<!-- ng-hide="IsVisible"<span><button ng-click="showHide()">show</button>
 										<i class="fa fa-toggle-on" aria-hidden="true"></i></span> -->
 
 									</td>
-									<td style="word-break: break-all ;">{{temp.tmpl_name}}</td>
+									<td class="tasktd">{{temp.tmpl_name}}</td>
 									<td>{{temp.tmpl_code}}</td>
-									<td style="word-break: break-all ;">{{temp.tmpl_desc}}</td>
+									<td class="tasktd">{{temp.tmpl_desc}}</td>
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
-									<td>{{temp.tmpl_status}}</td>
+									<td class="tasktd">{{temp.tmpl_status}}</td>
 									<td >
 									
 									
@@ -121,16 +120,16 @@
 										<div ng-if="temp.tmpl_location==undefined">
 									<gcms-upload template="template.modals.html"
 										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
-										 <span>Upload</span>
+										 <span title="Upload Tempalte" style="margin-left: 32px;" class="fa fa-upload" >
 									</gcms-upload>
 								</div>
 								
 								
 								<div ng-if="temp.tmpl_location!=undefined" >								    
-										<a href="" ng-click="download(temp)" ng-show="temp.tmpl_status=='ACTIVE'"> View </a>
+										<a href="" ng-click="download(temp)" ng-show="temp.tmpl_status=='ACTIVE'"><span title="Download Template" style="margin-left: 14px;"class="fa fa-download"></span></a>
 									<gcms-upload template="template.modals.html"
 										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
-										 <span>Change</span>
+										 <span title="Update Template" style="margin-left: 17px;" class="fa fa-upload" >
 									</gcms-upload>
 
 								</div> 

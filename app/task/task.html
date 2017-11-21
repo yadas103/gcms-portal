@@ -114,7 +114,7 @@
 							<th style="width:13%; st-sort="initiatedby">Task Owner</th> 
 							<th style="width:10%;"st-sort="taskstatus">Task Status</th>
 							<th ng-hide="status=='DELETED'">Document Upload</th>
-							<th style="width:10%;"ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"
+							<th style="width:10%;"ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' " 
 								>Activity								
 								</th>						 
 							<th ng-show="status=='COMPLETED'">DLU P/T</th>
@@ -146,7 +146,7 @@
 														
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
-							<th ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"></th>
+							<th ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' "></th>
 							<th ng-show="status=='COMPLETED'"></th>
 						</tr>
 					</thead>
@@ -207,7 +207,7 @@
 
 
 							</td>
-							<td ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'" >
+							<td ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' " >
 							
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">

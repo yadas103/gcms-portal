@@ -566,7 +566,7 @@ textarea.ng-invalid,
 .tasktd{
 	padding-top: 14px;
     text-align: left;
-	text-transform:lowercase;
+	/* text-transform:lowercase; */
 	white-space: nowrap;
   	overflow-x: hidden;
   	text-overflow: ellipsis;
@@ -577,9 +577,10 @@ textarea.ng-invalid,
   white-space: normal;
   word-break: break-all ;
 } 
- .tasktd:first-letter{
+ /* .tasktd:first-letter{
 	text-transform:uppercase;
-} 
+}  */
+
 .th{
 	font-family: serif;
 	font-size: 13px;

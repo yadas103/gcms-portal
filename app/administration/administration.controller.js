@@ -86,7 +86,7 @@
 	  $scope.update = function(item) {			
 		//Reloads page once Identity Reviewer is updated.	          		        	  
 	       		        		  
-	        	$window.location.reload();		        		          		
+	        	//$window.location.reload();		        		          		
 	         
 	       };
 	         								

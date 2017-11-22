@@ -83,14 +83,16 @@ var updateIdentityRequestView = function(result) {
                if(result.$promise.$$state.status == 1)
            	{
             	   {
-            		   $scope.validation="Validated";
+            		   $scope.validation="true";
+            		   $scope.success="TR ID is valid,Please Approve or Reject "
                	}
                	
                	}
               
              }).catch(function(){
           	  
-            	 $scope.validation="Not Validated";
+            	 $scope.validation="false";
+            	 $scope.error="TR ID is not valid,Please verify!"
             	
              }); 
        }; 
@@ -278,7 +280,7 @@ var updateIdentityRequestView = function(result) {
       
         $scope.updateApprove = function(item) {
         	
-        	if( $scope.validation==="Validated")
+        	if( $scope.validation=='true')
         		
         	{
         		
@@ -329,7 +331,7 @@ var updateIdentityRequestView = function(result) {
            */
           
           $scope.updateDismiss = function(item) {
-       	if($scope.validation==="Validated")
+       	if($scope.validation=='true')
        	{
        		 item.status="Rejected";
            	 item.updatedDate = new Date();

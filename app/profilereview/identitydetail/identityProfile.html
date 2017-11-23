@@ -10,14 +10,14 @@
 					class="table table-bordered table-striped table-highlight">
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
-							<th class="pro-rev" style="padding-bottom: 18px;"> </th>
-							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="profileTypeId">Profile Type Id</th>
-							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="firstName">First Name</th>
-							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="lastName">Last Name</th>
-							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="organizationName">OrganizationName</th>
-							<th class="pro-rev" style="padding-bottom: 18px;" st-sort="country">Profile Country</th>
-							<th class="pro-rev" style="padding-bottom: 18px;" >Status</th>
-							<th class="pro-rev" style="padding-bottom: 18px;">Action</th>
+							<th class="pro-rev" > </th>
+							<th class="pro-rev"  st-sort="profileTypeId">Profile Type</th>
+							<th class="pro-rev"  st-sort="firstName">First Name</th>
+							<th class="pro-rev"  st-sort="lastName">Last Name</th>
+							<th class="pro-rev"  st-sort="organizationName">Organization Name</th>
+							<th class="pro-rev"  st-sort="country">Profile Country</th>
+							<th class="pro-rev"  >Status</th>
+							<th class="pro-rev" >Action</th>
 
 						</tr>
 
@@ -40,22 +40,28 @@
 					</thead>
 					<tbody>
 
-						<tr ng-repeat-start="identity in displayedCollection">
+						<tr ng-repeat="identity in displayedCollection">
 
 							<td>
-							<a herf="" ng-if="identity.expanded" ng-click="identity.expanded = false" >
+							
+							<gcms-modal template="identity.view.html"
+										controller="ModalDefaultCtrl" content="identity" ok="update"
+										alt="Edit Task {{identity.id}}"> <span
+										style="color: #337ab7;" title="View Profile"> View</span> </gcms-modal>
+										
+							<!-- <a herf="" ng-if="identity.expanded" ng-click="identity.expanded = false" >
                                                            Close  </a>
                              <a herf="" ng-if="!identity.expanded" ng-click="identity.expanded = true"
-                                                           >View </a> 
+                                                           >View </a>  -->
 
 							</td>
 							
-							<td style="word-break: break-all;">{{ identity.profileTypeId }}</td>
-							<td style="word-break: break-all;">{{ identity.firstName}}</td>
-							<td style="word-break: break-all;">{{ identity.lastName }}</td>
-							<td style="word-break: break-all;">{{ identity.organizationName}}</td>
-							<td style="word-break: break-all;">{{ identity.country}}</td>
-							<td style="word-break: break-all;">{{ identity.status }}</td>
+							<td class="tasktd">{{ identity.profileTypeId }}</td>
+							<td class="tasktd">{{ identity.firstName}}</td>
+							<td class="tasktd">{{ identity.lastName }}</td>
+							<td class="tasktd">{{ identity.organizationName}}</td>
+							<td class="tasktd">{{ identity.country}}</td>
+							<td class="tasktd">{{ identity.status }}</td>
 
 							<td>
 								<div ng-switch="identity.status">
@@ -73,58 +79,58 @@
 							</td>
 
 						</tr>
-						<div class="container">
+						<!-- <div class="container">
 						<div class="row">
 						
 						<tr ng-if="identity.expanded" ng-repeat-end="">
 							<td colspan="12">
-								<table class="table table-hover table-condensed table-striped">
+								<table class="table table-bordered table-striped table-highlight">
 									<tr>
-										<td style="padding-left: 63px;">ProfileTypeId:<span  style="margin-left: 86px;">  {{
-											identity.profileTypeId }}</span></td>
+										<td style="padding-left: 80px;">ProfileTypeId:<td  style="margin-left: 86px;">  {{
+											identity.profileTypeId }}</td></td>
 
-										<td style="padding-left: 63px;">FirstName:<span  style="margin-left: 86px;"> {{
-											identity.firstName}}</span></td>
+										<td style="padding-left: 63px;">FirstName:<td  style="margin-left: 86px;"> {{
+											identity.firstName}}</td></td>
 									</tr>
 									<tr>
-										<td style="padding-left: 63px;">LastName:<span  style="margin-left: 86px;">  {{
-											identity.lastName }}</span></td>
-										<td style="padding-left: 63px;">OrganizationName:<span style="margin-left: 39px;"> {{
-											identity.organizationName}}</span></td>
+										<td style="padding-left: 80px;">LastName:<td  style="margin-left: 86px;">  {{
+											identity.lastName }}</td></td>
+										<td style="padding-left: 63px;">OrganizationName:<td style="margin-left: 39px;"> {{
+											identity.organizationName}}</td></td>
 									</tr>
 
 									<tr>
-										<td style="padding-left: 63px;">Country: <span  style="margin-left: 86px;"> {{
-											identity.country }}</span></td>
-										<td style="padding-left: 63px;">Address:<span style="margin-left: 95px;"> {{
-											identity.address}}</span></td>
-									</tr>
-									<tr>
-
-										<td style="padding-left: 63px;">Speciality:<span  style="margin-left: 86px;">  {{
-											identity.specility}}</span></td>
-										<td style="padding-left: 63px;">Notes:{{ identity.notes}}</td>
-
+										<td style="padding-left: 80px;">Country: <td  style="margin-left: 86px;"> {{
+											identity.country }}</td></td>
+										<td style="padding-left: 63px;">Address:<td style="margin-left: 95px;"> {{
+											identity.address}}</td></td>
 									</tr>
 									<tr>
 
-										<td style="padding-left: 63px;">Status: {{
-											identity.status}}</td>
+										<td style="padding-left: 80px;">Speciality:<td  style="margin-left: 86px;">  {{
+											identity.specility}}</td></td>
+										<td style="padding-left: 63px;">Notes: <td  style="margin-left: 86px;">  {{ identity.notes}}</td></td>
+
+									</tr>
+									<tr>
+
+										<td style="padding-left: 80px;">Status: <td> {{
+											identity.status}}</td></td>
 
 
 
 									</tr>
 
 
-
-
+									
+									
 
 								</table>
 							</td>
 						</tr>
 					
 						</div>
-						</div>
+						</div> -->
 					</tbody>
 					<tfoot>
 						<tr>

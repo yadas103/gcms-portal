@@ -1,0 +1,107 @@
+
+<div class="modal-content">
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium;">Identity View</h3>
+  
+</div>
+
+<div class="modal-body" >
+  <form name="taskForm"  novalidate  class="form-horizontal">
+  
+  	<!-- <table>
+  	<tr>
+  		<td><label for="consannexid.eventname" class="col-sm-3 control-label" style="margin-left: 50%;"><b>ProfileType:</b></label></td>
+  		<td> <label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 70%;">{{item.profileTypeId }}</label>		</td>
+  		<td><label for="consannexid.pocode" class="col-sm-3 control-label"  style="margin-left: 115%;"><b>FirstName:</b></label></td>
+  		<td><label    id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 135%;">{{item.firstName}}</label></td>
+  	</tr>	
+
+  	<tr>
+  		<td><label for="consannexid.acmcode" class="col-sm-3 control-label" style="margin-left: 50%;"><b>LastName:</b></label></td>
+  		<td> <label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 70%;">{{item.lastName }}</label>		</td>
+  		  		<td><label for="middleName" class="col-sm-3 control-label" style="margin-left: 115%;"><b>Country:</b></label></td>
+  		<td> <label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 135%;">{{item.country }}</label>		</td>
+  		
+  	</tr>
+<tr>
+  		<td><label for="middleName" class="col-sm-3 control-label" style="margin-left: 50%;"><b>Address:</b></label></td>
+  		<td> <label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 70%;">{{item.address }}</label>		</td>
+  		  		<td><label for="middleName" class="col-sm-3 control-label" style="margin-left: 115%;"><b>Speciality:</b></label></td>
+  		<td> <label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 135%;">{{item.specility }}</label>		</td>
+  		
+  	</tr>
+  	<tr>
+  	</tr>
+  	
+  	<tr>
+  		<td><label for="middleName" class="col-sm-3 control-label" style="margin-left: 50%;"><b>Notes:</b></label></td>
+  		<td> <label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 70%;">{{item.notes }}</label>		</td>
+  		 <td><label for="middleName" class="col-sm-3 control-label" style="margin-left: 115%;"><b>Status:</b></label></td>
+    <div class="col-sm-9">
+      <td><label   id="eventname" name="eventname" class="col-sm-3 control-label" style="margin-left: 135%;">{{item.status }}</label>          </td>
+  	</tr>
+  	
+
+    </div>
+    </table> -->
+	
+	
+	<div class="form-group">
+    <label for="consannexid.eventname" class="col-sm-3 control-label">ProfileType:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control"  id="eventname" name="eventname" placeholder="{{item.profileTypeId }}" ng-disabled="true">
+    </div>
+  </div>
+  <div class="form-group" >
+    <label for="consannexid.pocode" class="col-sm-3 control-label">FirstName:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control" id="pocode" name="pocode" placeholder="{{item.firstName }}" ng-disabled="true">
+    </div>
+  </div>
+      <div class="form-group" >
+    <label for="consannexid.acmcode" class="col-sm-3 control-label">LastName:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" placeholder="{{item.lastName }}" ng-disabled="true" >
+    </div>
+  </div>
+  <div class="form-group" >
+  <label for="consannexid.eventname" class="col-sm-3 control-label">Country:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control"  id="eventname" name="eventname" placeholder="{{item.country }}" ng-disabled="true">
+    </div>
+  </div>
+  <div class="form-group" >
+    <label for="consannexid.pocode" class="col-sm-3 control-label">Address:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control" id="pocode" name="pocode" placeholder="{{item.address }}" ng-disabled="true">
+    </div>
+  </div>
+      <div class="form-group" >
+    <label for="consannexid.acmcode" class="col-sm-3 control-label">Speciality:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" placeholder="{{item.specility }}" ng-disabled="true" >
+    </div>
+  </div>
+      <div class="form-group" >
+    <label for="consannexid.acmcode" class="col-sm-3 control-label">Status:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" placeholder="{{item.status }}" ng-disabled="true" >
+    </div>
+  </div>
+  <div class="form-group" >
+    <label for="consannexid.pocode" class="col-sm-3 control-label">Notes:</label>
+    <div class="col-sm-9">
+      <textarea ng-maxlength="60" type="text" class="form-control" style="resize: none" id="pocode" name="pocode" placeholder="{{item.notes }}" ng-disabled="true"></textarea>
+    </div>
+  </div>
+  
+   
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()" >Close</button>
+</div>
+
+</div>

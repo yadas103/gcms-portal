@@ -85,9 +85,9 @@
 			 */
 	  $scope.update = function(item) {			
 		//Reloads page once Identity Reviewer is updated.	          		        	  
-	       $scope.getProfileReviewerPersmission = function(currentProfile){			        		  
-	        	$window.location.reload();		        		          		
-	          };
+	       		        		  
+	        	//$window.location.reload();		        		          		
+	         
 	       };
 	         								
 	          

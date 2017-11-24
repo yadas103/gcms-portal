@@ -42,9 +42,11 @@
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';	
 		$scope.profile.readOnly = false;
+		$scope.hideHCO = true;
 		$scope.crossInCountry = {};
 		$scope.profileTypeSelected = {};
 		$scope.templateTypeSelected = {};	
+		$scope.clearText = "";
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -141,6 +143,17 @@
 		loadCountry();
 
 		$scope.$on('$localeChangeSuccess', loadCountry);
+		
+		$scope.clear = function()
+		{
+			$scope.request.lastName = $scope.clearText;
+			$scope.request.city = $scope.clearText;
+			$scope.request.firstName = $scope.clearText;
+			$scope.request.address = $scope.clearText;
+			$scope.request.tmpl_id = $scope.clearText;
+			$scope.request.speciality = $scope.clearText;
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
+		};
 
 		//Function to search for requested profiles
 		$scope.submit = function(request) {
@@ -150,6 +163,13 @@
 			$scope.selectedids = [];
 			$scope.cntryValue = request.country;
 			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":""};
+			/*if($scope.request.profileType == 'HCP'){
+				$scope.hideHCO = true;
+				$scope.hideHCP = false;
+			}else if($scope.request.profileType == 'HCO'){
+				$scope.hideHCP = true;
+				$scope.hideHCO = false;
+			}*/
 
 			for(var i in $scope.counties){
 				if ($scope.counties[i].name == request.collectingCountry){
@@ -174,6 +194,13 @@
 					$scope.search = undefined;
 				}
 				$scope.isReset = true;
+				if($scope.request.profileType == 'HCP'){
+					$scope.hideHCO = true;
+					$scope.hideHCP = false;
+				}else if($scope.request.profileType == 'HCO'){
+					$scope.hideHCP = true;
+					$scope.hideHCO = false;
+				}
 
 			}).catch(function(){
 				$scope.responseOnSearch = "No records to show"
@@ -215,6 +242,7 @@
 
 				}
 			});
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
 			if ((unchecked == 0) || (checked == 0)) {
 				$scope.checkboxes.checked = (checked == total);
 			}
@@ -469,8 +497,8 @@
 		}
 				
 		
-		$scope.change = function(){
-			$scope.setDownload = $scope.request.tmpl_id == undefined ? true : false;	
+		$scope.change = function(){			
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
 		};
 		
 		//Filters templates based on Reporting Country				

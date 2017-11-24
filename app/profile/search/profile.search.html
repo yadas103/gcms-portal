@@ -32,7 +32,7 @@
 						</select> <label style="font-size: 12px;margin-left: 3px;">Reporting Country</label><br>
 					</div>
 					<div class="col-sm-3 form-group" id="search-drop">
-						<select ng-model="request.profileType" class="drop-receipi" title="Business Party Type" required>							 						
+						<select ng-model="request.profileType" class="drop-receipi" ng-change="clear()" title="Business Party Type" required>							 						
 							<option ng-repeat="prof in profile_types">{{prof.name}}</option>
 						</select>						
 						<label style="font-size: 12px;margin-left: 2px;">Business Party Type</label><br>
@@ -129,14 +129,18 @@
 							ng-click="orderByField='profileType'; reverseSort = !reverseSort"
 							style="font-size: 13px; font-family: sans-serif;  width: 86px;"
 							st-sort="profileType">Profile Type</th>
-						<th ng-click="orderByField='lastName'; reverseSort = !reverseSort"
+						<th 
+							ng-hide = "hideHCP"
+							ng-click="orderByField='lastName'; reverseSort = !reverseSort"
 							st-sort="lastName"
 							>Last Name</th>
 						<th
+							ng-hide = "hideHCP"
 							ng-click="orderByField='firstName'; reverseSort = !reverseSort"
 							st-sort="firstName"
 							>First Name</th>
 						<th
+							ng-hide = "hideHCO"
 							ng-click="orderByField='organisationName'; reverseSort = !reverseSort"
 							st-sort="organisationName"
 							>Organization Name</th>
@@ -148,6 +152,7 @@
 							st-sort="address"
 							>Address</th>
 						<th
+							ng-hide = "hideHCP"
 							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
 							st-sort="specialit"
 							>Specialty</th>
@@ -160,18 +165,18 @@
 						<th ng-hide = "true"><input ng-model="search.profileType"
 							st-search="profileType" placeholder=" " class="form-control"
 							type="search" /></th>
-						<th><input ng-model="search.lastName" st-search="lastName"
+						<th ng-hide = "hideHCP"><input ng-model="search.lastName" st-search="lastName"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.firstName" st-search="firstName"
+						<th ng-hide = "hideHCP"><input ng-model="search.firstName" st-search="firstName"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.organisationName"
+						<th ng-hide = "hideHCO"><input ng-model="search.organisationName"
 							st-search="organisationName" placeholder=" " class="form-control"
 							type="search" /></th>
 						<th><input ng-model="search.city" st-search="city"
 							placeholder=" " class="form-control" type="search" /></th>
 						<th><input ng-model="search.address" st-search="address"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.speciality" st-search="speciality"
+						<th ng-hide = "hideHCP"><input ng-model="search.speciality" st-search="speciality"
 							placeholder=" " class="form-control" type="search" /></th>
 						<th></th>
 					</tr>
@@ -179,16 +184,16 @@
 				<tbody>
 					<tr
 						data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
-						<td><input type="checkbox"
+						<td><input type="checkbox"							
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
 						<td ng-hide = "true">{{pro.id}}</td>
 						<td ng-hide = "true">{{pro.profileType}}</td>
-						<td class="tasktd" title="{{pro.lastName}}">{{pro.lastName}}</td>
-						<td class="tasktd" title="{{pro.firstName}}">{{pro.firstName}}</td>
-						<td class="tasktd" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
+						<td class="tasktd" title="{{pro.lastName}}" ng-hide = "hideHCP">{{pro.lastName}}</td>
+						<td class="tasktd" title="{{pro.firstName}}" ng-hide = "hideHCP">{{pro.firstName}}</td>
+						<td class="tasktd" ng-hide = "hideHCO" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
 						<td class="tasktd" title="{{pro.city}}">{{pro.city}}</td>
 						<td class="tasktd" title="{{pro.address}}">{{pro.address}}</td>
-						<td class="tasktd" title="{{pro.speciality}}">{{pro.speciality}}</td>						
+						<td class="tasktd" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>						
 						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
 						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id)">View</a></gcms-modal></td>					

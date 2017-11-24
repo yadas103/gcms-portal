@@ -41,8 +41,16 @@
   <div class="form-group" >
     <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
        <div class="col-sm-9">
-       <input type="date" style="width: 138px;" class="form-control"  ng-model="item.consannexid.consentstartdate" value={{item.consannexid.consentstartdate}} is-open=""  close-text="Close" />
-            
+         <input    		 
+    		 class="form-control"
+    		 style="width: 138px;"
+             placeholder="Select a date..."
+             moment-picker
+             locale="en"
+             format="DD-MM-YYYY"
+             ng-model="item.consannexid.consentstartdate"
+             start-date="item.consannexid.consentstartdate"
+             ng-model-options="{ updateOn: 'blur' }">   
             
     	<!-- <input type="date" class="form-control" ng-model="item.consannexid.consentstartdate" value="{{item.consannexid.consentstartdate}}" min="{{item.consannexid.consentstartdate}}" /> --> 
     	<!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentstartdate" is-open="openedStart"  close-text="Close" />              
@@ -54,7 +62,17 @@
     <label  for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
     <div class="col-sm-9">
     <!-- <input type="date" style="width: 138px;" class="form-control"   value={{item.consannexid.consentenddate}}  />  -->
-      <input type="date" style="width: 138px;"  class="form-control" ng-model="item.consannexid.consentenddate"  value={{item.consannexid.consentenddate}} is-open=""  close-text="Close" /> 
+      <!-- <input type="date" style="width: 138px;"  class="form-control" ng-model="item.consannexid.consentenddate"  value={{item.consannexid.consentenddate}} is-open=""  close-text="Close" /> --> 
+       <input    		 
+    		 class="form-control"
+    		 style="width: 138px;"
+             placeholder="Select a date..."
+             moment-picker
+             locale="en"
+             format="DD-MM-YYYY"
+             ng-model="item.consannexid.consentenddate"
+             start-date="item.consannexid.consentenddate"
+             ng-model-options="{ updateOn: 'blur' }"> 
       <!--  <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.consannexid.consentenddate" min-date="item.consannexid.consentstartdate" is-open="openedEnd"  close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">
               <i class="fa fa-calendar"></i></button> -->

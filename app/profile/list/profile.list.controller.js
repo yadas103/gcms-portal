@@ -443,8 +443,7 @@
 			for(var i  in $scope.checkedIds){
 				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
 				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment($scope.currentYear+'/01/01');
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate =  moment($scope.currentYear+'/12/31');
-				console.log(moment('2017/12/31'));
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate =  moment($scope.currentYear+'/12/31');				
 			}
 			for(var i in $scope.templates){
 				if($scope.templates[i].id == $scope.request.tmpl_id){							

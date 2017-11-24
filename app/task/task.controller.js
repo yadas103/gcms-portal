@@ -240,7 +240,10 @@
           }
 		 
 	  
-	 
+      	$scope.date = function(con){
+      		con.consannexid.consentstartdate =  moment(con.consannexid.consentstartdate);
+      		con.consannexid.consentenddate =  moment(con.consannexid.consentenddate);
+      	};
 		
 		
 		/**
@@ -251,6 +254,8 @@
          * @description Updates Task
          * @param {object} item Task to update
          */
+      
+      
 		 $scope.update = function(item) {
 			 console.log("Inside update function");
 			 console.log(item.id);

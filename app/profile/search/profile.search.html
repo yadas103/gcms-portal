@@ -1,4 +1,5 @@
 <!-- Home page -->
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Search Details</h3>
@@ -64,7 +65,9 @@
 					<label for="Speciality" style="font-size: 12px;margin-left: -2px;">Speciality</label><br>
 				</div>
 				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
-				<select class="drop-receipi" style="width: 264px;margin-left: 19px;margin-top: 5px;" title="Template Type" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;"><option value="" ng-show="{{empty}}"></option></select>
+				<select class="drop-receipi" style="width: 264px;margin-left: 19px;margin-top: 5px;" title="Template Type" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;">
+					<option value="" ng-show="{{empty}}">Select Template</option>
+				</select>
 				<label for="Template Type" style="font-size: 12px;margin-left: 19px;">Template Type</label><br>
 				</div>
 				</div>
@@ -74,17 +77,17 @@
 						ng-disabled="requestSearchForm.$invalid">
 						Search</button>
 					<span ng-show="!requestSearchForm.$invalid">
-						<span ng-show="!setDownload"> 
-							<gcms-modal template="template.download.html"
-								controller="ModalDefaultCtrl" ok="submittry" content="dataToSend" >
-								<span class="btn btn-lg btn-default" role="button" data-toggle="tooltip"
-								data-placement="top" title="Download Consent Annex Template" ng-click="list()" ng-disabled="setDownload" >Download </span></gcms-modal>
-						</span> 
-						<span ng-show="setDownload">
-							<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
-								title="Download Consent Annex Template" ng-disabled="true">
-								Download</button>
-						</span> 
+					<span ng-show="!setDownload"> 
+						<gcms-modal template="template.download.html"
+							controller="ModalDefaultCtrl" ok="submittry" content="dataToSend" >
+							<span class="btn btn-lg btn-default" role="button" data-toggle="tooltip"
+							data-placement="top" title="Download Consent Annex Template" ng-click="list()" ng-disabled="setDownload" >Download </span></gcms-modal>
+					</span> 
+					<span ng-show="setDownload">
+						<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
+							title="Download Consent Annex Template" ng-disabled="true">
+							Download</button>
+					</span> 
 				</span>
 				<span ng-show="requestSearchForm.$invalid">
 					<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
@@ -112,7 +115,8 @@
 				class="table table-bordered table-striped table-highlight">
 				<thead>
 					<tr style="color: white; background-color: #337ab7;">
-						<th
+						
+						<th 
 							></th>
 						<th 
 							ng-hide = "true"
@@ -147,7 +151,7 @@
 							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
 							st-sort="specialit"
 							>Specialty</th>
-						<th style="width:80px;">Consent History</th>
+						<th style="width:105px;">Consent History</th>
 					</tr>
 					<tr>
 						<th></th>

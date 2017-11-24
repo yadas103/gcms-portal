@@ -164,8 +164,9 @@
   <div class="panel-body">
    <span style="color: green;">{{success}}</span>
    <span style="color: red;">{{error}}</span>
-	<table class="table table-bordered table-striped table-highlight">
-      <thead>
+	<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
+			class="table table-bordered table-hover table-condensed">
+			<thead style="background-color: #337ab7; color: white">
         <tr>
 		<th style="width: 50px; text-align: center;">
 		  <gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
@@ -173,10 +174,10 @@
 		  </gcms-modal>
 		</th>
 		
-        <th style="color: #337ab7 !important;">Username</th>
-          <th style="color: #337ab7 !important;">Country</th>
+        <th >Username</th>
+          <th >Country</th>
           <th ng-repeat="role in roles">
-            <gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" >{{role.roleName}}</gcms-modal>
+            <gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" ><span style="background-color: #337ab7; color: white !important">{{role.roleName}}</span></gcms-modal>
           </th>
       </tr>
 	  </thead>

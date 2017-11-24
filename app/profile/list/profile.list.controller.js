@@ -52,7 +52,7 @@
 			name: 'HCO',
 			value: 'HCO'
 		}];
-
+		 var ctrl = this;
 		 var internalError = function(){
 		        toasty.error({
 		          title: 'Error',
@@ -162,10 +162,10 @@
 			data.country = params.country;
 			data.profileType = params.profileType;
 			data.lastName = (params.lastName !== undefined && params.lastName !== "" ) ? params.lastName : 'lastName';
-			data.city = params.city !== undefined ? params.city : 'city';
-			data.firstName = params.firstName !== undefined ? params.firstName : 'firstName';
-			data.address = params.address !== undefined ? params.address : 'address';
-			data.speciality = params.speciality !== undefined ? params.speciality : 'speciality';
+			data.city = (params.city !== undefined && params.city !== "") ? params.city : 'city';
+			data.firstName = (params.firstName !== undefined && params.firstName !== "") ? params.firstName : 'firstName';
+			data.address = (params.address !== undefined && params.address !== "" ) ? params.address : 'address';
+			data.speciality = (params.speciality !== undefined && params.speciality !== "") ? params.speciality : 'speciality';
 			data.collectingCountry = params.collectingCountry;
 			ProfileSearch.get(data).$promise
 			.then(function(profileSearch) {
@@ -414,8 +414,9 @@
 			
 			for(var i  in $scope.checkedIds){
 				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate = new Date('01/01/'+$scope.currentYear);
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = new Date('12/31/'+$scope.currentYear);
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment($scope.currentYear+'/01/01');
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate =  moment($scope.currentYear+'/12/31');
+				console.log(moment('2017/12/31'));
 			}
 			for(var i in $scope.templates){
 				if($scope.templates[i].id == $scope.request.tmpl_id){							
@@ -446,8 +447,8 @@
 				item.request[$scope.copyCheckedIds[i]].acmcode = $scope.item.copyAcmcode;
 				item.request[$scope.copyCheckedIds[i]].eventname = $scope.item.copyEventName;
 				item.request[$scope.copyCheckedIds[i]].pocode = $scope.item.copyPocode;
-				item.request[$scope.copyCheckedIds[i]].consentstartdate = $scope.item.copyConsentStartDate == undefined? new Date('01/01/'+$scope.currentYear) : $scope.item.copyConsentStartDate ;
-				item.request[$scope.copyCheckedIds[i]].consentenddate = $scope.item.copyConsentEndDate == undefined? new Date('12/31/'+$scope.currentYear) : $scope.item.copyConsentEndDate;
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = $scope.item.copyConsentStartDate == undefined? moment($scope.currentYear+'/01/01') : $scope.item.copyConsentStartDate ;
+				item.request[$scope.copyCheckedIds[i]].consentenddate = $scope.item.copyConsentEndDate == undefined? moment($scope.currentYear+'/12/31') : $scope.item.copyConsentEndDate;
 			}
 		}
 		

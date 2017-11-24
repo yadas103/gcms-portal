@@ -186,6 +186,10 @@ fieldset {
 	padding-bottom: 35px;
 }
 
+.moment-picker {
+z-index: 1060 !important;
+}
+
 #admin-table th{
 	color:white;
 }

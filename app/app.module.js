@@ -44,6 +44,7 @@
 	  'ngJsonExportExcel',
 	  'dctmNgFileManager',
 	  'ngFileSaver', 
-	  'dctmRestClient'
+	  'dctmRestClient',
+	  'moment-picker'
     ]);
 })();

@@ -577,9 +577,13 @@ textarea.ng-invalid,
   white-space: normal;
   word-break: break-all ;
 } 
- /* .tasktd:first-letter{
+
+.sak{
+	text-transform:lowercase; 
+}
+ .sak:first-letter{
 	text-transform:uppercase;
-}  */
+}  
 
 .th{
 	font-family: serif;

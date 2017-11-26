@@ -5,7 +5,7 @@
 
 <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
 
-
+<!-- st-safe-src="ReviewAttributes" -->
 		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
 			class="table table-bordered table-hover table-condensed">
 			<thead style="background-color: #337ab7; color: white">
@@ -53,7 +53,7 @@
 					<td></td>
 					<td colspan="4">
 						<!--  st-table="Templates" -->
-						<table class="table table-bordered table-striped table-highlight">
+						<table st-table="Templates" class="table table-bordered table-striped table-highlight">
 							<thead style="background-color: #337ab7; color: white">
 								<tr>
 									<th style="text-align: center; width: 7%;"><gcms-modal
@@ -108,7 +108,7 @@
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
-									<td class="tasktd">{{temp.tmpl_status}}</td>
+									<td class="tasktd sak">{{temp.tmpl_status}}</td>
 									<td >
 									
 									
@@ -144,7 +144,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="13" class="text-center">
-						<div st-items-by-page="5" st-pagination=""
+						<div st-table="displayedCollection" st-safe-src="ReviewAttributes"  st-items-by-page='5' st-pagination=""
 							st-template="app/task/pagination.custom.html"></div>
 					</td>
 				</tr>
@@ -164,7 +164,9 @@
   <div class="panel-body">
    <span style="color: green;">{{success}}</span>
    <span style="color: red;">{{error}}</span>
-	<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
+   
+   <!-- st-table="displayedCollection" st-safe-src="ReviewAttributes" -->
+	<table 
 			class="table table-bordered table-hover table-condensed">
 			<thead style="background-color: #337ab7; color: white">
         <tr>

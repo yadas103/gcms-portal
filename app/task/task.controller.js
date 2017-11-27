@@ -20,6 +20,7 @@
 	  
 	  console.log("Inside task controller");
 	  	
+	  	
 	    var internalError = function(){
 	        toasty.error({
 	          title: 'Error',
@@ -60,6 +61,7 @@
 				 $scope.firstload=true;
 				 return;
 			 }
+			
 			$scope.selected = [];  
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;
@@ -168,7 +170,7 @@
 	   *  selim
        *  Bulk upload fuctionality
        */
-      $scope.a=false;
+      
       $scope.uploads = [];
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
@@ -245,6 +247,15 @@
       		con.consannexid.consentenddate =  moment(con.consannexid.consentenddate);
       	};
 		
+      	
+      	$scope.close=function(item) {
+      	 if(item.consannexid.annnexlocation != undefined){
+      		 if(item.consannexid.consentstatus.id != '63'){
+      			item.taskstatus="COMPLETED";
+      		 }
+      	 }
+      	 Task.update({ id:item.id }, item);	 
+      	}
 		
 		/**
 		 * selim
@@ -255,7 +266,7 @@
          * @param {object} item Task to update
          */
       
-      
+       
 		 $scope.update = function(item) {
 			 console.log("Inside update function");
 			 console.log(item.id);
@@ -267,13 +278,20 @@
 	       
 	           con.updatedDate = new Date(); 
 	           con.consannexid.updatedDate = new Date();
-	              }
+	         }
 	            });
+	           
+	           if(item.consannexid.consentstatus.id != '63'){
+	        	   if(item.consannexid.annnexlocation != undefined ){
+	        		   item.taskstatus="COMPLETED";
+	        	   }
+	           }
 	           // Task.update({ id:item.id }, item);
 	         	Task.update({ id:item.id }, item).$promise.then(function(response){
 	            	console.log(response);
 	            	if(response.$promise.$$state.status==1)
 	            		{
+	            		refresh();
 	            		toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Task Updated !',
@@ -285,6 +303,7 @@
 	            	        shake: false,
 	            	        theme: 'bootstrap'
 	            	      });
+	            		
 	            		//$scope.success= item.id + " task has been updated successfully";
 	            		}else{
 	            			unspecifiedError();

@@ -104,17 +104,17 @@
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
 							<th ng-hide="status=='DELETED'">Action</th>
-							<th style="width:11%;"st-sort="payercountry">Payer Country</th>
+							<th style="width:12%;"st-sort="payercountry">Payer Country</th>
 							<th style="width:13%;"st-sort="lastname">Last Name/Org Name</th>
 							<th style="width:13%;" st-sort="firstname">First Name</th>
-							<th style="width:11%;"st-sort="profilecountry">Profile Country</th>
-							<th style="width:15%; st-sort="eventname">Event Name</th>
+							<th style="width:12%;"st-sort="profilecountry">Profile Country</th>
+							<th style="width:18%; st-sort="eventname">Event Name</th>
 							<th style="width:12%;"st-sort="consentstaus">Consent Status</th>
 							<th style="width:10%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
-							<th style="width:13%; st-sort="initiatedby">Task Owner</th> 
-							<th style="width:10%;"st-sort="taskstatus">Task Status</th>
+							<th style="width:18%; st-sort="initiatedby">Task Owner</th> 
+							<th style="width:6%;"st-sort="taskstatus">Task Status</th>
 							<th ng-hide="status=='DELETED'">Document Upload</th>
-							<th style="width:10%;"ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"
+							<th style="width:10%;" ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' " 
 								>Activity								
 								</th>						 
 							<th ng-show="status=='COMPLETED'">DLU P/T</th>
@@ -138,7 +138,7 @@
 								class="form-control" type="search" /></th>
 								<th><input st-search="initiatedby" placeholder=""
 								class="form-control" type="search" /></th> 
-							<th><select st-input-event="change keydown" st-search="taskstatus">
+							<th style="width:6%;"><select st-input-event="change keydown" st-search="taskstatus">
 									<option value="INCOMPLETE">Incomplete</option>
 									<option value="COMPLETED">Completed</option>
 									<option value="DELETED">Deleted</option>
@@ -146,7 +146,7 @@
 														
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
-							<th ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'"></th>
+							<th ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' " ></th>
 							<th ng-show="status=='COMPLETED'"></th>
 						</tr>
 					</thead>
@@ -180,13 +180,26 @@
 									list="consentType"></gcms-idname></td>
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
 							<td class="tasktd ">{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
-							<td class="tasktd sak" >{{con.taskstatus}}
+							<td class="tasktd" >
+							 <div ng-if="con.taskstatus=='INCOMPLETE'" class="text-center">
+							   <div ng-if="con.consannexid.annnexlocation ==undefined">							   
+							   		<span title="Documnet = Missing"  class="fa fa-eye" style="color: #337ab7"></span>
+							   </div>
+							 <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id =='63'">
+							   		<span title="Documnet=OK , Consent = Missing"  class="fa fa-eye" style="color: #337ab7"></span>
+							   </div> 
+							 </div>
+							 <div ng-if="con.taskstatus=='COMPLETED'" class="text-center">
+							    <span class="fa fa-check" style="color: #337ab7;" title="Task Completed"></span>							   
+							 </div>
+							 <div ng-if="con.taskstatus=='DELETED'" class="text-center">{{con.taskstatus}}</div>
+							 </td>
 							<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">
 
 									<div ng-if="con.consannexid.annnexlocation==undefined">
 										<gcms-upload template="task.modals.html"
-											controller="ModalDefaultCtrl2" content="con" ok="update"
+											controller="ModalDefaultCtrl2" content="con" ok="close"
 											> <span title="Upload " class="fa fa-upload" style=" margin-left: 24px;"> </gcms-upload>
 									</div>
 									<div ng-if="con.consannexid.annnexlocation!=undefined">
@@ -202,12 +215,8 @@
 									</div>
 
 								</div>
-
-
-
-
 							</td>
-							<td ng-show="loggedInUserRoleId=='5'" ng-hide="status=='COMPLETED'" >
+							<td ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' "  >
 							
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
@@ -219,7 +228,7 @@
 									
 									</div>
 									
-									 <div ng-switch-when="COMPLETED">
+									<!--  <div ng-switch-when="COMPLETED">
 									
 									 
 									    <span ng-mouseover="value(con)" >
@@ -229,7 +238,7 @@
 										</gcms-modal>
 										</span>
 										
-									</div> 
+									</div>  -->
 									<div ng-switch-when="DELETED">
 										 
 											<gcms-modal template="task.undelete.html"

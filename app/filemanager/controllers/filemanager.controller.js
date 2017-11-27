@@ -93,6 +93,7 @@
 	        			           	      });
 	        		            		
 	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
 	        		            		}else{
 	        		            			toasty.error({
 	  	        		          	          title: 'Error',
@@ -155,15 +156,14 @@
             		            var link =respn.data.links[0];
             		            var docLink = link.href;		            
             		            console.log("Function calling from Task module");
-            		            $scope.item.consannexid.annnexlocation=docLink;
-            		            $scope.item.taskstatus="COMPLETED";
+            		            $scope.item.consannexid.annnexlocation=docLink;            		           
             		            Task.update({ id:item.id },item).$promise.then(function(response){
 	        		            	console.log(response);
 	        		            	if(response.$promise.$$state.status==1)
 	        		            		{
 	        		            		toasty.success({
 	        			           	        title: 'Success',
-	        			           	        msg: 'Task Status Changed to COMPLETED',
+	        			           	        msg: 'File Uploaded Successfully!',
 	        			           	        showClose: true,
 	        			           	        clickToClose: true,
 	        			           	        timeout: 5000,
@@ -172,8 +172,8 @@
 	        			           	        shake: false,
 	        			           	        theme: 'bootstrap'
 	        			           	      });
-	        		            		$scope.success= "File Uploaded Successfully!" ;
 	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
 	        		            		}else{
 	        		            			toasty.error({
 	  	        		          	          title: 'Error',

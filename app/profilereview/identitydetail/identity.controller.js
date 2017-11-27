@@ -75,8 +75,9 @@ var updateIdentityRequestView = function(result) {
        * @description validate bpid entered in the TextBox in approve and reject pop up screen 
        */
       
-      $scope.validation=" ";
-      $scope.validate = function(item){     	
+      $scope.validation='';
+      $scope.validate = function(item){ 
+    	  $scope.validation='';
     	  var id  ={id:item.bpid};
     	  ValidatedProfile.get(id).$promise
            .then(function(result) {
@@ -93,7 +94,6 @@ var updateIdentityRequestView = function(result) {
           	  
             	 $scope.validation="false";
             	 $scope.error="TR ID is not valid,Please verify!"
-            	
              }); 
        }; 
      
@@ -360,8 +360,10 @@ var updateIdentityRequestView = function(result) {
            	        html: false,
            	        shake: false,
            	        theme: 'bootstrap'
-           	      })};
-           		$scope.ok(item);
+           	      })
+           	   $scope.ok(item);
+         	};
+           		
            		
            	
 		      }).catch(function(){

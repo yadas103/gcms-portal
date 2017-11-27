@@ -71,25 +71,25 @@
 				<label for="Template Type" style="font-size: 12px;margin-left: 19px;">Template Type</label><br>
 				</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-top: 6px;">
 				<button type="submit" class="btn btn-lg btn-default" ng-click="submit(request)" alt="Search" data-toggle="tooltip"
 						data-placement="top" title="Search"
 						ng-disabled="requestSearchForm.$invalid">
 						Search</button>
-					<span ng-show="!requestSearchForm.$invalid">
-					<span ng-show="!setDownload"> 
+					<span ng-show="!requestSearchForm.$invalid" >
+					<span ng-show="!setDownload" style="margin-left: 10px;"> 
 						<gcms-modal template="template.download.html"
 							controller="ModalDefaultCtrl" ok="submittry" content="dataToSend" >
 							<span class="btn btn-lg btn-default" role="button" data-toggle="tooltip"
 							data-placement="top" title="Download Consent Annex Template" ng-click="list()" ng-disabled="setDownload" >Download </span></gcms-modal>
 					</span> 
-					<span ng-show="setDownload">
+					<span ng-show="setDownload" style="margin-left: 10px;">
 						<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
 							title="Download Consent Annex Template" ng-disabled="true">
 							Download</button>
 					</span> 
 				</span>
-				<span ng-show="requestSearchForm.$invalid">
+				<span ng-show="requestSearchForm.$invalid" style="margin-left: 10px;">
 					<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
 							title="Download Consent Annex Template" ng-disabled="true">
 							Download</button>
@@ -97,7 +97,7 @@
 					<span class="create-button">
 						<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href="" ng-click="passCountryName()" title="Create request for missing profile"><i>Cannot find a profile? Create a request here</i></a></gcms-modal>
+					<a href="" ng-click="passCountryName()" title="Create request for missing profile" ><i style="padding: 33px;">Cannot find a profile? Create a request here</i></a></gcms-modal>
 					</span>
 				
 			</div>

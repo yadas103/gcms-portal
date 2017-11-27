@@ -390,7 +390,10 @@
 			//	id : item.id
 			//}, item);
 		};
-	
+		$scope.count='null';
+	    $scope.onCategoryChange = function () {
+	    	 $scope.count=1;
+	    }
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");
 			

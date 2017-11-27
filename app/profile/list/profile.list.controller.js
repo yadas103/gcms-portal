@@ -461,7 +461,7 @@
 		};
 
 		//Copy to selected
-		$scope.copy = function(item){
+		$scope.copy = function(item,copy){
 			$scope.copyCheckedIds = [];
 			$scope.currentYear = (new Date()).getFullYear();
 			for(var i  in $scope.item.checkedIds){
@@ -471,11 +471,11 @@
 			}
 			 				
 			for(var i  in $scope.copyCheckedIds){
-				item.request[$scope.copyCheckedIds[i]].acmcode = $scope.item.copyAcmcode;
-				item.request[$scope.copyCheckedIds[i]].eventname = $scope.item.copyEventName;
-				item.request[$scope.copyCheckedIds[i]].pocode = $scope.item.copyPocode;
-				item.request[$scope.copyCheckedIds[i]].consentstartdate = $scope.item.copyConsentStartDate == undefined? moment($scope.currentYear+'/01/01') : $scope.item.copyConsentStartDate ;
-				item.request[$scope.copyCheckedIds[i]].consentenddate = $scope.item.copyConsentEndDate == undefined? moment($scope.currentYear+'/12/31') : $scope.item.copyConsentEndDate;
+				item.request[$scope.copyCheckedIds[i]].acmcode = copy.acmcode; 
+				item.request[$scope.copyCheckedIds[i]].eventname = copy.eventname;
+				item.request[$scope.copyCheckedIds[i]].pocode = copy.pocode;
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate == undefined? moment($scope.currentYear+'/01/01') : copy.consentstartdate ;
+				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate == undefined? moment($scope.currentYear+'/12/31') : copy.consentenddate;
 			}
 		}
 		

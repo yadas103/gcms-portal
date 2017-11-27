@@ -9,50 +9,7 @@
 	It is very important to give us the required details. Event Name allows us to match multiple payments to the same profile. PO Code and ACM Code will give us the ability to identify the right invoices. 
 Enter this information in the proper columns of the below list. Once done press Save Changes button.
 	</p>
-	
-<div ng-controller = "ProfileListCtrl">
-<form name="copyToSelected">
-<table class="table table-bordered table-striped table-highlight">
-  <div class=" class="panel panel-primary table-responsive">
-	<thead style="background-color:#337ab7;color:white;">
-	<tr  class="panel-title" style="font-size: 14px;">
-	<th style="font-size: 12px; font-family: sans-serif;">Event Description*</th>
-	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
-	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
-	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
-    </tr>
-	</thead>
-	
-	<tbody>
-	<tr  >
-	<td><input type="text" id="copyEventName" placeholder="" class="form-control" ng-model="item.copyEventName"></td>
-    <td><input type="text" id="copyPocode" placeholder="" ng-model="item.copyPocode" class="form-control" > </td>
- 	<td><input type="text" id="copyAcmcode" placeholder="" ng-model="item.copyAcmcode" class="form-control"></td>
-    <td ng-hide="item.setDates"><input    		 
-    		 class="form-control"
-    		 style="width: 138px;"
-             placeholder="Select a date..."
-             moment-picker="item.copyConsentStartDate"
-             locale="en"
-             format="DD-MM-YYYY"
-             ng-model="item.copyConsentStartDate"
-             ng-model-options="{ updateOn: 'blur' }">  </td>
-    <td ng-hide="item.setDates"><input
-    		 class="form-control"
-    		 style="width: 138px;"
-             placeholder="Select a date..."
-             moment-picker="item.copyConsentEndDate"
-             locale="en"
-             format="DD-MM-YYYY"
-             ng-model="item.copyConsentEndDate"
-             ng-model-options="{ updateOn: 'blur' }"></td> 
- 	</tr>
-	</tbody>	
-	</div>
-	</table>
-</form>
-	
+	<div ng-controller="ProfileListCtrl">	
  <form name="generateAnnex">
    <table class="table table-bordered table-striped table-highlight">
   <div class=" class="panel panel-primary table-responsive">
@@ -67,6 +24,7 @@ Enter this information in the proper columns of the below list. Once done press 
 	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
 	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
 	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
+	<th>Action </th>
     </tr>
 	</thead>
 	
@@ -99,14 +57,14 @@ Enter this information in the proper columns of the below list. Once done press 
              ng-model-options="{ updateOn: 'blur' }"
              start-date="item.request[i.id].consentenddate">                          
             </td> 
+            <td ng-model="item.i.id"><button  class="btn btn-primary" ng-click="copy(item,item.request[i.id])">Same for all</button></td>
  	</tr>
 	</tbody>	
 	</div>
 	</table>	
 </form>	
 <div class="modal-footer">
-	<span><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>
-	<button class="btn btn-primary" ng-click="copy(item)" ng-disabled="copyToSelected.$invalid">Same for all</button>
+	<span><button class="btn btn-primary" ng-click="ok()" ng-disabled="generateAnnex.$invalid">Generate Consent Annex</button>	
 	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 	</span>
 </div>

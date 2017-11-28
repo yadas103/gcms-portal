@@ -40,7 +40,7 @@ Enter this information in the proper columns of the below list. Once done press 
     	<td ng-hide="item.setDates">
             <input
             placeholder="Select a date..."
-             moment-picker
+             moment-picker="item.request[i.id].consentstartdate"
              locale="en"
              format="DD-MM-YYYY"
              ng-model="item.request[i.id].consentstartdate"
@@ -50,7 +50,7 @@ Enter this information in the proper columns of the below list. Once done press 
               <td ng-hide="item.setDates">
               <input
              placeholder="Select a date..."
-             moment-picker
+             moment-picker="item.request[i.id].consentenddate"
              locale="en"
              format="DD-MM-YYYY"
              ng-model="item.request[i.id].consentenddate"

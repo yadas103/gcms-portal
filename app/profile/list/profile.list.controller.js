@@ -29,6 +29,7 @@
 		$scope.itemsByPage=20;
 		$scope.dataToSend = {checkedIds :{},templates :{}};
 		var ids = [];
+		var index;
 		var criteria = {};
 		$scope.alerts = [];
 		$scope.profile = {};
@@ -221,7 +222,7 @@
 				}
 			});
 		});
-
+		
 		// watch for data checkboxes
 		$scope.$watch('checkboxes.items', function(values) {
 
@@ -238,7 +239,8 @@
 					$scope.selectedids.push(item);            	  
 				}
 				else if(!$scope.checkboxes.items[item.id] && ($scope.selectedids.indexOf(item) !== -1)){                
-					$scope.selectedids.pop();      
+					index = $scope.selectedids.indexOf(item);
+					$scope.selectedids.splice(index,1);
 
 				}
 			});

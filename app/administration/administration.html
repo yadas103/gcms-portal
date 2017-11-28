@@ -29,7 +29,7 @@
 				<td><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></td>
 				</tr>
-				<tr ng-repeat-start="con in displayedCollection">
+				<tr ng-repeat-start="con in displayedCollection | filter:ReviewerFilter">
 
 					<td  style="width: 139px;"><gcms-modal
 							template="administration.country.update.html"
@@ -141,14 +141,14 @@
 						</table>
 					</td>
 			</tbody>
-			<tfoot>
+			<!-- <tfoot>
 				<tr>
 					<td colspan="13" class="text-center">
 						<div st-table="displayedCollection" st-safe-src="ReviewAttributes"  st-items-by-page='5' st-pagination=""
 							st-template="app/task/pagination.custom.html"></div>
 					</td>
 				</tr>
-			</tfoot>
+			</tfoot> -->
 		</table>
 
 		 <!-- </tr>

@@ -18,7 +18,6 @@
       'angular-loading-bar',
       'isoCurrency',
       'smart-table',
-      'angular-date-picker-polyfill',
       'angular-toasty',
       'gcms.environment',
 	  'gcms.components.address',
@@ -44,7 +43,8 @@
 	  'ngJsonExportExcel',
 	  'dctmNgFileManager',
 	  'ngFileSaver', 
-	  'dctmRestClient',
+	  'dctmRestClient',	  
 	  'moment-picker'
+	
     ]);
 })();

@@ -66,6 +66,14 @@
 			 * @description partial view of reviewArributes
 			 */
 		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
+		
+		//Filter on Reviewer data
+		$scope.ReviewerFilter = function (result){
+			console.log(result.countries.id );
+			console.log($rootScope.currentProfile.countryId);
+			return (result.countries.id == $rootScope.currentProfile.countryId) ;
+		};
+		
 		/**
 		 * @author: selim
 		 * @ngdoc method

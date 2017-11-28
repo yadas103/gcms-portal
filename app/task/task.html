@@ -13,7 +13,7 @@
 
 <div class="panel panel-primary">
 	<div class="panel-heading">Upload your documents-Automatic Match</div>
-	<div class="container">
+	<div class="container" ng-controller="BulkCtrl">
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="panel-body">
@@ -114,10 +114,10 @@
 							<th style="width:18%; st-sort="initiatedby">Task Owner</th> 
 							<th style="width:6%;"st-sort="taskstatus">Task Status</th>
 							<th ng-hide="status=='DELETED'">Document Upload</th>
-							<th style="width:10%;" ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' " 
+							<th style="width:10%;" ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " 
 								>Activity								
 								</th>						 
-							<th ng-show="status=='COMPLETED'">DLU P/T</th>
+							<!-- <th ng-show="status=='COMPLETED'">DLU P/T</th> -->
 								
 						</tr>
 						<tr>
@@ -146,8 +146,8 @@
 														
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
-							<th ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' " ></th>
-							<th ng-show="status=='COMPLETED'"></th>
+							<th ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " ></th>
+							<!-- <th ng-show="status=='COMPLETED'"></th> -->
 						</tr>
 					</thead>
 					<tbody data-ng-repeat="con in TaskAttributes" ng-switch
@@ -183,14 +183,14 @@
 							<td class="tasktd" >
 							 <div ng-if="con.taskstatus=='INCOMPLETE'" class="text-center">
 							   <div ng-if="con.consannexid.annnexlocation ==undefined">							   
-							   		<span title="Document = Missing"  class="fa fa-eye" style="color: #337ab7"></span>
+							   		<span title="Document = Missing"  class="fa fa-eye" style="color: gray"></span>
 							   </div>
 							 <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id =='63'">
 							   		<span title="Document=OK , Consent = Missing"  class="fa fa-eye" style="color: #337ab7"></span>
 							   </div> 
 							 </div>
 							 <div ng-if="con.taskstatus=='COMPLETED'" class="text-center">
-							    <span class="fa fa-check" style="color: #337ab7;" title="Task Completed"></span>							   
+							    <span class="fa fa-check" style="color: green;" title="Task Completed"></span>							   
 							 </div>
 							 <div ng-if="con.taskstatus=='DELETED'" class="text-center">{{con.taskstatus}}</div>
 							 </td>
@@ -216,7 +216,7 @@
 
 								</div>
 							</td>
-							<td ng-show="loggedInUserRoleId=='5' && status!='COMPLETED' "  >
+							<td ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' "  >
 							
 								<div ng-switch="con.taskstatus">
 									<div ng-switch-when="INCOMPLETE">
@@ -226,6 +226,11 @@
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
 										<span>Reassign</span> </gcms-modal>
 									
+									</div>
+									
+									<div ng-switch-when="COMPLETED">
+									  <span style="margin-left:17px;" row-select="con" ng-click="select(con)">  <input
+											 type="checkbox" /></span>	
 									</div>
 									
 									<!--  <div ng-switch-when="COMPLETED">
@@ -250,12 +255,12 @@
 								</div>
 
 							</td>
-							<td ng-show="con.taskstatus =='COMPLETED'">
+							<!-- <td ng-show="con.taskstatus =='COMPLETED'">
 							
 									<span row-select="con" ng-click="select(con)">  <input
 											 type="checkbox" style="margin-left:7px;"/></span>	 							     
 								
-							</td>
+							</td> -->
 
 						</tr>
 
@@ -268,7 +273,7 @@
 					<tfoot>
 						<tr ng-show="selected.length != '0'">
 							<td colspan="14">
-								<button class="btn btn-primary" ng-json-export-excel
+								<button class="btn btn-warning" ng-json-export-excel
 									data="selected"
 									report-fields="{
 											'Record_type':'Record_type',
@@ -355,191 +360,27 @@
 											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
 											}"
 									filename="'Data'">Generate DLU-P</button>
-							
-								<button class="btn btn-primary" ng-json-export-excel
+							<button class="btn btn-warning" ng-json-export-excel
 									data="selected"
-									report-fields="{
-											'consannexid.eventname': 'Event Name',
-											'Name of Event Venue': 'Name of Event Venue',
-											'Event Co-ordinator': 'Event Co-ordinator',
-											'Event Start Date': 'Event Start Date',
-											'Event End Date' : 'Event End Date',
-											'Event Agenda' : 'Event Agenda',
-											'Event Managed by Pfizer?': 'Event Managed by Pfizer?',
-											'Event Type' : 'Event Type',     
-											'Count of Covered Recipient Attendees': 'Count of Covered Recipient Attendees',
-											'Count of non Covered Recipient Attendees': 'Count of non Covered Recipient Attendees',
-											'Count of Pfizer employee attendees': 'Count of Pfizer employee attendees',
-											'Count of total invited': 'Count of total invited',
-											'Source System Identifier for Event': 'Source System Identifier for Event',
-											'Event Address Line 1': 'Event Address Line 1',
-											'Event Address Line 2': 'Event Address Line 2',
-											'Event Address Line 3': 'Event Address Line 3',
-											'Event Address Line 4': 'Event Address Line 4',
-											'Event Region':'Event Region',
-											'Event County':'Event County',
-											'Event Province':'Event Province',   
-											'Event Canton':'Event Canton',
-											'Event City':'Event City',
-											'Event Postal/Zip Code':'Event Postal/Zip Code',
-											'Event State':'Event State',
-											'Event Country Code (2 character ISO)':'Event Country Code (2 character ISO)',
-											'Transaction Currency': 'Transaction Currency',
-											'Covered Recipient Expense Amount in Transaction Currency': 'Covered Recipient Expense Amount in Transaction Currency',
-											'Expense Type Code' : 'Expense Type Code',
-											'Transaction Reportable Date': 'Transaction Reportable Date',										
-									       'consannexid.profilecountry.code': 'Transaction Reporting Country',
-									       	'VAT': 'VAT',
-											'Withholding Tax':'Withholding Tax',
-								         'consannexid.consentstatus.consentName': 'Consent',
-								         	'Source System Identifier for Transfer of Value':'Source System Identifier for Transfer of Value ', 
-											'Payment Method':'Payment Method',
-											'Check Number':'Check Number',
-											'Purpose of Payment or Event':'Purpose of Payment or Event',
-											'Pfizer Legal Entity':'Pfizer Legal Entity',
-									                    'consannexid.pocode': 'Purchase Order Number',
-									        'GL Code':'GL Code',
-									        'Is the payment made to person or organization?':'Is the payment made to person or organization?',
-										           'consannexid.bpid.id': 'Covered Recipient ID',
-										  'consannexid.bpid.profileType': 'Covered Recipient ID Type',	
-										  	'Covered Recipient Licensed State':'Covered Recipient Licensed State',	
-								                     'consannexid.bpid.lastName': 'Covered Recipient Last Name/Organization Name for HCO',
-										    'consannexid.bpid.firstName': 'Covered Recipient First Name',
-										    'Covered Recipient Middle Name':'Covered Recipient Middle Name',
-											'Covered Recipient Credential':'Covered Recipient Credential',
-											'Covered Recipient Primary Specialty':'Covered Recipient Primary Specialty',
-											'Covered Recipient Suffix Name':'Covered Recipient Suffix Name',
-											'Covered Recipient Email Address':'Covered Recipient Email Address',   
-											'Covered Recipient Role/Type of Attendee':'Covered Recipient Role/Type of Attendee',
-											'Source System Identifier for Covered Recipient':'Source System Identifier for Covered Recipient',
-										      'consannexid.bpid.address': 'Covered Recipient Address Line 1',
-										     'consannexid.bpid.address2': 'Covered Recipient Address Line 2',
-									             'consannexid.bpid.address3': 'Covered Recipient Address Line 3',
-									             'consannexid.bpid.address4': 'Covered Recipient Address Line 4',
-                       						'Covered Recipient Region':'Covered Recipient Region',
-											'Covered Recipient County':'Covered Recipient County',
-											'Covered Recipient Province':'Covered Recipient Province',
-											'Covered Recipient Canton':'Covered Recipient Canton',
-                       						'consannexid.bpid.city': 'Covered Recipient City',		
-											'Covered Recipient State':'Covered Recipient State',
-											'Covered Recipient Postal/Zip Code':'Covered Recipient Postal/Zip Code',
-                       						'Source System Identifier for Covered Recipient Address':'Source System Identifier for Covered Recipient Address',
-                       						'Hotel/Lodging Name':'Hotel/Lodging Name',
-											'Hotel/Lodging Check In Date':'Hotel/Lodging Check In Date',
-											'Hotel/Lodging Check Out Date':'Hotel/Lodging Check Out Date',  
-											'Number of accomodation nights':'Number of accomodation nights',
-											'Hotel/Lodging Address':'Hotel/Lodging Address',
-											'FCPA Reference/In-country FCPA Number/FCPA Project ID':'FCPA Reference/In-country FCPA Number/FCPA Project ID',
-											'FCPA Transaction Type':'FCPA Transaction Type',
-											'FCPA Transaction Type for Reporting':'FCPA Transaction Type for Reporting',
-											'FCPA Vendor Type':'FCPA Vendor Type',
-                       						'Product 1':'Product 1',
-											'Product 2':'Product 2',
-											'Product 3':'Product 3',
-											'Product 4':'Product 4',
-											'Product 5':'Product 5',
-											'Name of Research Study':'Name of Research Study',     
-											'Research Objectives/Context of Research':'Research Objectives/Context of Research',
-											'Research Type/PreClinicalResearchIndicator':'Research Type/PreClinicalResearchIndicator',
-											'Research Expenditure Category':'Research Expenditure Category',
-                       						'Research Information Link(ex. web URL)':'Research Information Link(ex. web URL)',
-											'Clinical Trials .GOV Identifier (NCT)':'Clinical Trials .GOV Identifier (NCT)',
-                       						'Protocol ID/Protocol Number':'Protocol ID/Protocol Number',
-											'Protocol Program Code':'Protocol Program Code',
-                       						'Site Number':'Site Number',
-											'Site Status':'Site Status',
-											'Enrollment Number':'Enrollment Number',
-											'PI Disclose Indicator':'PI Disclose Indicator',
-											'Delay in Publication Reason':'Delay in Publication Reason ',   
-											'Payee As on the Check':'Payee As on the Check',
-                       						'Payee ID':'Payee ID',
-											'Payee ID Type':'Payee ID Type',
-											'Source System Payee Identifier':'Source System Payee Identifier',
-                       						'Payee Address Line 1':'Payee Address Line 1',
-											'Payee Address Line 2':'Payee Address Line 2',
-											'Payee Address Line 3':'Payee Address Line 3',
-											'Payee Address Line 4':'Payee Address Line 4',
-											'Payee Region':'Payee Region',
-											'Payee County':'Payee County',
-											'Payee Province':'Payee Province',
-											'Payee Canton':'Payee Canton',     
-											'Payee City':'Payee City',
-											'Payee Postal/Zip Code':'Payee Postal/Zip Code',
-											'Payee Country Code (2 character ISO)':'Payee Country Code (2 character ISO)',
-											'Payee State':'Payee State',
-                       						'Source Item ID':'Source Item ID',
-											'Pfizer Item ID':'Pfizer Item ID',
-											'Item Description':'Item Description',
-											'Item Quantity Distributed':'Item Quantity Distributed',
-											'Item Quantity Requested':'Item Quantity Requested',
-											'Requestor ID':'Requestor ID',
-											'Requestor Last Name':'Requestor Last Name',
-											'Requestor Middle Name':'Requestor Middle Name',      
-											'Requestor Email Address':'Requestor Email Address',
-											'Requestor Territory ID':'Requestor Territory ID',
-											'Data Provider Name':'Data Provider Name',
-											'Name of Contact at Data Provider':'Name of Contact at Data Provider',
-											'Phone Number of Contact at Data Provider':'Phone Number of Contact at Data Provider',
-                       						'Email of Contact at Data Provider':'Email of Contact at Data Provider',
-											'Transaction Comments':'Transaction Comments',
-											'File Name':'File Name',
-											'Transaction Reportable Indicator': 'Transaction Reportable Indicator',
-											'Transaction Reportable Comment': 'Transaction Reportable Comment',
-                       						'Source Sub-System Code': 'Source Sub-System Code',                                                                                                                     
-											'Custom/Flex Field 1': 'Custom/Flex Field 1',      
-											'Custom/Flex Field 2': 'Custom/Flex Field 2',
-											'Custom/Flex Field 3': 'Custom/Flex Field 3',
-											'Custom/Flex Field 4': 'Custom/Flex Field 4',
-											'Custom/Flex Field 5': 'Custom/Flex Field 5',
-											'Custom/Flex Field 6': 'Custom/Flex Field 6',
-											'Custom/Flex Field 7': 'Custom/Flex Field 7',
-											'Custom/Flex Field 8': 'Custom/Flex Field 8',
-											'Custom/Flex Field 9': 'Custom/Flex Field 9',
-											'Custom/Flex Field 10': 'Custom/Flex Field 10',
-											'Custom/Flex Field 11': 'Custom/Flex Field 11',
-											'Custom/Flex Field 12': 'Custom/Flex Field 12',
-											'Custom/Flex Field 13': 'Custom/Flex Field 13',
-											'Custom/Flex Field 14': 'Custom/Flex Field 14',
-											'Custom/Flex Field 15': 'Custom/Flex Field 15',
-											'Custom/Flex Field 16': 'Custom/Flex Field 16',
-											'Custom/Flex Field 17': 'Custom/Flex Field 17',
-											'Custom/Flex Field 18': 'Custom/Flex Field 18',
-											'Custom/Flex Field 19': 'Custom/Flex Field 19',
-											'Custom/Flex Field 20': 'Custom/Flex Field 20',
-											'Custom/Flex Field 21': 'Custom/Flex Field 21',
-											'Custom/Flex Field 22': 'Custom/Flex Field 22',
-											'Custom/Flex Field 23': 'Custom/Flex Field 23',
-											'Custom/Flex Field 24': 'Custom/Flex Field 24',  
-											'Custom/Flex Field 25': 'Custom/Flex Field 25',
-											'Custom/Flex Field 26': 'Custom/Flex Field 26',
-											'Custom/Flex Field 27': 'Custom/Flex Field 27',
-											'Custom/Flex Field 28': 'Custom/Flex Field 28',
-											'Custom/Flex Field 29': 'Custom/Flex Field 29',
-											'Custom/Flex Field 30': 'Custom/Flex Field 30',
-											'Custom/Flex Field 31': 'Custom/Flex Field 31',
-											'Custom/Flex Field 32': 'Custom/Flex Field 32',
-											'Custom/Flex Field 33': 'Custom/Flex Field 33',
-											'Custom/Flex Field 34': 'Custom/Flex Field 34',
-											'Custom/Flex Field 35': 'Custom/Flex Field 35',
-											'Custom/Flex Field 36': 'Custom/Flex Field 36',
-											'Custom/Flex Field 37': 'Custom/Flex Field 37',
-											'Custom/Flex Field 38': 'Custom/Flex Field 38',
-											'Custom/Flex Field 39': 'Custom/Flex Field 39',
-											'Custom/Flex Field 40': 'Custom/Flex Field 40',
-											'Custom/Flex Field 41': 'Custom/Flex Field 41',
-											'Custom/Flex Field 42': 'Custom/Flex Field 42',
-											'Custom/Flex Field 43': 'Custom/Flex Field 43',
-											'Custom/Flex Field 44': 'Custom/Flex Field 44',
-											'Custom/Flex Field 45': 'Custom/Flex Field 45',
-											'Custom/Flex Field 46': 'Custom/Flex Field 46',
-											'Custom/Flex Field 47': 'Custom/Flex Field 47',
-											'Custom/Flex Field 48': 'Custom/Flex Field 48',
-											'Custom/Flex Field 49': 'Custom/Flex Field 49',
-											'Custom/Flex Field 50':'Custom/Flex Field 50',		
-										    'Transaction Comments': 'Transaction Comments',
-											'Source System Code[T]': 'Source System Code[T]'
+									report-fields="{											
+								            'consannexid.bpid.lastName': 'Last Name/Org Name',
+								            'consannexid.bpid.firstName': 'First Name',
+								            'consannexid.profilecountry.name': 'Profile Country',
+								            'consannexid.payercountry.name': 'Payer Country',
+								            'consannexid.eventname': 'Event Name',
+								            'consannexid.pocode': 'PO Code',
+								            'consannexid.acmcode': 'ACM Code',
+								            'consannexid.consentstatus.consentName': 'Consent Status',
+								            'updatedDate': 'Consent Updated Date',
+								            'consannexid.consentstartdate': 'Consent Start Date',
+								            'consannexid.consentenddate': 'Consent End Date',
+								            'assignedto.lastName': 'Task Owner Last Name',
+								            'assignedto.firstName': 'Task Owner First Name',
+								            'assignedto.userName': 'NTID',
+								            'taskstatus': 'Task Status'
 											}"
-									filename="'Data'">Generate DLU-T</button>
+									filename="'summary'">Table Info</button>
+								
 							</td>
 
 						</tr>
@@ -551,8 +392,6 @@
 						</tr>
 					</tfoot>
 				</table>
-			
-
 	</div>
  </div>
 

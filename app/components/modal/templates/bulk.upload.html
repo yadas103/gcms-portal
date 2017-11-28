@@ -16,13 +16,13 @@
         		<tr style="background-color: #337ab7;
     color: white;">
           			<th style="width: 10%;">Document Name</th>
+          			<th style="width: 10%;">Document Upload Status</th>
+          			<th style="width: 15%;">Reason</th>
           			<th style="width: 10%;">Last Name</th>
           			<th style="width: 10%;">First Name</th>
           			<th style="width: 10%;">Event Name </th>
           			<th style="width: 10%;">Consent Status </th> 
           			<th style="width: 10%;">Task Status </th>         			
-          			<th style="width: 10%;">Document Upload Status</th>
-          			<th style="width: 10%;">Reason</th>
           
         		</tr>
       </thead>
@@ -30,13 +30,14 @@
 				<tbody>
 					<tr ng-repeat="c in item">
 						<td class="tasktd">{{c.name}}</td>
+						<td class="tasktd">{{c.status}}</td>
+						<td class="tasktd">{{c.reason}}</td>
 						<td class="tasktd">{{c.lastName}}</td>
 						<td class="tasktd">{{c.firstName}}</td>
 						<td class="tasktd">{{c.event}}</td>
 						<td class="tasktd">{{c.consentstatus}}</td>	
 						<td class="tasktd">{{c.taskstatus}}</td>					
-						<td class="tasktd">{{c.status}}</td>
-						<td class="tasktd">{{c.reason}}</td>
+						
 					</tr>
 				</tbody>
 

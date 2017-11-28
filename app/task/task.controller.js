@@ -13,10 +13,10 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','FileUploader','FileMonitor','localeMapper','Users','toasty' ];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','Users','toasty' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,FileUploader,FileMonitor,localeMapper,Users,toasty ){
+  function TaskController($rootScope, $scope,$filter,Task,Users,toasty ){
 	  
 	  console.log("Inside task controller");
 	  	
@@ -54,7 +54,7 @@
 		 $scope.tableState = null;
 		 $scope.firstload=false;
 		 $scope.selected = [];
-		 $scope.itemsByPage = 6;
+		 $scope.itemsByPage = 5;
 		 $scope.callServer = function(tableState) {
 			 $scope.tableState =tableState;
 			 if(!$scope.firstload){
@@ -171,7 +171,7 @@
        *  Bulk upload fuctionality
        */
       
-      $scope.uploads = [];
+     /* $scope.uploads = [];
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
 
@@ -239,7 +239,7 @@
        		      });
    		  //};
             
-          }
+          }*/
 		 
 	  
       	$scope.date = function(con){
@@ -291,7 +291,7 @@
 	            	console.log(response);
 	            	if(response.$promise.$$state.status==1)
 	            		{
-	            		refresh();
+	            		//refresh();
 	            		toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Task Updated !',

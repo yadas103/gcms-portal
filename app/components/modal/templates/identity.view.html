@@ -53,16 +53,22 @@
       <input ng-maxlength="60" type="text" class="form-control"  id="eventname" name="eventname" placeholder="{{item.profileTypeId }}" ng-disabled="true">
     </div>
   </div>
-  <div class="form-group" >
+  <div class="form-group" ng-hide="item.profileTypeId == 'HCO'" >
     <label for="consannexid.pocode" class="col-sm-3 control-label">FirstName:</label>
     <div class="col-sm-9">
       <input ng-maxlength="60" type="text" class="form-control" id="pocode" name="pocode" placeholder="{{item.firstName }}" ng-disabled="true">
     </div>
   </div>
-      <div class="form-group" >
+      <div class="form-group" ng-hide="item.profileTypeId == 'HCO'" >
     <label for="consannexid.acmcode" class="col-sm-3 control-label">LastName:</label>
     <div class="col-sm-9">
       <input ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" placeholder="{{item.lastName }}" ng-disabled="true" >
+    </div>
+  </div>
+  <div class="form-group" ng-hide="item.profileTypeId== 'HCP'" >
+    <label for="consannexid.acmcode" class="col-sm-3 control-label">Organization Name:</label>
+    <div class="col-sm-9">
+      <input ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" placeholder="{{item.organizationName }}" ng-disabled="true" >
     </div>
   </div>
   <div class="form-group" >
@@ -92,7 +98,7 @@
   <div class="form-group" >
     <label for="consannexid.pocode" class="col-sm-3 control-label">Notes:</label>
     <div class="col-sm-9">
-      <textarea ng-maxlength="60" type="text" class="form-control" style="resize: none" id="pocode" name="pocode" placeholder="{{item.notes }}" ng-disabled="true"></textarea>
+      <textarea ng-maxlength="60" type="text" class="form-control" id="acmcode" name="acmcode" style="resize: none" id="pocode" name="pocode" placeholder="{{item.notes }}" ng-disabled="true"></textarea>
     </div>
   </div>
   

@@ -242,10 +242,22 @@
           }*/
 		 
 	  
-      	$scope.date = function(con){
-      		con.consannexid.consentstartdate =  moment(con.consannexid.consentstartdate);
-      		con.consannexid.consentenddate =  moment(con.consannexid.consentenddate);
-      	};
+          var startdate = {};
+    	  var enddate = {};
+          	$scope.date = function(item){
+          		if(item.consannexid.consentstartdate != undefined || item.consannexid.consentenddate != undefined){
+          		item.consannexid.consentstartdate =  moment(item.consannexid.consentstartdate);
+    			startdate = item.consannexid.consentstartdate;
+          		item.consannexid.consentenddate =  moment(item.consannexid.consentenddate);
+          		enddate = item.consannexid.consentenddate;
+          		}
+          		else
+          		{
+    				item.consannexid.consentstartdate = startdate;
+    				item.consannexid.consentenddate = enddate;
+          		}
+          	};
+    		
 		
       	
       	$scope.close=function(item) {

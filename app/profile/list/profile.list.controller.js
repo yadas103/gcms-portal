@@ -444,8 +444,8 @@
 			
 			for(var i  in $scope.checkedIds){
 				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment($scope.currentYear+'/01/01');
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate =  moment($scope.currentYear+'/12/31');				
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) ;
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz($scope.currentYear+'/12/31',moment.tz.guess());				
 			}
 			for(var i in $scope.templates){
 				if($scope.templates[i].id == $scope.request.tmpl_id){							
@@ -476,8 +476,8 @@
 				item.request[$scope.copyCheckedIds[i]].acmcode = copy.acmcode; 
 				item.request[$scope.copyCheckedIds[i]].eventname = copy.eventname;
 				item.request[$scope.copyCheckedIds[i]].pocode = copy.pocode;
-				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate == undefined? moment($scope.currentYear+'/01/01') : copy.consentstartdate ;
-				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate == undefined? moment($scope.currentYear+'/12/31') : copy.consentenddate;
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate == undefined? moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) : copy.consentstartdate ;
+				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate == undefined? moment.tz($scope.currentYear+'/12/31',moment.tz.guess()) : copy.consentenddate;
 			}
 		}
 		

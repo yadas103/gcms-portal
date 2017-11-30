@@ -116,6 +116,7 @@
 	  		 * @param {object}
 	  		 *            item country to update
 	  		 */
+	  	//$scope.expanded = false;
 	  	  $scope.value=function(con){
 	  		 console.log("Inside value");
 	  		  con.expanded = true;		  
@@ -174,6 +175,8 @@
 		        	}	
 		        	item.tmpl_status="ACTIVE"; 
 		        	console.log(item.tmpl_code);
+		        	console.log(item);
+		        	delete item.expanded;
 		            $scope.Templates.push(item);
 		            
 		            Templates.save(item).$promise.then(function(response){
@@ -210,6 +213,7 @@
 		              }
 		            });
 		            console.log(item.id);
+		            delete item.expanded;
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){
 		            	toasty.success({
 	            	        title: 'Success',

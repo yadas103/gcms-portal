@@ -86,6 +86,8 @@
 			           con.updatedDate = new Date();      
 			              }
 			            });
+		    		console.log(item);
+		    		delete item.expanded;
 		    	   Review.update({ id:item.id }, item).$promise.then(function(response){
 		    			toasty.success({
 	            	        title: 'Success',

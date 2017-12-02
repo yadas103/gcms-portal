@@ -5,31 +5,37 @@
 
 <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
 
-<!-- st-safe-src="ReviewAttributes" -->
-		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
+<!-- st-safe-src="ReviewAttributes" st-table="displayedCollection" st-safe-src="ReviewAttributes" -->
+		<table 
 			class="table table-bordered table-hover table-condensed">
 			<thead style="background-color: #337ab7; color: white">
 				<tr style="height:6%;">
 					
-					<th style="width:8%;text-align:center">Action</th>
+				<!-- 	<th style="width:8%;text-align:center">Action</th>
 					<th style="width: 15%;" st-sort="countries.isoCode">Country ISO Code</th>
 					<th style="width: 15%;" st-sort="countries.name">Country Name</th>
 					<th style="width: 28%;" st-sort="cntryContact">Country Contact</th>
-					<th style="width: 45%;" st-sort="cntryReviewer">Identity Reviewers</th>
+					<th style="width: 45%;" st-sort="cntryReviewer">Identity Reviewers</th> -->
+					
+					<th style="width:8%;text-align:center">Action</th>
+					<th style="width: 15%;" >Country ISO Code</th>
+					<th style="width: 15%;" >Country Name</th>
+					<th style="width: 28%;">Country Contact</th>
+					<th style="width: 45%;">Identity Reviewers</th>
 
 				</tr>
 				
 				
 			</thead>
 			<tbody>
-			<tr>
+			<!-- <tr>
 				<td></td>
 				<td><input st-search="countries.isoCode" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="countries.name" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></td>
-				</tr>
-				<tr ng-repeat-start="con in displayedCollection | filter:ReviewerFilter">
+				</tr> -->
+				<tr ng-repeat-start="con in ReviewAttributes | filter:ReviewerFilter">
 
 					<td  style="width: 139px;"><gcms-modal
 							template="administration.country.update.html"
@@ -53,7 +59,7 @@
 					<td></td>
 					<td colspan="4">
 						<!--  st-table="Templates" -->
-						<table st-table="Templates" class="table table-bordered table-striped table-highlight">
+						<table  class="table table-bordered table-striped table-highlight">
 							<thead style="background-color: #337ab7; color: white">
 								<tr>
 									<th style="text-align: center; width: 7%;"><gcms-modal
@@ -108,28 +114,27 @@
 									<td>{{temp.dates_rages}}</td>
 									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
 									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
-									<td class="tasktd sak">{{temp.tmpl_status}}</td>
-									<td >
-									
-									
-										
-											
-										
+									<td>
+									<span ng-if="temp.tmpl_status=='ACTIVE'" style="color: #337ab7;">{{temp.tmpl_status}}</span>
+									<span ng-if="temp.tmpl_status=='INACTIVE'">{{temp.tmpl_status}}</span>
+									</td>
+									<td>
+
 										<div ng-if="temp.tmpl_location==undefined">
 									<gcms-upload template="template.modals.html"
 										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
-										 <span title="Upload Tempalte" style="margin-left: 32px;" class="fa fa-upload" >
+										 <span title="Upload Tempalte" style="margin-left: 21%;" class="fa fa-upload" >
 									</gcms-upload>
 								</div>
 								
 								
 								<div ng-if="temp.tmpl_location!=undefined" >								    
-										<a href="" ng-click="download(temp)" ng-show="temp.tmpl_status=='ACTIVE'"><span title="Download Template" style="margin-left: 14px;"class="fa fa-download"></span></a>
-									<gcms-upload template="template.modals.html"
+											<gcms-upload template="template.modals.html"
 										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
-										 <span title="Update Template" style="margin-left: 17px;" class="fa fa-upload" >
+										 <span title="Update Template" style="margin-left: 21%;" class="fa fa-upload" >
 									</gcms-upload>
-
+									<a href="" ng-click="download(temp)" ng-show="temp.tmpl_status=='ACTIVE'"><span title="Download Template" style="margin-left: 22%;"class="fa fa-download"></span></a>
+								
 								</div> 
 								
 										

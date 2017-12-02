@@ -65,12 +65,12 @@
 			 * @used smart table
 			 * @description partial view of reviewArributes
 			 */
-		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
+		//$scope.displayedCollection = [].concat($scope.ReviewAttributes);
 		
 		//Filter on Reviewer data
 		$scope.ReviewerFilter = function (result){
-			console.log(result.countries.id );
-			console.log($rootScope.currentProfile.countryId);
+			//console.log(result.countries.id );
+			//console.log($rootScope.currentProfile.countryId);
 			return (result.countries.id == $rootScope.currentProfile.countryId) ;
 		};
 		
@@ -215,6 +215,7 @@
 		            console.log(item.id);
 		            delete item.expanded;
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){
+		            	getTemplateData();
 		            	toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Template updated !',

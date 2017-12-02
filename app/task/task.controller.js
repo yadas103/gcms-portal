@@ -54,7 +54,7 @@
 		 $scope.tableState = null;
 		 $scope.firstload=false;
 		 $scope.selected = [];
-		 $scope.itemsByPage = 6;
+		 $scope.itemsByPage = 10;
 		 $scope.callServer = function(tableState) {
 			 $scope.tableState =tableState;
 			 if(!$scope.firstload){
@@ -82,7 +82,8 @@
 		    	eventName :tableState.search.predicateObject.eventname,
 		    	consentStaus : tableState.search.predicateObject.consentstaus,
 		    	taskStatus : tableState.search.predicateObject.taskstatus,
-		    	initiatedBy :tableState.search.predicateObject.initiatedby,	    	
+		    	initiatedBy :tableState.search.predicateObject.initiatedby,	
+		    	updateddate : tableState.search.predicateObject.updateddate,
 		        page : 1+(start/number),
 		        size : number,
 		        sort : predicate,

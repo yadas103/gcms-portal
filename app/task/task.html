@@ -136,7 +136,7 @@
 								class="form-control" type="search" /></th>
 							<th><input st-search="updateddate" placeholder=""
 								class="form-control" type="search" /></th>
-								<th><input st-search="initiatedby" placeholder=""
+								<th><input st-search="initiatedby" placeholder="First Name"
 								class="form-control" type="search" /></th> 
 							<th style="width:6%;"><select st-input-event="change keydown" st-search="taskstatus">
 									<option value="INCOMPLETE">Incomplete</option>
@@ -180,14 +180,16 @@
 									list="consentType"></gcms-idname></td>
 							<td>{{con.updatedDate | date:'dd-MM-yyyy'}}</td>
 							<td class="tasktd ">{{con.assignedto.firstName}} {{con.assignedto.lastName}}({{con.assignedto.userName}})</td>
-							<td class="tasktd" >
-							 <div ng-if="con.taskstatus=='INCOMPLETE'" class="text-center">
-							   <div ng-if="con.consannexid.annnexlocation ==undefined">							   
-							   		<span title="Document = Missing"  class="fa fa-eye" style="color: gray"></span>
+							<td class="tasktd sak" >
+							 <div ng-if="con.taskstatus=='INCOMPLETE'" >
+							   <div ng-if="con.consannexid.annnexlocation ==undefined">
+							   		<span title="Document = Missing" style="color: gray">{{con.taskstatus}}</span>							   
+							   		<span title="Document = Missing" class="fa fa-exclamation-circle" style="color: #337ab7;margin-left: 7%;"></span>
 							   </div>
 							 <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id =='63'">
-							   		<span title="Document=OK , Consent = Missing"  class="fa fa-eye" style="color: #337ab7"></span>
-							   </div> 
+							 		<span title="Document=OK , Consent = Missing" style="color: #337ab7">{{con.taskstatus}}</span>
+							   		<span title="Document=OK , Consent = Missing" class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
+							   </div>
 							 </div>
 							 <div ng-if="con.taskstatus=='COMPLETED'" class="text-center">
 							    <span class="fa fa-check" style="color: green;" title="Task Completed"></span>							   
@@ -200,17 +202,17 @@
 									<div ng-if="con.consannexid.annnexlocation==undefined">
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="close"
-											> <span title="Upload " class="fa fa-upload" style=" margin-left: 24px;"> </gcms-upload>
+											> <span title="Upload " class="fa fa-upload" style=" margin-left: 13px;"> </gcms-upload>
 									</div>
-									<div ng-if="con.consannexid.annnexlocation!=undefined">
-										<span ng-show="true" ng-controller="FileManagerController">
-
-											<a href="" ng-click="download(con)"> <span title="Download" class="fa fa-download" style="margin-left: 12px;"></span> </a>
-										</span>
+									<div ng-if="con.consannexid.annnexlocation!=undefined">										
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
 											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-upload" style=" margin-left: 13px;"></span>
 										</gcms-upload>
+										<span ng-show="true" ng-controller="FileManagerController">
+
+											<a href="" ng-click="download(con)"> <span title="Download" class="fa fa-download" style="margin-left: 12px;"></span> </a>
+										</span>
 
 									</div>
 
@@ -379,7 +381,7 @@
 								            'assignedto.userName': 'NTID',
 								            'taskstatus': 'Task Status'
 											}"
-									filename="'summary'">Table Info</button>
+									filename="'summary'">Table Summary</button>
 								
 							</td>
 

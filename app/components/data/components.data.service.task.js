@@ -40,6 +40,7 @@
     			  		consentStaus:'@consentStaus',
     			  		taskStatus:'@taskStatus',
     			  		initiatedBy:'@initiatedBy',
+    			  		updateddate:'@updateddate',
     			  		page:'@page',
     			  		size:'@size',
     			  		sort:'@sort',

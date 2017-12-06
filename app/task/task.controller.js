@@ -54,7 +54,7 @@
 		 $scope.tableState = null;
 		 $scope.firstload=false;
 		 $scope.selected = [];
-		 $scope.itemsByPage = 10;
+		 $scope.itemsByPage = 15;
 		 $scope.callServer = function(tableState) {
 			 $scope.tableState =tableState;
 			 if(!$scope.firstload){

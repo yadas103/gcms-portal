@@ -31,7 +31,7 @@
 				<td><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></td>
 				</tr> -->  <!-- | filter:ReviewerFilter -->
-				<tr ng-repeat-start="con in ReviewAttributes ">
+				<tr ng-repeat-start="con in displayedCollection ">
 
 					<td  style="width: 139px;"><gcms-modal
 							template="administration.country.update.html"
@@ -55,7 +55,7 @@
 					<td></td>
 					<td colspan="4">
 						<!--  st-table="Templates" -->
-						<table  class="table table-bordered table-striped table-highlight">
+						<table st-table="Templates" class="table table-bordered table-striped table-highlight">
 							<thead style="background-color: #337ab7; color: white">
 								<tr>
 									<th style="text-align: center; width: 7%;"><gcms-modal
@@ -82,7 +82,7 @@
 									<td><gcms-modal
 											template="administration.template.update.html"
 											controller="ModalDefaultCtrl" content="temp"
-											ok="updateTemplate"  alt="Edit Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
+											ok="updateTemplate"  alt="Edit Template {{temp.id}}" >
 										<span class="fa fa-pencil"
 											style="color: #337ab7;margin-left:2px" title="Edit Template"></span> </gcms-modal>
 											 <gcms-modal
@@ -97,14 +97,14 @@
 											ok="deactivateTemplate" alt="Deactivate Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-ban fa-inverse"
 											 title="Deactivate Template"
-											style="color: gray; margin-left: 9px;"></span> </gcms-modal>
+											style="color:#337ab7 ; margin-left: 9px;"></span> </gcms-modal>
 										<gcms-modal
 											template="administration.template.activate.html"
 											controller="ModalDefaultCtrl" content="temp"
 											ok="activateTemplate"  ng-show="temp.tmpl_status=='INACTIVE'">
 										<span class="fa fa-ban fa-inverse"
 											 title="Activate Template"
-											style="color: #337ab7; margin-left: 9px;"></span> </gcms-modal>
+											style="color:gray; margin-left: 9px;"></span> </gcms-modal>
 
 										<!-- ng-hide="IsVisible"<span><button ng-click="showHide()">show</button>
 										<i class="fa fa-toggle-on" aria-hidden="true"></i></span> -->
@@ -148,7 +148,7 @@
 						</table>
 					</td>
 			</tbody>
-			 <tfoot>
+			 <tfoot >
 				<tr>
 					<td colspan="13" class="text-center">
 						<div st-table="displayedCollection" st-safe-src="ReviewAttributes"  st-items-by-page='5' st-pagination=""

@@ -116,7 +116,8 @@
 							<th ng-hide="status=='DELETED'">Document Upload</th>
 							<th style="width:10%;" ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " 
 								>Activity								
-								</th>						 
+								</th>
+							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'">Activity</th>						 
 							<!-- <th ng-show="status=='COMPLETED'">DLU P/T</th> -->
 								
 						</tr>
@@ -147,6 +148,7 @@
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
 							<th ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " ></th>
+							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'"></th>
 							<!-- <th ng-show="status=='COMPLETED'"></th> -->
 						</tr>
 					</thead>
@@ -164,6 +166,7 @@
 									<gcms-modal template="task.delete.html"
 										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 										alt="Delete Task {{con.id}}"> <span title="Delete Task"
+										ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
 										class="fa fa-trash" style="color: #337ab7;margin-left: 12px;"></span></gcms-modal>
 								</div>
 								
@@ -190,6 +193,15 @@
 							 		<span title="Document=OK , Consent = Missing" style="color: #337ab7">{{con.taskstatus}}</span>
 							   		<span title="Document=OK , Consent = Missing" class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
 							   </div>
+							    <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname==undefined" >
+							 		<span title="Document=OK , Consent = OK , Event = Missing" style="color: #337ab7">{{con.taskstatus}}</span>
+							   		<span title="Document=OK , Consent = OK , Event = Missing" class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
+							   </div>
+							   <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname !=undefined &&(con.consannexid.pocode == undefined ||con.consannexid.acmcode == undefined )">
+							 		<span title="Document=OK , Consent = OK , POCode/ACM Code = Missing" style="color: #337ab7">{{con.taskstatus}}</span>
+							   		<span title="Document=OK , Consent = OK , POCode/ACM Code = Missing" class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
+							   </div> 
+							   
 							 </div>
 							 <div ng-if="con.taskstatus=='COMPLETED'" class="text-center">
 							    <span class="fa fa-check" style="color: green;" title="Task Completed"></span>							   
@@ -202,12 +214,16 @@
 									<div ng-if="con.consannexid.annnexlocation==undefined">
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="close"
-											> <span title="Upload " class="fa fa-upload" style=" margin-left: 13px;"> </gcms-upload>
+											> <span title="Upload " 
+											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
+											 class="fa fa-upload" style=" margin-left: 13px;"> </gcms-upload>
 									</div>
 									<div ng-if="con.consannexid.annnexlocation!=undefined">										
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
-											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-upload" style=" margin-left: 13px;"></span>
+											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-upload" 
+											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
+											style=" margin-left: 13px;"></span>
 										</gcms-upload>
 										<span ng-show="true" ng-controller="FileManagerController">
 
@@ -257,6 +273,11 @@
 								</div>
 
 							</td>
+							<td ng-show="loggedInUserRoleId !='5'&& status =='DELETED'">
+						<gcms-modal template="task.undelete.html"
+												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
+												alt="{{con.id}}"> <span ng-show="loggedInUserRoleId !='5' && loggedInUserRole.userName ==con.assignedto.userName">Undelete</span>
+											</gcms-modal></td>
 							<!-- <td ng-show="con.taskstatus =='COMPLETED'">
 							
 									<span row-select="con" ng-click="select(con)">  <input

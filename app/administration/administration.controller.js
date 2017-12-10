@@ -65,14 +65,14 @@
 			 * @used smart table
 			 * @description partial view of reviewArributes
 			 */
-		//$scope.displayedCollection = [].concat($scope.ReviewAttributes);
+		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
 		
-		//Filter on Reviewer data
+		/*//Filter on Reviewer data
 		$scope.ReviewerFilter = function (result){
 			//console.log(result.countries.id );
 			//console.log($rootScope.currentProfile.countryId);
 			return (result.countries.id == $rootScope.currentProfile.countryId) ;
-		};
+		};*/
 		
 		/**
 		 * @author: selim
@@ -173,7 +173,7 @@
 		        	} else if(item.tmpl_type=="CrossBorder-HCO"){
 		        		item.tmpl_code=$scope.isoCode+"GO"+$scope.counter;
 		        	}	
-		        	item.tmpl_status="ACTIVE"; 
+		        	item.tmpl_status="INACTIVE"; 
 		        	console.log(item.tmpl_code);
 		        	console.log(item);
 		        	delete item.expanded;
@@ -209,7 +209,7 @@
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
 		                // do nessasary work here if needed
-	  
+		            	  temp.updatedDate = new Date();
 		              }
 		            });
 		            console.log(item.id);
@@ -244,6 +244,7 @@
 		          $scope.deactivateTemplate = function(item) {
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
+		            	  temp.updatedDate = new Date();
 		                // do nessasary work here if needed
 		            	  item.tmpl_status="INACTIVE";
 		              }
@@ -251,7 +252,7 @@
 		            console.log(item.id);
 		            
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){
-		            	
+		            	getTemplateData();
 		            	toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Template deactivated !',
@@ -268,6 +269,46 @@
 		 		    	 internalError();	
 		       		 });
 		          };
+		          
+		          /**selim
+					 * @ngdoc method
+					 * @name deactivate
+					 * @methodOf template update
+					 * @description Updates Template
+					 * @param {object}
+					 *            item Template to update
+		 */
+		          
+		          $scope.activateTemplate = function(item) {
+			            angular.forEach($scope.Templates, function(temp){
+			              if (temp.id === item.id) {
+			            	  temp.updatedDate = new Date();
+			                // do nessasary work here if needed
+			            	  item.tmpl_status="ACTIVE";
+			              }
+			            });
+			            console.log(item.id);
+			            
+			            Templates.update({ id:item.id }, item).$promise.then(function(response){
+			            	getTemplateData();
+			            	toasty.success({
+		            	        title: 'Success',
+		            	        msg: 'Template Activated !',
+		            	        showClose: true,
+		            	        clickToClose: true,
+		            	        timeout: 5000,
+		            	        sound: false,
+		            	        html: false,
+		            	        shake: false,
+		            	        theme: 'bootstrap'
+		            	      });
+			            	
+			            }).catch(function(){
+			 		    	 internalError();	
+			       		 });
+			          };
+		          
+		          
 		          /**selim
 					 * @ngdoc method
 					 * @name delete

@@ -6,16 +6,16 @@
 <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
 
 <!-- st-safe-src="ReviewAttributes" st-table="displayedCollection" st-safe-src="ReviewAttributes" -->
-		<table 
+		<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
 			class="table table-bordered table-hover table-condensed">
 			<thead style="background-color: #337ab7; color: white">
 				<tr style="height:6%;">
 					
-				<!-- 	<th style="width:8%;text-align:center">Action</th>
+					<th style="width:8%;text-align:center">Action</th>
 					<th style="width: 15%;" st-sort="countries.isoCode">Country ISO Code</th>
 					<th style="width: 15%;" st-sort="countries.name">Country Name</th>
 					<th style="width: 28%;" st-sort="cntryContact">Country Contact</th>
-					<th style="width: 45%;" st-sort="cntryReviewer">Identity Reviewers</th> -->
+					<th style="width: 45%;" st-sort="cntryReviewer">Identity Reviewers</th>
 					
 					<th style="width:8%;text-align:center">Action</th>
 					<th style="width: 15%;" >Country ISO Code</th>
@@ -34,8 +34,8 @@
 				<td><input st-search="countries.name" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="cntryContact" placeholder=" " class="form-control" type="search" /></td>
 				<td><input st-search="cntryReviewer" placeholder=" " class="form-control" type="search" /></td>
-				</tr> -->
-				<tr ng-repeat-start="con in ReviewAttributes | filter:ReviewerFilter">
+				</tr> -->  <!-- | filter:ReviewerFilter -->
+				<tr ng-repeat-start="con in ReviewAttributes ">
 
 					<td  style="width: 139px;"><gcms-modal
 							template="administration.country.update.html"
@@ -101,8 +101,14 @@
 											ok="deactivateTemplate" alt="Deactivate Template {{temp.id}}" ng-show="temp.tmpl_status=='ACTIVE'">
 										<span class="fa fa-ban fa-inverse"
 											 title="Deactivate Template"
+											style="color: gray; margin-left: 9px;"></span> </gcms-modal>
+										<gcms-modal
+											template="administration.template.activate.html"
+											controller="ModalDefaultCtrl" content="temp"
+											ok="activateTemplate"  ng-show="temp.tmpl_status=='INACTIVE'">
+										<span class="fa fa-ban fa-inverse"
+											 title="Activate Template"
 											style="color: #337ab7; margin-left: 9px;"></span> </gcms-modal>
-
 
 										<!-- ng-hide="IsVisible"<span><button ng-click="showHide()">show</button>
 										<i class="fa fa-toggle-on" aria-hidden="true"></i></span> -->
@@ -119,10 +125,10 @@
 									<span ng-if="temp.tmpl_status=='INACTIVE'">{{temp.tmpl_status}}</span>
 									</td>
 									<td>
-
+											<!-- ng-show="temp.tmpl_status=='ACTIVE'" -->
 										<div ng-if="temp.tmpl_location==undefined">
 									<gcms-upload template="template.modals.html"
-										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
+										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" >
 										 <span title="Upload Tempalte" style="margin-left: 21%;" class="fa fa-upload" >
 									</gcms-upload>
 								</div>
@@ -130,10 +136,10 @@
 								
 								<div ng-if="temp.tmpl_location!=undefined" >								    
 											<gcms-upload template="template.modals.html"
-										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" ng-show="temp.tmpl_status=='ACTIVE'">
+										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" >
 										 <span title="Update Template" style="margin-left: 21%;" class="fa fa-upload" >
 									</gcms-upload>
-									<a href="" ng-click="download(temp)" ng-show="temp.tmpl_status=='ACTIVE'"><span title="Download Template" style="margin-left: 22%;"class="fa fa-download"></span></a>
+									<a href="" ng-click="download(temp)" ><span title="Download Template" style="margin-left: 22%;"class="fa fa-download"></span></a>
 								
 								</div> 
 								
@@ -146,14 +152,14 @@
 						</table>
 					</td>
 			</tbody>
-			<!-- <tfoot>
+			 <tfoot>
 				<tr>
 					<td colspan="13" class="text-center">
 						<div st-table="displayedCollection" st-safe-src="ReviewAttributes"  st-items-by-page='5' st-pagination=""
 							st-template="app/task/pagination.custom.html"></div>
 					</td>
 				</tr>
-			</tfoot> -->
+			</tfoot> 
 		</table>
 
 		 <!-- </tr>

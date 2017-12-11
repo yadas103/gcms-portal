@@ -205,6 +205,14 @@
 					 * @param {object}
 					 *            item Template to update
 					 */
+		          
+		        //On Click of Task Edit, initialize dates
+		          $scope.date = function(item){
+		        	    item.validity_start_date = moment(item.validity_start_date,'YYYY-MM-DD');
+		        	    item.validity_end_date = moment(item.validity_end_date,'YYYY-MM-DD');         		          		
+		        	};
+		  		
+		          
 		          $scope.updateTemplate = function(item) {
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
@@ -213,6 +221,22 @@
 		              }
 		            });
 		            console.log(item.id);
+		            
+		            	//Input Date format
+		            	item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+		            	item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+		       		
+			           //Adding timezone
+		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
+		       	   
+			           //Convert to DB date format
+		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
+		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
+
+			           delete item.validity_start;
+			           delete item.validity_end;
+		            
 		            delete item.expanded;
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){
 		            	getTemplateData();

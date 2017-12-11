@@ -131,22 +131,13 @@
 
 		 
 	  
-          var startdate = {};
-    	  var enddate = {};
-          	$scope.date = function(item){
-          		if(item.consannexid.consentstartdate != undefined || item.consannexid.consentenddate != undefined){
-          		item.consannexid.consentstartdate =  moment(item.consannexid.consentstartdate);
-    			startdate = item.consannexid.consentstartdate;
-          		item.consannexid.consentenddate =  moment(item.consannexid.consentenddate);
-          		enddate = item.consannexid.consentenddate;
-          		}
-          		else
-          		{
-    				item.consannexid.consentstartdate = startdate;
-    				item.consannexid.consentenddate = enddate;
-          		}
-          	};
-    		
+          
+          //On Click of Task Edit, initialize dates
+          $scope.date = function(item){
+        		item.consannexid.consentstartdate = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
+        		item.consannexid.consentenddate = moment(item.consannexid.consentenddate,'YYYY-MM-DD');         		          		
+        	};
+  		
 		
       	
           	$scope.close=function(item) {
@@ -191,6 +182,22 @@
 		      			 }     			
 		      		 }
 		      	 }
+	         
+	         //Input Date format
+	           item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
+	           item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+     		
+	           //Adding timezone
+	           item.consannexid.consentstartdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+	           item.consannexid.consentenddate = moment.tz(item.consannexid.consentend,moment.tz.guess());
+     	   
+	           //Convert to DB date format
+	           item.consannexid.consentstartdate = moment(item.consannexid.consentstart).format('YYYY-MM-DD');   			
+	           item.consannexid.consentenddate = moment(item.consannexid.consentend).format('YYYY-MM-DD');
+
+	           delete item.consannexid.consentend;
+	           delete item.consannexid.consentstart;
+	         
 		         delete item.click;
 	           // Task.update({ id:item.id }, item);
 	         	Task.update({ id:item.id }, item).$promise.then(function(response){

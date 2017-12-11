@@ -14,14 +14,18 @@ html, body {
 	margin: 0 auto -60px;
 }
 body {
-	padding-top: 60px;
-	padding-bottom: 40px;
-	background-color: #f9f9f9;
-	color: #666;
-	font-size: 12px;
-	font-family: sans-serif;
-	font-weight: 400;
+
+padding-top: 60px;
+padding-bottom: 40px;
+background-color: #f9f9f9;
+color: #666;
+font-size: 12px;
+font-family: sans-serif;
+font-weight: 400;
+overflow-y: scroll;
+
 }
+
 p {
 	color: #666;
 	font-size: 1em;

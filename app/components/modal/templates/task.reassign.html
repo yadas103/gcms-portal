@@ -5,7 +5,8 @@
   </h3>
   
 </div>
-<form name="taskForm"  novalidate  class="form-horizontal" ng-controller = "TaskCtrl">
+<form name="reasonForm"  novalidate  class="form-horizontal" ng-controller = "TaskCtrl">
+{{item.reassignReason}}
 <div class="modal-body">
     <div class="form-group">
     <label for="consannexid.eventname" class="col-sm-3 control-label">Current
@@ -15,13 +16,29 @@
     </div>
   </div>
   <div class="form-group" >
+  
     <label for="consannexid.pocode" class="col-sm-3 control-label">New
 					Task Owner :</label>
     <div class="col-sm-9">
      
-					<select class="col-sm-12"  ng-model="item.assignedto" ng-change="onCategoryChange(item.assignedto)" ng-options="useritr.userName for useritr in user" required>
+					<select class="form-control"  class="col-sm-12" class="drop-receipi" ng-model="item.assignedto" ng-change="onCategoryChange(item)" ng-options="useritr.userName for useritr in user" required>
 					<option  value="" ng-show="{{empty}}"> --- Please Select---</option></select> 
+					  
+					
 					 </div>
+<div  ng-show="count!='null'" >
+   <!--  <label for="consannexid.pocode" class="col-sm-3 control-label">Please Provide Reason For Change :</label>
+    <div class="col-sm-6" >
+    
+      <textarea rows="3" cols="45" name="comment" form="usrform" name="NewValue" ng-model="item.reassignReason" style="resize: none; width:95%;" >
+	Enter text here...</textarea>    </div> -->
+	<p>What is the reason for this change?</p>
+   
+    <textarea rows="3" cols="40" class="form-control" id="changeReason" name="changeReason"
+     ng-model="item.reassignReason" placeholder="" style="resize: none" required></textarea>
+      <span class="error" ng-show="reasonForm.changeReason.$error.required">Required!</span>
+
+  </div>
 
 
 
@@ -31,7 +48,7 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="count=='null'">Confirm</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="count=='null'|| reasonForm.$invalid">Confirm</button>
   <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
 </div>
 </form>

@@ -317,8 +317,12 @@
 			//}, item);
 		};
 		$scope.count='null';
-	    $scope.onCategoryChange = function () {
+	
+	    $scope.onCategoryChange = function (item) {
+	    	item.reassignReason='';
 	    	 $scope.count=1;
+	    	
+	    	 
 	    } 
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");

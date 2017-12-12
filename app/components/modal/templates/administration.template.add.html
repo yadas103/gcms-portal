@@ -34,7 +34,7 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="consentCheck" class="col-sm-3 control-label">Template Needs to be Consented ? :</label>
+         <label for="consentCheck" class="col-sm-3 control-label">Consent Required? :</label>
          <div class="col-sm-9">
          <select ng-model="item.consentCheck" ng-click="foo();"  style=" margin-left: 0px;width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <option value="">Please select</option>
@@ -46,13 +46,13 @@
      
       <div ng-show="item.consentCheck=='Y'">
        <div class="form-group" ">
-         <label for="signPageNo" class="col-sm-3 control-label">Signature Block PageNo :</label>
+         <label for="signPageNo" class="col-sm-3 control-label">SignatureBlock PageNo :</label>
          <div class="col-sm-9">
             <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required >
          </div>
       </div>
        <div class="form-group" >
-         <label for="consentPageNo" class="col-sm-3 control-label">Consent Block PageNo :</label>
+         <label for="consentPageNo" class="col-sm-3 control-label">ConsentBlock PageNo :</label>
          <div class="col-sm-9">
             <input type="number" style=" max-width: 32%;" min=1 max=10 class="form-control" id="consentPageNo" name="consentPageNo" ng-model="item.consentPageNo" placeholder="" required>
          </div>
@@ -60,7 +60,7 @@
      </div>
      <div ng-if="item.consentCheck=='N'">
        <div class="form-group" ">
-         <label for="signPageNo" class="col-sm-3 control-label">Signature Block PageNo :</label>
+         <label for="signPageNo" class="col-sm-3 control-label">SignatureBlock PageNo :</label>
          <div class="col-sm-9">
             <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required>
          </div>

@@ -51,6 +51,7 @@
    	   console.log("Inside upload");
    	   $scope.a=false;
           //if ($scope.uploader.queue.length > 0) {
+   	if($scope.uploader.progress=='100'){
    	   $scope.success='';
  	   $scope.error='';
        	   return FileMonitor.query().$promise.then(function(result){
@@ -85,7 +86,7 @@
    			        });
        		    	//$scope.error="File(s) not able to process ";
        		      });
-   		  //};
+   		  };
             
           }
 	  

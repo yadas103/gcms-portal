@@ -55,6 +55,7 @@
              start-view="day"
              ng-model-options="{updateOn: 'blur' }" >   
   </div>
+  </div>
   <div class="form-group" > 
     <label  for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
     <div class="col-sm-9">
@@ -71,7 +72,8 @@
          </div> 
   </div>
  </div>
-    </div>
+ </div>
+    
     <div ng-hide="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     <div class="form-group">
     <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>

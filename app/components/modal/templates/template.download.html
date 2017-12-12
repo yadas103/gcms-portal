@@ -24,7 +24,8 @@ Enter this information in the proper columns of the below list. Once done press 
 	<th style="font-size: 12px; font-family: sans-serif; padding-bottom: 22px;">ACM/ InterAct Code</th>
 	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
 	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
-	<th>Action </th>
+	<th ng-show="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Event End Date</th>
+	<th>Action </th>	
     </tr>
 	</thead>
 	
@@ -45,6 +46,7 @@ Enter this information in the proper columns of the below list. Once done press 
              format="DD-MM-YYYY"
              ng-model="item.request[i.id].consentstartdate"
              ng-model-options="{ updateOn: 'blur' }"
+             start-view = "day"
              start-date="item.request[i.id].consentstartdate">            
              </td>
               <td ng-hide="item.setDates">
@@ -55,7 +57,20 @@ Enter this information in the proper columns of the below list. Once done press 
              format="DD-MM-YYYY"
              ng-model="item.request[i.id].consentenddate"
              ng-model-options="{ updateOn: 'blur' }"
+             start-view = "day"
              start-date="item.request[i.id].consentenddate">                          
+            </td> 
+            <td ng-show="item.setDates">
+              <input
+             placeholder="Select a date..."
+             moment-picker="item.request[i.id].eventEndDate"
+             locale="en"
+             format="DD-MM-YYYY"
+             ng-model="item.request[i.id].eventEndDate"
+             ng-model-options="{ updateOn: 'blur' }"
+             start-view = "day"
+             start-date="item.request[i.id].eventEndDate"
+             required>                          
             </td> 
             <td ng-model="item.i.id"><button  class="btn btn-primary" ng-click="copy(item,item.request[i.id])">Same for all</button></td>
  	</tr>

@@ -443,7 +443,7 @@
 			$scope.currentYear = (new Date()).getFullYear();
 			
 			for(var i  in $scope.checkedIds){
-				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
+				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : "","eventEndDate": ""};
 				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) ;
 				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz($scope.currentYear+'/12/31',moment.tz.guess());				
 			}
@@ -476,6 +476,7 @@
 				item.request[$scope.copyCheckedIds[i]].acmcode = copy.acmcode; 
 				item.request[$scope.copyCheckedIds[i]].eventname = copy.eventname;
 				item.request[$scope.copyCheckedIds[i]].pocode = copy.pocode;
+				item.request[$scope.copyCheckedIds[i]].eventEndDate = copy.eventEndDate;
 				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate == undefined? moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) : copy.consentstartdate ;
 				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate == undefined? moment.tz($scope.currentYear+'/12/31',moment.tz.guess()) : copy.consentenddate;
 			}
@@ -576,9 +577,13 @@
 					modifiedparams['eventname'] = item.request[currentId].eventname;
 					modifiedparams['pocode'] = item.request[currentId].pocode;
 					modifiedparams['acmcode'] = item.request[currentId].acmcode;
+					if($scope.dataToSend.setDates = false){
 					modifiedparams['consentstartdate'] = item.request[currentId].consentstartdate;
 					modifiedparams['consentenddate'] = item.request[currentId].consentenddate;
-
+					}
+					else{
+					modifiedparams['eventEndDate'] = item.request[currentId].eventEndDate;
+					}
 					$scope.getPDFs(modifiedparams,y);				  	
 				}
 				else

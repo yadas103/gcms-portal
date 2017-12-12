@@ -25,11 +25,39 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="templatePage" class="col-sm-3 control-label">Template Consent Page:</label>
+         <label for="consentCheck" class="col-sm-3 control-label">Template Needs to be Consented ? :</label>
          <div class="col-sm-9">
-            <input type="number" min=1 max=10 class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="Provide consent page number" required >
+         <select ng-model="item.consentCheck" ng-click="foo();"  style=" margin-left: 0px;width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+               <option value="">Please select</option>
+               <option value="Y">Yes</option>
+               <option value="N">No</option>
+            </select>
+            </div>
+      </div>
+     
+      <div ng-show="item.consentCheck=='Y'">
+       <div class="form-group" ">
+         <label for="signPageNo" class="col-sm-3 control-label">Signature Block Page No :</label>
+         <div class="col-sm-9">
+            <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required >
          </div>
       </div>
+       <div class="form-group" >
+         <label for="consentPageNo" class="col-sm-3 control-label">Consent Block Page No :</label>
+         <div class="col-sm-9">
+            <input type="number" style=" max-width: 32%;" min=1 max=10 class="form-control" id="consentPageNo" name="consentPageNo" ng-model="item.consentPageNo" placeholder="" required>
+         </div>
+      </div>
+     </div>
+     <div ng-if="item.consentCheck=='N'">
+       <div class="form-group" ">
+         <label for="signPageNo" class="col-sm-3 control-label">Signature Block Page No :</label>
+         <div class="col-sm-9">
+            <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required>
+         </div>
+      </div>
+     
+     </div>
       <div class="form-group">
          <label for="templateDesc" class="col-sm-3 control-label">Template Description:</label>
          <div class="col-sm-9">
@@ -46,8 +74,8 @@
                <!--  <option value="" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Please select</option>
                <option value="Y" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Y</option> -->
                <option value="">Please select</option>
-               <option value="Y">Y</option>
-               <option value="N">N</option>
+               <option value="Y">Yes</option>
+               <option value="N">No</option>
             </select>
          </div>
       </div>

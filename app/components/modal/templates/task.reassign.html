@@ -6,7 +6,7 @@
   
 </div>
 <form name="reasonForm"  novalidate  class="form-horizontal" ng-controller = "TaskCtrl">
-{{item.reassignReason}}
+
 <div class="modal-body">
     <div class="form-group">
     <label for="consannexid.eventname" class="col-sm-3 control-label">Current
@@ -26,23 +26,16 @@
 					  
 					
 					 </div>
-<div  ng-show="count!='null'" >
-   <!--  <label for="consannexid.pocode" class="col-sm-3 control-label">Please Provide Reason For Change :</label>
-    <div class="col-sm-6" >
-    
-      <textarea rows="3" cols="45" name="comment" form="usrform" name="NewValue" ng-model="item.reassignReason" style="resize: none; width:95%;" >
-	Enter text here...</textarea>    </div> -->
-	<p>What is the reason for this change?</p>
-   
-    <textarea rows="3" cols="40" class="form-control" id="changeReason" name="changeReason"
-     ng-model="item.reassignReason" placeholder="" style="resize: none" required></textarea>
-      <span class="error" ng-show="reasonForm.changeReason.$error.required">Required!</span>
+	</div>
 
+
+<div class="form-group" ng-show="count!='null'" >
+    <label for="reassignReason" class="col-sm-3 control-label">Reassigning Reason:</label>
+    <div class="col-sm-9">
+       <textarea style="resize: none" ng-model="item.reassignReason" rows="2" cols="66" required></textarea> 
+    </div>  
   </div>
 
-
-
-      
 
    
 </div>

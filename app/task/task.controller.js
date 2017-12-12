@@ -184,8 +184,18 @@
 		      	 }
 	         
 	         //Input Date format
+	           if(item.consannexid.consentstart != undefined){
 	           item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
+	           }
+	           else{	        	   
+	           item.consannexid.consentstart = moment(item.consannexid.consentstartdate,'DD-MM-YYYY');
+	           }
+	           if(item.consannexid.consentend != undefined){
 	           item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+	           }
+	           else{	        	   
+		           item.consannexid.consentend = moment(item.consannexid.consentenddate,'DD-MM-YYYY');
+		           }
      		
 	           //Adding timezone
 	           item.consannexid.consentstartdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			

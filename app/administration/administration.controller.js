@@ -343,13 +343,15 @@
 					 */
 		          $scope.deleteTemplate = function(item) {
 		            var index = 0;
-		            angular.forEach($scope.Templates, function(temp){
-		              if (temp.id === item.id){
-		                $scope.Templates.splice(index, 1);
-		              }
-		              index++;
-		       });
 		            Templates.delete({ id:item.id }).$promise.then(function(response){
+		            	if(response.string == 1)
+		            	{
+		            	angular.forEach($scope.Templates, function(temp){
+		  		              if (temp.id === item.id){
+		  		                $scope.Templates.splice(index, 1);
+		  		              }
+		  		              index++;
+		  		       });	
 		            	toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Template deleted !',
@@ -361,6 +363,20 @@
 	            	        shake: false,
 	            	        theme: 'bootstrap'
 	            	      });
+		              } else if(response.string == 2){
+		            	  getTemplateData();
+		            	  toasty.error({
+		        	          title: 'Error',
+		        	          msg: 'There are Incompleted Task associated with this template ! Not able to Delete',
+		        	          showClose: true,
+		        	          clickToClose: true,
+		        	          timeout: 10000,
+		        	          sound: false,
+		        	          html: false,
+		        	          shake: false,
+		        	          theme: 'bootstrap'
+		        	        });
+		              }
 		            	
 		            }).catch(function(){
 		 		    	 internalError();	

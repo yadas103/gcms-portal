@@ -178,7 +178,8 @@
 		        	console.log(item);
 		        	delete item.expanded;
 		            $scope.Templates.push(item);
-		            
+		            item.validity_start_date =  moment.tz(item.validity_start_date,moment.tz.guess()) ;				            
+		            item.validity_end_date =  moment.tz(item.validity_end_date,moment.tz.guess()) ;
 		            Templates.save(item).$promise.then(function(response){
 		            	getTemplateData();
 		            	toasty.success({

@@ -251,6 +251,14 @@
 
 			           delete item.validity_start;
 			           delete item.validity_end;
+			           
+			           if(item.validity_start_date  == "Invalid date" || item.validity_start_date  == undefined ){
+			        	   delete item.validity_start_date ;
+			           }
+			           
+			           if(item.validity_end_date == "Invalid date" || item.validity_end_date == undefined){
+			        	   delete item.validity_end_date;
+			           }
 		            
 		            delete item.expanded;
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){

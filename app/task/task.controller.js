@@ -208,6 +208,14 @@
 	           delete item.consannexid.consentend;
 	           delete item.consannexid.consentstart;
 	         
+	           if(item.consannexid.consentstartdate == "Invalid date" || item.consannexid.consentstartdate == undefined ){
+	        	   delete item.consannexid.consentstartdate;
+	           }
+	           
+	           if(item.consannexid.consentenddate == "Invalid date" || item.consannexid.consentenddate == undefined){
+	        	   delete item.consannexid.consentenddate;
+	           }
+	           
 		         delete item.click;
 	           // Task.update({ id:item.id }, item);
 	         	Task.update({ id:item.id }, item).$promise.then(function(response){

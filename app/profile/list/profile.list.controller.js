@@ -114,7 +114,7 @@
 					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5)
 					{	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
-						 $scope.readOnlyCC = true;
+						 //$scope.readOnlyCC = true;
 					}											               
 		};
 		
@@ -122,7 +122,7 @@
 		
 		//Called on create missing profile to sent country and lock 
 		$scope.passCountryName = function (){
-			$scope.profile.country = $scope.request.collectingCountry;
+			$scope.profile.country = $scope.request.country;
 			$scope.profile.readOnly = true;
 		};
 		
@@ -130,6 +130,9 @@
 		//Calling $scope.userProfileData() to get Logged in User Profile Data
 		$scope.userProfileData();
 
+		//Loading Paying Country for Global
+		
+		
 		//Loading Countries
 		var updateCountry = function(result){
 			$scope.counties = result;         

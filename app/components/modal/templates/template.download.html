@@ -70,7 +70,7 @@ Enter this information in the proper columns of the below list. Once done press 
              ng-model-options="{ updateOn: 'blur' }"
              start-view = "day"
              start-date="item.request[i.id].eventEndDate"
-             required>                          
+             ng-required = "item.setDates">                          
             </td> 
             <td ng-model="item.i.id"><button  class="btn btn-primary" ng-click="copy(item,item.request[i.id])">Same for all</button></td>
  	</tr>

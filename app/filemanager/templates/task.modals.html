@@ -6,6 +6,7 @@
 	<div class="modal-body">
 		<span style="color: green;">{{success}}</span>
 		<span style="color: red;">{{error}}</span>
+		{{item.consannexid.tmpl_id.manualUpload}}
 		 <label class="radio"><!-- {{"files_will_uploaded_to"| translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b> --></label>
 		  <input type="file" class="form-control" ng-file="uploadFileList"
 			autofocus="autofocus" accept=".pdf" style="padding-top: 3px;" />

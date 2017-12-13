@@ -389,6 +389,7 @@
 			var request = item;
 			var reqID = {};
 			request.profileTypeId = item.profileTypeId.Name;
+			request.status = 'Pending';
 			delete request.readOnly;
 			IdentityRequest.save(request).$promise
 			.then(function(result) {

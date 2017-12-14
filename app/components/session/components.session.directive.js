@@ -110,7 +110,8 @@
            * @returns {object} current role of a user
            */
           user.getCurrentProfile().then(function(currentProfile){
-            $scope.currentProfile = currentProfile; 
+            $scope.currentProfile = currentProfile;
+            $rootScope.loggedInUserRole=$scope.currentProfile;
             $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
             
             $scope.getReviewersData(currentProfile);

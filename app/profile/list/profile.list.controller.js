@@ -114,7 +114,7 @@
 					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5)
 					{	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
-						 $scope.readOnlyCC = true;
+						 //$scope.readOnlyCC = true;
 					}											               
 		};
 		
@@ -122,7 +122,7 @@
 		
 		//Called on create missing profile to sent country and lock 
 		$scope.passCountryName = function (){
-			$scope.profile.country = $scope.request.collectingCountry;
+			$scope.profile.country = $scope.request.country;
 			$scope.profile.readOnly = true;
 		};
 		
@@ -130,6 +130,9 @@
 		//Calling $scope.userProfileData() to get Logged in User Profile Data
 		$scope.userProfileData();
 
+		//Loading Paying Country for Global
+		
+		
 		//Loading Countries
 		var updateCountry = function(result){
 			$scope.counties = result;         
@@ -389,6 +392,7 @@
 			var request = item;
 			var reqID = {};
 			request.profileTypeId = item.profileTypeId.Name;
+			request.status = 'Pending';
 			delete request.readOnly;
 			IdentityRequest.save(request).$promise
 			.then(function(result) {
@@ -443,7 +447,7 @@
 			$scope.currentYear = (new Date()).getFullYear();
 			
 			for(var i  in $scope.checkedIds){
-				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : ""};
+				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : "","eventEndDate": ""};
 				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) ;
 				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz($scope.currentYear+'/12/31',moment.tz.guess());				
 			}
@@ -476,6 +480,7 @@
 				item.request[$scope.copyCheckedIds[i]].acmcode = copy.acmcode; 
 				item.request[$scope.copyCheckedIds[i]].eventname = copy.eventname;
 				item.request[$scope.copyCheckedIds[i]].pocode = copy.pocode;
+				item.request[$scope.copyCheckedIds[i]].eventEndDate = copy.eventEndDate;
 				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate == undefined? moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) : copy.consentstartdate ;
 				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate == undefined? moment.tz($scope.currentYear+'/12/31',moment.tz.guess()) : copy.consentenddate;
 			}
@@ -576,9 +581,13 @@
 					modifiedparams['eventname'] = item.request[currentId].eventname;
 					modifiedparams['pocode'] = item.request[currentId].pocode;
 					modifiedparams['acmcode'] = item.request[currentId].acmcode;
+					if($scope.dataToSend.setDates == false){
 					modifiedparams['consentstartdate'] = item.request[currentId].consentstartdate;
 					modifiedparams['consentenddate'] = item.request[currentId].consentenddate;
-
+					}
+					else{
+					modifiedparams['eventEndDate'] = item.request[currentId].eventEndDate;
+					}
 					$scope.getPDFs(modifiedparams,y);				  	
 				}
 				else

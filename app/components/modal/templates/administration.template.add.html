@@ -5,15 +5,24 @@
 <div class="modal-body">
    <form name="adminTemplateForm" class="form-horizontal" novalidate >
       <div class="form-group">
-         <label for="templateName" class="col-sm-3 control-label">Template Name:</label>
+         <label for="templateName" class="col-sm-3 control-label">Template Name :</label>
          <div class="col-sm-9">
-            <input ng-maxlength="50" type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="Max 60 character" required>
+            <input  type="text" class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder=" " required>
          </div>
       </div>
       <div class="form-group">
-         <label for="templateType" class="col-sm-3 control-label">Template Type:</label>
+         <label for="templateDesc" class="col-sm-3 control-label">Template Description :</label>
          <div class="col-sm-9">
-            <select ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control" ng-model="item.tmpl_desc" required> 
+          
+            </textarea>
+            <!-- <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" > -->
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="templateType" class="col-sm-3 control-label">Template Type :</label>
+         <div class="col-sm-9">
+            <select ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <option value="">Please select</option>
                <option value="InCountry-HCO">InCountry - HCO</option>
                <option value="InCountry-HCP">InCountry - HCP</option>
@@ -25,35 +34,55 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="templatePage" class="col-sm-3 control-label">Template Consent Page:</label>
+         <label for="consentCheck" class="col-sm-3 control-label">Consent Required? :</label>
          <div class="col-sm-9">
-            <input type="number" min=1 max=10 class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="Provide consent page number" required >
+         <select ng-model="item.consentCheck" ng-click="foo();"  style=" margin-left: 0px;width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+               <option value="">Please select</option>
+               <option value="Y">Yes</option>
+               <option value="N">No</option>
+            </select>
+            </div>
+      </div>
+     
+      <div ng-show="item.consentCheck=='Y'">
+       <div class="form-group" ">
+         <label for="signPageNo" class="col-sm-3 control-label">SignatureBlock PageNo :</label>
+         <div class="col-sm-9">
+            <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required >
          </div>
       </div>
-      <div class="form-group">
-         <label for="templateDesc" class="col-sm-3 control-label">Template Description:</label>
+       <div class="form-group" >
+         <label for="consentPageNo" class="col-sm-3 control-label">ConsentBlock PageNo :</label>
          <div class="col-sm-9">
-         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control" ng-model="item.tmpl_desc" required> 
-          
-            </textarea>
-            <!-- <input type="text" class="form-control" id="tmpldesc" name="tmpldesc" ng-model="item.tmpl_desc" placeholder="" > -->
+            <input type="number" style=" max-width: 32%;" min=1 max=10 class="form-control" id="consentPageNo" name="consentPageNo" ng-model="item.consentPageNo" placeholder="" required>
          </div>
       </div>
+     </div>
+     <div ng-if="item.consentCheck=='N'">
+       <div class="form-group" ">
+         <label for="signPageNo" class="col-sm-3 control-label">SignatureBlock PageNo :</label>
+         <div class="col-sm-9">
+            <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required>
+         </div>
+      </div>
+     
+     </div>
+      
       <div class="form-group">
          <label for="consentValidityPeriod" class="col-sm-3 control-label" style="padding-left:4px;">Consent Validity Period :</label>
          <div class="col-sm-9">
-            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 100%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+            <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <!--  <option value="" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Please select</option>
                <option value="Y" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Y</option> -->
                <option value="">Please select</option>
-               <option value="Y">Y</option>
-               <option value="N">N</option>
+               <option value="Y">Yes</option>
+               <option value="N">No</option>
             </select>
          </div>
       </div>
       <div ng-show="item.dates_rages=='Y'" > 
       <div class="form-group">
-         <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity Start Date:</label>
+         <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity StartDate :</label>
          <div class="col-sm-9">
          <!-- <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_start_date" value={{item.validity_start_date}} is-open=""  close-text="Close" />
           --> <input
@@ -64,7 +93,7 @@
              ng-model="item.validity_start_date"
              ng-model-options="{ updateOn: 'blur' }"
            	 today="true"
-             start-view = "month"> 
+             start-view = "day"> 
               <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart" ng-required="true" close-text="Close" />                          
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
               <i class="fa fa-calendar"></i></button>   -->            
@@ -72,7 +101,7 @@
          
       </div>
       <div class="form-group" >
-         <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity End Date:</label>
+         <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity EndDate :</label>
          <div class="col-sm-9">
          <!-- <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_end_date" value={{item.validity_end_date}} is-open=""  close-text="Close" />
           --> <input
@@ -83,7 +112,7 @@
              ng-model="item.validity_end_date"
              ng-model-options="{ updateOn: 'blur' }"
              today="true"
-             start-view = "month">     
+             start-view = "day">     
          
             <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" min-date="item.validity_start_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">

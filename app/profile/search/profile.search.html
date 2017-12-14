@@ -1,5 +1,5 @@
 <!-- Home page -->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Search Details</h3>
@@ -16,59 +16,59 @@
 			style="margin-right: -12px; margin-left: 32px;">
 			<div class="container-fluid">
 				<div class="row">
-				<div ng-hide="true" class="col-sm-3" id="search-drop" style="margin-left: -63px;width: 264px;">
-						<select ng-model="request.collectingCountry" class="drop-receipi"
-							style="margin-left: 37px;" ng-disabled="readOnlyCC" required>
+				<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop" >
+						<select class="form-control" ng-model="request.collectingCountry" class="drop-receipi"
+							 ng-disabled="readOnlyCC" required>
 							<option value = "">Please select</option>
 							<option ng-repeat="con in counties | filter:efpiaFilter " >{{con.name}}</option>
 						</select>
-						<label style="font-size: 12px;margin-left: 37px;"">Collecting Country</label><br>
+						<label style="font-size: 12px;margin-left: 3px; display: block;">Collecting Country</label><br>
 					</div> 
-					<div class="col-sm-3 form-group" id="search-drop">
-						<select ng-model="request.country" class="drop-receipi"
-							ng-disabled="readOnlyPC" title="Reporting Country" required>
+					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
+						<select class="form-control" ng-model="request.country" class="drop-receipi"
+							ng-disabled="readOnlyPC" title="Reporting Country" required style="width: 264px; height: 25px;">
 							<option value = "">Please select</option>
 							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option>
-						</select> <label style="font-size: 12px;margin-left: 3px;">Reporting Country</label><br>
+						</select> <label style="font-size: 12px;margin-left: 1px;">Reporting Country</label><br>
 					</div>
-					<div class="col-sm-3 form-group" id="search-drop">
-						<select ng-model="request.profileType" class="drop-receipi" ng-change="clear()" title="Business Party Type" required>							 						
+					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
+						<select class="form-control" ng-model="request.profileType" class="drop-receipi" ng-change="clear()" title="Business Party Type" required style="width: 264px; height: 25px; ;margin-left: 3%;">
 							<option ng-repeat="prof in profile_types">{{prof.name}}</option>
 						</select>						
-						<label style="font-size: 12px;margin-left: 2px;">Business Party Type</label><br>
+						<label style="font-size: 12px; margin-left: 10px;">Business Party Type</label><br>
 					</div>
-					<div class="col-sm-3 form-group" id="search-drop">
+					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
 					<input type="text" class="form-control" id="firstName"
-						ng-model="request.firstName" style="width: 264px; height: 25px;margin-left: -4px;" title="First Name">
-					<label for="firstName" style="font-size: 12px;margin-left: -2px;">First Name</label><br>
+						ng-model="request.firstName" style="width: 264px; height: 25px; ;margin-left: 6%;" title="First Name">
+					<label for="firstName" style="font-size: 12px; margin-left: 6%;">First Name</label><br>
 				</div>
-				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
+				<div  ng-hide="true" class="col-sm-3 col-md-3 col-lg-3 form-group" style="width: 264px; height: 25px;">
 					<input type="text" class="form-control" id="address"
 						ng-model="request.address"
-						style="margin-left: 17px; margin-top: 6px; width: 264px;height: 25px;" title="Address"	>
-					<label for="address" style="font-size: 12px;margin-left: 20px;">Address</label><br>
+						style="margin-left: 17px; margin-top: 6px; width: 264px; height: 25px; ;margin-left: 11%;" title="Address"	>
+					<label for="address" style="font-size: 12px;margin-left: 28px;">Address</label><br>
 				</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-3 form-group" id="search-drop">
+					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
 						<input type="text" class="form-control" id="lastName"
-						ng-model="request.lastName" style="width: 250px;"> <label style="font-size: 12px;margin-left: 1px;" title="Last Name / Organization Name">Last Name / Organization Name</label><br>
+						ng-model="request.lastName" style="width: 275px;"> <label style="font-size: 12px;margin-left: 1px;" title="Last Name / Organization Name">Last Name / Organization Name</label><br>
 					</div>
-					<div class="col-sm-3 form-group" id="search-drop">
+					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
 						<input type="text" class="form-control" id="city"
-						ng-model="request.city" style="width:247px;"  title="City">						
-						<label style="font-size: 12px;margin-left: 3px;">City</label><br>
+						ng-model="request.city" style="width:264px;"  title="City">						
+						<label style="font-size: 12px;">City</label><br>
 					</div>
-					<div class="col-sm-3 form-group" id="search-drop">
+					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
 					<input type="text" class="form-control" id="speciality"
-						ng-model="request.speciality" style="width: 264px; height: 25px;margin-left: -4px;" title="Speciality">
-					<label for="Speciality" style="font-size: 12px;margin-left: -2px;">Speciality</label><br>
+						ng-model="request.speciality" style="width: 264px; height: 25px; ;margin-left: 3%;" title="Speciality">
+					<label for="Speciality" style="font-size: 12px; margin-left: 3%;">Speciality</label><br>
 				</div>
-				<div class="col-sm-3 form-group" style="width: 264px; height: 25px;">
-				<select class="drop-receipi" style="width: 264px;margin-left: 19px;margin-top: 5px;" title="Template Type" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;">
+				<div class="col-sm-3 col-md-3 col-lg-3 form-group" style="width: 264px; height: 25px;">
+				<select class="drop-receipi" style="width: 264px;margin-left: 8%; margin-top: 5px;" title="Template Type" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;">
 					<option value="" ng-show="{{empty}}">Select Template</option>
 				</select>
-				<label for="Template Type" style="font-size: 12px;margin-left: 19px;">Template Type</label><br>
+				<label for="Template Type" style="font-size: 12px; margin-left: 21px;">Template Type</label><br>
 				</div>
 				</div>
 				<div class="form-group" style="margin-top: 6px;">
@@ -97,7 +97,7 @@
 					<span class="create-button">
 						<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href="" ng-click="passCountryName()" title="Create request for missing profile" ><i style="padding: 33px;">Cannot find a profile? Create a request here</i></a></gcms-modal>
+					<a href="" ng-click="passCountryName()" title="Create request for missing profile" ><i style="padding: 25px;">Cannot find a profile? Create a request here</i></a></gcms-modal>
 					</span>
 				
 			</div>

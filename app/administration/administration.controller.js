@@ -65,14 +65,14 @@
 			 * @used smart table
 			 * @description partial view of reviewArributes
 			 */
-		//$scope.displayedCollection = [].concat($scope.ReviewAttributes);
+		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
 		
-		//Filter on Reviewer data
+		/*//Filter on Reviewer data
 		$scope.ReviewerFilter = function (result){
 			//console.log(result.countries.id );
 			//console.log($rootScope.currentProfile.countryId);
 			return (result.countries.id == $rootScope.currentProfile.countryId) ;
-		};
+		};*/
 		
 		/**
 		 * @author: selim
@@ -173,12 +173,13 @@
 		        	} else if(item.tmpl_type=="CrossBorder-HCO"){
 		        		item.tmpl_code=$scope.isoCode+"GO"+$scope.counter;
 		        	}	
-		        	item.tmpl_status="ACTIVE"; 
+		        	item.tmpl_status="INACTIVE"; 
 		        	console.log(item.tmpl_code);
 		        	console.log(item);
 		        	delete item.expanded;
 		            $scope.Templates.push(item);
-		            
+		            item.validity_start_date =  moment.tz(item.validity_start_date,moment.tz.guess()) ;				            
+		            item.validity_end_date =  moment.tz(item.validity_end_date,moment.tz.guess()) ;
 		            Templates.save(item).$promise.then(function(response){
 		            	getTemplateData();
 		            	toasty.success({
@@ -205,14 +206,60 @@
 					 * @param {object}
 					 *            item Template to update
 					 */
+		          
+		        //On Click of Task Edit, initialize dates
+		          $scope.date = function(item){
+		        	    item.validity_start_date = moment(item.validity_start_date,'YYYY-MM-DD');
+		        	    item.validity_end_date = moment(item.validity_end_date,'YYYY-MM-DD');         		          		
+		        	};
+		  		
+		          
 		          $scope.updateTemplate = function(item) {
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
 		                // do nessasary work here if needed
-	  
+		            	  temp.updatedDate = new Date();
 		              }
 		            });
 		            console.log(item.id);
+		            
+		            //Input Date format
+		 	           if(item.validity_start != undefined)
+		 	           {
+		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_start = moment(item.validity_start_date,'DD-MM-YYYY');
+		 	           }
+		 	           if(item.validity_end != undefined)
+		 	           {
+		 	        	  item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
+		 		       }
+		       		
+			           //Adding timezone
+		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
+		       	   
+			           //Convert to DB date format
+		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
+		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
+
+			           delete item.validity_start;
+			           delete item.validity_end;
+			           
+			           if(item.validity_start_date  == "Invalid date" || item.validity_start_date  == undefined ){
+			        	   delete item.validity_start_date ;
+			           }
+			           
+			           if(item.validity_end_date == "Invalid date" || item.validity_end_date == undefined){
+			        	   delete item.validity_end_date;
+			           }
+		            
 		            delete item.expanded;
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){
 		            	getTemplateData();
@@ -244,6 +291,7 @@
 		          $scope.deactivateTemplate = function(item) {
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
+		            	  temp.updatedDate = new Date();
 		                // do nessasary work here if needed
 		            	  item.tmpl_status="INACTIVE";
 		              }
@@ -251,7 +299,7 @@
 		            console.log(item.id);
 		            
 		            Templates.update({ id:item.id }, item).$promise.then(function(response){
-		            	
+		            	getTemplateData();
 		            	toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Template deactivated !',
@@ -268,6 +316,46 @@
 		 		    	 internalError();	
 		       		 });
 		          };
+		          
+		          /**selim
+					 * @ngdoc method
+					 * @name deactivate
+					 * @methodOf template update
+					 * @description Updates Template
+					 * @param {object}
+					 *            item Template to update
+		 */
+		          
+		          $scope.activateTemplate = function(item) {
+			            angular.forEach($scope.Templates, function(temp){
+			              if (temp.id === item.id) {
+			            	  temp.updatedDate = new Date();
+			                // do nessasary work here if needed
+			            	  item.tmpl_status="ACTIVE";
+			              }
+			            });
+			            console.log(item.id);
+			            
+			            Templates.update({ id:item.id }, item).$promise.then(function(response){
+			            	getTemplateData();
+			            	toasty.success({
+		            	        title: 'Success',
+		            	        msg: 'Template Activated !',
+		            	        showClose: true,
+		            	        clickToClose: true,
+		            	        timeout: 5000,
+		            	        sound: false,
+		            	        html: false,
+		            	        shake: false,
+		            	        theme: 'bootstrap'
+		            	      });
+			            	
+			            }).catch(function(){
+			 		    	 internalError();	
+			       		 });
+			          };
+		          
+		          
 		          /**selim
 					 * @ngdoc method
 					 * @name delete
@@ -278,13 +366,15 @@
 					 */
 		          $scope.deleteTemplate = function(item) {
 		            var index = 0;
-		            angular.forEach($scope.Templates, function(temp){
-		              if (temp.id === item.id){
-		                $scope.Templates.splice(index, 1);
-		              }
-		              index++;
-		       });
 		            Templates.delete({ id:item.id }).$promise.then(function(response){
+		            	if(response.string == 1)
+		            	{
+		            	angular.forEach($scope.Templates, function(temp){
+		  		              if (temp.id === item.id){
+		  		                $scope.Templates.splice(index, 1);
+		  		              }
+		  		              index++;
+		  		       });	
 		            	toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Template deleted !',
@@ -296,6 +386,20 @@
 	            	        shake: false,
 	            	        theme: 'bootstrap'
 	            	      });
+		              } else if(response.string == 2){
+		            	  getTemplateData();
+		            	  toasty.error({
+		        	          title: 'Error',
+		        	          msg: 'There are Incompleted Task associated with this template ! Not able to Delete',
+		        	          showClose: true,
+		        	          clickToClose: true,
+		        	          timeout: 10000,
+		        	          sound: false,
+		        	          html: false,
+		        	          shake: false,
+		        	          theme: 'bootstrap'
+		        	        });
+		              }
 		            	
 		            }).catch(function(){
 		 		    	 internalError();	

@@ -1,64 +1,64 @@
 <!-- Consent History view page -->
-   
-<div class="panel panel-primary table-responsive">
-      <div class="panel-heading">Consent History: {{item[0].bpid.firstName}} {{item[0].bpid.lastName}} </div>
-      <div class="panel-body">
-         
-           <div ng-controller = "ProfileListCtrl">
-  
-          
-                  <table class="table table-hover ">
-                  <div class="table-responsive">
-                        <!-- st-set-filter="myStrictFilter" -->
-                 
-                        <table  class="table table-bordered table-striped table-highlight">
-                              <thead>
-                               <tr style="color:white;background-color:#337ab7;">
-                                          
-                                         
-                                   <th style="font-size: 13px; font-family: sans-serif; width:14%;     height: 40px">Event Name</th>
-                                   <th style="font-size: 13px; font-family: sans-serif;  width: 11%;   height: 40px">Consent Status</th>
-                                   <th style="font-size: 13px; font-family: sans-serif;   width: 10%;  height: 40px">Consent Start Date</th>
-                                   <th style="font-size: 13px; font-family: sans-serif;   width: 10% ;height: 40px">Consent End Date</th>
-                                   <th  style="font-size: 13px; font-family: sans-serif;width: 15%;    height: 40px">Consent Updated Date</th>
-                                   <th style="font-size: 13px; font-family: sans-serif;width: 5%;    height: 40px">Document</th>
-                                   </tr>
-                              </thead>
-                                
-                              <tbody data-ng-repeat="field  in item">
-                                <tr >
-                                                                     <td>{{field.eventname}}</td>  
-                                                                  <td>{{field.consentstatus.consentName}}</td>
-                                                                  <td>{{field.consentstartdate}}</td>
-                                                                  <td>{{field.consentenddate}}</td>
-                                                                  
-                                                                   <td>{{field.updatedDate }}</td>
-																   <td>
-																  <div ng-if="field.annnexlocation==undefined">
-																   <span style="color:red;"></span>
-																  </div>
-																  <div ng-if="field.annnexlocation!=undefined">
-																  <div ng-show="true" ng-controller="FileManagerController">
-																 	<a href="" ng-click="downloadCH(field)"> View </a>
-																   </div>
-																   </div>
-																   </td>
-						</tr>
-                              </tbody>
-                        </table>
-              
-              
-      </div>
+<div class="modal-content" style="width: 869px; margin-left: -158px;">
 
-</table>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-warning" ng-click="cancel()">Close</button>
-</div>
-</div>
+	<div class="modal-header"
+		style="background-color: #337ab7; color: white; padding: 5px;">
+		<h3 class="modal-title" style="font-size: medium;">Consent
+			History  {{item[0].bpid.firstName}} {{item[0].bpid.lastName}}</h3>
+
+	</div>
+
+	<div class="modal-body">
+
+		<table class="table table-bordered table-striped table-highlight"
+			ng-controller="ProfileListCtrl">
+			<thead>
+				<tr style="color: white; background-color: #337ab7;">
+					<th style="font-size: 12px; font-family: sans-serif; width: 14%;">Event
+						Name</th>
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+						Status</th>
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+						Start Date</th>
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+						End Date</th>
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+						Updated Date</th>
+					<th style="font-size: 12px; font-family: sans-serif; width: 5%;">Document</th>
+				</tr>
+			</thead>
+
+			<tbody data-ng-repeat="field  in item">
+				<tr>
+					<td class="tasktd">{{field.eventname}}</td>
+					<td>{{field.consentstatus.consentName}}</td>
+					<td style="text-align: center">{{field.consentstartdate | date:'dd-MM-yyyy'}}</td>
+					<td style="text-align: center">{{field.consentenddate | date:'dd-MM-yyyy'}}</td>
+					<td style="text-align: center">{{field.updatedDate | date:'dd-MM-yyyy' }}</td>
+					<td>
+						<div ng-if="field.annnexlocation==undefined">
+							<span style="color: red;"></span>
+						</div>
+						<div ng-if="field.annnexlocation!=undefined">
+							<div ng-show="true" ng-controller="FileManagerController"
+								style="text-align: center">
+								<a href="" ng-click="downloadCH(field)"> View </a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-warning" ng-click="cancel()">Close</button>
+	</div>
 </div>
 
-</div>
+
+
+
 
 
 

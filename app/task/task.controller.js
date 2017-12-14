@@ -54,15 +54,16 @@
 		 $scope.tableState = null;
 		 $scope.firstload=false;
 		 $scope.selected = [];
-		 $scope.itemsByPage = 10;
+		 $scope.itemsByPage = 15;
 		 $scope.callServer = function(tableState) {
 			 $scope.tableState =tableState;
 			 if(!$scope.firstload){
 				 $scope.firstload=true;
 				 return;
 			 }
-			
-			$scope.selected = [];  
+			 if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
+		    	 $scope.selected = [];
+		    }			 
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
@@ -127,148 +128,29 @@
           		    if(found == -1) $scope.selected.push(id);		    
           		    else $scope.selected.splice(found, 1);	    
           }
-	  /*$scope.dldata=[];
-	  $scope.mouseIN=function(con){            
-		  con['AddressType']='primary Address';
-		  con['Source System Code[P]']='DLU-P-GCMS';
-		  con['Source System Code[T]']='DLU-T-GCMS';
-		  con['Transaction Comments']='Consent update from GCMS';
-	      $scope.dldata = [con];
-	      console.log("value ",con);
-	  }
-	 
-	  $scope.mouseOUT=function(con){
-		  $scope.con=con;
-	     // delete con['Address Type'];
-	     // delete con['Source System Code[P]'];
-	     // delete con['Source System Code[T]'];
-	     // delete con['Transaction Comments'];
-	     
-	      console.log("value2 ",con);
-	  }
-	  $scope.value=function(con){
-		  $scope.con=con;
-	  }*/
-	  /**
-	     * selim
-	     * @name getTaskData
-	     * @methodOf 
-	     * @description Gets data
-	     */
-      
-	  /*var getTaskData = function(){
-		    
-		     return Task.query().$promise.then(function(task){
-		       $scope.TaskAttributes = task;
-		       
-		      // console.log(task);
-		      });
-		  };	  
-	  getTaskData();
-	  $scope.displayedCollection = [].concat($scope.TaskAttributes);*/
-	  
-	  /**
-	   *  selim
-       *  Bulk upload fuctionality
-       */
-      
-     /* $scope.uploads = [];
-      $scope.alerts = [];
-      $scope.locale = localeMapper.getCurrentISOCode();
 
-      $scope.uploader = new FileUploader({
-        filters: [{
-          fn: function(item) {
-            var flag = false;
-            for (var i in this.queue){
-              if (item.name === this.queue[i].file.name){
-                flag = true;
-              }
-            }
-
-            if (flag){
-              item.name += '(' + (this.queue.length + 1) + ')';
-            }
-
-            return true;
-          }
-        }],
-
-        url: '../gcms-service/' + $scope.locale + '/bulk-upload'
-       
-      });   
-      $scope.closeAlert = function(index) {
-          $scope.alerts.splice(index, 1);
-        };
-      $scope.upload = function() {
-   	   console.log("Inside upload");
-   	   $scope.a=false;
-          //if ($scope.uploader.queue.length > 0) {
-   	   $scope.success='';
- 	   $scope.error='';
-       	   return FileMonitor.query().$promise.then(function(result){
-   		       $scope.Result = result;
-   		       $scope.a=result.$resolved
-   		    toasty.success({
-    	        title: 'Success',
-    	        msg: 'File Processed ! See results',
-    	        showClose: true,
-    	        clickToClose: true,
-    	        timeout: 15000,
-    	        sound: false,
-    	        html: false,
-    	        shake: false,
-    	        theme: 'bootstrap'
-    	      });
-   		      // $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
-   		       $scope.uploader.clearQueue();
-   		       console.log(result)		       
-   		      }).catch(function(){
-     		    	$scope.uploader.clearQueue(); 
-     		    	toasty.error({
-   			          title: 'Error',
-   			          msg: 'File(s) proccessing failed ! Internal Server Error',
-   			          showClose: true,
-   			          clickToClose: true,
-   			          timeout: 5000,
-   			          sound: false,
-   			          html: false,
-   			          shake: false,
-   			          theme: 'bootstrap'
-   			        });
-       		    	//$scope.error="File(s) not able to process ";
-       		      });
-   		  //};
-            
-          }*/
 		 
 	  
-          var startdate = {};
-    	  var enddate = {};
-          	$scope.date = function(item){
-          		if(item.consannexid.consentstartdate != undefined || item.consannexid.consentenddate != undefined){
-          		item.consannexid.consentstartdate =  moment(item.consannexid.consentstartdate);
-    			startdate = item.consannexid.consentstartdate;
-          		item.consannexid.consentenddate =  moment(item.consannexid.consentenddate);
-          		enddate = item.consannexid.consentenddate;
-          		}
-          		else
-          		{
-    				item.consannexid.consentstartdate = startdate;
-    				item.consannexid.consentenddate = enddate;
-          		}
-          	};
-    		
+          
+          //On Click of Task Edit, initialize dates
+          $scope.date = function(item){
+        		item.consannexid.consentstartdate = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
+        		item.consannexid.consentenddate = moment(item.consannexid.consentenddate,'YYYY-MM-DD');         		          		
+        	};
+  		
 		
       	
-      	$scope.close=function(item) {
-      	 if(item.consannexid.annnexlocation != undefined){
-      		 if(item.consannexid.consentstatus.id != '63'){
-      			item.taskstatus="COMPLETED";
-      		 }
-      	 }
-      	 Task.update({ id:item.id }, item);	 
-      	}
+          	$scope.close=function(item) {
+             	 if(item.consannexid.annnexlocation != undefined){
+             		 if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined ){
+             			 if(item.consannexid.acmcode != undefined||item.consannexid.pocode != undefined){
+             				item.taskstatus="COMPLETED";
+             			 }     			
+             		 }
+             	 }
+             	delete item.click; 
+             	 Task.update({ id:item.id }, item);	 
+             	}
 		
 		/**
 		 * selim
@@ -293,18 +175,54 @@
 	           con.consannexid.updatedDate = new Date();
 	         }
 	            });
-	           
-	           if(item.consannexid.consentstatus.id != '63'){
-	        	   if(item.consannexid.annnexlocation != undefined ){
-	        		   item.taskstatus="COMPLETED";
-	        	   }
+	         if(item.consannexid.annnexlocation != undefined){
+		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined ){
+		      			 if(item.consannexid.acmcode != undefined||item.consannexid.pocode != undefined){
+		      				item.taskstatus="COMPLETED";
+		      			 }     			
+		      		 }
+		      	 }
+	         
+	         //Input Date format
+	           if(item.consannexid.consentstart != undefined){
+	           item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
 	           }
+	           else{	        	   
+	           item.consannexid.consentstart = moment(item.consannexid.consentstartdate,'DD-MM-YYYY');
+	           }
+	           if(item.consannexid.consentend != undefined){
+	           item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+	           }
+	           else{	        	   
+		           item.consannexid.consentend = moment(item.consannexid.consentenddate,'DD-MM-YYYY');
+		           }
+     		
+	           //Adding timezone
+	           item.consannexid.consentstartdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+	           item.consannexid.consentenddate = moment.tz(item.consannexid.consentend,moment.tz.guess());
+     	   
+	           //Convert to DB date format
+	           item.consannexid.consentstartdate = moment(item.consannexid.consentstart).format('YYYY-MM-DD');   			
+	           item.consannexid.consentenddate = moment(item.consannexid.consentend).format('YYYY-MM-DD');
+
+	           delete item.consannexid.consentend;
+	           delete item.consannexid.consentstart;
+	         
+	           if(item.consannexid.consentstartdate == "Invalid date" || item.consannexid.consentstartdate == undefined ){
+	        	   delete item.consannexid.consentstartdate;
+	           }
+	           
+	           if(item.consannexid.consentenddate == "Invalid date" || item.consannexid.consentenddate == undefined){
+	        	   delete item.consannexid.consentenddate;
+	           }
+	           
+		         delete item.click;
 	           // Task.update({ id:item.id }, item);
 	         	Task.update({ id:item.id }, item).$promise.then(function(response){
 	            	console.log(response);
 	            	if(response.$promise.$$state.status==1)
 	            		{
-	            		//refresh();
+	            		refresh();
 	            		toasty.success({
 	            	        title: 'Success',
 	            	        msg: 'Task Updated !',
@@ -398,6 +316,7 @@
 	           	console.log(response);
 	           	if(response.$promise.$$state.status==1)
 	           		{
+	           		refresh();
 	           		toasty.success({
 	        	        title: 'Success',
 	        	        msg: 'Task Deleted!',
@@ -423,8 +342,12 @@
 			//}, item);
 		};
 		$scope.count='null';
-	    $scope.onCategoryChange = function () {
+	
+	    $scope.onCategoryChange = function (item) {
+	    	item.reassignReason='';
 	    	 $scope.count=1;
+	    	
+	    	 
 	    } 
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");
@@ -446,6 +369,7 @@
 	           	console.log(response);
 	           	if(response.$promise.$$state.status==1)
 	           		{
+	           		refresh();
 	           		toasty.success({
 	        	        title: 'Success',
 	        	        msg: 'Task Reassigned!',
@@ -492,6 +416,7 @@
 	           	console.log(response);
 	           	if(response.$promise.$$state.status==1)
 	           		{
+	           		refresh();
 	           		toasty.success({
 	        	        title: 'Success',
 	        	        msg: 'Task Undeleted!',

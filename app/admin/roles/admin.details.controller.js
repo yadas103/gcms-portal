@@ -139,8 +139,8 @@
      * @description Updates the specified user profile
      */
     $scope.save = function(item){
-      //UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin'); });
-    	UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $window.location.reload(); });
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go('admin'); });
+    	//UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $window.location.reload(); });
     };
 
     /**

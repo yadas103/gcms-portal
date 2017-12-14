@@ -93,7 +93,7 @@
         controller: 'TaskCtrl',
         templateUrl: 'app/task/task.html',
         data: {
-          section: 'Tasks',
+          section: 'Manage Consent',
           action: 'browse'
         }
       })

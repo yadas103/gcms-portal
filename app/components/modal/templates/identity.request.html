@@ -14,7 +14,7 @@
             <form novalidate name="saveProfiles" class="form-vertical">
                  <h4 style="color: black; font-size: small;">General Details</h4>
                 <div class="form-group">
-                    <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;">Profile Type:*</label>
+                    <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 49px;">Profile Type:*</label>
                     <div class="col-sm-9">
 					<select ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-receipi" style="width: 395px;" required><option value="" ng-show="{{empty}}"></option></select>                      
                         <span class="help-block"></span>
@@ -22,13 +22,13 @@
                 </div>
 				 
                 <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
-                    <label for="fname" class="col-sm-3 control-label" style="font-size: 13px;">First Name:*</label>
+                    <label for="fname" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 49px;">First Name:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                    <input type="text" ng-maxlength="100" class="form-control" id="firstName" ng-model="item.firstName" ng-required="item.profileTypeId.Name == 'HCP'">   
                     </div>
                 </div>
                 <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
-                    <label for="lastname" class="col-sm-3 control-label" style="font-size: 13px;">Last Name:*</label>
+                    <label for="lastname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Last Name:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                        <input type="text" ng-maxlength="100" class="form-control" id="lastName" placeholder="" ng-model="item.lastName" ng-required="item.profileTypeId.Name == 'HCP'">
                     </div>
@@ -41,13 +41,13 @@
                 </div>
 				 <legend style="color: black; font-size: small;">Professional Details</legend>
 				 <div class="form-group">
-                    <label for="Procity" class="col-sm-3 control-label" style="font-size: 13px;">Profile City</label>
+                    <label for="Procity" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Profile City</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                         <input type="text" ng-maxlength="100" id="city" placeholder="" class="form-control" ng-model="item.city">
                     </div>
                 </div>
 				<div class="form-group">
-                    <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px;">Profile Country:*</label>
+                    <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 30px;">Profile Country:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                         <select class="form-control" ng-model="item.country" class="drop-receipi" style="width: 395px;" ng-disabled="item.readOnly" required>
                   			<option ng-repeat="contry in counties |filter : efpiaFilter">{{contry.name}}</option>
@@ -55,13 +55,13 @@
                     </div>
                 </div>
 				<div class="form-group" ng-model="new1Value">
-                    <label for="Prosp" class="col-sm-3 control-label" style="font-size: 13px;">Profile Specialty:*</label>
+                    <label for="Prosp" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Specialty:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                         <input type="text" ng-maxlength="100" id="specility" placeholder="" class="form-control" ng-model="item.specility" required>
                     </div>
                 </div>
 				<div class="form-group">
-                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;">Profile Address:*</label>
+                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Address:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                         <input type="text" ng-maxlength="1024" id="address" placeholder="" class="form-control" ng-model="item.address" required>
                     </div>
@@ -69,7 +69,7 @@
                  <!-- /.form-group -->
               <h4 style="color: black; font-size: small;">Other Details</h4>
 			  <div class="form-group" style="margin-bottom: 0px;">
-                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;margin-top: 10px;">Note for reviewer:</label>
+                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;margin-top: 10px; padding-left: 24px;">Note for reviewer:</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                         	<textarea id="notes" ng-maxlength="1000" class="form-control" rows="2" style="resize: none" ng-model="item.notes"></textarea>
                     </div>

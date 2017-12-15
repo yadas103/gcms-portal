@@ -1,0 +1,48 @@
+<div class="modal-header" style="background-color: #337ab7;
+   color: white; padding: 5px;">
+   <h3 class="modal-title" style="font-size: medium;">Cross-Border Reminder Setup </h3>
+</div>
+<div class="modal-body">
+   <form name="adminTemplateForm" class="form-horizontal" novalidate >
+      <div class="form-group">
+         <label for="templateName" class="col-sm-3 control-label">First Reminder:</label>
+         <div class="col-sm-9 add-new">
+            <input type="number" min=1 max=10 class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="1" required>
+          <label for="templateName" class="col-sm-3 control-label cross-label">Day's</label>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="templateType" class="col-sm-3 control-label">Second Reminder:</label>
+         <div class="col-sm-9 add-new">
+            <input type="number" min=1 max=10 class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="5" required>
+           <label for="templateName" class="col-sm-3 control-label cross-label">Day's</label>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="templatePage" class="col-sm-3 control-label">Third Reminder:</label>
+         <div class="col-sm-9 add-new">
+            <input type="number" min=1 max=10 class="form-control" id="tmplpages" name="tmplpages" ng-model="item.total_pages" placeholder="3" required >
+           <label for="templateName" class="col-sm-3 control-label cross-label">Day's</label>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="templateDesc" class="col-sm-3 control-label">REP Reminder:</label>
+         <div class="col-sm-9 add-new">
+         	<input type="number" min=1 max=10 class="form-control" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder="4" required>
+           <label for="templateName" class="col-sm-3 control-label cross-label">Day's</label>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="consentValidityPeriod" class="col-sm-3 control-label" style="padding-left:4px;">Reminder Message:</label>
+         <div class="col-sm-9 form-popup1">
+           <textarea id="notes" ng-maxlength="1000" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" rows="2" style="resize: none" ng-model="item.notes"></textarea>
+         </div>
+      </div>
+       </form>
+</div>
+<div class="modal-footer">
+	<div ng-hide="">
+	 <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">Update</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</div>
+

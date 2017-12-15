@@ -17,9 +17,9 @@
 	.module('gcms.profile')
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexPdf,$rootScope,toasty) {
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexPdf,$rootScope,toasty,ngDialog) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -95,6 +95,8 @@
         	        theme: 'bootstrap'
         	      });
 		        };
+		        
+		       
 		//Getting Logged in User Profile
 				
 		        $scope.userProfileData = function(){		        	
@@ -117,8 +119,20 @@
 						 //$scope.readOnlyCC = true;
 					}											               
 		};
-		
-		
+						
+		$scope.compare = function(){
+			if(($scope.request.collectingCountry == $scope.request.country) && $scope.loggedInUserRole == 1){				
+				$http.get('./emailproperties.json').then(function (response) {
+				$scope.str =  response.data.countryinfo.msg;
+				$scope.str = $scope.str.replace("PC",$scope.request.collectingCountry);
+				$scope.str = $scope.str.replace("RC",$scope.request.country);
+				ngDialog.open({ template:"<div class=\"dialog-contents\">"+
+				$scope.str+ "</div>"+
+			    "<div style=\"float:right;\"><button ng-click=\"closeThisDialog()\" style=\"padding-left: 10px; padding-right: 10px;color: #fff;background-color: #337ab7;border-color: #2e6da4;\">OK</button> </div>" , plain: true ,showClose: true});
+				});
+			}
+		};
+			
 		
 		//Called on create missing profile to sent country and lock 
 		$scope.passCountryName = function (){

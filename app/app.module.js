@@ -44,7 +44,8 @@
 	  'dctmNgFileManager',
 	  'ngFileSaver', 
 	  'dctmRestClient',	  
-	  'moment-picker'
+	  'moment-picker',
+	  'ngDialog'
 	
     ]);
 })();

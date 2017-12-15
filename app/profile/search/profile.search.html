@@ -17,16 +17,16 @@
 			<div class="container-fluid">
 				<div class="row">
 				<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop" >
-						<select class="form-control" ng-model="request.collectingCountry" class="drop-receipi"
+						<select class="form-control" ng-model="request.collectingCountry" ng-change="compare()" class="drop-receipi"
 							 ng-disabled="readOnlyCC" required>
 							<option value = "">Please select</option>
 							<option ng-repeat="con in counties | filter:efpiaFilter " >{{con.name}}</option>
 						</select>
 						<label style="font-size: 12px;margin-left: 3px; display: block;">Collecting Country</label><br>
-					</div> 
+					</div> 					
 					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
 						<select class="form-control" ng-model="request.country" class="drop-receipi"
-							ng-disabled="readOnlyPC" title="Reporting Country" required style="width: 264px; height: 25px;">
+							ng-disabled="readOnlyPC" ng-change="compare()" title="Reporting Country" required style="width: 264px; height: 25px;">
 							<option value = "">Please select</option>
 							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option>
 						</select> <label style="font-size: 12px;margin-left: 1px;">Reporting Country</label><br>

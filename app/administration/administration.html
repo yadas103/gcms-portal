@@ -114,8 +114,8 @@
 									<td>{{temp.tmpl_code}}</td>
 									<td class="tasktd">{{temp.tmpl_desc}}</td>
 									<td>{{temp.dates_rages}}</td>
-									<td>{{temp.validity_start_date | date:'dd-MM-yyyy'}}</td>
-									<td>{{temp.validity_end_date | date:'dd-MM-yyyy'}}</td>
+									<td>{{temp.startDate }}</td>
+									<td>{{temp.endDate }}</td>
 									<td>
 									<span ng-if="temp.tmpl_status=='ACTIVE'" style="color: #337ab7;">{{temp.tmpl_status}}</span>
 									<span ng-if="temp.tmpl_status=='INACTIVE'">{{temp.tmpl_status}}</span>

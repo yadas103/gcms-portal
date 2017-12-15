@@ -132,11 +132,25 @@
 	  		 * @methodOf
 	  		 * @description get all template data
 	  		 */
-	  	  var getTemplateData = function(){			  
+	  	 var getTemplateData = function(){			  
 	  		  Templates.query().$promise.then(function(template){			    	 
 	  		       $scope.Templates = template;			     			       
 	  		      // $scope.addItem = { temp: $scope.Templates };
 	  		      // console.log($scope.Templates );
+	  		     for(var i in $scope.Templates){
+	  		    	 if($scope.Templates[i].dates_rages == 'Y'){
+	  		    	 if(i != "$promise" || i != "$resolve"){
+	 				$scope.Templates[i].validity_start_date = moment($scope.Templates[i].validity_start_date,'YYYY-MM-DD');
+	 				$scope.Templates[i].validity_end_date = moment($scope.Templates[i].validity_end_date,'YYYY-MM-DD')  ;
+	 				$scope.Templates[i].validity_start_date = moment.tz($scope.Templates[i].validity_start_date,moment.tz.guess());   			
+	 				$scope.Templates[i].validity_end_date = moment.tz($scope.Templates[i].validity_end_date,moment.tz.guess());
+	 				$scope.Templates[i].validity_start_date = moment($scope.Templates[i].validity_start_date).format('DD-MM-YYYY');
+	 				$scope.Templates[i].validity_end_date = moment($scope.Templates[i].validity_end_date).format('DD-MM-YYYY')  ;
+	 				$scope.Templates[i].startDate = $scope.Templates[i].validity_start_date;
+	 				$scope.Templates[i].endDate = $scope.Templates[i].validity_end_date;
+	  		    	 }
+	  		    	 }
+	  		    	 } 
 	  		       });
 	  		};
 	  		  getTemplateData();
@@ -208,10 +222,15 @@
 					 */
 		          
 		        //On Click of Task Edit, initialize dates
-		          $scope.date = function(item){
-		        	    item.validity_start_date = moment(item.validity_start_date,'YYYY-MM-DD');
-		        	    item.validity_end_date = moment(item.validity_end_date,'YYYY-MM-DD');         		          		
+		          $scope.date = function(item){		        	  
+		        	  item.validity_start_date = moment(item.startDate,'DD-MM-YYYY');
+		        	  item.validity_end_date = moment(item.endDate,'DD-MM-YYYY')  ;
+		        	  item.validity_start_date = moment.tz(item.validity_start_date,moment.tz.guess());   			
+		              item.validity_end_date = moment.tz(item.validity_end_date,moment.tz.guess());		            			        	  
+		        	  item.validity_start = moment(item.startDate,'DD-MM-YYYY').format('DD-MM-YYYY');
+		        	  item.validity_end = moment(item.endDate,'DD-MM-YYYY').format('DD-MM-YYYY')  ;
 		        	};
+		  		
 		  		
 		          
 		          $scope.updateTemplate = function(item) {
@@ -240,6 +259,23 @@
 		 	           {	        	   
 		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
 		 		       }
+		 	          //Input Date format
+		 	           if(item.validity_start != undefined)
+		 	           {
+		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_start = moment(item.validity_start_date,'DD-MM-YYYY');
+		 	           }
+		 	           if(item.validity_end != undefined)
+		 	           {
+		 	        	  item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
+		 		       }
 		       		
 			           //Adding timezone
 		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
@@ -249,8 +285,10 @@
 		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
 		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
 
-			           delete item.validity_start;
-			           delete item.validity_end;
+		            	delete item.validity_start;
+				        delete item.validity_end;
+				        delete item.startDate;
+				        delete item.endDate;
 			           
 			           if(item.validity_start_date  == "Invalid date" || item.validity_start_date  == undefined ){
 			        	   delete item.validity_start_date ;

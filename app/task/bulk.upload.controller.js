@@ -22,7 +22,9 @@
       $scope.uploads = [];
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
-
+      $scope.userID= $rootScope.loggedInUserRoleId;
+      console.log($scope.userID);
+      
       $scope.uploader = new FileUploader({
         filters: [{
           fn: function(item) {
@@ -54,7 +56,7 @@
    	if($scope.uploader.progress=='100'){
    	   $scope.success='';
  	   $scope.error='';
-       	   return FileMonitor.query().$promise.then(function(result){
+       	   return FileMonitor.query({userid:$scope.userID}).$promise.then(function(result){
    		       $scope.Result = result;
    		       $scope.a=result.$resolved
    		    toasty.success({

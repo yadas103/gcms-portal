@@ -38,7 +38,11 @@
       },
       {
        
-        query: { method:'GET', isArray:true }
+        query: {
+        	method:'GET',
+        	params:{userid:'@userid'},
+        	isArray:true 
+        	}
       }
     );
   }

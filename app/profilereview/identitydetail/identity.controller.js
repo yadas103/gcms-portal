@@ -14,6 +14,7 @@
   IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile','toasty'];
 
   function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile,toasty){
+	 
 	  var internalError = function(){
 	        toasty.error({
 	          title: 'Error',
@@ -27,24 +28,21 @@
 	          theme: 'bootstrap'
 	        });
 	      };
-var updateIdentityRequestView = function(result) {
-            $scope.identityRequestView = result;
-           
-      };
- 
-      var loadIdentityRequestView = function() {
-            $scope.identityRequestView = [];
-            IdentityRequestView.query().$promise
-                        .then(updateIdentityRequestView);
-            
-           
-      };
+
+	       
+	      var loadIdentityRequestView = function(){			  
+	    	  IdentityRequestView.query().$promise
+              .then(function(result){
+                  		   $scope.identityRequestView = result;   
+                     	});
+              };
+	  		  
+  
 
       loadIdentityRequestView();
-     
       $scope.displayedCollection = [].concat($scope.identityRequestView);
-
-      $scope.$on('$localeChangeSuccess', loadIdentityRequestView);
+     
+      
       var currentprofile = $rootScope.currentProfile;
       $scope.logged_In_User= currentprofile.userName;
      /* *//**
@@ -68,15 +66,17 @@ var updateIdentityRequestView = function(result) {
        *            item IdentityRequest object
        */
       $scope.close=function(item){
+    	  
     	 }
       /**
        * @ngdoc method
        * @name validate
        * @description validate bpid entered in the TextBox in approve and reject pop up screen 
        */
-      
+      $scope.trData=[];
       $scope.validation='';
       $scope.validate = function(item){ 
+    	   
     	  $scope.validation='';
     	  var id  ={id:item.bpid};
     	  ValidatedProfile.get(id).$promise
@@ -84,6 +84,16 @@ var updateIdentityRequestView = function(result) {
                if(result.$promise.$$state.status == 1)
            	{
             	   {
+            		   $scope.trData=result;
+            		  /* console.log("fn"+$scope.trData[0].firstName);
+            		   console.log("ls"+$scope.trData[0].lastName);
+            		   console.log("on"+$scope.trData[0].organizationName);
+            		   console.log("sp"+$scope.trData[0].specility);
+            		   console.log("country"+$scope.trData[0].country);
+            		   console.log("profiletype"+$scope.trData[0].profileType);
+            		   console.log("onwith-s"+$scope.trData[0].organisationName);
+            		   console.log("city"+$scope.trData[0].city);
+            		   console.log("add"+$scope.trData[0].address);*/
             		   $scope.validation="true";
             		   $scope.success="TR ID is valid,Please Approve or Reject "
                	}
@@ -135,17 +145,16 @@ var updateIdentityRequestView = function(result) {
   		 var ln = ($scope.resultcopy.lastName == null)? '' : $scope.resultcopy.lastName;
   		 var on = ($scope.resultcopy.organizationName == null)? '' : $scope.resultcopy.organizationName;	        		    	
   		 var city = ($scope.resultcopy.city == null)? '' : $scope.resultcopy.city ;       		    	
-  		 var notes = ($scope.resultcopy.notes == null)? '' : $scope.resultcopy.notes;
+  		 //var notes = ($scope.resultcopy.notes == null)? '' : $scope.resultcopy.notes;
   		 var status = ($scope.resultcopy.status == null)? '' : $scope.resultcopy.status;
-           $scope.profileRequestSender = $scope.resultcopy.createdBy;             
+          // $scope.profileRequestSender = $scope.resultcopy.createdBy;             
+            
              
 		$http.get('./emailproperties.json').then(function (response) {
 		  console.log(response);
 		     if( response.data.production.value === 'yes'){
-		    	 
-		    	// $scope.emaildetails[emailTo] = $scope.profileRequestSender; 
-		    	 $scope.emaildetails[emailTo] = $scope.logged_In_User;
-		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User; 
+		        $scope.emaildetails[emailTo] =$scope.profileRequestSender ;
+		    	 $scope.emaildetails[emailFrom] =$scope.logged_In_User; 
 		     }
 		     else if(response.data.development.value === 'yes'){
 		    	 
@@ -288,18 +297,31 @@ var updateIdentityRequestView = function(result) {
             	 item.updatedDate = new Date();
             		 var reqID = {};
             	 reqID = item.id;
-               	$scope.countryCopy = item.country;
-               	$scope.profile_type_id = item.profileTypeId;
-               	$scope.resultcopy = item;
+            	  
+               	$scope.resultcopy = $scope.trData[0];
+               	$scope.resultcopy.status=item.status;
+               	$scope.resultcopy.organizationName=$scope.trData[0].organisationName;
+               	$scope.profile_type_id =$scope.trData[0].profileType;
+            	$scope.countryCopy = $scope.trData[0].country;
+            	 var Createdby=item.createdBy;
+           	  var index = Createdby.indexOf("(");
+       			var startIndex = Createdby.indexOf("(");
+       			var endIndex = Createdby.indexOf(")");
+       			var ntidUser = Createdby.substring(startIndex + 1, endIndex);
+       			$scope.profileRequestSender = ntidUser;   
+              // 	$scope.resultcopy = item;
                	$scope.getSenderDetails(reqID);
                	$scope.profile_status= item.status;
                	$scope.TRID=item.bpid;
+               	
         	}else{
         		item.bpid="";
         	}
 
            IdentityRequestView.update({ id:item.id },item).$promise.then(function(response){
            	console.log(response);
+         	if(response.$promise.$$state.status==1){
+           		
            	if($scope.profile_status=="Approved"){
            		toasty.success({
            	        title: 'Success',
@@ -313,13 +335,15 @@ var updateIdentityRequestView = function(result) {
            	        theme: 'bootstrap'
            	      })};
            		$scope.ok(item);
-           		
-           	
+           	 
+         	}
+         	
 		      }).catch(function(){
+		    	 
+	 		    	 internalError();
 	 		    	 
-	 		    	 internalError();	
 	       		 });
-           
+           //$state.reload();
           };
           
           /**
@@ -337,18 +361,29 @@ var updateIdentityRequestView = function(result) {
            	 item.updatedDate = new Date();
            		var reqID = {};
         	 reqID = item.id;
-           	$scope.countryCopy = item.country;
-           	$scope.profile_type_id = item.profileTypeId;
-           	$scope.resultcopy = item;
-           	$scope.getSenderDetails(reqID);
-           	$scope.profile_status= item.status;
-           	$scope.TRID=item.bpid;
+          	$scope.resultcopy = $scope.trData[0];
+          	$scope.resultcopy.status=item.status;
+          	$scope.resultcopy.organizationName=$scope.trData[0].organisationName;
+          	$scope.profile_type_id =$scope.trData[0].profileType;
+       	$scope.countryCopy = $scope.trData[0].country;
+        var Createdby=item.createdBy;
+     	  var index = Createdby.indexOf("(");
+ 			var startIndex = Createdby.indexOf("(");
+ 			var endIndex = Createdby.indexOf(")");
+ 			var ntidUser = Createdby.substring(startIndex + 1, endIndex);
+ 			$scope.profileRequestSender = ntidUser; 
+          	$scope.getSenderDetails(reqID);
+          	$scope.profile_status= item.status;
+          	$scope.TRID=item.bpid;
+           	
        	}
        	else{
     		item.bpid="";
     	}
          	IdentityRequestView.update({ id:item.id }, item).$promise.then(function(response){
            	console.log(response);
+           	if(response.$promise.$$state.status==1){	
+          
          	if($scope.profile_status=="Rejected"){
            		toasty.success({
            	        title: 'Success',
@@ -362,12 +397,13 @@ var updateIdentityRequestView = function(result) {
            	        theme: 'bootstrap'
            	      })
            	   $scope.ok(item);
+         	}
          	};
            		
            		
            	
 		      }).catch(function(){
-	 		    	 
+		    	  //refresh(); 
 	 		    	 internalError();	
 	       		 });
           };

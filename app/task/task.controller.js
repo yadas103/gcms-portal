@@ -133,12 +133,13 @@
 		 
 	  
           
-          //On Click of Task Edit, initialize dates
-          $scope.date = function(item){
-        		item.consannexid.consentstartdate = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
-        		item.consannexid.consentenddate = moment(item.consannexid.consentenddate,'YYYY-MM-DD');         		          		
+        //On Click of Task Edit, initialize dates
+          $scope.taskdate = function(item){        	  	
+        	  	item.consannexid.startdate = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
+                item.consannexid.enddate = moment(item.consannexid.consentenddate,'YYYY-MM-DD');  
+                item.consannexid.consentstart = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
+                item.consannexid.consentend = moment(item.consannexid.consentenddate,'YYYY-MM-DD');
         	};
-  		
 		
       	
           	$scope.close=function(item) {
@@ -184,20 +185,20 @@
 		      		 }
 		      	 }
 	         
-	         //Input Date format
+	       //Input Date format
 	           if(item.consannexid.consentstart != undefined){
 	           item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
 	           }
 	           else{	        	   
-	           item.consannexid.consentstart = moment(item.consannexid.consentstartdate,'DD-MM-YYYY');
+	           item.consannexid.consentstart = moment(item.consannexid.startdate,'DD-MM-YYYY');
 	           }
 	           if(item.consannexid.consentend != undefined){
 	           item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
 	           }
 	           else{	        	   
-		           item.consannexid.consentend = moment(item.consannexid.consentenddate,'DD-MM-YYYY');
+		           item.consannexid.consentend = moment(item.consannexid.enddate,'DD-MM-YYYY');
 		           }
-     		
+   		
 	           //Adding timezone
 	           item.consannexid.consentstartdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
 	           item.consannexid.consentenddate = moment.tz(item.consannexid.consentend,moment.tz.guess());
@@ -208,6 +209,8 @@
 
 	           delete item.consannexid.consentend;
 	           delete item.consannexid.consentstart;
+	           delete item.consannexid.enddate;
+	           delete item.consannexid.startdate;
 	         
 	           if(item.consannexid.consentstartdate == "Invalid date" || item.consannexid.consentstartdate == undefined ){
 	        	   delete item.consannexid.consentstartdate;

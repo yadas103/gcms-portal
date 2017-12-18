@@ -51,7 +51,7 @@
              moment-picker="item.consannexid.consentstart"
              locale="en"
              format="DD-MM-YYYY"
-             ng-model="item.consannexid.consentstartdate"
+             ng-model="item.consannexid.startdate"
              start-view="day"
              ng-model-options="{updateOn: 'blur' }" >   
   </div>
@@ -66,7 +66,7 @@
              moment-picker="item.consannexid.consentend"
              locale="en"
              format="DD-MM-YYYY"
-             ng-model="item.consannexid.consentenddate"
+             ng-model="item.consannexid.enddate"
              start-view="day"
              ng-model-options="{updateOn: 'blur' }" > 
          </div> 
@@ -114,12 +114,12 @@
     		 class="form-control form-popup"
     		 style="width: 138px;"
              placeholder="Select a date..."
-             moment-picker
+             moment-picker="item.consannexid.consentstart"
              locale="en"
              format="DD-MM-YYYY"
-             ng-model="item.consannexid.consentstartdate"
-             start-date="item.consannexid.consentstartdate"
-             ng-model-options="{ updateOn: 'blur' }">   
+             ng-model="item.consannexid.startdate"
+             start-view="day"
+             ng-model-options="{updateOn: 'blur' }" >
            </div>
   </div>
   <div class="form-group" > 
@@ -129,12 +129,12 @@
     		 class="form-control form-popup"
     		 style="width: 138px;"
              placeholder="Select a date..."
-             moment-picker
+             moment-picker="item.consannexid.consentend"
              locale="en"
              format="DD-MM-YYYY"
-             ng-model="item.consannexid.consentenddate"
-             start-date="item.consannexid.consentstartdate"
-             ng-model-options="{ updateOn: 'blur' }"> 
+             ng-model="item.consannexid.enddate"
+             start-view="day"
+             ng-model-options="{updateOn: 'blur' }" > 
          </div> 
   </div>
  </div>

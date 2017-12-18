@@ -13,31 +13,31 @@
     
        <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>
     <div class="col-sm-9">
-      <input  type="text" class="form-control form-popup"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" ng-readonly="true">
+      <input  type="text" class="form-control form-popup"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
   <div class="form-group" >
     <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code:</label>
     <div class="col-sm-9">
-      <input ng-maxlength="60" type="text" class="form-control form-popup" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" ng-readonly="true">
+      <input ng-maxlength="60" type="text" class="form-control form-popup" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
       <div class="form-group" >
     <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code:</label>
     <div class="col-sm-9">
-      <input ng-maxlength="60" type="text" class="form-control form-popup" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" ng-readonly="true" >
+      <input ng-maxlength="60" type="text" class="form-control form-popup" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" >
     </div>    
   </div>
   <div class="form-group" >
     <label for="middleName" class="col-sm-3 control-label">Consent Status:</label>
     <div class="col-sm-9">
-       <gcms-lov list="consentType" value="item.consannexid.consentstatus.id" ng-disabled="true" class="form-popup"></gcms-lov> 
+       <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"  class="form-popup" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"></gcms-lov> 
     </div>
   </div>
   <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'">
     <label for="middleName" class="col-sm-3 control-label">Consent Status Reason :</label>
     <div class="col-sm-9">
-       <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" ng-disabled="true" class="form-popup"></textarea> 
+       <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" ></textarea> 
     </div>  
   </div>
   <div ng-if="item.consannexid.tmpl_id.dates_rages=='Y'">
@@ -53,7 +53,9 @@
              format="DD-MM-YYYY"
              ng-model="item.consannexid.startdate"
              start-view="day"
-             ng-model-options="{updateOn: 'blur' }" >   
+             ng-model-options="{updateOn: 'blur' }" 
+             ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"
+             >   
   </div>
   </div>
   <div class="form-group" > 
@@ -68,13 +70,15 @@
              format="DD-MM-YYYY"
              ng-model="item.consannexid.enddate"
              start-view="day"
-             ng-model-options="{updateOn: 'blur' }" > 
+             ng-model-options="{updateOn: 'blur' }"
+             ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"
+              > 
          </div> 
   </div>
  </div>
  </div>
     
-    <div ng-hide="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
+    <!-- <div ng-hide="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     <div class="form-group">
     <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>
     <div class="col-sm-9">
@@ -138,12 +142,9 @@
          </div> 
   </div>
  </div>
-</div>
-<div >
-<a href="" ng-if="!item.click" ng-click="item.click=true" style="margin-left: 77%;">Show Additional Details</a>
-<a href="" ng-if="item.click" ng-click="item.click=false" style="margin-left: 78%;">Hide Additional Details</a>											
-</div>
+</div> -->
 
+<a href="" ng-if="!item.click" ng-click="item.click=true" style="margin-left: 77%;">Show Additional Details</a>											
 <div ng-show="item.click">
 		<div class="form-group">
 			<label for="profileid" class="col-sm-3 control-label">HCP/O ID:</label>
@@ -179,6 +180,7 @@
 		</div>
 		
 </div>
+<a href="" ng-if="item.click" ng-click="item.click=false" style="margin-left: 78%;">Hide Additional Details</a>
 	</form>
 </div>
 

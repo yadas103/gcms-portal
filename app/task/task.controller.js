@@ -61,13 +61,14 @@
 				 $scope.firstload=true;
 				 return;
 			 }
-			 if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
-		    	 $scope.selected = [];
-		    }			 
+			 			 
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
 		    $scope.status=tableState.search.predicateObject.taskstatus;
+		    if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
+		    	 $scope.selected = [];
+		    }
 		    var sort = tableState.sort;
 		    var predicate = sort.predicate;
 		    var reverse = sort.reverse || false;

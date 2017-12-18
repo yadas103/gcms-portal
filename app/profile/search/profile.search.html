@@ -1,17 +1,16 @@
 <!-- Home page -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Search Details</h3>
 	</div>
 	
 	<div class="panel-body-con" id="pannel-search">
-		<div ng-model="downloadMsg" style="color: green; font-size: 13px;"
+		<!-- <div ng-model="downloadMsg" style="color: green; font-size: 13px;"
 			role="alert">{{msg}}</div>
 		<div ng-model="msg" style="color: green; font-size: 13px;"
 			role="alert">{{responseOnSave}}</div>
 		<div ng-model="failuremsg" style="color: maroon; font-size: 13px;"
-			role="alert">{{responseOnUnsave}}</div>
+			role="alert">{{responseOnUnsave}}</div> -->
 		<form name="requestSearchForm" class="form-horizontal"
 			style="margin-right: -12px; margin-left: 32px;">
 			<div class="container-fluid">
@@ -71,7 +70,8 @@
 				<label for="Template Type" style="font-size: 12px; margin-left: 21px;">Template Type</label><br>
 				</div>
 				</div>
-				<div class="form-group" style="margin-top: 6px;">
+				<div class="row">
+				<div class="col-sm-9 form-group" style="margin-top: 14px;">
 				<button type="submit" class="btn btn-lg btn-default" ng-click="submit(request)" alt="Search" data-toggle="tooltip"
 						data-placement="top" title="Search"
 						ng-disabled="requestSearchForm.$invalid">
@@ -88,18 +88,22 @@
 							title="Download Consent Annex Template" ng-disabled="true">
 							Download</button>
 					</span> 
+					
 				</span>
+				
 				<span ng-show="requestSearchForm.$invalid" style="margin-left: 10px;">
 					<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
 							title="Download Consent Annex Template" ng-disabled="true">
 							Download</button>
 				</span>
+				</div>
+				<div class="col-sm-3" style="padding-left: 4px;margin-top: 10px;">
 					<span class="create-button">
 						<gcms-modal template="identity.request.html"
 						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href="" ng-click="passCountryName()" title="Create request for missing profile" ><i style="padding: 25px;">Cannot find a profile? Create a request here</i></a></gcms-modal>
+					<a href="" ng-click="passCountryName()" title="Create request for missing profile" ><i style="margin-right: 5px;padding: 12px;position: relative;width: 204px">Cannot find a profile? Create a request here</i></a></gcms-modal>
 					</span>
-				
+				</div>				
 			</div>
 	</div>
 	</form>

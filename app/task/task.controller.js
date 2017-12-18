@@ -356,7 +356,7 @@
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");
 			
-			$scope.assignedto=item.assignedto;
+			item.assignedto=item.changedowner;
 			console.log(item.id);
 			$scope.success='';
 			$scope.error='';
@@ -367,6 +367,7 @@
                      delete item.assignedto.countryCode;
                      delete item.assignedto.countryId;
                      delete item.assignedto.errors;
+                     delete item.changedowner;
 				}
 			});
 			Task.update({ id:item.id }, item).$promise.then(function(response){

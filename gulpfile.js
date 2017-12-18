@@ -27,7 +27,7 @@ var rev = require('gulp-rev');
 
 var templateCache = require('gulp-angular-templatecache');
 
-gulp.task('usemin', ['move-templates','move-meta','move-config', 'move-assets','move-famfamfam', 'move-fonts', 'build','templates'], function () {
+gulp.task('usemin', ['move-templates','move-meta','move-config', 'move-email', 'move-assets','move-famfamfam', 'move-fonts','install', 'build','templates'], function () {
   return gulp.src('./*.html')
       .pipe(usemin({
         css: [minifyCss(), 'concat', rev()],
@@ -59,6 +59,11 @@ gulp.task('move-config', ['clean:build'], function(){
 	  .pipe(gulp.dest('./build/'));
 	});
 
+gulp.task('move-email', ['clean:build'], function(){
+	  return gulp.src(['./emailproperties.*'],  {base: './'})	 
+	  .pipe(gulp.dest('./build/'));
+	});
+	
 gulp.task('move-assets', ['clean:build'], function(){
   return gulp.src(['./assets/**/*.ico',
                    './assets/**/*.png',
@@ -76,7 +81,7 @@ gulp.task('move-fonts', ['clean:build'], function(){
 });
 
 gulp.task('default', ['connect:reload', 'watch','openbrowser']);
-gulp.task('build', ['lint', 'plato']);
+gulp.task('build', ['lint','plato']);
 gulp.task('deploy', ['war']);
 //Uf2bme2cds!
 /**

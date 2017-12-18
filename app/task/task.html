@@ -147,7 +147,11 @@
 														
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
-							<th ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " ></th>
+							<th ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " >
+							<span ng-hide="status!='COMPLETED'" style="margin-left:17px;" row-select-all="TaskAttributes"  selected="selected" ng-click="selectAll(TaskAttributes)">
+							<input type="checkbox" />
+							</span>
+							</th>
 							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'"></th>
 							<!-- <th ng-show="status=='COMPLETED'"></th> -->
 						</tr>

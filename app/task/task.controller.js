@@ -66,9 +66,10 @@
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
 		    $scope.status=tableState.search.predicateObject.taskstatus;
-		    if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
+		    /*if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
 		    	 $scope.selected = [];
-		    }
+		    }*/
+		    $scope.selected = [];
 		    var sort = tableState.sort;
 		    var predicate = sort.predicate;
 		    var reverse = sort.reverse || false;
@@ -94,9 +95,12 @@
 		        	$scope.TaskAttributes = task.currentPageData;	
 		        	tableState.pagination.numberOfPages =Math.ceil(task.totalRecordsCount/$scope.itemsByPage);
 		            $scope.isLoading = false;
+		            $scope.TaskAttributes = [].concat($scope.TaskAttributes);
 		        });
 		    
 		  }
+		$scope.TaskAttributes = [].concat($scope.TaskAttributes);
+		
 		 var refresh=function(){
 			 $scope.callServer($scope.tableState);
 			 
@@ -131,6 +135,24 @@
           }
 
 		 
+          
+          $scope.selectAll = function (collection) {
+
+        	    if ($scope.selected.length === 0) {       	      
+        	      angular.forEach(collection, function(val) {       	        
+        	    	  $scope.selected.push(val); 
+        	        
+        	      });
+        	    } else if ($scope.selected.length > 0 && $scope.selected.length != $scope.TaskAttributes.length) {       	      
+        	      angular.forEach(collection, function(val) {       	        
+        	        var found = $scope.selected.indexOf(val);      	        
+        	        if(found == -1) $scope.selected.push(val);       	        
+        	      });
+        	    } else  {        	      
+        	    	$scope.selected = [];      	      
+        	    }
+        	    
+        	  };
 	  
           
         //On Click of Task Edit, initialize dates

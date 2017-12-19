@@ -45,7 +45,8 @@
         $scope.uploadFiles = function (item) {
         	console.log("uploadFiles");
         	console.log(item);
-        	
+        	delete item.startDate;
+	        delete item.endDate;
         	$scope.apiMiddleware.getConfigFile().then(function (result) {
         		
         		var loginInfo = {

@@ -49,4 +49,4 @@ function rowSelectAll() {
 
 angular
   .module('gcms.task')
-  .directive('rowSelectAll', rowSelectAll)
+  .directive('rowSelectAll', rowSelectAll);

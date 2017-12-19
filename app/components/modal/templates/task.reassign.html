@@ -12,7 +12,7 @@
     <label for="consannexid.eventname" class="col-sm-3 control-label">Current
 					Task Owner :</label>
     <div class="col-sm-9">
-      <lebel class="form-control" >{{item.assignedto.firstName}}{{item.assignedto.lastName}} ({{item.assignedto.userName}}) </lebel>
+      <lebel class="form-control form-popup" >{{item.assignedto.firstName}}{{item.assignedto.lastName}} ({{item.assignedto.userName}}) </lebel>
     </div>
   </div>
   <div class="form-group" >
@@ -21,7 +21,7 @@
 					Task Owner :</label>
     <div class="col-sm-9">
      
-					<select class="form-control"  class="col-sm-12" class="drop-receipi" ng-model="item.changedowner" ng-change="onCategoryChange(item)" ng-options="useritr.userName for useritr in user |orderBy:'userName'" required>
+					<select class="form-control form-popup"  class="col-sm-12" class="drop-receipi" ng-model="item.changedowner" ng-change="onCategoryChange(item)" ng-options="useritr.userName for useritr in user |orderBy:'userName'" required>
 					<option  value="" ng-show="{{empty}}"> --- Please Select---</option></select> 
 					  
 					

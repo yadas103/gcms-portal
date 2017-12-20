@@ -50,6 +50,8 @@
 	  
 		 $scope.currentProfile={};
 		 var mydata= $rootScope.loggedInUserRoleId;
+		 $scope.loaded = false;
+         $scope.data = [];
 		 $scope.searchparam=null;
 		 $scope.sortparam=null;
 		 $scope.totalcount=null;
@@ -72,6 +74,7 @@
 		    if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
 		    	 $scope.selected = [];
 		    }
+		    $scope.data = [];
 		   // $scope.selected = [];
 		    var sort = tableState.sort;
 		    var predicate = sort.predicate;
@@ -100,7 +103,7 @@
 		        	$scope.totalcount=task.totalRecordsCount;
 		        	tableState.pagination.numberOfPages =Math.ceil(task.totalRecordsCount/$scope.itemsByPage);
 		            $scope.isLoading = false;
-		           
+		            $scope.loaded = false;
 		        });
 		    
 		  }
@@ -141,8 +144,7 @@
 
 		 
           
-          $scope.loaded = false;
-          $scope.data = [];
+          
 
           $scope.loadData = function() {
             if (!$scope.loaded) {

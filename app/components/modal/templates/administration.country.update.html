@@ -6,26 +6,26 @@
 <form name="administrationForm" ng-controller="ReviewCtrl" class="form-horizontal" novalidate>
 
   <div class="form-group">
-    <label for="firstName" class="col-sm-3 control-label">Country ISO Code:</label>
+    <label for="firstName" class="col-sm-3 control-label">Country ISO Code :</label>
     <div class="col-sm-9">
       <input type="text" class="form-control form-popup" id="isoCode" name="isoCode" ng-model="item.countries.isoCode" placeholder="" ng-readonly="true">
     </div>
 	</div>
  <div class="form-group">
-    <label for="role" class="col-sm-3 control-label">Country Name:</label>
+    <label for="role" class="col-sm-3 control-label">Country Name :</label>
     <div class="col-sm-9">
       <input type="text" class="form-control form-popup" id="name" name="name" ng-model="item.countries.name" placeholder="" ng-readonly="true">
     </div>
   </div>
   <div class="form-group">
-    <label for="role" class="col-sm-3 control-label">Country Contact:</label>
+    <label for="role" class="col-sm-3 control-label">Country Contact :</label>
     <div class="col-sm-9">
       <input ng-maxlength="30" type="text" class="form-control form-popup" id="cntryContact" name="cntryContact" ng-model="item.cntryContact" placeholder="" >
     </div>
   </div>
    <label><span style="margin-left: 153px;"><i class="form-popup">Please add reviewer using ';(semicolon)' separator</i></span> </label>
   <div class="form-group">
-    <label for="role" class="col-sm-3 control-label">Identity Reviewers:</label>
+    <label for="role" class="col-sm-3 control-label">Identity Reviewers :</label>
     <div class="col-sm-9">
        <textarea style="resize: none; width: 100%;" ng-model="item.cntryReviewer" rows="4" class="form-popup" ></textarea> 
     </div>

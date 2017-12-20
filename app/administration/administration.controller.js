@@ -212,6 +212,9 @@
 		       		 });
 		          };
 		          
+		          	$scope.close=function(item){
+		        	  
+		          	}
 		          /**selim
 					 * @ngdoc method
 					 * @name update

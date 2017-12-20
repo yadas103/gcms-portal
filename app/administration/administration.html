@@ -124,7 +124,7 @@
 											<!-- ng-show="temp.tmpl_status=='ACTIVE'" -->
 										<div ng-if="temp.tmpl_location==undefined">
 									<gcms-upload template="template.modals.html"
-										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" >
+										controller="ModalDefaultCtrl2" content="temp" ok="close" >
 										 <span title="Upload Tempalte" style="margin-left: 21%;" class="fa fa-upload" >
 									</gcms-upload>
 								</div>
@@ -132,7 +132,7 @@
 								
 								<div ng-if="temp.tmpl_location!=undefined" >								    
 											<gcms-upload template="template.modals.html"
-										controller="ModalDefaultCtrl2" content="temp" ok="updateTemplate" >
+										controller="ModalDefaultCtrl2" content="temp" ok="close" >
 										 <span title="Update Template" style="margin-left: 21%;" class="fa fa-upload" >
 									</gcms-upload>
 									<a href="" ng-click="download(temp)" ><span title="Download Template" style="margin-left: 22%;"class="fa fa-download"></span></a>

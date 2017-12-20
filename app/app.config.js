@@ -98,6 +98,15 @@
           action: 'browse'
         }
       })
+      .state('help', {
+        resolve: {},
+        url: '/help',        
+        templateUrl: 'app/help/help.html',
+        data: {
+          section: 'Help and Support',
+          action: 'browse'
+        }
+      })
       .state('timeout', {
     	resolve: {},
         url: '/',

@@ -39,6 +39,7 @@
 	  'gcms.identity',
 	  'gcms.task',
 	  'gcms.administration',
+	  'gcms.help',
 	  'gcms.consentmgmt',
 	  'ngJsonExportExcel',
 	  'dctmNgFileManager',

@@ -70,6 +70,28 @@
             }
           }
         }])
+        .directive('myDirective', function($compile, $timeout) {
+        	  return {
+        		    restrit: 'A',
+        		    replace: false,
+        		    scope: {
+        		      loaded: "=",
+        		      data: "="
+        		    },
+        		    link: function(scope, element, attrs) {
+        		      scope.$watch("loaded", function(newValue, oldValue) {
+        		        if (newValue && newValue !== oldValue) {
+        		          element.attr('ng-json-export-excel', '');
+        		          element.removeAttr('my-directive');
+        		          $compile(element)(scope);
+        		          $timeout(function() {
+        		            element.triggerHandler('click');
+        		          });
+        		        }
+        		      });
+        		    }
+        		  }
+        		})
        .directive('pageSelect', [function() {
     	   return {
     		restrict: 'E',

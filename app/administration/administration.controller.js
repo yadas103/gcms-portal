@@ -365,6 +365,7 @@
 		 */
 		          
 		          $scope.activateTemplate = function(item) {
+		        	  if(item.tmpl_location!=undefined &&item.tmpl_location !='' ){
 			            angular.forEach($scope.Templates, function(temp){
 			              if (temp.id === item.id) {
 			            	  temp.updatedDate = new Date();
@@ -391,6 +392,19 @@
 			            }).catch(function(){
 			 		    	 internalError();	
 			       		 });
+		        	  }else{
+		        		  toasty.error({
+		        	          title: 'Error',
+		        	          msg: 'Please Upload Template !',
+		        	          showClose: true,
+		        	          clickToClose: true,
+		        	          timeout: 5000,
+		        	          sound: false,
+		        	          html: false,
+		        	          shake: false,
+		        	          theme: 'bootstrap'
+		        	        });
+		        	  }
 			          };
 		          
 		          

@@ -50,7 +50,9 @@
 	  
 		 $scope.currentProfile={};
 		 var mydata= $rootScope.loggedInUserRoleId;
-		 
+		 $scope.searchparam=null;
+		 $scope.sortparam=null;
+		 $scope.totalcount=null;
 		 $scope.tableState = null;
 		 $scope.firstload=false;
 		 $scope.selected = [];
@@ -65,13 +67,15 @@
 		    $scope.isLoading = true;
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
+		    $scope.searchparam=tableState.search;
 		    $scope.status=tableState.search.predicateObject.taskstatus;
-		    /*if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
+		    if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
 		    	 $scope.selected = [];
-		    }*/
-		    $scope.selected = [];
+		    }
+		   // $scope.selected = [];
 		    var sort = tableState.sort;
 		    var predicate = sort.predicate;
+		    $scope.sortparam=sort.predicate;
 		    var reverse = sort.reverse || false;
 		    var start = pagination.start || 0;
 		    var number = pagination.number || $scope.itemsByPage;
@@ -93,13 +97,14 @@
 		        reverse : reverse 
 		        }).$promise.then(function(task) {
 		        	$scope.TaskAttributes = task.currentPageData;	
+		        	$scope.totalcount=task.totalRecordsCount;
 		        	tableState.pagination.numberOfPages =Math.ceil(task.totalRecordsCount/$scope.itemsByPage);
 		            $scope.isLoading = false;
-		            $scope.TaskAttributes = [].concat($scope.TaskAttributes);
+		           
 		        });
 		    
 		  }
-		$scope.TaskAttributes = [].concat($scope.TaskAttributes);
+		
 		
 		 var refresh=function(){
 			 $scope.callServer($scope.tableState);
@@ -136,23 +141,33 @@
 
 		 
           
-          $scope.selectAll = function (collection) {
+          $scope.loaded = false;
+          $scope.data = [];
 
-        	    if ($scope.selected.length === 0) {       	      
-        	      angular.forEach(collection, function(val) {       	        
-        	    	  $scope.selected.push(val); 
-        	        
-        	      });
-        	    } else if ($scope.selected.length > 0 && $scope.selected.length != $scope.TaskAttributes.length) {       	      
-        	      angular.forEach(collection, function(val) {       	        
-        	        var found = $scope.selected.indexOf(val);      	        
-        	        if(found == -1) $scope.selected.push(val);       	        
-        	      });
-        	    } else  {        	      
-        	    	$scope.selected = [];      	      
-        	    }
-        	    
-        	  };
+          $scope.loadData = function() {
+            if (!$scope.loaded) {
+               console.log($scope.searchparam);
+               Task.get({
+   		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+   		    	lastName : $scope.searchparam.predicateObject.lastname,
+   		    	firstName :$scope.searchparam.predicateObject.firstname,
+   		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+   		    	eventName :$scope.searchparam.predicateObject.eventname,
+   		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+   		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+   		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+   		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+   		        page : 1,
+   		        size : $scope.totalcount,
+   		        sort : $scope.sortparam,
+   		        reverse : false 
+   		        }).$promise.then(function(task) {
+   		        	$scope.data = task.currentPageData;        		        	
+   		        	$scope.loaded = true;
+   		            
+   		        });
+            }
+          }
 	  
           
         //On Click of Task Edit, initialize dates
@@ -164,14 +179,24 @@
         	};
 		
       	
-          	$scope.close=function(item) {
-             	 if(item.consannexid.annnexlocation != undefined){
-             		 if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined ){
-             			 if(item.consannexid.acmcode != undefined||item.consannexid.pocode != undefined){
-             				item.taskstatus="COMPLETED";
-             			 }     			
-             		 }
-             	 }
+        	$scope.close=function(item) {
+          		if(item.consannexid.annnexlocation != undefined){
+		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined && item.consannexid.eventname != ""){
+		      			 if(item.consannexid.acmcode != undefined  ||item.consannexid.pocode != undefined ){
+		      				 if(item.consannexid.acmcode != "" || item.consannexid.pocode != "" ){
+		      					item.taskstatus="COMPLETED";
+		      				 }else{
+				       			item.taskstatus="INCOMPLETE"; 
+			     			 }		      				
+		      			 }else{
+		       				item.taskstatus="INCOMPLETE"; 
+		     			 }     			
+		      		 }else{
+		      				item.taskstatus="INCOMPLETE"; 
+	     			 }
+		      	 }else{
+      				item.taskstatus="INCOMPLETE"; 
+     			 }
              	delete item.click; 
              	 Task.update({ id:item.id }, item);	 
              	}
@@ -200,12 +225,22 @@
 	         }
 	            });
 	         if(item.consannexid.annnexlocation != undefined){
-		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined ){
-		      			 if(item.consannexid.acmcode != undefined||item.consannexid.pocode != undefined){
-		      				item.taskstatus="COMPLETED";
-		      			 }     			
-		      		 }
-		      	 }
+		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined && item.consannexid.eventname != ""){
+		      			 if(item.consannexid.acmcode != undefined  ||item.consannexid.pocode != undefined ){
+		      				 if(item.consannexid.acmcode != "" || item.consannexid.pocode != "" ){
+		      					item.taskstatus="COMPLETED";
+		      				 }else{
+				       				item.taskstatus="INCOMPLETE"; 
+			     			 }		      				
+		      			 }else{
+		       				item.taskstatus="INCOMPLETE"; 
+		     			 }     			
+		      		 }else{
+		      				item.taskstatus="INCOMPLETE"; 
+	     			 }
+		      	 }else{
+   				item.taskstatus="INCOMPLETE"; 
+  			 }
 	         
 	       //Input Date format
 	           if(item.consannexid.consentstart != undefined){

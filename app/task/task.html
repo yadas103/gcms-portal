@@ -148,9 +148,7 @@
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
 							<th ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " >
-							<span ng-hide="status!='COMPLETED'" style="margin-left:17px;" row-select-all="TaskAttributes"  selected="selected" ng-click="selectAll(TaskAttributes)">
-							<input type="checkbox" />
-							</span>
+							<input ng-hide="status!='COMPLETED'" type="checkbox" ng-model="check" /> 
 							</th>
 							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'"></th>
 							<!-- <th ng-show="status=='COMPLETED'"></th> -->
@@ -409,6 +407,113 @@
 											}"
 									filename="'summary'">Table Summary</button>
 								
+								<button ng-show="check"  class="btn btn-warning" ng-click="loadData()" data="data"
+							filename="'data'"
+									report-fields="{
+											'Record_type':'Record_type',
+											'consannexid.bpid.profileType': 'Party_Type',
+											'consannexid.bpid.organisationName': 'Organization',
+											'consannexid.bpid.lastName': 'Party Last Name',
+											'consannexid.bpid.firstName': 'Party First Name',
+											'Party Middle Name':'Party Middle Name',
+											'Party Credential':'Party Credential',
+											'Party Primary Specialty':'Party Primary Specialty',
+											'Party Title':'Party Title',
+											'Party Prefix':'Party Prefix',
+											'Party Suffix Name':'Party Suffix Name',
+											'Party Email Address':'Party Email Address',
+											'Party Role/Type of Attendee':'Party Role/Type of Attendee',
+											'Source System Identifier for Party':'Source System Identifier for Party',
+											'Party ID_1':'Party ID_1',
+											'Party ID Type_1':'Party ID Type_1',
+											'Party ID_2':'Party ID_2',
+											'Party ID Type_2':'Party ID Type_2',
+											'Party ID_3':'Party ID_3',
+											'Party ID Type_3':'Party ID Type_3',
+											'Party ID_4':'Party ID_4',
+											'Party ID Type_4':'Party ID Type_4',
+											'Party ID_5':'Party ID_5',
+											'Party ID Type_5':'Party ID Type_5',
+											'Party ID_6':'Party ID_6',
+											'Party ID Type_6':'Party ID Type_6',
+											'Party ID_7':'Party ID_7',
+											'Party ID Type_7':'Party ID Type_7',
+											'Party ID_8':'Party ID_8',
+											'Party ID Type_8':'Party ID Type_8',
+											'Party ID_9':'Party ID_9',
+											'Party ID Type_9':'Party ID Type_9',
+											'Party ID_10':'Party ID_10',
+											'Party ID Type_10':'Party ID Type_10',
+											'Party Address Type':'Party Address Type',
+											'AddressType': 'AddressType',
+											'consannexid.bpid.address': 'Party Address Line 1',
+											'consannexid.bpid.address2': 'Party Address Line 2',
+											'consannexid.bpid.address3': 'Party Address Line 3',
+											'consannexid.bpid.address4': 'Party Address Line 4',
+											'Party Region':'Party Region',
+											'Party County':'Party County',
+											'Party Province':'Party Province',
+											'Party Canton':'Party Canton',
+											'consannexid.bpid.city': 'Party City',
+											'Party Postal/Zip Code':'Party Postal/Zip Code',
+											'Party State':'Party State',
+											'consannexid.profilecountry.code': 'Party Postal/Zip Code',
+											'consannexid.profilecountry.isoCode': 'Party Country Code (2 character ISO)',
+											'Source System Identifier for Party_s Address':'Source System Identifier for Party_s Address',
+											'Consent_editor':'Consent_editor',
+											'Consent_required':'Consent_required',
+											'consannexid.consentstatus.consentStatus': 'Consent_Status',
+											'consannexid.consentstartdate': 'Consent_Start_Date',
+											'consannexid.consentenddate': 'Consent_End_Date',
+											'Active Flag SAP':'Active Flag SAP',
+											'Parent Institution ID':'Parent Institution ID', 
+											'Parent Institution Type':'Parent Institution Type',
+											'FCPA Type':'FCPA Type',
+											'File Name':'File Name',
+											'Source System Code[P]': 'Source System Code[P]',
+											'Source Sub-System Code':'Source Sub-System Code',
+											'Custom/Flex Field 1':'Custom/Flex Field 1',
+											'Custom/Flex Field 2':'Custom/Flex Field 2',
+											'Custom/Flex Field 3':'Custom/Flex Field 3',
+											'Custom/Flex Field 4':'Custom/Flex Field 4',
+											'Custom/Flex Field 5':'Custom/Flex Field 5',
+											'Custom/Flex Field 6':'Custom/Flex Field 6',
+											'Custom/Flex Field 7':'Custom/Flex Field 7',
+											'Custom/Flex Field 8':'Custom/Flex Field 8',
+											'Custom/Flex Field 9':'Custom/Flex Field 9',
+											'Custom/Flex Field 10':'Custom/Flex Field 10',
+											'Custom/Flex Field 11':'Custom/Flex Field 11',
+											'Custom/Flex Field 12':'Custom/Flex Field 12',
+											'Custom/Flex Field 13':'Custom/Flex Field 13',
+											'Custom/Flex Field 14':'Custom/Flex Field 14',
+											'Custom/Flex Field 15':'Custom/Flex Field 15',
+											'Custom/Flex Field 16':'Custom/Flex Field 16',
+											'Custom/Flex Field 17':'Custom/Flex Field 17',
+											'Custom/Flex Field 18':'Custom/Flex Field 18',
+											'Custom/Flex Field 19':'Custom/Flex Field 19',
+											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
+											}"
+									loaded="loaded" my-directive>Download All (DLU-P)</button>
+							<button ng-show="check"  class="btn btn-warning" ng-click="loadData()" data="data"
+							filename="'summary'"
+							report-fields="{											
+								            'consannexid.bpid.lastName': 'Last Name/Org Name',
+								            'consannexid.bpid.firstName': 'First Name',
+								            'consannexid.profilecountry.name': 'Profile Country',
+								            'consannexid.payercountry.name': 'Payer Country',
+								            'consannexid.eventname': 'Event Name',
+								            'consannexid.pocode': 'PO Code',
+								            'consannexid.acmcode': 'ACM Code',
+								            'consannexid.consentstatus.consentName': 'Consent Status',
+								            'updatedDate': 'Consent Updated Date',
+								            'consannexid.consentstartdate': 'Consent Start Date',
+								            'consannexid.consentenddate': 'Consent End Date',
+								            'assignedto.lastName': 'Task Owner Last Name',
+								            'assignedto.firstName': 'Task Owner First Name',
+								            'assignedto.userName': 'NTID',
+								            'taskstatus': 'Task Status'
+											}"
+							loaded="loaded" my-directive>Download All (Table Summary)</button>
 							</td>
 
 						</tr>

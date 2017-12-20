@@ -30,7 +30,7 @@
   </div>
   <div class="form-group" >
     <label for="middleName" class="col-sm-3 control-label">Consent Status:</label>
-    <div class="col-sm-9 form-popup">
+    <div class="col-sm-9 form-popup1">
        <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"    ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"></gcms-lov> 
     </div>
   </div>
@@ -144,7 +144,7 @@
  </div>
 </div> -->
 
-<a href="" ng-if="!item.click" ng-click="item.click=true" style="margin-left: 77%;">Show Additional Details</a>											
+<a href="" ng-if="!item.click" ng-click="item.click=true" style="float:right;">Show Additional Details</a>											
 <div ng-show="item.click">
 		<div class="form-group">
 			<label for="profileid" class="col-sm-3 control-label">HCP/O ID:</label>
@@ -186,7 +186,7 @@
 		</div>
 		
 </div>
-<a href="" ng-if="item.click" ng-click="item.click=false" style="margin-left: 78%;">Hide Additional Details</a>
+<a href="" ng-if="item.click" ng-click="item.click=false" style="float:right;">Hide Additional Details</a>
 	</form>
 </div>
 

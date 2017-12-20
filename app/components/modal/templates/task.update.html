@@ -161,6 +161,12 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="taskid" class="col-sm-3 control-label">Task Created Date:</label>
+			<div class="col-sm-9">
+				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.createdDate | date:'dd-MM-yyyy'" placeholder="" ng-readonly="true">
+			</div>
+		</div>
+		<div class="form-group">
 			<label for="tmpltcode" class="col-sm-3 control-label">Template Code:</label>
 			<div class="col-sm-9">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpltcode" name="tmpltcode" ng-model="item.consannexid.tmpl_id.tmpl_code" placeholder="" ng-readonly="true">

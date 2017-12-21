@@ -11,38 +11,38 @@
     
     <div class="form-group">
     
-       <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>
+       <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name :</label>
     <div class="col-sm-9">
       <input  type="text" class="form-control form-popup"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
   <div class="form-group" >
-    <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code:</label>
+    <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code :</label>
     <div class="col-sm-9">
       <input ng-maxlength="60" type="text" class="form-control form-popup" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
       <div class="form-group" >
-    <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code:</label>
+    <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code :</label>
     <div class="col-sm-9">
       <input ng-maxlength="60" type="text" class="form-control form-popup" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" >
     </div>    
   </div>
   <div class="form-group" >
-    <label for="middleName" class="col-sm-3 control-label">Consent Status:</label>
+    <label for="middleName" class="col-sm-3 control-label">Consent Status :</label>
     <div class="col-sm-9 form-popup1">
        <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"    ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"></gcms-lov> 
     </div>
   </div>
   <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'">
-    <label for="middleName" class="col-sm-3 control-label">Consent Status Reason :</label>
+    <label for="middleName" class="col-sm-3 control-label" style="padding-left: 4px;">Consent Status Reason :</label>
     <div class="col-sm-9">
-       <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" ></textarea> 
+       <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup form-control" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" ></textarea> 
     </div>  
   </div>
   <div ng-if="item.consannexid.tmpl_id.dates_rages=='Y'">
   <div class="form-group" >
-    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
+    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date :</label>
        <div class="col-sm-9">
         <input    		 
     		 class="form-control form-popup"
@@ -59,7 +59,7 @@
   </div>
   </div>
   <div class="form-group" > 
-    <label  for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
+    <label  for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date :</label>
     <div class="col-sm-9">
           <input    		 
     		 class="form-control form-popup"
@@ -147,7 +147,7 @@
 <a href="" ng-if="!item.click" ng-click="item.click=true" style="float:right;">Show Additional Details</a>											
 <div ng-show="item.click">
 		<div class="form-group">
-			<label for="profileid" class="col-sm-3 control-label">HCP/O ID:</label>
+			<label for="profileid" class="col-sm-3 control-label">HCP/O ID :</label>
 			<div class="col-sm-9">
 				<input type="text" class="form-control form-popup" id="bpid" name="bpid"
 					ng-model="item.consannexid.bpid.id" placeholder=""
@@ -155,31 +155,31 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="taskid" class="col-sm-3 control-label">Task ID:</label>
+			<label for="taskid" class="col-sm-3 control-label">Task ID :</label>
 			<div class="col-sm-9">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.id" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="taskid" class="col-sm-3 control-label">Task Created Date:</label>
+			<label for="taskid" class="col-sm-3 control-label">Task Created Date :</label>
 			<div class="col-sm-9">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.createdDate | date:'dd-MM-yyyy'" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmpltcode" class="col-sm-3 control-label">Template Code:</label>
+			<label for="tmpltcode" class="col-sm-3 control-label">Template Code :</label>
 			<div class="col-sm-9">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpltcode" name="tmpltcode" ng-model="item.consannexid.tmpl_id.tmpl_code" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmplttype" class="col-sm-3 control-label">Template Type:</label>
+			<label for="tmplttype" class="col-sm-3 control-label">Template Type :</label>
 			<div class="col-sm-9">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmplttype" name="tmplttype" ng-model="item.consannexid.tmpl_id.tmpl_type" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmpl_name" class="col-sm-3 control-label">Template Name:</label>
+			<label for="tmpl_name" class="col-sm-3 control-label">Template Name :</label>
 			<div class="col-sm-9">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpl_name" name="tmpl_name" ng-model="item.consannexid.tmpl_id.tmpl_name" placeholder="" ng-readonly="true">
 			</div>

@@ -10,14 +10,14 @@
 <div class="form-group">
     <label class="col-sm-3 control-label" >Please provide reason for deleting task :</label>
     <div class="col-sm-9">
-      <select class="col-sm-9" ng-model="item.deleteReason" ng-options="Group.Name for Group in Groups" style="width: 100%;"><option  value="" ng-show="{{empty}}"> ---Select---</option></select> 
+      <select class="col-sm-9" ng-model="item.deleteReason" ng-options="Group.Name for Group in Groups" style="width: 100%;margin-top: 4%;"><option  value="" ng-show="{{empty}}"> ---Select---</option></select> 
        </div>
   </div>
   <div class="form-group" ng-show="item.deleteReason.Name == 'Other reason'" >
     <label for="consannexid.pocode" class="col-sm-3 control-label">Comments :</label>
     <div class="col-sm-9" >
     
-      <textarea rows="3" cols="50" name="comment" form="usrform" name="NewValue" ng-model="item.deleteReasonDesc" style="resize: none; width: 100%;" >
+      <textarea rows="3" cols="50" name="comment" form="usrform form-control" name="NewValue" ng-model="item.deleteReasonDesc" style="resize: none; width: 100%;" >
 	Enter text here...</textarea>    </div>
   </div>
 

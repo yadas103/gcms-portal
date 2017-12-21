@@ -5,14 +5,14 @@
 <div class="modal-body">
    <form name="adminTemplateForm" class="form-horizontal" novalidate >
       <div class="form-group">
-         <label for="templateName" class="col-sm-3 control-label">Template Name :</label>
-         <div class="col-sm-9">
+         <label for="templateName" class="col-sm-4 control-label">Template Name :</label>
+         <div class="col-sm-4">
             <input  type="text" class="form-control form-popup" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder=" " required>
          </div>
       </div>
       <div class="form-group">
-         <label for="templateDesc" class="col-sm-3 control-label">Template Description :</label>
-         <div class="col-sm-9">
+         <label for="templateDesc" class="col-sm-4 control-label">Template Description :</label>
+         <div class="col-sm-8">
          	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control form-popup" ng-model="item.tmpl_desc" required> 
           
             </textarea>
@@ -20,8 +20,8 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="templateType" class="col-sm-3 control-label">Template Type :</label>
-         <div class="col-sm-9 form-popup1">
+         <label for="templateType" class="col-sm-4 control-label">Template Type :</label>
+         <div class="col-sm-8 form-popup1">
             <select ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <option value="">Please select</option>
                <option value="InCountry-HCO">InCountry - HCO</option>
@@ -34,8 +34,8 @@
          </div>
       </div>
       <div class="form-group">
-         <label for="consentCheck" class="col-sm-3 control-label">Consent Required? :</label>
-         <div class="col-sm-9 form-popup1">
+         <label for="consentCheck" class="col-sm-4 control-label">Consent Required? :</label>
+         <div class="col-sm-8 form-popup1">
          <select ng-model="item.consentCheck" ng-click="foo();"  style=" margin-left: 0px;width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <option value="">Please select</option>
                <option value="Y">Yes</option>
@@ -46,22 +46,22 @@
      
       <div ng-show="item.consentCheck=='Y'">
        <div class="form-group" ">
-         <label for="signPageNo" class="col-sm-3 control-label">SignatureBlock PageNo :</label>
-         <div class="col-sm-9">
+         <label for="signPageNo" class="col-sm-4 control-label">SignatureBlock PageNo :</label>
+         <div class="col-sm-8">
             <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required >
          </div>
       </div>
        <div class="form-group" >
-         <label for="consentPageNo" class="col-sm-3 control-label">ConsentBlock PageNo :</label>
-         <div class="col-sm-9">
-            <input type="number" style=" max-width: 32%;" min=1 max=10 class="form-control" id="consentPageNo" name="consentPageNo" ng-model="item.consentPageNo" placeholder="" required>
+         <label for="consentPageNo" class="col-sm-4 control-label">ConsentBlock PageNo :</label>
+         <div class="col-sm-8">
+            <input type="number" style=" max-width: 32%;" min=1 max=10 class="form-control form-popup" id="consentPageNo" name="consentPageNo" ng-model="item.consentPageNo" placeholder="" required>
          </div>
       </div>
      </div>
      <div ng-if="item.consentCheck=='N'">
        <div class="form-group" ">
-         <label for="signPageNo" class="col-sm-3 control-label">SignatureBlock PageNo :</label>
-         <div class="col-sm-9">
+         <label for="signPageNo" class="col-sm-4 control-label">SignatureBlock PageNo :</label>
+         <div class="col-sm-8">
             <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required>
          </div>
       </div>
@@ -69,8 +69,8 @@
      </div>
       
       <div class="form-group">
-         <label for="consentValidityPeriod" class="col-sm-3 control-label" style="padding-left:4px;">Consent Validity Period :</label>
-         <div class="col-sm-9 form-popup1">
+         <label for="consentValidityPeriod" class="col-sm-4 control-label" style="padding-left:4px;">Consent Validity Period :</label>
+         <div class="col-sm-8 form-popup1">
             <select ng-model="item.dates_rages" ng-click="foo();"  style=" margin-left: 0px; width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <!--  <option value="" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Please select</option>
                <option value="Y" ng-hide="item.tmpl_type=='CrossBorder-HCO' || item.tmpl_type=='CrossBorder-HCP'">Y</option> -->
@@ -82,8 +82,8 @@
       </div>
       <div ng-show="item.dates_rages=='Y'" > 
       <div class="form-group">
-         <label for="template_validity_start_date" class="col-sm-3 control-label">Template Validity StartDate :</label>
-         <div class="col-sm-9">
+         <label for="template_validity_start_date" class="col-sm-4 control-label ">Template Validity StartDate :</label>
+         <div class="col-sm-8 form-popup1">
          <!-- <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_start_date" value={{item.validity_start_date}} is-open=""  close-text="Close" />
           --> <input
             placeholder="Select a date..."
@@ -93,7 +93,7 @@
              ng-model="item.validity_start_date"
              ng-model-options="{ updateOn: 'blur' }"
            	 today="true"
-             start-view = "day"> 
+             start-view = "day" style="max-width: 32%;"> 
               <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart" ng-required="true" close-text="Close" />                          
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
               <i class="fa fa-calendar"></i></button>   -->            
@@ -101,8 +101,8 @@
          
       </div>
       <div class="form-group" >
-         <label for="template_validity_end_date" class="col-sm-3 control-label">Template Validity EndDate :</label>
-         <div class="col-sm-9">
+         <label for="template_validity_end_date" class="col-sm-4 control-label">Template Validity EndDate :</label>
+         <div class="col-sm-8 form-popup1">
          <!-- <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_end_date" value={{item.validity_end_date}} is-open=""  close-text="Close" />
           --> <input
             placeholder="Select a date..."
@@ -112,7 +112,7 @@
              ng-model="item.validity_end_date"
              ng-model-options="{ updateOn: 'blur' }"
              today="true"
-             start-view = "day">     
+             start-view = "day" style="max-width: 32%;">     
          
             <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" min-date="item.validity_start_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default b1" ng-click="endDate()">

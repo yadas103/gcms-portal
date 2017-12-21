@@ -230,7 +230,7 @@
 				<tbody>
 					<tr
 						data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
-						<td><input type="checkbox"							
+						<td style="text-align: center"><input type="checkbox"							
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
 						<td ng-hide = "true" class="td-search-panel-text">{{pro.id}}</td>
 						<td ng-hide = "true" class="td-search-panel-text">{{pro.profileType}}</td>

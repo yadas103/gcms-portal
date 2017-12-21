@@ -148,7 +148,7 @@
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
 							<th ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " >
-							<input style="margin-left:17px;" ng-hide="status!='COMPLETED'" type="checkbox" ng-model="check" /> 
+							<!-- <input style="margin-left:17px;" ng-hide="status!='COMPLETED'" type="checkbox" ng-model="check" />  -->
 							</th>
 							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'"></th>
 							<!-- <th ng-show="status=='COMPLETED'"></th> -->
@@ -199,7 +199,7 @@
 							 		<span title="Document=OK , Consent = OK , Event = Missing" style="color: #337ab7">{{con.taskstatus}}</span>
 							   		<span title="Document=OK , Consent = OK , Event = Missing" class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
 							   </div>
-							   <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' &&(con.consannexid.pocode == undefined ||con.consannexid.acmcode == undefined )">
+							   <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname!=undefined && (con.consannexid.pocode == undefined ||con.consannexid.acmcode == undefined )">
 							 		<span title="Document=OK , Consent = OK , POCode/ACM Code = Missing" style="color: #337ab7">{{con.taskstatus}}</span>
 							   		<span title="Document=OK , Consent = OK , POCode/ACM Code = Missing" class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
 							   </div> 
@@ -226,11 +226,11 @@
 											controller="ModalDefaultCtrl2" content="con" ok="update"
 											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-arrow-circle-up" 
 											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
-											style="padding-right:10px; font-size:initial; margin-left: 6px;"></span>
+											style="padding-right:10px; margin-left: 6px;"></span>
 										</gcms-upload>
 										<span ng-show="true" ng-controller="FileManagerController">
 
-											<a href="" ng-click="download(con)"> <span title="Download" class="fa-arrow-circle-down" style="padding-right: 10px; display: table-cell;font-size: initial;margin-left: 6px;"></span> </a>
+											<a href="" ng-click="download(con)"> <span title="Download" class=" fa fa-arrow-circle-down"></span> </a>
 										</span>
 
 									</div>
@@ -297,9 +297,9 @@
 						</tr>
 					</tbody>
 					<tfoot>
-						<tr ng-show="selected.length != '0'">
+						<tr ng-hide="status!='COMPLETED'">
 							<td colspan="14">
-								<button class="btn btn-warning" ng-json-export-excel
+								<button ng-show="selected.length != '0'" class="btn btn-warning" ng-json-export-excel
 									data="selected"
 									report-fields="{
 											'Record_type':'Record_type',
@@ -386,7 +386,7 @@
 											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
 											}"
 									filename="'Data'">Generate DLU-P</button>
-							<button class="btn btn-warning" ng-json-export-excel
+							<button ng-show="selected.length != '0'" class="btn btn-warning" ng-json-export-excel
 									data="selected"
 									report-fields="{											
 								            'consannexid.bpid.lastName': 'Last Name/Org Name',
@@ -407,7 +407,7 @@
 											}"
 									filename="'summary'">Table Summary</button>
 								
-								<button ng-show="check"  class="btn btn-warning" ng-click="loadData()" data="data"
+								<button   class="btn btn-warning" ng-click="loadData()" data="data"
 							filename="'data'"
 									report-fields="{
 											'Record_type':'Record_type',
@@ -494,7 +494,7 @@
 											'Custom/Flex Field 20':'Custom/Flex Field 20'																	
 											}"
 									loaded="loaded" my-directive>Download All (DLU-P)</button>
-							<button ng-show="check"  class="btn btn-warning" ng-click="loadData()" data="data"
+							<button   class="btn btn-warning" ng-click="loadData()" data="data"
 							filename="'summary'"
 							report-fields="{											
 								            'consannexid.bpid.lastName': 'Last Name/Org Name',

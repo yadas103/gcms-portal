@@ -487,7 +487,7 @@
 		  		  return true;
 		  		};   
 		  		
-		  	  
+		    
 		  var getData = function(){
 		      return Role.query().$promise.then(function(roles) {
 		        $scope.roles = roles;

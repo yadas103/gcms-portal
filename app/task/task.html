@@ -226,11 +226,11 @@
 											controller="ModalDefaultCtrl2" content="con" ok="update"
 											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-arrow-circle-up" 
 											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
-											style="padding-right:10px; font-size:initial; margin-left: 6px;"></span>
+											style="padding-right:10px; margin-left: 6px;"></span>
 										</gcms-upload>
 										<span ng-show="true" ng-controller="FileManagerController">
 
-											<a href="" ng-click="download(con)"> <span title="Download" class=" fa fa-arrow-circle-down" style="padding-right: 10px; display: table-cell;font-size: initial;margin-left: 6px;"></span> </a>
+											<a href="" ng-click="download(con)"> <span title="Download" class=" fa fa-arrow-circle-down"></span> </a>
 										</span>
 
 									</div>

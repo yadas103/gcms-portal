@@ -4,7 +4,7 @@
  *
  * @description
  * Represents a IdentityRequestView controller.
- */
+ */ 
 (function () {
   'use strict';
   angular

@@ -2625,6 +2625,31 @@ input[type=search] {
     font-weight: 400;
     cursor: pointer
 }
+.td-search-panel {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+.td-search-panel-text {
+	padding-left: 10px;
+	padding-right: 10px;
+	font-family: Calibri;
+	font-size: small;
+}
+
+.input-search-panel {
+	width: 100%;
+}
+
+.container-search-panel {
+	min-width: 1024px;
+	width: 90% !important;
+}
+.drop-down{
+	height: 25px;
+	width: 395px;
+}
 .radio input[type=radio],
 .radio-inline input[type=radio],
 .checkbox input[type=checkbox],

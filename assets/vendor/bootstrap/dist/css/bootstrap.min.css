@@ -2252,7 +2252,7 @@ th {
 	width: 250px;
 }
 .table>tbody+tbody {
-    border-top: 2px solid #ddd
+    border-top: 1px solid #ddd
 }
 .table .table {
     background-color: #fff
@@ -2278,7 +2278,7 @@ th {
 }
 .table-bordered>thead>tr>th,
 .table-bordered>thead>tr>td {
-    border-bottom-width: 2px
+    border-bottom-width: 1px
 }
 .table-striped>tbody>tr:nth-child(odd) {
     background-color: #f9f9f9

@@ -147,14 +147,15 @@
   		 var city = ($scope.resultcopy.city == null)? '' : $scope.resultcopy.city ;       		    	
   		 //var notes = ($scope.resultcopy.notes == null)? '' : $scope.resultcopy.notes;
   		 var status = ($scope.resultcopy.status == null)? '' : $scope.resultcopy.status;
-           $scope.profileRequestSender = $scope.resultcopy.createdBy;             
+          // $scope.profileRequestSender = $scope.resultcopy.createdBy;             
             
              
 		$http.get('./emailproperties.json').then(function (response) {
 		  console.log(response);
 		     if( response.data.production.value === 'yes'){
 		        $scope.emaildetails[emailTo] = $scope.profileRequestSender ;
-		    	 $scope.emaildetails[emailFrom] =$scope.logged_In_User; 
+		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User ;
+		    	; 
 		     }
 		     else if(response.data.development.value === 'yes'){
 		    	 

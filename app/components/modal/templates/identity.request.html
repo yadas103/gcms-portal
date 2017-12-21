@@ -11,11 +11,12 @@
 			{{item.msg}} 
 		</div>
             <form novalidate name="saveProfiles" class="form-vertical">
-                 <h4 style="color: black; font-size: small;">General Details</h4>
+                 <legend style="color: black; font-size: small;">General Details</legend>
+                 
                 <div class="form-group">
                     <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 49px;">Profile Type:*</label>
-                    <div class="col-sm-9">
-					<select ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-receipi" style="width: 395px;" required><option value="" ng-show="{{empty}}"></option></select>                      
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+					<select class="form-control" ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-down" required><option value="" ng-show="{{empty}}"></option></select>                      
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -48,7 +49,7 @@
 				<div class="form-group">
                     <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 30px;">Profile Country:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <select class="form-control" ng-model="item.country" class="drop-receipi" style="width: 395px;" ng-disabled="item.readOnly" required>
+                        <select class="form-control" ng-model="item.country" class="drop-down" ng-disabled="item.readOnly" required>
                   			<option ng-repeat="contry in counties |filter : efpiaFilter">{{contry.name}}</option>
                			</select>               			
                     </div>
@@ -66,8 +67,8 @@
                     </div>
                 </div>
                  <!-- /.form-group -->
-              <h4 style="color: black; font-size: small;">Other Details</h4>
-			  <div class="form-group" style="margin-bottom: 0px;">
+              <legend style="color: black; font-size: small;">Other Details</legend>
+			  <div class="form-group">
                     <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;margin-top: 10px; padding-left: 24px;">Note for reviewer:</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
                         	<textarea id="notes" ng-maxlength="1000" class="form-control" rows="2" style="resize: none" ng-model="item.notes"></textarea>

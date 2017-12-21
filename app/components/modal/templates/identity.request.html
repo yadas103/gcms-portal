@@ -7,9 +7,8 @@
 <p style="font-size: 12px;">Before requesting a new profile, please make sure you searched
  using multiple criteria</p>
 	<div ng-controller = "ProfileListCtrl" style="margin-bottom: 105px;">
-		<div ng-if="alerts.length > 0">
-			<alert ng-repeat="alert in alerts" type="{{alert.type}}"
-				close="closeAlert($index)" style="color:maroon;font-size: 13px;"> {{alert.msg}} </alert>
+		<div style="color:maroon;">
+			{{item.msg}} 
 		</div>
             <form novalidate name="saveProfiles" class="form-vertical">
                  <h4 style="color: black; font-size: small;">General Details</h4>

@@ -46,7 +46,8 @@
 	  'ngFileSaver', 
 	  'dctmRestClient',	  
 	  'moment-picker',
-	  'ngDialog'
+	  'ngDialog',
+	  'mgcrea.ngStrap.popover'
 	
     ]);
 })();

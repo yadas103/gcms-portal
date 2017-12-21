@@ -1,116 +1,151 @@
-<!-- Home page -->
-<div class="panel panel-primary">
-	<div class="panel-heading">
-		<h3 class="panel-title">Search Details</h3>
-	</div>
-	
-	<div class="panel-body-con" id="pannel-search">
-		<!-- <div ng-model="downloadMsg" style="color: green; font-size: 13px;"
-			role="alert">{{msg}}</div>
-		<div ng-model="msg" style="color: green; font-size: 13px;"
-			role="alert">{{responseOnSave}}</div>
-		<div ng-model="failuremsg" style="color: maroon; font-size: 13px;"
-			role="alert">{{responseOnUnsave}}</div> -->
-		<form name="requestSearchForm" class="form-horizontal"
-			style="margin-right: -12px; margin-left: 32px;">
-			<div class="container-fluid">
-				<div class="row">
-				<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop" >
-						<select class="form-control" ng-model="request.collectingCountry" ng-change="compare()" class="drop-receipi"
-							 ng-disabled="readOnlyCC" required style="width: 264px; height: 25px;">
-							<option value = "">Please select</option>
-							<option ng-repeat="con in counties | filter:efpiaFilter " >{{con.name}}</option>
-						</select>
-						<label style="font-size: 12px;margin-left: 3px; display: block;">Collecting Country</label><br>
-					</div> 					
-					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
-						<select class="form-control" ng-model="request.country" class="drop-receipi"
-							ng-disabled="readOnlyPC" ng-change="compare()" title="Reporting Country" required style="width: 264px; height: 25px;">
-							<option value = "">Please select</option>
-							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option>
-						</select> <label style="font-size: 12px;margin-left: 1px;">Reporting Country</label><br>
-					</div>
-					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
-						<select class="form-control" ng-model="request.profileType" class="drop-receipi" ng-change="clear()" title="Business Party Type" required style="width: 264px; height: 25px; ;margin-left: 3%;">
-							<option ng-repeat="prof in profile_types">{{prof.name}}</option>
-						</select>						
-						<label style="font-size: 12px; margin-left: 10px;">Business Party Type</label><br>
-					</div>
-					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
-					<input type="text" class="form-control" id="firstName"
-						ng-model="request.firstName" style="width: 264px; height: 25px; ;margin-left: 6%;" title="First Name">
-					<label for="firstName" style="font-size: 12px; margin-left: 6%;">First Name</label><br>
-				</div>
-				<div  ng-hide="true" class="col-sm-3 col-md-3 col-lg-3 form-group" style="width: 264px; height: 25px;">
-					<input type="text" class="form-control" id="address"
-						ng-model="request.address"
-						style="margin-left: 17px; margin-top: 6px; width: 264px; height: 25px; ;margin-left: 11%;" title="Address"	>
-					<label for="address" style="font-size: 12px;margin-left: 28px;">Address</label><br>
-				</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
-						<input type="text" class="form-control" id="lastName"
-						ng-model="request.lastName" style="width: 275px;"> <label style="font-size: 12px;margin-left: 1px;" title="Last Name / Organization Name">Last Name / Organization Name</label><br>
-					</div>
-					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
-						<input type="text" class="form-control" id="city"
-						ng-model="request.city" style="width:264px;"  title="City">						
-						<label style="font-size: 12px;">City</label><br>
-					</div>
-					<div class="col-sm-3 col-md-3 col-lg-3 form-group" id="search-drop">
-					<input type="text" class="form-control" id="speciality"
-						ng-model="request.speciality" style="width: 264px; height: 25px; ;margin-left: 3%;" title="Speciality">
-					<label for="Speciality" style="font-size: 12px; margin-left: 3%;">Speciality</label><br>
-				</div>
-				<div class="col-sm-3 col-md-3 col-lg-3 form-group" style="width: 264px; height: 25px;">
-				<select class="drop-receipi" style="width: 264px;margin-left: 8%; margin-top: 5px;" title="Template Type" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter" style="width: 114px;">
-					<option value="" ng-show="{{empty}}">Select Template</option>
-				</select>
-				<label for="Template Type" style="font-size: 12px; margin-left: 21px;">Template Type</label><br>
-				</div>
-				</div>
-				<div class="row">
-				<div class="col-sm-9 form-group" style="margin-top: 20px;">
-				<button type="submit" class="btn btn-lg btn-default" ng-click="submit(request)" alt="Search" data-toggle="tooltip"
-						data-placement="top" title="Search"
-						ng-disabled="requestSearchForm.$invalid">
-						Search</button>
-					<span ng-show="!requestSearchForm.$invalid" >
-					<span ng-show="!setDownload" style="margin-left: 10px;"> 
-						<gcms-modal template="template.download.html"
-							controller="ModalDefaultCtrl" ok="submittry" content="dataToSend" >
-							<span class="btn btn-lg btn-default" role="button" data-toggle="tooltip"
-							data-placement="top" title="Download Consent Annex Template" ng-click="list()" ng-disabled="setDownload" >Download </span></gcms-modal>
-					</span> 
-					<span ng-show="setDownload" style="margin-left: 10px;">
-						<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
-							title="Download Consent Annex Template" ng-disabled="true">
-							Download</button>
-					</span> 
-					
-				</span>
-				
-				<span ng-show="requestSearchForm.$invalid" style="margin-left: 10px;">
-					<button type="submit" class="btn btn-lg btn-default" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top"
-							title="Download Consent Annex Template" ng-disabled="true">
-							Download</button>
-				</span>
-				</div>
-				<div class="col-sm-3" style="padding-left: 4px;margin-top: 10px;">
-					<span class="create-button">
-						<gcms-modal template="identity.request.html"
-						controller="ModalDefaultCtrl" ok="create" content="profile">
-					<a href="" ng-click="passCountryName()" title="Create request for missing profile" ><i style="margin-right: 5px;padding: 12px;position: relative;width: 204px">Cannot find a profile? Create a request here</i></a></gcms-modal>
-					</span>
-				</div>				
-			</div>
-	</div>
-	</form>
-	
-</div>
+<!-- Home page -->	
+	<div class=".container-search-panel" style="width:100%;">
+        <div class="panel panel-primary">
+            <div class="panel-heading td-search-panel-text">Search Details</div>
+            <div class="panel-body">
+			<form name="requestSearchForm">
+                <table style="width:100%; border-spacing:0px">
+                <div class="row">
+                    <tr>
+                        <td ng-show="sysAdmin" class="td-search-panel col-xs-3">
+                            <div class="input-group">
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.collectingCountry" ng-change="compare()" ng-disabled="readOnlyCC" required><option value = "">Please select</option>
+								<option ng-repeat="con in counties" >{{con.name}}</option></select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PAY_CNTRY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="td-search-panel col-xs-3">
+                            <div class="input-group">
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.country" ng-disabled="readOnlyPC" ng-change="compare()" required><option value = "">Please select</option>
+							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option></select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_REP_CNTRY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="td-search-panel col-xs-3">
+                            <div class="input-group">
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.profileType" ng-change="clear()" required><option ng-repeat="prof in profile_types">{{prof.name}}</option></select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PROFILE_TYP_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="td-search-panel col-xs-3">
 
-</div>
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.firstName" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_FRS_NM_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+
+                        </td>
+                        
+                        <td ng-hide="sysAdmin" class="td-search-panel col-xs-3">
+
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.address" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_ADDRESS_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td ng-show="sysAdmin" class="td-search-panel-text col-xs-3">Paying Country</td>
+                        <td class="td-search-panel-text col-xs-3">Reporting Country</td>
+                        <td class="td-search-panel-text col-xs-3">Profile Type</td>
+                        <td class="td-search-panel-text col-xs-3">First Name</td>
+                        <td ng-hide="sysAdmin" class="td-search-panel-text col-xs-3">Address</td>
+                    </tr>
+                    </div>
+                    <div class="row"> 
+                    <tr >
+                        <td class="td-search-panel col-xs-3">
+
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.lastName" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_LST_NM_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+
+                        </td>
+                        <td class="td-search-panel col-xs-3">
+
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.city" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PROFILE_CITY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+
+                        </td>
+                        <td class="td-search-panel col-xs-3">
+
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.speciality" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PROFILE_SPEC_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+
+                        </td>
+                        <td class="td-search-panel col-xs-3">
+                            <div class="input-group">
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter"><option value="" ng-show="{{empty}}">Select Template</option></select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_TEMPLATE_TYPE_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-search-panel-text col-xs-3">Last Name / Organization Name</td>
+                        <td class="td-search-panel-text col-xs-3">Profile City</td>
+                        <td class="td-search-panel-text col-xs-3">Profile Specialty</td>
+                        <td class="td-search-panel-text col-xs-3">Template Type</td>
+                    </tr>
+				</div>
+
+                </table>
+			</form>
+                <table style="width:100%; border-spacing:0px; ">
+                    <tr class="row">
+                        <td class="td-search-panel col-xs-6" style="width:100%; padding-top:10px;align:left">
+                            <button type="submit" class="btn btn-primary btn-sm td-search-panel-text" ng-click="submit(request)" ng-disabled="requestSearchForm.$invalid">Search</button>                          
+					
+						<span ng-show="!setDownload"> 
+								<gcms-modal template="template.download.html" controller="ModalDefaultCtrl" ok="submittry" content="dataToSend" >
+							    <span class="btn btn-warning btn-sm td-search-panel-text" role="button" data-toggle="tooltip" data-placement="top" title="Download Consent Annex Template" ng-click="list()" ng-disabled="setDownload" >Download Consent Form(s)</span></gcms-modal>
+						</span> 
+						<span ng-show="setDownload">
+								<button type="submit" class="btn btn-warning btn-sm td-search-panel-text" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top" title="Download Consent Annex Template" ng-disabled="true">Download Consent Form(s)</button>
+						</span> 
+					
+				
+
+                        </td>
+
+                        <td class="td-search-panel col-xs-6" style="align:left">
+							<gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" ok="create" content="profile">                            
+							<span class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >Cannot find a profile? Create a request here!</span>
+							</gcms-modal>
+                        </td>
+
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
 <div class="panel panel-primary">
 	<table class="table table-hover ">
 		<div class="table-responsive">
@@ -126,62 +161,69 @@
 							ng-hide = "true"
 						    ng-click="orderByField='id'; reverseSort = !reverseSort"
 							st-sort="id"
-							style="width:77px;">TR
+							style="width:77px;"
+							class="td-search-panel-text">TR
 							ID</th>
 						<th 
 							ng-hide = "true"
 							ng-click="orderByField='profileType'; reverseSort = !reverseSort"
 							style="font-size: 13px; font-family: sans-serif;  width: 86px;"
-							st-sort="profileType">Profile Type</th>
+							st-sort="profileType"class="td-search-panel-text">Profile Type</th>
 						<th 
 							ng-hide = "hideHCP"
 							ng-click="orderByField='lastName'; reverseSort = !reverseSort"
 							st-sort="lastName"
+							class="td-search-panel-text"
 							>Last Name</th>
 						<th
 							ng-hide = "hideHCP"
 							ng-click="orderByField='firstName'; reverseSort = !reverseSort"
 							st-sort="firstName"
+							class="td-search-panel-text"
 							>First Name</th>
 						<th
 							ng-hide = "hideHCO"
 							ng-click="orderByField='organisationName'; reverseSort = !reverseSort"
 							st-sort="organisationName"
+							class="td-search-panel-text"
 							>Organization Name</th>
 						<th ng-click="orderByField='city'; reverseSort = !reverseSort"
 							st-sort="city"
+							class="td-search-panel-text"
 							>City
 							Name</th>
 						<th ng-click="orderByField='address'; reverseSort = !reverseSort"
 							st-sort="address"
+							class="td-search-panel-text"
 							>Address</th>
 						<th
 							ng-hide = "hideHCP"
 							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
 							st-sort="specialit"
+							class="td-search-panel-text"
 							>Specialty</th>
-						<th style="width:105px;">Consent History</th>
+						<th style="width:105px;" class="td-search-panel-text">Consent History</th>
 					</tr>
 					<tr>
 						<th></th>
 						<th ng-hide = "true"><input ng-model="search.id" st-search="id"
-							placeholder=" " class="form-control" type="search" /></th>
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "true"><input ng-model="search.profileType"
-							st-search="profileType" placeholder=" " class="form-control"
+							st-search="profileType" placeholder=" " class="form-control td-search-panel-text"
 							type="search" /></th>
 						<th ng-hide = "hideHCP"><input ng-model="search.lastName" st-search="lastName"
-							placeholder=" " class="form-control" type="search" /></th>
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "hideHCP"><input ng-model="search.firstName" st-search="firstName"
-							placeholder=" " class="form-control" type="search" /></th>
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "hideHCO"><input ng-model="search.organisationName"
-							st-search="organisationName" placeholder=" " class="form-control"
+							st-search="organisationName td-search-panel-text" placeholder=" " class="form-control"
 							type="search" /></th>
 						<th><input ng-model="search.city" st-search="city"
-							placeholder=" " class="form-control" type="search" /></th>
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th><input ng-model="search.address" st-search="address"
-							placeholder=" " class="form-control" type="search" /></th>
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "hideHCP"><input ng-model="search.speciality" st-search="speciality"
-							placeholder=" " class="form-control" type="search" /></th>
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -190,17 +232,17 @@
 						data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
 						<td><input type="checkbox"							
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
-						<td ng-hide = "true">{{pro.id}}</td>
-						<td ng-hide = "true">{{pro.profileType}}</td>
-						<td class="tasktd" title="{{pro.lastName}}" ng-hide = "hideHCP">{{pro.lastName}}</td>
-						<td class="tasktd" title="{{pro.firstName}}" ng-hide = "hideHCP">{{pro.firstName}}</td>
-						<td class="tasktd" ng-hide = "hideHCO" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
-						<td class="tasktd" title="{{pro.city}}">{{pro.city}}</td>
-						<td class="tasktd" title="{{pro.address}}">{{pro.address}}</td>
-						<td class="tasktd" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>						
+						<td ng-hide = "true" class="td-search-panel-text">{{pro.id}}</td>
+						<td ng-hide = "true" class="td-search-panel-text">{{pro.profileType}}</td>
+						<td class="tasktd td-search-panel-text" title="{{pro.lastName}}" ng-hide = "hideHCP">{{pro.lastName}}</td>
+						<td class="tasktd td-search-panel-text" title="{{pro.firstName}}" ng-hide = "hideHCP">{{pro.firstName}}</td>
+						<td class="tasktd td-search-panel-text" ng-hide = "hideHCO" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
+						<td class="tasktd td-search-panel-text" title="{{pro.city}}">{{pro.city}}</td>
+						<td class="tasktd td-search-panel-text" title="{{pro.address}}">{{pro.address}}</td>
+						<td class="tasktd td-search-panel-text" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>						
 						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
-						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id)">View</a></gcms-modal></td>					
+						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id)" class="tasktd td-search-panel-text">View</a></gcms-modal></td>					
 					</tr>
 				</tbody>
 				<tfoot>

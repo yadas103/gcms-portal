@@ -132,7 +132,7 @@
               $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
               for(var i in $rootScope.reviewers){								
     		    	if($rootScope.reviewers[i].cntryReviewer != null){							
-    		    		if ($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase(currentProfile.userName))){						
+    		    		if ($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase($scope.currentProfile.userName))){						
       	   					$rootScope.profileReviewTabShow = true;	
     	   					}				
     	   				}							

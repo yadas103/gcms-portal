@@ -48,6 +48,7 @@
 		$scope.profileTypeSelected = {};
 		$scope.templateTypeSelected = {};	
 		$scope.clearText = "";
+		$scope.sysAdmin = false;
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -95,8 +96,52 @@
         	        theme: 'bootstrap'
         	      });
 		        };
-		        
 		       
+		        $scope.HOME_PAY_CNTRY_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Here you can select the Paying Country for this interaction. It is important to know the paying country because this is the way we determine between local interactions and cross-border interactions."
+        		};
+		        
+		        $scope.HOME_REP_CNTRY_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Here you choose the Reporting Country. This is the HCP or HCO Country. Application will search in this location for HCPs or HCOs."
+        		};
+		        
+		        $scope.HOME_PROFILE_TYP_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Here you select the profile type. HCP is for Healthcare Professionals (doctors, residents, etc.) and HCO is for Healthcare Organizations (hospitals, universities, private practice companies, etc.)."
+        		};
+		        
+		        $scope.HOME_FRS_NM_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the first name of the HCP here. If it is an Organization, leave it empty. The system will search using partial criteria too. For example, if you are looking for -John-, entering -jo- will bring all the names that contains -jo-. The system is not case sensitive."
+        		};
+		       
+		        
+		        $scope.HOME_LST_NM_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the Last Name of the HCP or Organization name here. The system will search using partial criteria too. For example, if you are looking for -John-, entering -jo- will bring all the names that contains -jo-. The system is not case sensitive."
+        		};
+		        
+		        $scope.HOME_PROFILE_CITY_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the HCP or HCO City here. The system will search using partial criteria too. For example, if you are looking for -Berlin-, entering -be- will bring all the profiles where their Cities contains -be-. The system is not case sensitive."
+        		};
+		        
+		        $scope.HOME_PROFILE_SPEC_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the HCP Specialty here. If it is an Organization, leave it empty. The specialties are usually written in the language of the HCP/HCO nationality. If you do not know exactly the name of specialty, leave it empty. The system will search using partial criteria too. For example, if you are looking for -Cardiology-, entering -ca- will bring all the profiles with specialties that contains -ca-. The system is not case sensitive."
+		        };
+		        
+		        $scope.HOME_TEMPLATE_TYPE_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Select the Consent Template here. This list is dynamically populated based on your Reporting Country Selections."
+		        		};
+		       
+		        $scope.HOME_ADDRESS_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the HCP or HCO Address here. The system will search using partial criteria too. For example, if you are looking for -GNEISENAUSTRASSE 5-, entering -GNE- will bring all the profiles where their Addresses contains -GNE-. The system is not case sensitive."
+        		};
 		//Getting Logged in User Profile
 				
 		        $scope.userProfileData = function(){		        	
@@ -106,6 +151,11 @@
 					$scope.loggedInUserCountryName = currentprofile.countryName ;
 					$scope.loggedInUserRole = currentprofile.roleId;
 					$scope.logged_In_User= currentprofile.userName;
+					
+					if($scope.loggedInUserRole == 5){
+						$scope.sysAdmin = true;
+					}
+						
 					
 					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
@@ -126,9 +176,9 @@
 				$scope.str =  response.data.countryinfo.msg;
 				$scope.str = $scope.str.replace("PC",$scope.request.collectingCountry);
 				$scope.str = $scope.str.replace("RC",$scope.request.country);
-				ngDialog.open({ template:"<div class=\"dialog-contents\">"+
+				ngDialog.open({ template:"<html><body><div class=\"dialog-contents row\">"+
 				$scope.str+ "</div>"+
-			    "<div style=\"float:right;\"><button ng-click=\"closeThisDialog()\" style=\"padding-left: 10px; padding-right: 10px;color: #fff;background-color: #337ab7;border-color: #2e6da4;\">OK</button> </div>" , plain: true ,showClose: true});
+			    "<div class=\"row\" style=\"float:right;\"><button ng-click=\"closeThisDialog()\" style=\"padding-left: 10px; padding-right: 10px;color: #fff;background-color: #337ab7;border-color: #337ab7;\">OK</button> </div></body></html>" , plain: true ,showClose: true});
 				});
 			}
 		};
@@ -136,8 +186,15 @@
 		
 		//Called on create missing profile to sent country and lock 
 		$scope.passCountryName = function (){
+			if($scope.request.country != undefined){
 			$scope.profile.country = $scope.request.country;
 			$scope.profile.readOnly = true;
+			}
+			else
+				{
+				$scope.profile.msg = "Please select Reporting Country to auto populate Profile Country"
+				$scope.profile.readOnly = true;
+				}
 		};
 		
 		
@@ -408,6 +465,7 @@
 			request.profileTypeId = item.profileTypeId.Name;
 			request.status = 'Pending';
 			delete request.readOnly;
+			delete request.msg;
 			IdentityRequest.save(request).$promise
 			.then(function(result) {
 				if(result.$promise.$$state.status == 1)

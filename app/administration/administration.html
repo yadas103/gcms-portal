@@ -174,7 +174,7 @@
    <span style="color: red;">{{error}}</span>
    
    <!-- st-table="displayedCollection" st-safe-src="ReviewAttributes" -->
-	<table 
+<!-- 	<table 
 			class="table table-bordered table-hover table-condensed">
 			<thead style="background-color: #337ab7; color: white">
         <tr>
@@ -208,7 +208,71 @@
           <td ng-repeat="role in roles"><i ng-show="profile.roleId === role.id" class="fa fa-check"></i></td>
         </tr>
    </tbody>
-   </table>
+   </table> -->
+      <table class="table table-hover">
+	<div class="table-responsive"> 
+   <table st-table="profilesCopy" st-safe-src="profiles"
+				st-reset="isReset"
+				class="table table-bordered table-striped table-highlight">
+				<thead>
+					<tr style="color: white; background-color: #337ab7;">
+						
+						<!-- <th style="width: 50px; text-align: center;">
+							<gcms-modal template="admin.role.create.html" controller="ModalDefaultCtrl" content="addItem" ok="create" alt="Add Role">
+						 <a href="" title="Add Role"><i class="fa fa-plus-circle fa-2x" style="color: white;" ></i></a>
+						  </gcms-modal>
+						</th> -->
+						
+						<th>Username</th>
+						<th>Country </th>
+						
+						<th ng-repeat="role in roles">
+						<gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" ><span style="background-color: #337ab7; color: white !important">{{role.roleName}}</span></gcms-modal>
+						</th>
+					</tr>
+					
+					<tr>
+						<!-- <th></th> -->
+						<th><input ng-model="search.userName" st-search="userName"
+							placeholder=" " class="form-control" type="search" /></th>
+						<th><input ng-model="search.countryISOCode"
+							st-search="countryISOCode" placeholder=" " class="form-control"
+							type="search" /></th>
+						
+						<th ng-repeat="role in roles"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="adminRole" ng-repeat="profile in profilesCopy | filter:search:strict">
+			<!--  <td style="padding-right:10px">
+             <a ng-click="go(profile)"><span title="Edit" class="fa fa-pencil" style="color: #337ab7;"></span></a> 
+                        
+              <gcms-modal template="admin.role.delete.html" controller="ModalDefaultCtrl"
+              content="profile" ok="delete" alt="delete user">
+            	  <span class="fa fa-trash" title="Delete" style="color: #337ab7; margin-left: 8px;"></span>
+            </gcms-modal>
+          </td> -->
+						
+		  <td>{{profile.userName}}</td>
+          <td>{{profile.countryISOCode}}</td>
+		  <td ng-repeat="role in roles"><i ng-show="profile.roleId === role.id" class="fa fa-check"></i></td>
+										
+					</tr>
+				</tbody>
+				
+				<tfoot>
+				<tr>
+					<td colspan="8" class="text-center">
+							<div st-items-by-page="10" st-pagination=""
+								st-template="app/profile/list/pagination.custom.html"></div>
+							<div>{{responseOnSearch}}</div>
+					</td>
+				</tr>
+			</tfoot> 
+			</table>
+			 </div>
+	</table> 
+   
 </div>
 </div>
 <div class="panel panel-primary ng-scope">	

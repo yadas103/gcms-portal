@@ -501,13 +501,13 @@
 		        allUsers = users;
 		        $scope.users = users.filter(removeExisting);
 		        $scope.addItem = { users: $scope.users, roles: $scope.roles};
-		        return $rootScope.session.user.getCurrentProfile();
-		      }).then(function(profile){
+		        //return $rootScope.session.user.getCurrentProfile();
+		      });/*.then(function(profile){
 		        var countryId = profile.countryId;
 		        return $rootScope.session.user.getAttributes(countryId);
 		      }).then(function(attributes){
 		        $scope.countryAttributes = attributes;
-		      });
+		      });*/
 		    };
 
 		    getData();

@@ -5947,8 +5947,8 @@ button.close {
     display: none;
     max-width: 276px;
     padding: 1px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-family: Calibri;
+    font-size: 12px;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: left;
@@ -5960,7 +5960,8 @@ button.close {
     border: 1px solid rgba(0, 0, 0, .2);
     border-radius: 6px;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2)
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    width:600%
 }
 .popover.top {
     margin-top: -10px

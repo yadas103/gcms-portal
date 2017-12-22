@@ -12,7 +12,7 @@
                                 <select class="form-control input-sm td-search-panel-text" ng-model="request.collectingCountry" ng-change="compare()" ng-disabled="readOnlyCC" required><option value = "">Please select</option>
 								<option ng-repeat="con in counties" >{{con.name}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PAY_CNTRY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PAY_CNTRY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
@@ -21,7 +21,7 @@
                                 <select class="form-control input-sm td-search-panel-text" ng-model="request.country" ng-disabled="readOnlyPC" ng-change="compare()" required><option value = "">Please select</option>
 							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_REP_CNTRY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus"  data-content="{{HOME_REP_CNTRY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
@@ -29,7 +29,7 @@
                             <div class="input-group">
                                 <select class="form-control input-sm td-search-panel-text" ng-model="request.profileType" ng-change="clear()" required><option ng-repeat="prof in profile_types">{{prof.name}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PROFILE_TYP_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PROFILE_TYP_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
@@ -38,7 +38,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.firstName" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_FRS_NM_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-trigger="focus" data-content="{{HOME_FRS_NM_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -49,7 +49,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.address" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_ADDRESS_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-trigger="focus" data-content="{{HOME_ADDRESS_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -71,7 +71,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.lastName" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_LST_NM_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_LST_NM_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -81,7 +81,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.city" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PROFILE_CITY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PROFILE_CITY_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -91,7 +91,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.speciality" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_PROFILE_SPEC_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PROFILE_SPEC_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -100,7 +100,7 @@
                             <div class="input-group">
                                 <select class="form-control input-sm td-search-panel-text" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter"><option value="" ng-show="{{empty}}">Select Template</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-animation="am-flip-x" data-content="{{HOME_TEMPLATE_TYPE_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_TEMPLATE_TYPE_MSG.content}}" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>

@@ -96,7 +96,7 @@
         	        theme: 'bootstrap'
         	      });
 		        };
-		       
+		       		      
 		        $scope.HOME_PAY_CNTRY_MSG = {
 		        		  "title": "Title",
 		        		  "content": "Here you can select the Paying Country for this interaction. It is important to know the paying country because this is the way we determine between local interactions and cross-border interactions."
@@ -176,9 +176,9 @@
 				$scope.str =  response.data.countryinfo.msg;
 				$scope.str = $scope.str.replace("PC",$scope.request.collectingCountry);
 				$scope.str = $scope.str.replace("RC",$scope.request.country);
-				ngDialog.open({ template:"<html><body><div class=\"dialog-contents row\">"+
-				$scope.str+ "</div>"+
-			    "<div class=\"row\" style=\"float:right;\"><button ng-click=\"closeThisDialog()\" style=\"padding-left: 10px; padding-right: 10px;color: #fff;background-color: #337ab7;border-color: #337ab7;\">OK</button> </div></body></html>" , plain: true ,showClose: true});
+				ngDialog.open({ template:"<html><body><div class=\"dialog-contents row\" style=\"margin-right: 0px;margin-left: 0px;\"><p style=\"font-family:Calibri\" >"+
+				$scope.str+ "</p>"+
+			    "<div style=\"float:right;\"><button ng-click=\"closeThisDialog()\" style=\"padding-left: 10px; padding-right: 10px;font-family:calibri;color: #fff;background-color: #337ab7;border-color: #337ab7;\">OK</button></div> </div></body></html>" , plain: true ,showClose: true});
 				});
 			}
 		};

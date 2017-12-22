@@ -1,12 +1,10 @@
-
 <div class="modal-header">
   <h3 class="modal-title" style="font-size: medium;">Undelete Task : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}</h3>
 </div>
 
 <div class="modal-body">
-<p>Are you sure  you want to undelete this task?</p>
-  <p>What is the reason for this undeletion?</p>
-    <form name="reasonForm" novalidate>
+<p>Are you sure  you want to undelete this task? What is the reason for this undeletion?</p>
+ <form name="reasonForm" novalidate>
     <textarea rows="3" cols="50" class="form-control" id="changeReason" name="changeReason"
       ng-model="item.undeleteReason" placeholder="" style="resize: none" required></textarea>
       <!-- <span class="error" ng-show="reasonForm.changeReason.$error.required">Required!</span> -->
@@ -18,6 +16,7 @@
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div> 
  
+
 
 	
 	

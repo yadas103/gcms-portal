@@ -6,7 +6,7 @@
    <form name="adminTemplateForm" class="form-horizontal" novalidate >
       <div class="form-group">
          <label for="templateName" class="col-sm-4 control-label">Template Name :</label>
-         <div class="col-sm-4">
+         <div class="col-sm-8">
             <input  type="text" class="form-control form-popup" id="tmplname" name="tmplname" ng-model="item.tmpl_name" placeholder=" " required>
          </div>
       </div>
@@ -46,13 +46,13 @@
      
       <div ng-show="item.consentCheck=='Y'">
        <div class="form-group" ">
-         <label for="signPageNo" class="col-sm-4 control-label">SignatureBlock PageNo :</label>
+         <label for="signPageNo" class="col-sm-4 control-label">Signature Block PageNo :</label>
          <div class="col-sm-8">
-            <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required >
+            <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control form-popup" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required >
          </div>
       </div>
        <div class="form-group" >
-         <label for="consentPageNo" class="col-sm-4 control-label">ConsentBlock PageNo :</label>
+         <label for="consentPageNo" class="col-sm-4 control-label">Consent Block PageNo :</label>
          <div class="col-sm-8">
             <input type="number" style=" max-width: 32%;" min=1 max=10 class="form-control form-popup" id="consentPageNo" name="consentPageNo" ng-model="item.consentPageNo" placeholder="" required>
          </div>
@@ -60,7 +60,7 @@
      </div>
      <div ng-if="item.consentCheck=='N'">
        <div class="form-group" ">
-         <label for="signPageNo" class="col-sm-4 control-label">SignatureBlock PageNo :</label>
+         <label for="signPageNo" class="col-sm-4 control-label label-pad">Signature Block PageNo :</label>
          <div class="col-sm-8">
             <input type="number"  style=" max-width: 32%;" min=1 max=10 class="form-control" id="signPageNo" name="signPageNo" ng-model="item.signPageNo" placeholder="" required>
          </div>
@@ -82,7 +82,7 @@
       </div>
       <div ng-show="item.dates_rages=='Y'" > 
       <div class="form-group">
-         <label for="template_validity_start_date" class="col-sm-4 control-label ">Template Validity StartDate :</label>
+         <label for="template_validity_start_date" class="col-sm-4 control-label">Template Validity StartDate :</label>
          <div class="col-sm-8 form-popup1">
          <!-- <input type="date" style="width: 138px;" class="form-control"  ng-model="item.validity_start_date" value={{item.validity_start_date}} is-open=""  close-text="Close" />
           --> <input

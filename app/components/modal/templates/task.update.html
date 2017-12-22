@@ -11,39 +11,39 @@
     
     <div class="form-group">
     
-       <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name :</label>
-    <div class="col-sm-9">
+       <label for="consannexid.eventname" class="col-sm-4 control-label">Event Name :</label>
+    <div class="col-sm-8">
       <input  type="text" class="form-control form-popup"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
   <div class="form-group" >
-    <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code :</label>
-    <div class="col-sm-9">
+    <label for="consannexid.pocode" class="col-sm-4 control-label">PO Code :</label>
+    <div class="col-sm-8">
       <input ng-maxlength="60" type="text" class="form-control form-popup" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
       <div class="form-group" >
-    <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code :</label>
-    <div class="col-sm-9">
+    <label for="consannexid.acmcode" class="col-sm-4 control-label">ACM Code :</label>
+    <div class="col-sm-8">
       <input ng-maxlength="60" type="text" class="form-control form-popup" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" >
     </div>    
   </div>
   <div class="form-group" >
-    <label for="middleName" class="col-sm-3 control-label">Consent Status :</label>
-    <div class="col-sm-9 form-popup1">
+    <label for="middleName" class="col-sm-4 control-label">Consent Status :</label>
+    <div class="col-sm-8 form-popup1">
        <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"    ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"></gcms-lov> 
     </div>
   </div>
   <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'">
-    <label for="middleName" class="col-sm-3 control-label" style="padding-left: 4px;">Consent Status Reason :</label>
-    <div class="col-sm-9">
+    <label for="middleName" class="col-sm-4 control-label" style="padding-left: 4px;">Consent Status Reason:</label>
+    <div class="col-sm-8">
        <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup form-control" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" ></textarea> 
     </div>  
   </div>
   <div ng-if="item.consannexid.tmpl_id.dates_rages=='Y'">
   <div class="form-group" >
-    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date :</label>
-       <div class="col-sm-9">
+    <label for="consannexid.consentstartdate" class="col-sm-4 control-label">Consent Start Date :</label>
+       <div class="col-sm-8">
         <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
@@ -59,8 +59,8 @@
   </div>
   </div>
   <div class="form-group" > 
-    <label  for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date :</label>
-    <div class="col-sm-9">
+    <label  for="consannexid.consentenddate" class="col-sm-4 control-label">Consent End Date :</label>
+    <div class="col-sm-8">
           <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
@@ -80,40 +80,40 @@
     
     <!-- <div ng-hide="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     <div class="form-group">
-    <label for="consannexid.eventname" class="col-sm-3 control-label">Event Name:</label>
-    <div class="col-sm-9">
+    <label for="consannexid.eventname" class="col-sm-4 control-label">Event Name:</label>
+    <div class="col-sm-8">
       <input  type="text" class="form-control form-popup"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="">
     </div>
   </div>
   <div class="form-group" >
-    <label for="consannexid.pocode" class="col-sm-3 control-label">PO Code:</label>
-    <div class="col-sm-9">
+    <label for="consannexid.pocode" class="col-sm-4 control-label">PO Code:</label>
+    <div class="col-sm-8">
       <input ng-maxlength="60" type="text" class="form-control form-popup" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="">
     </div>
   </div>
       <div class="form-group" >
-    <label for="consannexid.acmcode" class="col-sm-3 control-label">ACM Code:</label>
-    <div class="col-sm-9">
+    <label for="consannexid.acmcode" class="col-sm-4 control-label">ACM Code:</label>
+    <div class="col-sm-8">
       <input ng-maxlength="60" type="text" class="form-control form-popup" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" >
     </div>    
   </div>
   <div class="form-group" >
-    <label for="middleName" class="col-sm-3 control-label">Consent Status:</label>
-    <div class="col-sm-9 form-popup1">
+    <label for="middleName" class="col-sm-4 control-label">Consent Status:</label>
+    <div class="col-sm-8 form-popup1">
        <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"></gcms-lov> 
     </div>
   </div>
   <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'">
-    <label for="middleName" class="col-sm-3 control-label">Consent Status Reason :</label>
-    <div class="col-sm-9">
+    <label for="middleName" class="col-sm-4 control-label">Consent Status Reason :</label>
+    <div class="col-sm-8">
        <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup"></textarea> 
     </div>  
   </div>
   
   <div ng-if="item.consannexid.tmpl_id.dates_rages=='Y'">
   <div class="form-group" >
-    <label for="consannexid.consentstartdate" class="col-sm-3 control-label">Consent Start Date:</label>
-       <div class="col-sm-9">
+    <label for="consannexid.consentstartdate" class="col-sm-4 control-label">Consent Start Date:</label>
+       <div class="col-sm-8">
          <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
@@ -127,8 +127,8 @@
            </div>
   </div>
   <div class="form-group" > 
-    <label  for="consannexid.consentenddate" class="col-sm-3 control-label">Consent End Date:</label>
-    <div class="col-sm-9">
+    <label  for="consannexid.consentenddate" class="col-sm-4 control-label">Consent End Date:</label>
+    <div class="col-sm-8">
          <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
@@ -147,40 +147,40 @@
 <a href="" ng-if="!item.click" ng-click="item.click=true" style="float:right;">Show Additional Details</a>											
 <div ng-show="item.click">
 		<div class="form-group">
-			<label for="profileid" class="col-sm-3 control-label">HCP/O ID :</label>
-			<div class="col-sm-9">
+			<label for="profileid" class="col-sm-4 control-label">HCP/O ID :</label>
+			<div class="col-sm-8">
 				<input type="text" class="form-control form-popup" id="bpid" name="bpid"
 					ng-model="item.consannexid.bpid.id" placeholder=""
 					ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="taskid" class="col-sm-3 control-label">Task ID :</label>
-			<div class="col-sm-9">
+			<label for="taskid" class="col-sm-4 control-label">Task ID :</label>
+			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.id" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="taskid" class="col-sm-3 control-label">Task Created Date :</label>
-			<div class="col-sm-9">
+			<label for="taskid" class="col-sm-4 control-label">Task Created Date:</label>
+			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.createdDate | date:'dd-MM-yyyy'" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmpltcode" class="col-sm-3 control-label">Template Code :</label>
-			<div class="col-sm-9">
+			<label for="tmpltcode" class="col-sm-4 control-label">Template Code :</label>
+			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpltcode" name="tmpltcode" ng-model="item.consannexid.tmpl_id.tmpl_code" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmplttype" class="col-sm-3 control-label">Template Type :</label>
-			<div class="col-sm-9">
+			<label for="tmplttype" class="col-sm-4 control-label">Template Type :</label>
+			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmplttype" name="tmplttype" ng-model="item.consannexid.tmpl_id.tmpl_type" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmpl_name" class="col-sm-3 control-label">Template Name :</label>
-			<div class="col-sm-9">
+			<label for="tmpl_name" class="col-sm-4 control-label">Template Name :</label>
+			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpl_name" name="tmpl_name" ng-model="item.consannexid.tmpl_id.tmpl_name" placeholder="" ng-readonly="true">
 			</div>
 		</div>

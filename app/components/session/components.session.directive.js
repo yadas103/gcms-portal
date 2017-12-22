@@ -136,7 +136,7 @@
       		    		if (($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase($scope.currentProfile.userName)))){						
         	   					$rootScope.profileReviewTabShow = true;	
       	   					}
-      		    		if($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && $scope.currentProfile.roleId == 5){
+      		    		if($scope.currentProfile.roleId == 5){
       		    			$rootScope.profileReviewTabShow = true;	
       		    		}
       	   				}							
@@ -155,7 +155,7 @@
         	   				if (($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase(currentProfile.userName)))){						
         	   					$rootScope.profileReviewTabShow = true;	
         	   					}	
-        	   			if($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && currentProfile.roleId == 5){
+        	   			if(currentProfile.roleId == 5){
   		    			$rootScope.profileReviewTabShow = true;	
   		    		}
         	   				}							

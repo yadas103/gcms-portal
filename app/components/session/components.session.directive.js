@@ -127,34 +127,41 @@
            * @param {object} profile The profile to change the user to
            */
           $scope.setProfile = function(profile) {
-            $state.go('landing').then(function(){
-              $scope.currentProfile = profile;
-              $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
-              for(var i in $rootScope.reviewers){								
-    		    	if($rootScope.reviewers[i].cntryReviewer != null){							
-    		    		if ($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase($scope.currentProfile.userName))){						
-      	   					$rootScope.profileReviewTabShow = true;	
-    	   					}				
-    	   				}							
- 			}	
-              user.setProfile(profile);
-            });
-          };
-
-          $scope.getReviewersData = function(currentProfile){		  								
-      		   Review.query().$promise.then(function(review){		    	 					
-      		       $scope.ReviewAttributes = review;
-      		       
-      		       $rootScope.reviewers = review;
-      		    for(var i in $scope.ReviewAttributes){								
-      		    	if($scope.ReviewAttributes[i].cntryReviewer != null){							
-      	   				if ($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase(currentProfile.userName))){						
-      	   					$rootScope.profileReviewTabShow = true;	
-      	   					}				
+              $state.go('landing').then(function(){
+                $rootScope.profileReviewTabShow = false;
+                $scope.currentProfile = profile;
+                $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
+                for(var i in $rootScope.reviewers){								
+      		    	if($rootScope.reviewers[i].cntryReviewer != null){							
+      		    		if (($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase($scope.currentProfile.userName)))){						
+        	   					$rootScope.profileReviewTabShow = true;	
+      	   					}
+      		    		if($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && $scope.currentProfile.roleId == 5){
+      		    			$rootScope.profileReviewTabShow = true;	
+      		    		}
       	   				}							
-   			}							    		       								
-      		       });	    		   
-      		  };								
+   			}	
+                user.setProfile(profile);
+              });
+            };
+
+            $scope.getReviewersData = function(currentProfile){		  								
+        		   Review.query().$promise.then(function(review){		    	 					
+        		       $scope.ReviewAttributes = review;
+        		       
+        		       $rootScope.reviewers = review;
+        		    for(var i in $scope.ReviewAttributes){								
+        		    	if($scope.ReviewAttributes[i].cntryReviewer != null){							
+        	   				if (($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase(currentProfile.userName)))){						
+        	   					$rootScope.profileReviewTabShow = true;	
+        	   					}	
+        	   			if($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && currentProfile.roleId == 5){
+  		    			$rootScope.profileReviewTabShow = true;	
+  		    		}
+        	   				}							
+     			}							    		       								
+        		       });	    		   
+        		  };								
 
           
           $interval(user.getCurrentProfile(),1000*60*10); //call get profile every 10 minutes to keep the session alive

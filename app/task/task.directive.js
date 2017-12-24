@@ -105,6 +105,20 @@
         	}
     	   }
        }])
+       .directive('toggle', function(){
+    	   return {
+    		   restrict: 'A',
+    		   link: function(scope, element, attrs){
+    			   if (attrs.toggle=="tooltip"){
+    				   $(element).tooltip();
+    			   }
+    			   if (attrs.toggle=="popover"){
+    				   $(element).popover();
+    				   
+    			   }
+    		   }
+    	   };
+       })
         .filter('customFilter', ['$filter', function($filter) {
         var filterFilter = $filter('filter');
         var standardComparator = function standardComparator(obj, text) {

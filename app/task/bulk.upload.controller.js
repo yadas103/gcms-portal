@@ -53,7 +53,7 @@
    	   console.log("Inside upload");
    	   $scope.a=false;
           //if ($scope.uploader.queue.length > 0) {
-   	if($scope.uploader.progress=='100'){
+   	if($scope.uploader.progress==100){
    	   $scope.success='';
  	   $scope.error='';
        	   return FileMonitor.query({userid:$scope.userID}).$promise.then(function(result){

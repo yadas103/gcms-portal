@@ -270,6 +270,8 @@
 					<tfoot>
 						<tr ng-hide="status!='COMPLETED'">
 							<td colspan="14">
+							<div class="row" style="margin-top: 12px;margin-bottom: 2px;">
+							<div class="col-sm-6">
 								
 								
 								<button   class="btn btn-warning" ng-click="loadData()" data="data"
@@ -378,7 +380,8 @@
 								            'assignedto.userName': 'NTID',
 								            'taskstatus': 'Task Status'
 											}"
-							loaded="loaded" my-directive>Download All (Table Summary)</button>
+							loaded="loaded" my-directive>Download All (Table Summary)</button></div>
+							<div class="col-sm-6" style="text-align: right;">
 							
 							<button ng-show="selected.length != '0'" class="btn btn-warning" style="margin-left: 48%;" ng-json-export-excel
 									data="selected"
@@ -487,7 +490,8 @@
 								            'taskstatus': 'Task Status'
 											}"
 									filename="'summary'">Table Summary</button>
-							
+							</div>
+							</div>
 							</td>
 
 						</tr>

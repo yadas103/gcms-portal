@@ -133,7 +133,7 @@
                 $rootScope.loggedInUserRoleId=$scope.currentProfile.roleId;
                 for(var i in $rootScope.reviewers){								
       		    	if($rootScope.reviewers[i].cntryReviewer != null){							
-      		    		if (($scope.ReviewAttributes[i].countries.name == $scope.currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase($scope.currentProfile.userName)))){						
+      		    		if (angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase($scope.currentProfile.userName))){						
         	   					$rootScope.profileReviewTabShow = true;	
       	   					}
       		    		if($scope.currentProfile.roleId == 5){
@@ -152,7 +152,7 @@
         		       $rootScope.reviewers = review;
         		    for(var i in $scope.ReviewAttributes){								
         		    	if($scope.ReviewAttributes[i].cntryReviewer != null){							
-        	   				if (($scope.ReviewAttributes[i].countries.name == currentProfile.countryName && angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase(currentProfile.userName)))){						
+        	   				if ( angular.lowercase($scope.ReviewAttributes[i].cntryReviewer).includes(angular.lowercase(currentProfile.userName))){						
         	   					$rootScope.profileReviewTabShow = true;	
         	   					}	
         	   			if(currentProfile.roleId == 5){

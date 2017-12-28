@@ -16,8 +16,8 @@ Enter this information in the proper columns of the below list.
 	<thead style="background-color:#337ab7;color:white;">
 	<tr  class="panel-title" style="font-size: 14px;">
 	<th style="font-size: 12px; font-family: sans-serif; ">#</th>
-	<th style="font-size: 12px; font-family: sans-serif;">Last Name/Organization Name</th>
-	<th style="font-size: 12px; font-family: sans-serif;">First Name</th>
+	<th style="font-size: 12px; font-family: sans-serif;">Last/Org. Name</th>
+	<th style="font-size: 12px; font-family: sans-serif;width: 8%;">First Name</th>
 	<th style="font-size: 12px; font-family: sans-serif;">Event Description*</th>
 	<th  ng-hide="true" style="font-size: 12px; font-family: sans-serif;">TR ID*</th>
 	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
@@ -58,7 +58,7 @@ Enter this information in the proper columns of the below list.
              ng-model="item.request[i.id].consentenddate"
              ng-model-options="{ updateOn: 'blur' }"
              start-view = "day"
-             start-date="item.request[i.id].consentenddate">                          
+             start-date="item.request[i.id].consentenddate" class="form-control">                          
             </td> 
             <td ng-show="item.setDates">
               <input
@@ -70,9 +70,9 @@ Enter this information in the proper columns of the below list.
              ng-model-options="{ updateOn: 'blur' }"
              start-view = "day"
              start-date="item.request[i.id].eventEndDate"
-             ng-required = "item.setDates">                          
+             ng-required = "item.setDates" class="form-control">                          
             </td> 
-            <td ng-model="item.i.id"><button  class="btn btn-primary" ng-click="copy(item,item.request[i.id])">Same for all</button></td>
+            <td ng-model="item.i.id"><button  class="btn btn-primary btn-xs" ng-click="copy(item,item.request[i.id])">Same for all</button></td>
  	</tr>
 	</tbody>	
 	</div>

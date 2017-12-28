@@ -6,7 +6,7 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
 html {
-    font-family: sans-serif;
+    font-family: Calibri;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%
 }
@@ -182,7 +182,7 @@ fieldset {
 }
 .task-table-header1{
 	font-size: 13px;
-	font-family: sans-serif;
+	font-family: Calibri;
 	padding-bottom: 35px;
 }
 
@@ -2635,7 +2635,7 @@ input[type=search] {
 	padding-left: 10px;
 	padding-right: 10px;
 	font-family: Calibri;
-	font-size: small;
+	font-size: 12px;
 }
 
 .input-search-panel {

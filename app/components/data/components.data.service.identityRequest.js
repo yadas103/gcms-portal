@@ -37,14 +37,15 @@
   function IdentityRequestView($resource, localeMapper, ENVIRONMENT)  {
 
   return $resource(
-      ENVIRONMENT.SERVICE_URI + ':locale/profileRequest/:id' + ENVIRONMENT.SERVICE_EXT,
+      ENVIRONMENT.SERVICE_URI + ':locale/profileRequest/:id/:status' + ENVIRONMENT.SERVICE_EXT,
       {
     	  
         id: '@id',
+          status: '@status',
         locale: function(){ return localeMapper.getCurrentISOCode(); }
       },
       {
-      get:    { method:'GET', isArray:false },
+      get:    { method:'GET', isArray:true },
         query:  { method:'GET', isArray:true },
        update: { method:'PUT' }
       }

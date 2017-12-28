@@ -29,12 +29,24 @@
 	        });
 	      };
 
-	       
+	      $scope.status={};
+	      $scope.records={};
+	      $scope.records='';
 	      var loadIdentityRequestView = function(){			  
 	    	  IdentityRequestView.query().$promise
               .then(function(result){
-                  		   $scope.identityRequestView = result;   
-                     	});
+                  		   $scope.identityRequestView = result; 
+                  		 $scope.status='True';
+                  		 if ($scope.identityRequestView.length=='0'){
+                  			$scope.status='True';
+        					$scope.records="No records to show";
+                  		 }
+                     	}).catch(function(){
+        				//$scope.responseOnSearch = "No records to show"
+        					$scope.status='True';
+        					$scope.records="No records to show";
+        					//$scope.profileSearchCopy.length = 0;                               	
+        				});
               };
 	  		  
   
@@ -42,6 +54,7 @@
       loadIdentityRequestView();
       $scope.displayedCollection = [].concat($scope.identityRequestView);
      
+  
       
       var currentprofile = $rootScope.currentProfile;
       $scope.logged_In_User= currentprofile.userName;
@@ -68,6 +81,45 @@
       $scope.close=function(item){
     	  
     	 }
+    //sending parameters for status
+      var params={};
+      $scope.request={};
+      
+      $scope.identityRequestView=[];
+      $scope.column=false;
+        $scope.onCategoryChange= function(request){
+        	$scope.records='';
+      	params=request.downchk;
+      	var data = {"id":"","status":""};
+      	data.status=params;
+      	data.id = (params.id!== undefined && params.id!== "" ) ? params.id: 'id';
+      	console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiii");
+      	 IdentityRequestView.get(data).$promise
+            .then(function(result){
+            	if(result.$promise.$$state.status == 1)
+            	{ 
+            		$scope.identityRequestView = result; 
+                		   console.log("hii records"+result)
+                		   $scope.displayedCollection = [].concat($scope.identityRequestView);
+                		 
+            	
+            	if($scope.identityRequestView[0].status=='Pending'){
+            		$scope.status='True';
+            	}else if ($scope.identityRequestView.length=='0')
+				{
+            		$scope.status='True';
+				}else{
+					$scope.status='False';
+				}
+            	}
+                   	}).catch(function(){
+        				//$scope.responseOnSearch = "No records to show"
+        					$scope.status='True';
+        					$scope.records="No records to show";
+        					//$scope.profileSearchCopy.length = 0;                               	
+        				}); ;
+        }
+
       /**
        * @ngdoc method
        * @name validate
@@ -153,8 +205,9 @@
 		$http.get('./emailproperties.json').then(function (response) {
 		  console.log(response);
 		     if( response.data.production.value === 'yes'){
-		        $scope.emaildetails[emailTo] = $scope.profileRequestSender ;
-		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User ;
+		       // $scope.emaildetails[emailTo] = $scope.profileRequestSender ;
+		    	 $scope.emaildetails[emailTo] = $scope.logged_In_User ;
+		    	 $scope.emaildetails[emailFrom] = $scope.profileRequestSender;
 		    	; 
 		     }
 		     else if(response.data.development.value === 'yes'){
@@ -170,7 +223,7 @@
 		     if(fn != ''){
 		    	 if($scope.profile_status=="Approved"){
 		     $scope.emaildetails[message] = "MailTo:  "+ $scope.profileRequestSender +"-<br/><br/><br/>"+
-		    	 "This is to inform you that the below profile creation request has been submitted to me to review.<br/>"+
+		    	 "This is to inform you that the below profile creation request  <br/>"+
 		    	"<br/>"+"has been " + $scope.profile_status+" with below Details: " + "<br/>"+
 		    	"First Name: "+fn+"<br/>"+
 		    	"<br/>"+
@@ -194,7 +247,7 @@
 		         }
 		    	 else if ($scope.profile_status=="Rejected"){
 		    		 $scope.emaildetails[message] = "MailTo:  "+ $scope.profileRequestSender +"-<br/><br/><br/>"+
-		    			 "This is to inform you that the below profile creation request has been submitted to me to review has been "+
+		    			 "This is to inform you that the below profile creation request has been  "+
 				    	"<br/>"+ $scope.profile_status+" with below Details: "+ "<br/>"+
 				    	"First Name: "+fn+"<br/>"+
 				    	"<br/>"+
@@ -224,7 +277,7 @@
   		    
   		    	 if($scope.profile_status=="Approved"){
   		    		 $scope.emaildetails[message] = "MailTo:  "+ $scope.profileRequestSender +"-<br/><br/><br/>"+
-  				     "This is to inform you that the below profile creation request has been submitted to me to review.<br/>"+
+  				     "This is to inform you that the below profile creation request <br/>"+
   				    	"<br/>"+"has been " + $scope.profile_status+" with below Details: " + "<br/>"+
   		    	"Organization Name: "+on+"<br/>"+
   		    	"<br/>"+
@@ -248,7 +301,7 @@
   		    		 $scope.emaildetails[message] = "To: "+ $scope.profileRequestSender+"<br/>"+
   	  		    	"CC: "+$scope.logged_In_User+"<br/>"+
   	  		    	"<br/>"+
-		    		"This is to inform you that the below profile creation request has been submitted to me to review has been "+
+		    		"This is to inform you that the below profile creation request  has been "+
 				    	"<br/>"+ $scope.profile_status+" with below Details: "+ "<br/>"+
 				    	"Organization Name: "+on+"<br/>"+
 		  		    	"<br/>"+
@@ -287,7 +340,8 @@
        * @param {object}
        *            item IdentityRequest object
        */
-      
+       
+  	          
         $scope.updateApprove = function(item) {
         	
         	if( $scope.validation=='true')
@@ -321,8 +375,8 @@
 
            IdentityRequestView.update({ id:item.id },item).$promise.then(function(response){
            	console.log(response);
-         	if(response.$promise.$$state.status==1){
-           		
+         	if(response.$promise.$$state.status==1){ 
+         		
            	if($scope.profile_status=="Approved"){
            		toasty.success({
            	        title: 'Success',
@@ -336,7 +390,8 @@
            	        theme: 'bootstrap'
            	      })};
            		$scope.ok(item);
-           	 
+           		loadIdentityRequestView();
+                $scope.displayedCollection = [].concat($scope.identityRequestView);
          	}
          	
 		      }).catch(function(){
@@ -404,7 +459,7 @@
            		
            	
 		      }).catch(function(){
-		    	  //refresh(); 
+		    	  //(); 
 	 		    	 internalError();	
 	       		 });
           };

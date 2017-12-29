@@ -17,12 +17,12 @@
 						Name</th>
 					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
 						Status</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">
 						Start Date</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">
 						End Date</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
-						Updated Date</th>
+					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Updated</th>
+						<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Event End Date</th>
 					<th style="font-size: 12px; font-family: sans-serif; width: 5%;">Document</th>
 				</tr>
 			</thead>
@@ -34,6 +34,7 @@
 					<td style="text-align: center">{{field.consentstartdate | date:'dd-MM-yyyy'}}</td>
 					<td style="text-align: center">{{field.consentenddate | date:'dd-MM-yyyy'}}</td>
 					<td style="text-align: center">{{field.updatedDate | date:'dd-MM-yyyy' }}</td>
+					<td></td>
 					<td>
 						<div ng-if="field.annnexlocation==undefined">
 							<span style="color: red;"></span>

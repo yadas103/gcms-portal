@@ -76,7 +76,7 @@
 						<tr style="color: white; background-color: #337ab7;">
 							<th ng-hide="status=='DELETED'">Action</th>
 							<th style="width:12%;"st-sort="payercountry">Payer Country</th>
-							<th style="width:13%;"st-sort="lastname">Last Name/Org Name</th>
+							<th style="width:13%;"st-sort="lastname">Last/Org Name</th>
 							<th style="width:13%;" st-sort="firstname">First Name</th>
 							<th style="width:12%;"st-sort="profilecountry">Profile Country</th>
 							<th style="width:18%; st-sort="eventname">Event Name</th>
@@ -84,7 +84,7 @@
 							<th style="width:10%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
 							<th style="width:18%; st-sort="initiatedby">Task Owner</th> 
 							<th style="width:6%;"st-sort="taskstatus">Task Status</th>
-							<th ng-hide="status=='DELETED'">Document Upload</th>
+							<th ng-hide="status=='DELETED'">Document</th>
 							<th style="width:10%;" ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " 
 								>Activity								
 								</th>
@@ -140,7 +140,7 @@
 										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
 										alt="Delete Task {{con.id}}"> <span title="Delete Task"
 										ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
-										class="fa fa-trash" style="color: #337ab7;margin-left: 12px;"></span></gcms-modal>
+										class="fa fa-trash" style="color: #337ab7;margin-left: 7px;"></span></gcms-modal>
 								</div>
 								
 
@@ -197,7 +197,7 @@
 											controller="ModalDefaultCtrl2" content="con" ok="update"
 											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-arrow-circle-up" 
 											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
-											style="padding-right:10px; margin-left: 6px;"></span>
+											style="padding-right:10px; margin-left: 11px;"></span>
 										</gcms-upload>
 										<span ng-show="true" ng-controller="FileManagerController">
 
@@ -495,8 +495,9 @@
 							</td>
 
 						</tr>
+						
 						<tr>
-							<td colspan="14" class="text-center">
+							<td colspan="14" class="text-center" ng-hide="itemsByPage >= totalcount">
 								<div st-items-by-page='itemsByPage' st-pagination=""
 									st-template="app/task/pagination.custom.html"></div>
 							</td>

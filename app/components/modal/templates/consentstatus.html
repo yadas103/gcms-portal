@@ -13,17 +13,17 @@
 			 >
 			<thead>
 				<tr style="color: white; background-color: #337ab7;">
-					<th style="font-size: 12px; font-family: sans-serif; width: 14%;">Event
+					<th style="width: 14%;">Event
 						Name</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Consent
+					<th style="width: 8%;">Consent
 						Status</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">
+					<th style="width: 8%;">
 						Start Date</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">
+					<th style="width: 8%;">
 						End Date</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Updated</th>
-						<th style="font-size: 12px; font-family: sans-serif; width: 8%;">Event End Date</th>
-					<th style="font-size: 12px; font-family: sans-serif; width: 5%;">Document</th>
+					<th style="width: 8%;">Consent Updated</th>
+						<th style="width: 8%;">Event End Date</th>
+					<th style="width: 5%;">Document</th>
 				</tr>
 			</thead>
 
@@ -31,17 +31,16 @@
 				<tr>
 					<td class="tasktd">{{field.eventname}}</td>
 					<td>{{field.consentstatus.consentName}}</td>
-					<td style="text-align: center">{{field.consentstartdate | date:'dd-MM-yyyy'}}</td>
-					<td style="text-align: center">{{field.consentenddate | date:'dd-MM-yyyy'}}</td>
-					<td style="text-align: center">{{field.updatedDate | date:'dd-MM-yyyy' }}</td>
+					<td>{{field.consentstartdate | date:'dd-MM-yyyy'}}</td>
+					<td>{{field.consentenddate | date:'dd-MM-yyyy'}}</td>
+					<td>{{field.updatedDate | date:'dd-MM-yyyy' }}</td>
 					<td></td>
 					<td>
 						<div ng-if="field.annnexlocation==undefined">
 							<span style="color: red;"></span>
 						</div>
 						<div ng-if="field.annnexlocation!=undefined">
-							<div ng-show="true" ng-controller="FileManagerController"
-								style="text-align: center">
+							<div ng-show="true" ng-controller="FileManagerController">
 								<a href="" ng-click="downloadCH(field)"> View </a>
 							</div>
 						</div>

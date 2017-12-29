@@ -30,7 +30,7 @@
 	      };
 
 	      $scope.status={};
-	      $scope.records={};
+	     // $scope.records={};
 	      $scope.records='';
 	      var loadIdentityRequestView = function(){			  
 	    	  IdentityRequestView.query().$promise
@@ -205,10 +205,8 @@
 		$http.get('./emailproperties.json').then(function (response) {
 		  console.log(response);
 		     if( response.data.production.value === 'yes'){
-		       // $scope.emaildetails[emailTo] = $scope.profileRequestSender ;
-		    	 $scope.emaildetails[emailTo] = $scope.logged_In_User ;
-		    	 $scope.emaildetails[emailFrom] = $scope.profileRequestSender;
-		    	; 
+		       $scope.emaildetails[emailTo] = $scope.profileRequestSender;
+		    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User;
 		     }
 		     else if(response.data.development.value === 'yes'){
 		    	 
@@ -223,8 +221,8 @@
 		     if(fn != ''){
 		    	 if($scope.profile_status=="Approved"){
 		     $scope.emaildetails[message] = "MailTo:  "+ $scope.profileRequestSender +"-<br/><br/><br/>"+
-		    	 "This is to inform you that the below profile creation request  <br/>"+
-		    	"<br/>"+"has been " + $scope.profile_status+" with below Details: " + "<br/>"+
+		    	 "This is to inform you that the below profile creation request has been " + $scope.profile_status+" with below Details: " + "<br/>"+
+		    	"<br/>"+
 		    	"First Name: "+fn+"<br/>"+
 		    	"<br/>"+
 		    	"Last Name: "+ln+"<br/>"+
@@ -247,8 +245,8 @@
 		         }
 		    	 else if ($scope.profile_status=="Rejected"){
 		    		 $scope.emaildetails[message] = "MailTo:  "+ $scope.profileRequestSender +"-<br/><br/><br/>"+
-		    			 "This is to inform you that the below profile creation request has been  "+
-				    	"<br/>"+ $scope.profile_status+" with below Details: "+ "<br/>"+
+		    		 "This is to inform you that the below profile creation request has been " + $scope.profile_status+" with below Details: " + "<br/>"+
+				    	"<br/>"+
 				    	"First Name: "+fn+"<br/>"+
 				    	"<br/>"+
 				    	"Last Name: "+ln+"<br/>"+
@@ -277,8 +275,8 @@
   		    
   		    	 if($scope.profile_status=="Approved"){
   		    		 $scope.emaildetails[message] = "MailTo:  "+ $scope.profileRequestSender +"-<br/><br/><br/>"+
-  				     "This is to inform you that the below profile creation request <br/>"+
-  				    	"<br/>"+"has been " + $scope.profile_status+" with below Details: " + "<br/>"+
+  		    		"This is to inform you that the below profile creation request has been " + $scope.profile_status+" with below Details: " + "<br/>"+
+  			    	"<br/>"+
   		    	"Organization Name: "+on+"<br/>"+
   		    	"<br/>"+
   		    	"Address: "+$scope.resultcopy.address+"<br/>"+
@@ -301,8 +299,8 @@
   		    		 $scope.emaildetails[message] = "To: "+ $scope.profileRequestSender+"<br/>"+
   	  		    	"CC: "+$scope.logged_In_User+"<br/>"+
   	  		    	"<br/>"+
-		    		"This is to inform you that the below profile creation request  has been "+
-				    	"<br/>"+ $scope.profile_status+" with below Details: "+ "<br/>"+
+  	  		    "This is to inform you that the below profile creation request has been " + $scope.profile_status+" with below Details: " + "<br/>"+
+		    	"<br/>"+
 				    	"Organization Name: "+on+"<br/>"+
 		  		    	"<br/>"+
 		  		    	"Address: "+$scope.resultcopy.address+"<br/>"+

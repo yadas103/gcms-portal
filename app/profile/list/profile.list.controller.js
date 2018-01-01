@@ -682,6 +682,8 @@
 			$scope.view = function(id) { 
 			var profileid = id;
 			$scope.consentAttributes = ConsentAnnex.query({id : profileid});
+			$scope.itemCopy = [].concat($scope.consentAttributes);
+			$scope.isResetConsentHistory = true;
 			if($scope.consentAttributes==''){
 			    		 $scope.error = "No Records Found";
 			    		 console.log($scope.error);

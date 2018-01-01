@@ -7,27 +7,46 @@
 			History  {{item[0].bpid.firstName}} {{item[0].bpid.lastName}}</h3>
 
 	</div>
-	<div class="modal-body">
+	<div class="modal-body" ng-controller="ProfileListCtrl">
 		<div ng-if="item.length!=0">
-		<table class="table table-bordered table-striped table-highlight"
+		<table st-table="itemCopy" st-safe-src="item" 
+				 class="table table-bordered table-striped table-highlight"
 			 >
 			<thead>
 				<tr style="color: white; background-color: #337ab7;">
-					<th style="width: 14%;">Event
+					<th st-sort="eventname" style="width: 14%;">Event
 						Name</th>
-					<th style="width: 8%;">Consent
+					<th st-sort="consentstatus.consentName" style="width: 8%;">Consent
 						Status</th>
-					<th style="width: 8%;">
+					<th st-sort="consentstartdate" style="width: 8%;">
 						Start Date</th>
-					<th style="width: 8%;">
+					<th st-sort="consentenddate" style="width: 8%;">
 						End Date</th>
-					<th style="width: 8%;">Consent Updated</th>
-						<th style="width: 8%;">Event End Date</th>
+					<th st-sort="updatedDate" style="width: 8%;">Consent Updated</th>
+						<th st-sort="consentenddate" style="width: 8%;">Event End Date</th>
 					<th style="width: 5%;">Document</th>
 				</tr>
+				<tr>
+                        
+                                    <th><input st-search="eventname" placeholder=""
+                                                class="form-control" type="search" /></th>
+                                          <th><input st-search="consentstatus.consentName" placeholder=""
+                                                class="form-control" type="search" /></th>
+                                          <th><input st-search="consentstartdate" placeholder=""
+                                                class="form-control" type="search" /></th>
+                                          <th><input st-search="consentenddate" placeholder=""
+                                                class="form-control" type="search" /></th>
+                                          <th><input st-search="updatedDate" placeholder=""
+                                                class="form-control" type="search" /></th>
+                                                <th><input st-search="consentenddate" placeholder=""
+                                                class="form-control" type="search" /></th>
+                                          <th></th>
+                        </tr>
+			
 			</thead>
 
-			<tbody data-ng-repeat="field  in item">
+			<tbody data-ng-repeat="field  in itemCopy">
+			
 				<tr>
 					<td class="tasktd">{{field.eventname}}</td>
 					<td>{{field.consentstatus.consentName}}</td>
@@ -47,6 +66,14 @@
 					</td>
 				</tr>
 			</tbody>
+			<tfoot>
+                                    <tr>
+                                          <td colspan="7" class="text-center">
+                                                <div st-items-by-page="20" st-pagination=""
+                                                      st-template="app/profile/list/pagination.custom.html"></div>
+                                          </td>
+                                    </tr>
+                              </tfoot>
 		</table>
 
 	</div>

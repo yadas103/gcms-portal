@@ -140,16 +140,17 @@
 						
 					</tbody>
 					<tfoot>
-						<tr>
-							<td colspan="13" class="text-center">
-								<div st-pagination="" st-items-by-page="itemsByPage"
-									st-displayed-pages="5"
-									st-template="app/task/pagination.custom.html"></div>
-									<div>{{records}}</div>
-							</td>
-						</tr>
-					</tfoot>
+					<tr>
+         
+						<td colspan="8" class="text-center" ng-hide="recordlength <'10'">
+							<div st-items-by-page="10" st-pagination=""
+								st-template="app/profile/list/pagination.custom.html"></div>
+							<div>{{records}}</div>
+						</td>
+					</tr>
+				</tfoot>
 				</table>
+				
 			</div>
 		</table>
 	</div>

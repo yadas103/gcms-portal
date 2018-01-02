@@ -14,7 +14,7 @@
   IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','EmailGeneration','$state','$stateParams','ValidatedProfile','toasty'];
 
   function IdentityController(IdentityRequestView,$scope,$rootScope,$http,EmailGeneration,$state,$stateParams,ValidatedProfile,toasty){
-	 
+	 $scope.itemsByPage=10;
 	  var internalError = function(){
 	        toasty.error({
 	          title: 'Error',
@@ -32,12 +32,16 @@
 	      $scope.status={};
 	     // $scope.records={};
 	      $scope.records='';
+	      $scope.recordlength='';
 	      var loadIdentityRequestView = function(){			  
 	    	  IdentityRequestView.query().$promise
               .then(function(result){
                   		   $scope.identityRequestView = result; 
                   		 $scope.status='True';
+                  		console.log("hiiiiii length"+ $scope.identityRequestView.length);
+                  		$scope.recordlength=$scope.identityRequestView.length;
                   		 if ($scope.identityRequestView.length=='0'){
+                  			 console.log("hiiiiii length"+ $scope.identityRequestView.length);
                   			$scope.status='True';
         					$scope.records="No records to show";
                   		 }
@@ -101,7 +105,7 @@
             		$scope.identityRequestView = result; 
                 		   console.log("hii records"+result)
                 		   $scope.displayedCollection = [].concat($scope.identityRequestView);
-                		 
+                		   $scope.recordlength=$scope.identityRequestView.length;
             	
             	if($scope.identityRequestView[0].status=='Pending'){
             		$scope.status='True';

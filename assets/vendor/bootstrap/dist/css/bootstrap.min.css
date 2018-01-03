@@ -931,7 +931,7 @@ html {
 }
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.42857143;
     color: #333;
     background-color: #fff
@@ -944,7 +944,7 @@ textarea {
     padding-bottom: 5px;
     border-radius: 4px;
     border: 1px solid #dddddd;
-    font-size: 11px;
+    font-size: 12px;
     padding-top:4px;
     line-height: inherit
 }
@@ -2635,7 +2635,7 @@ input[type=search] {
 	padding-left: 10px;
 	padding-right: 10px;
 	font-family: Calibri;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .input-search-panel {
@@ -2710,7 +2710,7 @@ fieldset[disabled] .checkbox label {
 .form-group-sm .form-control {
     height: 30px;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.5;
     border-radius: 3px
 }
@@ -3324,14 +3324,14 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-lg,
 .btn-group-lg>.btn {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.33;
     border-radius: 6px
 }
 .btn-sm,
 .btn-group-sm>.btn {
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.5;
     border-radius: 3px
 }
@@ -3519,7 +3519,7 @@ tbody.collapse.in {
 .dropdown-header {
     display: block;
     padding: 3px 20px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.42857143;
     color: #777;
     white-space: nowrap
@@ -3818,7 +3818,7 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 }
 .input-group-addon.input-sm {
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 13px;
     border-radius: 3px
 }
 .input-group-addon.input-lg {

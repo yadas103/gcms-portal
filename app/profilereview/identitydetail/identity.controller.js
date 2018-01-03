@@ -28,8 +28,8 @@
 	          theme: 'bootstrap'
 	        });
 	      };
-
-	      $scope.status={};
+	     
+	   
 	     // $scope.records={};
 	      $scope.records='';
 	      $scope.recordlength='';
@@ -88,7 +88,7 @@
     //sending parameters for status
       var params={};
       $scope.request={};
-      
+      $scope.request.downchk='Pending';
       $scope.identityRequestView=[];
       $scope.column=false;
         $scope.onCategoryChange= function(request){

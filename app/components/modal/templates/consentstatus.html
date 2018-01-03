@@ -4,12 +4,12 @@
 	<div class="modal-header"
 		style="background-color: #337ab7; color: white; padding: 5px;">
 		<h3 class="modal-title" style="font-size: medium;">Consent
-			History  {{item[0].bpid.firstName}} {{item[0].bpid.lastName}}</h3>
+			History :  {{item[0].bpid.firstName}} {{item[0].bpid.lastName}}</h3>
 
 	</div>
 	<div class="modal-body" ng-controller="ProfileListCtrl">
 		<div ng-if="item.length!=0">
-		<table st-table="itemCopy" st-safe-src="item" 
+		<table st-table="itemCopy" st-safe-src="item" st-reset=""
 				 class="table table-bordered table-striped table-highlight"
 			 >
 			<thead>
@@ -60,13 +60,13 @@
 						</div>
 						<div ng-if="field.annnexlocation!=undefined">
 							<div ng-show="true" ng-controller="FileManagerController">
-								<a href="" ng-click="downloadCH(field)"> View </a>
+								<a href="" ng-click="downloadCH(field)" style="margin-left: 25px;"> View </a>
 							</div>
 						</div>
 					</td>
 				</tr>
 			</tbody>
-			<tfoot>
+			<tfoot ng-hide="lengthZero">
                                     <tr>
                                           <td colspan="7" class="text-center">
                                                 <div st-items-by-page="20" st-pagination=""

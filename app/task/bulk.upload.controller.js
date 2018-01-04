@@ -77,7 +77,7 @@
      		    	$scope.uploader.clearQueue(); 
      		    	toasty.error({
    			          title: 'Error',
-   			          msg: 'File(s) proccessing failed ! Tessaract Error',
+   			          msg: 'Server not able to delete previous files ! Please reload page and try again',
    			          showClose: true,
    			          clickToClose: true,
    			          timeout: 5000,

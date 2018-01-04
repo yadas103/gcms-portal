@@ -48,7 +48,7 @@
 		$scope.profileTypeSelected = {};
 		$scope.templateTypeSelected = {};	
 		$scope.clearText = "";
-		$scope.sysAdmin = false;
+		$scope.sysAdmin = false;		
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -679,16 +679,17 @@
 		
 		//Loading History
 		$scope.consentAttributes = {};
-			$scope.view = function(id) { 
-			var profileid = id;
-			$scope.consentAttributes = ConsentAnnex.query({id : profileid});
-			$scope.itemCopy = [].concat($scope.consentAttributes);
-			$scope.isResetConsentHistory = true;
-			if($scope.consentAttributes==''){
-			    		 $scope.error = "No Records Found";
-			    		 console.log($scope.error);
-			    	 }
-			};	
-		               
+        $scope.view = function(id) { 
+        var profileid = id;
+        $scope.consentAttributes = ConsentAnnex.query({id : profileid});
+        $scope.itemCopy = [].concat($scope.consentAttributes);
+        $scope.isResetConsentHistory = true;             
+        if($scope.consentAttributes==''){
+                     $scope.error = "No Records Found";
+                     console.log($scope.error);
+               }
+        };    
+           
+                     
 	}
 })();

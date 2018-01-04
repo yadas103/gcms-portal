@@ -60,7 +60,7 @@
 						</div>
 						<div ng-if="field.annnexlocation!=undefined">
 							<div ng-show="true" ng-controller="FileManagerController">
-								<a href="" ng-click="downloadCH(field)" style="margin-left: 25px;"> View </a>
+								<a href="" ng-click="downloadCH(field)" style="margin-left: 24%;"> View </a>
 							</div>
 						</div>
 					</td>
@@ -68,8 +68,8 @@
 			</tbody>
 			<tfoot>
                                     <tr>
-                                          <td ng-hide="recordlength <'10'" colspan="7" class="text-center">
-                                                <div st-items-by-page="2" st-pagination=""
+                                          <td ng-hide="itemCopy.length <'20'" colspan="7" class="text-center">
+                                                <div st-items-by-page="20" st-pagination=""
                                                       st-template="app/profile/list/pagination.custom.html"></div>
                                           </td>
                                     </tr>

@@ -15,16 +15,16 @@ Enter this information in the proper columns of the below list.
   <div class=" class="panel panel-primary table-responsive">
 	<thead style="background-color:#337ab7;color:white;">
 	<tr  class="panel-title" style="font-size: 14px;">
-	<th style="font-size: 12px; font-family: sans-serif; ">#</th>
-	<th style="font-size: 12px; font-family: sans-serif;">Last/Org. Name</th>
-	<th style="font-size: 12px; font-family: sans-serif;width: 8%;">First Name</th>
-	<th style="font-size: 12px; font-family: sans-serif;">Event Description*</th>
-	<th  ng-hide="true" style="font-size: 12px; font-family: sans-serif;">TR ID*</th>
-	<th style="font-size: 12px; font-family: sans-serif;">PO Code</th>
-	<th style="font-size: 12px; font-family: sans-serif; padding-top: 6px;">ACM/ InterAct Code</th>
-	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;">Consent Start Date</th>
-	<th ng-hide="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Consent End Date</th>
-	<th ng-show="item.setDates" style="font-size: 12px; font-family: sans-serif;"> Event End Date</th>
+	<th style="font-size: 12px; ">#</th>
+	<th style="font-size: 12px; ">Last/Org. Name</th>
+	<th style="font-size: 12px; width: 8%;">First Name</th>
+	<th style="font-size: 12px; ">Event Description*</th>
+	<th  ng-hide="true" style="font-size: 12px; ">TR ID*</th>
+	<th style="font-size: 12px; ">PO Code</th>
+	<th style="font-size: 12px; padding-top: 6px;">ACM/ InterAct Code</th>
+	<th ng-hide="item.setDates" style="font-size: 12px; ">Consent Start Date</th>
+	<th ng-hide="item.setDates" style="font-size: 12px; "> Consent End Date</th>
+	<th ng-show="item.setDates" style="font-size: 12px; "> Event End Date</th>
 	<th>Action </th>	
     </tr>
 	</thead>
@@ -32,9 +32,9 @@ Enter this information in the proper columns of the below list.
 	<tbody>
 	<tr ng-repeat = "i in item.checkedIds"  >
 	<td><input type="checkbox" ng-model="item.checkbox[i.id]" class="recipient-checkbox"></td>			
- 	<td ng-model="item.request[i.id].lastName" >{{i.lastName}}{{i.organisationName}}</td>
-    <td ng-model="item.request[i.id].firstName">{{i.firstName}}</td>	             
-    <td><input type="text" id="eventname" placeholder="" class="form-control" ng-model="item.request[i.id].eventname" required style="width: 114px;"></td>
+ 	<td class="tasktd" ng-model="item.request[i.id].lastName" >{{i.lastName}}{{i.organisationName}}</td>
+    <td class="tasktd"ng-model="item.request[i.id].firstName">{{i.firstName}}</td>	             
+    <td class="tasktd"><input type="text" id="eventname" placeholder="" class="form-control" ng-model="item.request[i.id].eventname" required style="width: 114px;"></td>
     <td ng-model="item.request[i.id].id" ng-hide="true" >{{i.id}}</td>
 	<td><input type="text" id="pocode" placeholder="" ng-model="item.request[i.id].pocode" class="form-control" ng-required='!item.request[i.id].acmcode' style="width: 75px;"> </td>
  	<td><input type="text" id="acmcode" placeholder="" ng-model="item.request[i.id].acmcode" class="form-control" ng-required='!item.request[i.id].pocode'></td>

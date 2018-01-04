@@ -16,7 +16,7 @@
 				<tr style="color: white; background-color: #337ab7;">
 					<th st-sort="eventname" style="width: 14%;">Event
 						Name</th>
-					<th st-sort="consentstatus.consentName" style="width: 8%;">Consent
+					<th st-sort="consentstatus.consentName" style="width: 12%;">Consent
 						Status</th>
 					<th st-sort="consentstartdate" style="width: 8%;">
 						Start Date</th>
@@ -66,10 +66,10 @@
 					</td>
 				</tr>
 			</tbody>
-			<tfoot ng-hide="lengthZero">
+			<tfoot>
                                     <tr>
-                                          <td colspan="7" class="text-center">
-                                                <div st-items-by-page="20" st-pagination=""
+                                          <td ng-hide="recordlength <'10'" colspan="7" class="text-center">
+                                                <div st-items-by-page="2" st-pagination=""
                                                       st-template="app/profile/list/pagination.custom.html"></div>
                                           </td>
                                     </tr>

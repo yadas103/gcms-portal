@@ -169,8 +169,12 @@
 						 //$scope.readOnlyCC = true;
 					}											               
 		};
-						
-		$scope.compare = function(){
+				
+		
+		
+		$scope.compare = function(){	
+			$scope.request.tmpl_id = $scope.clearText;
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
 			if(($scope.request.collectingCountry == $scope.request.country) && $scope.loggedInUserRole == 1){				
 				$http.get('./emailproperties.json').then(function (response) {
 				$scope.str =  response.data.countryinfo.msg;

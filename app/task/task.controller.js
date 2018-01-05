@@ -200,7 +200,24 @@
       				item.taskstatus="INCOMPLETE"; 
      			 }
              	delete item.click; 
-             	 Task.update({ id:item.id }, item);	 
+             	// Task.update({ id:item.id }, item);
+             	Task.update({ id:item.id }, item).$promise.then(function(response){
+	            	console.log(response);
+	            	if(response.$promise.$$state.status==1)
+	            		{
+	            		refresh();
+	            		
+	            		
+	            		//$scope.success= item.id + " task has been updated successfully";
+	            		}else{
+	            			unspecifiedError();
+	            		//$scope.error= item.id + " task failed to update";
+	            		}
+	 		      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		 });
+             	 
              	}
 		
 		/**

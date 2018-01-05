@@ -32,10 +32,10 @@
 					<tr ng-repeat="c in item">
 						<td class="tasktd">{{c.name}}</td>
 						<td class="tasktd">
-						<div ng-if="c.status=='Accepted'" class="text-center">
+						<div ng-if="c.status=='Accepted'" >
 							    <span class="fa fa-check" style="color: green;" title="Accepted"></span>							   
 							 </div>
-							 <div ng-if="c.status=='Rejected'" class="text-center">
+							 <div ng-if="c.status=='Rejected'" >
 							    <span class="fa fa-times" style="color: red;" title="Rejected"></span>							   
 							 </div>
 						

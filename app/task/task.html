@@ -43,7 +43,7 @@
 							ngf-pattern="'application/pdf'" nv-file-select ngf-max-size="20MB" ngf-min-height="100" 
 							uploader="uploader" multiple="" accept="application/pdf">
 							</label>
-						 	<a href="" ng-if="uploader.getNotUploadedItems().length"  ng-init="uploader.uploadAll()" >Uploading...</a>						 							 
+						 	<a href="" ng-if="uploader.getNotUploadedItems().length"  ng-init="uploader.uploadAll()" ></a>						 							 
 						  	<a href="" ng-if="uploader.progress==100 && !uploader.isUploading"  ng-init="upload()"><span class="fa fa-spin fa-spinner "></span>
 						 	 Validating...</a>						  						  	
 							<gcms-modal template="bulk.upload.html"
@@ -79,11 +79,11 @@
 							<th style="width:13%;"st-sort="lastname">Last/Org Name</th>
 							<th style="width:13%;" st-sort="firstname">First Name</th>
 							<th style="width:12%;"st-sort="profilecountry">Profile Country</th>
-							<th style="width:18%; st-sort="eventname">Event Name</th>
+							<th style="width:18%;" st-sort="eventname">Event Name</th>
 							<th style="width:12%;"st-sort="consentstaus">Consent Status</th>
 							<th style="width:11%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
-							<th style="width:18%; st-sort="initiatedby">Task Owner</th> 
-							<th style="width:6%;"st-sort="taskstatus">Task Status</th>
+							<th style="width:18%;" st-sort="initiatedby">Task Owner</th> 
+							<th style="width:6%;">Task Status</th>
 							<th ng-hide="status=='DELETED'">Document</th>
 							<th style="width:10%;" ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " 
 								>Activity								

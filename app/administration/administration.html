@@ -213,7 +213,7 @@
       <table class="table table-hover">
 	<div class="table-responsive"> 
    <table st-table="profilesCopy" st-safe-src="profiles"
-				st-reset="isReset"
+				st-reset="true"
 				class="table table-bordered table-striped table-highlight">
 				<thead>
 					<tr style="color: white; background-color: #337ab7;">
@@ -234,10 +234,9 @@
 					
 					<tr>
 						<!-- <th></th> -->
-						<th><input ng-model="search.userName" st-search="userName"
+						<th><input  st-search="userName"
 							placeholder=" " class="form-control" type="search" /></th>
-						<th><input ng-model="search.countryISOCode"
-							st-search="countryISOCode" placeholder=" " class="form-control"
+						<th><input st-search="countryISOCode" placeholder=" " class="form-control"
 							type="search" /></th>
 						
 						<th ng-repeat="role in roles"></th>

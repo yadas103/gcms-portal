@@ -37,8 +37,7 @@
 								placeholder=" " class="form-control" type="search" /></th>
 								<th><input st-search="createdBy" placeholder=" "
 								class="form-control" type="search" /></th>
-						<th><select st-search="status"  ng-model="request.downchk" ng-change="onCategoryChange(request)" style="padding: 4px 25px;height: 27px;padding-left:3px;"
->
+						<th><select st-input-event="change keydown" st-search="status"  ng-model="request.downchk" ng-change="onCategoryChange(request)" style="height: 27px;padding-left:3px;width:95px;">
 						            <option value="Pending">Pending</option>
 									 <option value="Approved">Approved</option> 									
 									<option value="Rejected">Rejected</option>

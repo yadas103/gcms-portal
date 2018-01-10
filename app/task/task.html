@@ -180,7 +180,7 @@
 							 <div ng-if="con.taskstatus=='COMPLETED'" class="text-center">
 							    <span class="fa fa-check" style="color: green;" title="Task Completed"></span>							   
 							 </div>
-							 <div ng-if="con.taskstatus=='DELETED'" class="text-center">{{con.taskstatus}}</div>
+							 <div ng-if="con.taskstatus=='DELETED'" >{{con.taskstatus | lowercase}}</div>
 							 </td>
 							<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">

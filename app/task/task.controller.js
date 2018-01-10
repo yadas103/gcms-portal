@@ -183,8 +183,8 @@
       	
         	$scope.close=function(item) {
           		if(item.consannexid.annnexlocation != undefined){
-		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined && item.consannexid.eventname != ""){
-		      			 if(item.consannexid.acmcode != undefined  ||item.consannexid.pocode != undefined ){
+		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != null && item.consannexid.eventname != ""){
+		      			 if(item.consannexid.acmcode != null  ||item.consannexid.pocode != null ){
 		      				 if(item.consannexid.acmcode != "" || item.consannexid.pocode != "" ){
 		      					item.taskstatus="COMPLETED";
 		      				 }else{
@@ -244,8 +244,8 @@
 	         }
 	            });
 	         if(item.consannexid.annnexlocation != undefined){
-		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != undefined && item.consannexid.eventname != ""){
-		      			 if(item.consannexid.acmcode != undefined  ||item.consannexid.pocode != undefined ){
+		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != null && item.consannexid.eventname != ""){
+		      			 if(item.consannexid.acmcode != null  ||item.consannexid.pocode != null ){
 		      				 if(item.consannexid.acmcode != "" || item.consannexid.pocode != "" ){
 		      					item.taskstatus="COMPLETED";
 		      				 }else{

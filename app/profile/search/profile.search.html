@@ -242,7 +242,7 @@
 						<td class="tasktd td-search-panel-text" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>						
 						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
-						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id)" class="tasktd td-search-panel-text">View</a></gcms-modal></td>					
+						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id,pro.firstName,pro.lastName)" class="tasktd td-search-panel-text">View</a></gcms-modal></td>					
 					</tr>
 				</tbody>
 				<tfoot>

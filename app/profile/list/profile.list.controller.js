@@ -540,9 +540,15 @@
 				item.request[$scope.copyCheckedIds[i]].acmcode = copy.acmcode; 
 				item.request[$scope.copyCheckedIds[i]].eventname = copy.eventname;
 				item.request[$scope.copyCheckedIds[i]].pocode = copy.pocode;
+				if(copy.eventEndDate != undefined && copy.eventEndDate != ""){
 				item.request[$scope.copyCheckedIds[i]].eventEndDate = copy.eventEndDate.clone();
+				}
+				if(copy.consentstartdate != undefined && copy.consentstartdate != ""){
 				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) : copy.consentstartdate.clone();
+				}
+				if(copy.consentstartdate != undefined && copy.consentstartdate != ""){
 				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz($scope.currentYear+'/12/31',moment.tz.guess()) : copy.consentenddate.clone();
+				}
 				
 			}
 		}

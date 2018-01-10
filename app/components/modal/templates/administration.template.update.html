@@ -7,19 +7,19 @@
    <div class="form-group">
          <label for="tmpl_code" class="col-sm-4 control-label">Template Code :</label>
          <div class="col-sm-8">
-            <input ng-maxlength="50" type="text" class="form-control form-popup" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_code" placeholder="" ng-readonly="true" >
+            <input ng-maxlength="30" type="text" class="form-control form-popup" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_code" placeholder="" ng-readonly="true" >
          </div>
       </div>
       <div class="form-group">
          <label for="template_name" class="col-sm-4 control-label">Template Name :</label>
          <div class="col-sm-8">
-            <input type="text" class="form-control form-popup" id="tmpl_name" name="tmpl_name" ng-model="item.tmpl_name" placeholder="max 50 char">
+            <input ng-maxlength="30" type="text" class="form-control form-popup" id="tmpl_name" name="tmpl_name" ng-model="item.tmpl_name" placeholder="max 30 char" required>
          </div>
       </div>
       <div class="form-group">
          <label for="template_code" class="col-sm-4 control-label">Template Description :</label>
          <div class="col-sm-8">
-         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control form-popup" ng-model="item.tmpl_desc" > 
+         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control form-popup" ng-model="item.tmpl_desc" required > 
           
             </textarea>
             <!-- <input type="text" class="form-control" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_desc" placeholder=""> -->
@@ -28,7 +28,7 @@
       <div class="form-group">
          <label for="templateType" class="col-sm-4 control-label">Template Type :</label>
          <div class="col-sm-8 form-popup1">
-            <select class="form-control" ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" >
+            <select class="form-control" ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 32%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
                <option value="">Please select</option>
                <option value="InCountry-HCO">InCountry - HCO</option>
                <option value="InCountry-HCP">InCountry - HCP</option>

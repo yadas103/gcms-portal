@@ -76,9 +76,64 @@
 	        		            var link =respn.data.links[0];
 	        		            var docLink = link.href;		            	        		            
 	        		            console.log("Function calling from Template module") ;
-	        		            $scope.item.tmpl_location=docLink;	        		            
+	        		            $scope.item.tmpl_location=docLink;
+	        		          //Divya - DateRanges 
+	        		            //Input Date format
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
+	     		 		       }
+	     		 	          //Input Date format
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
+	     		 		       }
+	     		       		
+	     			           //Adding timezone
+	     		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+	     		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
+	     		       	   
+	     			           //Convert to DB date format
+	     		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
+	     		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
+
+	     		            	delete item.validity_start;
+	     				        delete item.validity_end;
+	     				        delete item.startDate;
+	     				        delete item.endDate;
+	        		            //
 	        		            Templates.update({ id:item.id },item).$promise.then(function(response){
 	        		            	console.log(response);
+	        		            	item.startDate = moment(response.validity_start_date,'YYYY-MM-DD');
+	        			        	  item.endDate = moment(response.validity_end_date,'YYYY-MM-DD')  ;
+	        			        	  item.startDate = moment.tz(item.startDate,moment.tz.guess());   			
+	        			              item.endDate = moment.tz(item.endDate,moment.tz.guess());	
+	        			              item.startDate = moment(item.startDate,'YYYY-MM-DD').format('DD-MM-YYYY');
+	        			        	  item.endDate = moment(item.endDate,'YYYY-MM-DD').format('DD-MM-YYYY')  ;	  
 	        		            	if(response.$promise.$$state.status==1)
 	        		            		{
 	        		            		toasty.success({

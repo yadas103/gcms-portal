@@ -192,10 +192,25 @@
 		        	console.log(item);
 		        	delete item.expanded;
 		            $scope.Templates.push(item);
-		            item.validity_start_date = moment(item.validity_start_date,['DD-MM-YYYY','YYYY-MM-DD']).format('DD-MM-YYYY');
-		            item.validity_end_date = moment(item.validity_end_date,['DD-MM-YYYY','YYYY-MM-DD']).format('DD-MM-YYYY');
+		           
 		            item.validity_start_date =  moment.tz(item.validity_start_date,moment.tz.guess()) ;				            
 		            item.validity_end_date =  moment.tz(item.validity_end_date,moment.tz.guess()) ;
+		         	item.validity_start_date = moment(item.validity_start_date).format('YYYY-MM-DD');   			
+	            	item.validity_end_date = moment(item.validity_end_date).format('YYYY-MM-DD');
+
+	            	delete item.validity_start;
+			        delete item.validity_end;
+			        delete item.startDate;
+			        delete item.endDate;
+		           
+		           if(item.validity_start_date  == "Invalid date" || item.validity_start_date  == undefined ){
+		        	   delete item.validity_start_date ;
+		           }
+		           
+		           if(item.validity_end_date == "Invalid date" || item.validity_end_date == undefined){
+		        	   delete item.validity_end_date;
+		           }
+	            
 		            Templates.save(item).$promise.then(function(response){
 		            	getTemplateData();
 		            	toasty.success({

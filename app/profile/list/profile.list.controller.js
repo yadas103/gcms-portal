@@ -401,7 +401,7 @@
 							$scope.msgHCP = $scope.msgHCP.replace(new RegExp("PROFILE_TYPE", 'g'),$scope.profile_type_id);
 							$scope.msgHCP = $scope.msgHCP.replace("PROFILE_FIRST_NAME",fn);
 							$scope.msgHCP = $scope.msgHCP.replace("PROFILE_LAST_NAME",ln);
-							$scope.msgHCP = $scope.msgHCP.replace("PROFILE_SPECIALTY",$scope.resultcopy.speciality);
+							$scope.msgHCP = $scope.msgHCP.replace("PROFILE_SPECIALTY",$scope.resultcopy.specility);
 							$scope.msgHCP = $scope.msgHCP.replace("PROFILE_CITY",city);
 							$scope.msgHCP = $scope.msgHCP.replace("NOTE_FOR_REVIEWER",notes);
 							$scope.msgHCP = $scope.msgHCP.replace(new RegExp("PROFILE_CNTRY", 'g'),$scope.countryCopy);
@@ -415,7 +415,7 @@
 							$scope.msgHCO = $scope.msgHCO.replace(new RegExp("REQUESTOR_FULL_NAME", 'g'),$scope.fullName);
 							$scope.msgHCO = $scope.msgHCO.replace(new RegExp("PROFILE_TYPE", 'g'),$scope.profile_type_id);
 							$scope.msgHCO = $scope.msgHCO.replace("ORG_NAME",on);						
-							$scope.msgHCO = $scope.msgHCO.replace("PROFILE_SPECIALTY",$scope.resultcopy.speciality);
+							$scope.msgHCO = $scope.msgHCO.replace("PROFILE_SPECIALTY",$scope.resultcopy.specility);
 							$scope.msgHCO = $scope.msgHCO.replace("PROFILE_CITY",city);
 							$scope.msgHCO = $scope.msgHCO.replace("NOTE_FOR_REVIEWER",notes);
 							$scope.msgHCO = $scope.msgHCO.replace(new RegExp("PROFILE_CNTRY", 'g'),$scope.countryCopy);

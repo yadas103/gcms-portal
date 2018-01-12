@@ -210,10 +210,11 @@
 	 	    	 var  subject = 'subject';
 	 	    	 var emaildetails = {};
 	 	    	 var resultcontent = {};
-	 	    	 var fn = ($scope.resultcopy.firstName == null)? '' : $scope.resultcopy.firstName;
-	  		 var ln = ($scope.resultcopy.lastName == null)? '' : $scope.resultcopy.lastName;
-	  		 var on = ($scope.resultcopy.organizationName == null)? '' : $scope.resultcopy.organizationName;	        		    	
-	  		 var city = ($scope.resultcopy.city == null)? '' : $scope.resultcopy.city ;       		    	
+	 	    	 var fn = ($scope.resultcopy.firstName == null)? 'N/A' : $scope.resultcopy.firstName;
+	  		 var ln = ($scope.resultcopy.lastName == null)? 'N/A' : $scope.resultcopy.lastName;
+	  		 var on = ($scope.resultcopy.organizationName == null)? 'N/A' : $scope.resultcopy.organizationName;	        		    	
+	  		 var city = ($scope.resultcopy.city == null)? 'N/A' : $scope.resultcopy.city ;  
+	  		var speciality =  ($scope.resultcopy.speciality == null)? 'N/A' : $scope.resultcopy.speciality ;
 	  		 //var notes = ($scope.resultcopy.notes == null)? '' : $scope.resultcopy.notes;
 	  		 var status = ($scope.resultcopy.status == null)? '' : $scope.resultcopy.status;
 	          // $scope.profileRequestSender = $scope.resultcopy.createdBy; 
@@ -251,10 +252,10 @@
 					$scope.msgRequestor = $scope.msgRequestor.replace("FIRST_NAME",fn);
 					$scope.msgRequestor = $scope.msgRequestor.replace("LAST_NAME",ln);
 					$scope.msgRequestor = $scope.msgRequestor.replace("ORGANIZATION_NAME",on);
-					$scope.msgRequestor = $scope.msgRequestor.replace("SPECIALTY",$scope.resultcopy.speciality);
+					$scope.msgRequestor = $scope.msgRequestor.replace("SPECIALTY",speciality);
 					$scope.msgRequestor = $scope.msgRequestor.replace("CITY",city);
-					$scope.msgRequestor = $scope.msgRequestor.replace(new RegExp("PROFILE_CNTRY", 'g'),$scope.countryCopy);
-					$scope.msgRequestor = $scope.msgRequestor.replace("PROFILE_ADDRESS",$scope.resultcopy.address);
+					$scope.msgRequestor = $scope.msgRequestor.replace(new RegExp("COUNTRY", 'g'),$scope.countryCopy);
+					$scope.msgRequestor = $scope.msgRequestor.replace("ADDRESS",$scope.resultcopy.address);
 					$scope.msgRequestor = $scope.msgRequestor.replace("REQUESTOR",$scope.profileRequestSender);
 					$scope.msgRequestor = $scope.msgRequestor.replace("REVIEWER_EMAIL_ADDRESS",currentprofile.userName);
 					

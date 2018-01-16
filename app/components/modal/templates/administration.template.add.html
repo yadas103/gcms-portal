@@ -82,7 +82,7 @@
             </select>
          </div>
       </div>
-      <div ng-show="item.dates_rages=='Y'" > 
+      <div ng-if="item.dates_rages=='Y'" > 
       <div class="form-group">
          <label for="template_validity_start_date" class="col-sm-4 control-label">Template Validity StartDate :</label>
          <div class="col-sm-8 form-popup1">
@@ -95,6 +95,7 @@
              ng-model="item.validity_start_date"
              ng-model-options="{ updateOn: 'blur' }"
            	 today="true"
+           	 ng-required = "item.dates_rages=='Y'"
              start-view = "day" class="form-control"  style="max-width: 32%;"> 
               <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_start_date" is-open="openedStart" ng-required="true" close-text="Close" />                          
               <button style="height:27px; margin-top: -44px; margin-left: 142px;" class="btn btn-default btn" ng-click="startDate()">
@@ -114,6 +115,7 @@
              ng-model="item.validity_end_date"
              ng-model-options="{ updateOn: 'blur' }"
              today="true"
+             ng-required = "item.dates_rages=='Y'"
              start-view = "day" class="form-control" style="max-width: 32%;">     
          
             <!-- <input type="text" style="width: 138px;" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="item.validity_end_date" min-date="item.validity_start_date" is-open="openedEnd" ng-required="true" close-text="Close" />                           
@@ -134,14 +136,14 @@
    </form>
 </div>
 <div class="modal-footer">
-	<div ng-hide="item.dates_rages=='N'">
+	<!-- <div ng-hide="item.dates_rages=='N'"> -->
 		<button class="btn btn-primary" ng-click="ok()"
 			ng-disabled="adminTemplateForm.$invalid">Add Template</button>
 		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-	</div>
+	<!-- </div> -->
 
-	<div ng-show="item.dates_rages=='N'">
+	<!-- <div ng-show="item.dates_rages=='N'">
 		<button class="btn btn-primary" ng-click="ok()">Add Template</button>
 		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-	</div>
+	</div> -->
 </div>

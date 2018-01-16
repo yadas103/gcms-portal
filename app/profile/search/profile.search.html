@@ -158,7 +158,7 @@
 						<th 
 							></th>
 						<th 
-							ng-hide = "true"
+							
 						    ng-click="orderByField='id'; reverseSort = !reverseSort"
 							st-sort="id"
 							style="width:77px;"
@@ -206,7 +206,7 @@
 					</tr>
 					<tr>
 						<th></th>
-						<th ng-hide = "true"><input ng-model="search.id" st-search="id"
+						<th><input ng-model="search.id" st-search="id"
 							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "true"><input ng-model="search.profileType"
 							st-search="profileType" placeholder=" " class="form-control td-search-panel-text"
@@ -232,7 +232,7 @@
 						data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
 						<td style="text-align: center"><input type="checkbox"							
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
-						<td ng-hide = "true" class="td-search-panel-text">{{pro.id}}</td>
+						<td class="td-search-panel-text">{{pro.id}}</td>
 						<td ng-hide = "true" class="td-search-panel-text">{{pro.profileType}}</td>
 						<td class="tasktd td-search-panel-text" title="{{pro.lastName}}" ng-hide = "hideHCP">{{pro.lastName}}</td>
 						<td class="tasktd td-search-panel-text" title="{{pro.firstName}}" ng-hide = "hideHCP">{{pro.firstName}}</td>

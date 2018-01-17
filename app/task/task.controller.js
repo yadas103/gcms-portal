@@ -236,7 +236,7 @@
 	            	console.log(res);
 	            	if(res.$promise.$$state.status==1){
 	            		$http.get('./config.json').then(function (response) {
-	    					var link = response.data["local-server"].ENVIRONMENT.SERVICE_URI+'consent-pdf/'+item.id;
+	    					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-pdf/'+item.id;
 	    					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
 	    						var bin = new Blob([response.data]);
 	    						var docName = item.id+'.pdf';           
@@ -264,14 +264,9 @@
 	 		      }).catch(function(){
 		 		    	// refresh();
 		 		    	 internalError();	
-		       		 });
-    			
+		       		 });    			
     	};
-        	
-        	
-        	
-        	
-        	
+	
 		/**
 		 * selim
          * @ngdoc method

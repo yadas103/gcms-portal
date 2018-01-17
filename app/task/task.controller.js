@@ -13,10 +13,10 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','Users','toasty' ];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','Users','toasty','PDFDownload','$http','ConsentPdf' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,Users,toasty ){
+  function TaskController($rootScope, $scope,$filter,Task,Users,toasty,PDFDownload,$http,ConsentPdf ){
 	  
 	  console.log("Inside task controller");
 	  	
@@ -220,6 +220,58 @@
              	 
              	}
 		
+        	/**
+    		 * selim
+             * @ngdoc method
+             * @name Pdf Download
+             * @methodOf 
+             * @description 
+             * 
+             */
+          
+        	
+        	$scope.download=function(item){
+    			console.log("inside download")       			
+    			PDFDownload.update({ id:item.id }, item).$promise.then(function(res){
+	            	console.log(res);
+	            	if(res.$promise.$$state.status==1){
+	            		$http.get('./config.json').then(function (response) {
+	    					var link = response.data["local-server"].ENVIRONMENT.SERVICE_URI+'consent-pdf/'+item.id;
+	    					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
+	    						var bin = new Blob([response.data]);
+	    						var docName = item.id+'.pdf';           
+	    						saveAs(bin, docName); 
+	    						toasty.success({
+	    	            	        title: 'Success',
+	    	            	        msg: 'PDF Downloaded Successfully!',
+	    	            	        showClose: true,
+	    	            	        clickToClose: true,
+	    	            	        timeout: 5000,
+	    	            	        sound: false,
+	    	            	        html: false,
+	    	            	        shake: false,
+	    	            	        theme: 'bootstrap'
+	    	            	      });
+	    					}).catch(function(){
+	    						internalError();
+	    					});	
+	    					
+	    				});
+	            	}else{
+	            			unspecifiedError();	            		
+	            		}
+	            	    	            	
+	 		      }).catch(function(){
+		 		    	// refresh();
+		 		    	 internalError();	
+		       		 });
+    			
+    	};
+        	
+        	
+        	
+        	
+        	
 		/**
 		 * selim
          * @ngdoc method

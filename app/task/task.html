@@ -134,11 +134,11 @@
 
 									<gcms-modal template="task.update.html"
 										controller="ModalDefaultCtrl" content="con" ok="update"
-										alt="Edit Task {{con.id}}"> <span title="Edit Task" ng-click = "taskdate(con)"
+										alt="Edit Task {{con.id}}"> <span title="Edit Task" data-toggle="tooltip" ng-click = "taskdate(con)"
 										class="fa fa-pencil" style="color: #337ab7;margin-left: 1px;"></span> </gcms-modal>
 									<gcms-modal template="task.delete.html"
 										controller="ModalDefaultCtrl" content="con" ok="updateDelete"
-										alt="Delete Task {{con.id}}"> <span title="Delete Task"
+										alt="Delete Task {{con.id}}"> <span title="Delete Task" data-toggle="tooltip"
 										ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
 										class="fa fa-trash" style="color: #337ab7;margin-left: 7px;"></span></gcms-modal>
 										<!-- <gcms-modal template="task.pdf.download.html"
@@ -147,7 +147,7 @@
 										ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
 										class="fa fa-arrow-circle-down" style="color: #337ab7;margin-left: 7px;"></span></gcms-modal> -->
 										
-									<span ng-if="con.consannexid.annnexlocation == null" class="fa fa-file-pdf-o" title="Download PDF" data-toggle="tooltip"  ng-click= "download(con)"  style="color: #337ab7; font-size: 11px;padding-left: 9px;">
+									<span ng-if="con.consannexid.annnexlocation == null" class="fa fa-file-pdf-o" title="Download PDF" data-toggle="tooltip"  ng-click= "download(con)"  style="color: #337ab7; font-size: 11px;padding-left: 9px; cursor: pointer;">
 										</span>
 								</div>
 								
@@ -196,20 +196,20 @@
 									<div ng-if="con.consannexid.annnexlocation==undefined">
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="close"> 
-											<span title="Upload" 
+											<span title="Upload" data-toggle="tooltip"
 											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
 											 class="fa fa-arrow-circle-up" style="margin-left: 11px;"> </gcms-upload>
 									</div>
 									<div ng-if="con.consannexid.annnexlocation!=undefined">										
 										<gcms-upload template="task.modals.html"
 											controller="ModalDefaultCtrl2" content="con" ok="update"
-											alt="Edit Task {{con.id}}"> <span title="Upload" class="fa fa-arrow-circle-up" 
+											alt="Edit Task {{con.id}}"> <span title="Upload" data-toggle="tooltip" class="fa fa-arrow-circle-up" 
 											ng-hide="loggedInUserRoleId !='5'&&loggedInUserRole.userName !=con.assignedto.userName"
 											style="padding-right:10px; margin-left: 11px;"></span>
 										</gcms-upload>
 										<span ng-show="true" ng-controller="FileManagerController" style="float: right;padding-right: 11px;">
 
-											<a href="" ng-click="download(con)"> <span title="Download" class=" fa fa-arrow-circle-down"></span> </a>
+											<a href="" ng-click="download(con)"> <span title="Download" data-toggle="tooltip" class=" fa fa-arrow-circle-down"></span> </a>
 										</span>
 
 									</div>

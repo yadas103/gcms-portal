@@ -151,6 +151,7 @@
 		<div class="table-responsive">
 			<table st-table="profileSearchCopy" st-safe-src="profileSearch"
 				st-reset="isReset"
+				st-set-filter="myStrictFilter"				
 				class="table table-bordered table-striped table-highlight">
 				<thead>
 					<tr style="color: white; background-color: #337ab7;">
@@ -216,7 +217,7 @@
 						<th ng-hide = "hideHCP"><input ng-model="search.firstName" st-search="firstName"
 							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "hideHCO"><input ng-model="search.organisationName"
-							st-search="organisationName td-search-panel-text" placeholder=" " class="form-control"
+							st-search="organisationName" placeholder=" " class="form-control td-search-panel-text"
 							type="search" /></th>
 						<th><input ng-model="search.city" st-search="city"
 							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
@@ -229,7 +230,7 @@
 				</thead>
 				<tbody>
 					<tr
-						data-ng-repeat="pro in profileSearchCopy | filter:search:strict | orderBy:orderByField:reverseSort">
+						data-ng-repeat="pro in profileSearchCopy track by $index | orderBy:orderByField:reverseSort">
 						<td style="text-align: center"><input type="checkbox"							
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
 						<td class="td-search-panel-text">{{pro.id}}</td>

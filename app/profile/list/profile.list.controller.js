@@ -15,6 +15,28 @@
 
 	angular
 	.module('gcms.profile')
+	.filter('myStrictFilter', function($filter){
+		    return function(input, predicate){
+		    	var fn=[],y=0;		    			    			    			    	   		    		    			    	 		    
+		    	var keys = Object.keys(predicate);	
+		    	if(keys.length != 0){
+		    		for(var key in predicate){		    
+						var r = new RegExp(predicate[key]);
+						for(var i in input){
+							if (r.exec(input[i][key]) != null){
+								fn[y] = input[i];
+								y++;
+								console.log(fn[i]);
+							}
+						}
+						}
+		    		return fn;
+				    	}
+		    	else{
+		    		return input;
+		    	}		        
+		    }	
+		})
 	.controller('ProfileListCtrl', ProfileSearch);
 
 	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
@@ -142,6 +164,9 @@
 		        		  "title": "Title",
 		        		  "content": "Enter the HCP or HCO Address here. The system will search using partial criteria too. For example, if you are looking for -GNEISENAUSTRASSE 5-, entering -GNE- will bring all the profiles where their Addresses contains -GNE-. The system is not case sensitive."
         		};
+		        		
+
+		        
 		//Getting Logged in User Profile
 				
 		        $scope.userProfileData = function(){		        	
@@ -233,8 +258,8 @@
 			$scope.request.tmpl_id = $scope.clearText;
 			$scope.request.speciality = $scope.clearText;
 			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
-		};
-
+		};				
+		
 		//Function to search for requested profiles
 		$scope.submit = function(request) {
 			$scope.responseOnSearch = '';			
@@ -269,7 +294,7 @@
 			data.collectingCountry = params.collectingCountry;
 			ProfileSearch.get(data).$promise
 			.then(function(profileSearch) {
-				$scope.profileSearch = profileSearch;
+				$scope.profileSearch = profileSearch;				
 				if($scope.search !== undefined){
 					$scope.search = undefined;
 				}

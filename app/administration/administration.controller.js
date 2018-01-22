@@ -230,7 +230,7 @@
 		          };
 		          
 		          	$scope.close=function(item){
-		        	  
+		          		getTemplateData();
 		          	}
 		          /**selim
 					 * @ngdoc method

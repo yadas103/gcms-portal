@@ -97,6 +97,7 @@
               locale="en"
               format="DD-MM-YYYY"
               ng-model="item.validity_start_date"
+              ng-required = "item.dates_rages=='Y'"
               start-view="day"
               ng-model-options="{updateOn: 'blur' }" >  
          </div>
@@ -113,6 +114,7 @@
               locale="en"
               format="DD-MM-YYYY"
               ng-model="item.validity_end_date"
+              ng-required = "item.dates_rages=='Y'"
               start-view="day"
               ng-model-options="{updateOn: 'blur' }" >
          </div>

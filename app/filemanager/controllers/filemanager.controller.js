@@ -116,15 +116,23 @@
 	     		            	delete item.validity_start;
 	     				        delete item.validity_end;
 	     				        delete item.startDate;
-	     				        delete item.endDate;	        		            
+	     				        delete item.endDate;	
+	     				       if(item.validity_start_date  == "Invalid date" || item.validity_start_date  == undefined ){
+	     			        	   delete item.validity_start_date ;
+	     			           }	     			           
+	     			           if(item.validity_end_date == "Invalid date" || item.validity_end_date == undefined){
+	     			        	   delete item.validity_end_date;
+	     			           }
 	        		            Templates.update({ id:item.id },item).$promise.then(function(response){
 	        		            	console.log(response);
-	        		            	item.startDate = moment(response.validity_start_date,'YYYY-MM-DD');
-	        			        	  item.endDate = moment(response.validity_end_date,'YYYY-MM-DD')  ;
-	        			        	  item.startDate = moment.tz(item.startDate,moment.tz.guess());   			
-	        			              item.endDate = moment.tz(item.endDate,moment.tz.guess());	
-	        			              item.startDate = moment(item.startDate,'YYYY-MM-DD').format('DD-MM-YYYY');
-	        			        	  item.endDate = moment(item.endDate,'YYYY-MM-DD').format('DD-MM-YYYY')  ;	  
+	        		            	if(response.validity_start_date != null && response.validity_end_date != null ){
+		        		            	  item.startDate = moment(response.validity_start_date,'YYYY-MM-DD');
+		        			        	  item.endDate = moment(response.validity_end_date,'YYYY-MM-DD')  ;
+		        			        	  item.startDate = moment.tz(item.startDate,moment.tz.guess());   			
+		        			              item.endDate = moment.tz(item.endDate,moment.tz.guess());	
+		        			              item.startDate = moment(item.startDate,'YYYY-MM-DD').format('DD-MM-YYYY');
+		        			        	  item.endDate = moment(item.endDate,'YYYY-MM-DD').format('DD-MM-YYYY');
+		        			        	  }		  
 	        		            	if(response.$promise.$$state.status==1)
 	        		            		{
 	        		            		toasty.success({

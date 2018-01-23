@@ -471,7 +471,7 @@
 							
 							$scope.emaildetails[message] = $scope.msgHCO;
 						}
-						$scope.emaildetails[requestID] = reqID;
+						$scope.emaildetails[requestID] = $scope.countryReviwer;
 						$scope.emaildetails[subject] = "GCMS - "+$scope.profile_type_id+" Profile Review Request for "+$scope.countryCopy;						
 						emaildetails = $scope.emaildetails;
 						$scope.generateEmail(emaildetails);

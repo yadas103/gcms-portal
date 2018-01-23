@@ -262,7 +262,7 @@
 					$scope.emaildetails[message] = $scope.msgRequestor;
 			     
 			     
-		        $scope.emaildetails[requestID] = reqID;
+		        $scope.emaildetails[requestID] = $scope.logged_In_User;
 			    	$scope.emaildetails[subject] = "GCMS - "+$scope.profile_type_id+" Profile Review Status for "+$scope.countryCopy;
 			    	emaildetails = $scope.emaildetails;
 			    	$scope.generateEmail(emaildetails);

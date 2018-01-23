@@ -15,21 +15,43 @@
 
 	angular
 	.module('gcms.profile')
-	.filter('myStrictFilter', function($filter){
+	.filter('SearchFilter', function($filter){
 		    return function(input, predicate){
-		    	var fn=[],y=0;		    			    			    			    	   		    		    			    	 		    
-		    	var keys = Object.keys(predicate);	
-		    	if(keys.length != 0){
-		    		for(var key in predicate){		    
-						var r = new RegExp(predicate[key]);
-						for(var i in input){
-							if (r.exec(input[i][key]) != null){
-								fn[y] = input[i];
-								y++;
-								console.log(fn[i]);
+		    	var fn=[];		    			    			    			    	   		    		    			    	 		    
+		    	var keys = Object.keys(predicate);
+		    	var y=0;
+		    	var patternStr = '';		    			    	
+		    	
+		    	predicate.lastName = (typeof predicate.lastName == "string") ? predicate.lastName.replace("%",".*") : predicate.lastName;
+		    	predicate.firstName = (typeof predicate.firstName == "string") ? predicate.firstName.replace("%",".*") : predicate.firstName;
+		    	predicate.organisationName = (typeof predicate.organisationName == "string") ? predicate.organisationName.replace("%",".*") : predicate.organisationName;
+		    	predicate.city = (typeof predicate.city == "string") ? predicate.city.replace("%",".*") : predicate.city;
+		    	predicate.address = (typeof predicate.address == "string") ? predicate.address.replace("%",".*") : predicate.address;
+		    	predicate.speciality = (typeof predicate.speciality == "string") ? predicate.speciality.replace("%",".*") : predicate.speciality;
+		    	predicate.id =  (typeof predicate.id == "string") ? predicate.id.replace("%",".*") : predicate.id;
+		    	
+		    	if(keys.length != 0){		   
+		    			    
+						var lastName = new RegExp(predicate.lastName, 'gi');
+						var firstName = new RegExp(predicate.firstName, 'gi');
+						var organisationName = new RegExp(predicate.organisationName, 'gi');
+						var city = new RegExp(predicate.city, 'gi');
+						var address = new RegExp(predicate.address, 'gi');
+						var speciality = new RegExp(predicate.speciality, 'gi');
+						var id = new RegExp(predicate.id, 'gi');
+						for(var i in input){							
+							if (lastName.exec(input[i].lastName) != null && firstName.exec(input[i].firstName) != null && organisationName.exec(input[i].organisationName) != null && city.exec(input[i].city) != null && address.exec(input[i].address) != null && speciality.exec(input[i].speciality) != null && id.exec(input[i].id) != null){
+								lastName.lastIndex = 0;
+								firstName.lastIndex = 0;
+								organisationName.lastIndex = 0;
+								city.lastIndex = 0;
+								address.lastIndex = 0;
+								speciality.lastIndex = 0;
+								id.lastIndex = 0;
+								fn.push(input[i]);																	
 							}
-						}
-						}
+							}
+						
 		    		return fn;
 				    	}
 		    	else{

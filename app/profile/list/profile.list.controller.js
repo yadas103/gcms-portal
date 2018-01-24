@@ -22,23 +22,23 @@
 		    	var y=0;
 		    	var patternStr = '';		    			    	
 		    	
-		    	predicate.lastName = (typeof predicate.lastName == "string") ? predicate.lastName.replace("%",".*") : predicate.lastName;
-		    	predicate.firstName = (typeof predicate.firstName == "string") ? predicate.firstName.replace("%",".*") : predicate.firstName;
-		    	predicate.organisationName = (typeof predicate.organisationName == "string") ? predicate.organisationName.replace("%",".*") : predicate.organisationName;
-		    	predicate.city = (typeof predicate.city == "string") ? predicate.city.replace("%",".*") : predicate.city;
-		    	predicate.address = (typeof predicate.address == "string") ? predicate.address.replace("%",".*") : predicate.address;
-		    	predicate.speciality = (typeof predicate.speciality == "string") ? predicate.speciality.replace("%",".*") : predicate.speciality;
-		    	predicate.id =  (typeof predicate.id == "string") ? predicate.id.replace("%",".*") : predicate.id;
+		    	var patternlastName = (typeof predicate.lastName == "string") ? predicate.lastName.replace("%",".*") : predicate.lastName;
+		    	var patternfirstName = (typeof predicate.firstName == "string") ? predicate.firstName.replace("%",".*") : predicate.firstName;
+		    	var patternorganisationName = (typeof predicate.organisationName == "string") ? predicate.organisationName.replace("%",".*") : predicate.organisationName;
+		    	var patterncity = (typeof predicate.city == "string") ? predicate.city.replace("%",".*") : predicate.city;
+		    	var patternaddress = (typeof predicate.address == "string") ? predicate.address.replace("%",".*") : predicate.address;
+		    	var patternspeciality = (typeof predicate.speciality == "string") ? predicate.speciality.replace("%",".*") : predicate.speciality;
+		    	var patternid =  (typeof predicate.id == "string") ? predicate.id.replace("%",".*") : predicate.id;
 		    	
 		    	if(keys.length != 0){		   
 		    			    
-						var lastName = new RegExp(predicate.lastName, 'gi');
-						var firstName = new RegExp(predicate.firstName, 'gi');
-						var organisationName = new RegExp(predicate.organisationName, 'gi');
-						var city = new RegExp(predicate.city, 'gi');
-						var address = new RegExp(predicate.address, 'gi');
-						var speciality = new RegExp(predicate.speciality, 'gi');
-						var id = new RegExp(predicate.id, 'gi');
+						var lastName = new RegExp(patternlastName, 'gi');
+						var firstName = new RegExp(patternfirstName, 'gi');
+						var organisationName = new RegExp(patternorganisationName, 'gi');
+						var city = new RegExp(patterncity, 'gi');
+						var address = new RegExp(patternaddress, 'gi');
+						var speciality = new RegExp(patternspeciality, 'gi');
+						var id = new RegExp(patternid, 'gi');
 						for(var i in input){							
 							if (lastName.exec(input[i].lastName) != null && firstName.exec(input[i].firstName) != null && organisationName.exec(input[i].organisationName) != null && city.exec(input[i].city) != null && address.exec(input[i].address) != null && speciality.exec(input[i].speciality) != null && id.exec(input[i].id) != null){
 								lastName.lastIndex = 0;

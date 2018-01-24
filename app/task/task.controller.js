@@ -239,7 +239,13 @@
 	    					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-pdf/'+item.id;
 	    					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
 	    						var bin = new Blob([response.data]);
-	    						var docName = item.id+'.pdf';           
+	    						var docName='';
+	    						if(item.consannexid.bpid.profileType == "HCP"){
+	    						docName = item.consannexid.bpid.lastName+','+item.consannexid.bpid.firstName+'.pdf'; 
+	    						}else{
+	    						docName = item.consannexid.bpid.organisationName+'.pdf'; 
+	    						}
+          
 	    						saveAs(bin, docName); 
 	    						toasty.success({
 	    	            	        title: 'Success',

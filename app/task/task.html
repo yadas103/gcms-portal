@@ -371,8 +371,9 @@
 									loaded="loaded" my-directive>Download All (DLU-P)</button>
 							<button   class="btn btn-warning" ng-click="loadData()" data="data"
 							filename="'summary'"
-							report-fields="{											
-								            'consannexid.bpid.lastName': 'Last Name/Org Name',
+							report-fields="{
+											'consannexid.bpid.organisationName':'Org Name',											
+								            'consannexid.bpid.lastName': 'Last Name',
 								            'consannexid.bpid.firstName': 'First Name',
 								            'consannexid.profilecountry.name': 'Profile Country',
 								            'consannexid.payercountry.name': 'Payer Country',
@@ -480,8 +481,9 @@
 									filename="'Data'">Generate DLU-P</button>
 							<button ng-show="selected.length != '0'" class="btn btn-warning" ng-json-export-excel
 									data="selected"
-									report-fields="{											
-								            'consannexid.bpid.lastName': 'Last Name/Org Name',
+									report-fields="{
+											'consannexid.bpid.organisationName':'Org Name',											
+								            'consannexid.bpid.lastName': 'Last Name',
 								            'consannexid.bpid.firstName': 'First Name',
 								            'consannexid.profilecountry.name': 'Profile Country',
 								            'consannexid.payercountry.name': 'Payer Country',

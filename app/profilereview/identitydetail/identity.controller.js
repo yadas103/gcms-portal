@@ -11,9 +11,9 @@
     .module('gcms.identity')
     .controller('identityCtrl', IdentityController);
 
-  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','Users','EmailGeneration','$state','$stateParams','ValidatedProfile','toasty'];
+  IdentityController.$inject = ['IdentityRequestView','$scope','$rootScope','$http','Users','UIConfig','EmailGeneration','$state','$stateParams','ValidatedProfile','toasty'];
 
-  function IdentityController(IdentityRequestView,$scope,$rootScope,$http,Users,EmailGeneration,$state,$stateParams,ValidatedProfile,toasty){
+  function IdentityController(IdentityRequestView,$scope,$rootScope,$http,Users,UIConfig,EmailGeneration,$state,$stateParams,ValidatedProfile,toasty){
 	 $scope.itemsByPage=10;
 	  var internalError = function(){
 	        toasty.error({
@@ -30,6 +30,11 @@
 	      };
 	     
 	   
+	      UIConfig.query().$promise.then(function(result){
+	        	$scope.configFile = result;
+	        	console.log($scope.configFile.emailTo);
+	        });
+	      
 	     // $scope.records={};
 	      $scope.records='';
 	      $scope.recordlength='';
@@ -228,23 +233,16 @@
 					}				
 				} 
 	          
-			$http.get('./emailproperties.json').then(function (response) {
-			  console.log(response);
-			     if( response.data.production.value === 'yes'){
-			       $scope.emaildetails[emailTo] = $scope.profileRequestSender;
-			    	 $scope.emaildetails[emailFrom] = $scope.logged_In_User;
-			     }
-			     else if(response.data.development.value === 'yes'){
-			    	 
-			    	$scope.emaildetails[emailTo] = response.data.development.emailTo;
-				    $scope.emaildetails[emailFrom] = response.data.development.emailFrom;
-			     }
-			     else if(response.data.testing.value === 'yes'){
-			    	 
-			    	$scope.emaildetails[emailTo] = response.data.testing.emailTo;
-				    $scope.emaildetails[emailFrom] = response.data.testing.emailFrom;
-			     }
-			    		    	 		  
+			$http.get('./emailproperties.json').then(function (response) {					  				     
+			     if( $scope.configFile.emailTo != ""){
+						$scope.emaildetails[emailTo] = $scope.configFile.emailTo; 
+						$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom; 
+					}
+					else {
+						$scope.emaildetails[emailTo] = $scope.profileRequestSender;
+						$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom;
+					}
+			     
 			    	$scope.msgRequestor = response.data.development.msgRequestor;
 			    	$scope.msgRequestor = $scope.msgRequestor.replace("REQUESTOR_FIRST_NAME",$scope.requestorFirstName);
 					$scope.msgRequestor = $scope.msgRequestor.replace(new RegExp("REVIEWER_FULL_NAME", 'g'),$scope.reviewerFullName);

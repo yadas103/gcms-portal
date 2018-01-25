@@ -61,9 +61,9 @@
 		})
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexPdf,$rootScope,toasty,ngDialog) {
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexPdf,$rootScope,toasty,ngDialog) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -140,7 +140,12 @@
         	        theme: 'bootstrap'
         	      });
 		        };
-		       		      
+		       	
+		        UIConfig.query().$promise.then(function(result){
+		        	$scope.configFile = result;
+		        	console.log($scope.configFile.emailTo);
+		        });
+		        
 		        $scope.HOME_PAY_CNTRY_MSG = {
 		        		  "title": "Title",
 		        		  "content": "Here you can select the Paying Country for this interaction. It is important to know the paying country because this is the way we determine between local interactions and cross-border interactions."
@@ -427,20 +432,13 @@
 					}
 					$http.get('./emailproperties.json').then(function (response) {
 
-						if( response.data.production.value === 'yes'){
-
-							$scope.emaildetails[emailTo] = $scope.countryReviwer; 
-							$scope.emaildetails[emailFrom] = $scope.logged_In_User; 
+						if( $scope.configFile.emailTo != ""){
+							$scope.emaildetails[emailTo] = $scope.configFile.emailTo; 
+							$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom; 
 						}
-						else if(response.data.development.value === 'yes'){
-
-							$scope.emaildetails[emailTo] = response.data.development.emailTo;
-							$scope.emaildetails[emailFrom] = response.data.development.emailFrom;
-						}
-						else if(response.data.testing.value === 'yes'){
-
-							$scope.emaildetails[emailTo] = response.data.testing.emailTo;
-							$scope.emaildetails[emailFrom] = response.data.testing.emailFrom;
+						else {
+							$scope.emaildetails[emailTo] = $scope.countryReviwer;
+							$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom;
 						}
 						if(fn != ''){
 							$scope.msgHCP = response.data.development.msgHCP;

@@ -441,6 +441,7 @@
 					con.taskstatus = "DELETED";
 					con.deleteReason = item.deleteReason.Name;
 					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.undeleteReason='';
 					con.updatedDate = new Date();
 					
 				}
@@ -538,8 +539,8 @@
 				if (con.id === item.id) {
 					con.deleted = 'false';
 					con.taskstatus = "INCOMPLETE";
-					con.deleteReason = item.deleteReason;
-					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.deleteReason = '';
+					con.deleteReasonDesc = '';
 					con.updatedDate = new Date();
 				}
 			});

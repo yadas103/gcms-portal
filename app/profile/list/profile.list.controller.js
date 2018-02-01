@@ -143,7 +143,6 @@
 		       	
 		        UIConfig.query().$promise.then(function(result){
 		        	$scope.configFile = result;
-		        	console.log($scope.configFile.emailTo);
 		        });
 		        
 		        $scope.HOME_PAY_CNTRY_MSG = {
@@ -395,11 +394,11 @@
 			.then(function(response) {
 				if(response.$promise.$$state.status == 1)
 				{
-					console.log(response);
+					console.log("Yes");
 				}
 				else
 				{
-					console.log(response);
+					console.log("No");
 				}
 
 			});
@@ -430,7 +429,6 @@
 							}
 						}
 					}
-					$http.get('./emailproperties.json').then(function (response) {
 
 						if( $scope.configFile.emailTo != ""){
 							$scope.emaildetails[emailTo] = $scope.configFile.emailTo; 
@@ -441,7 +439,7 @@
 							$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom;
 						}
 						if(fn != ''){
-							$scope.msgHCP = response.data.development.msgHCP;
+							$scope.msgHCP = $scope.configFile.msgHcp;
 							$scope.msgHCP = $scope.msgHCP.replace(new RegExp("REQUESTOR_FULL_NAME", 'g'),$scope.fullName);
 							$scope.msgHCP = $scope.msgHCP.replace(new RegExp("PROFILE_TYPE", 'g'),$scope.profile_type_id);
 							$scope.msgHCP = $scope.msgHCP.replace("PROFILE_FIRST_NAME",fn);
@@ -456,7 +454,7 @@
 							$scope.emaildetails[message] = $scope.msgHCP;
 						}
 						else if(on != ''){
-							$scope.msgHCO = response.data.development.msgHCO;
+							$scope.msgHCO = $scope.configFile.msgHco;
 							$scope.msgHCO = $scope.msgHCO.replace(new RegExp("REQUESTOR_FULL_NAME", 'g'),$scope.fullName);
 							$scope.msgHCO = $scope.msgHCO.replace(new RegExp("PROFILE_TYPE", 'g'),$scope.profile_type_id);
 							$scope.msgHCO = $scope.msgHCO.replace("ORG_NAME",on);						
@@ -472,8 +470,7 @@
 						$scope.emaildetails[requestID] = $scope.countryReviwer;
 						$scope.emaildetails[subject] = "GCMS - "+$scope.profile_type_id+" Profile Review Request for "+$scope.countryCopy;						
 						emaildetails = $scope.emaildetails;
-						$scope.generateEmail(emaildetails);
-					});    			    	
+						$scope.generateEmail(emaildetails);					    			    	
 				
 		};
 		
@@ -485,8 +482,7 @@
 			else if(item.profileTypeId.Name == 'HCO'){
 				item.firstName = '';
 				item.lastName = ''
-			}
-			console.log(item);
+			}			
 		};
 		
 		//Creates the missing profile 

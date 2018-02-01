@@ -31,8 +31,7 @@
 	     
 	   
 	      UIConfig.query().$promise.then(function(result){
-	        	$scope.configFile = result;
-	        	console.log($scope.configFile.emailTo);
+	        	$scope.configFile = result;	        	
 	        });
 	      
 	     // $scope.records={};
@@ -42,11 +41,9 @@
 	    	  IdentityRequestView.query().$promise
               .then(function(result){
                   		   $scope.identityRequestView = result; 
-                  		 $scope.status='True';
-                  		console.log("hiiiiii length"+ $scope.identityRequestView.length);
+                  		 $scope.status='True';                  		
                   		$scope.recordlength=$scope.identityRequestView.length;
-                  		 if ($scope.identityRequestView.length=='0'){
-                  			 console.log("hiiiiii length"+ $scope.identityRequestView.length);
+                  		 if ($scope.identityRequestView.length=='0'){                 			
                   			$scope.status='True';
         					$scope.records="No records to show";
                   		 }
@@ -115,13 +112,11 @@
       	var data = {"id":"","status":""};
       	data.status=params;
       	data.id = (params.id!== undefined && params.id!== "" ) ? params.id: 'id';
-      	console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiii");
       	 IdentityRequestView.get(data).$promise
             .then(function(result){
             	if(result.$promise.$$state.status == 1)
             	{ 
             		$scope.identityRequestView = result; 
-                		   console.log("hii records"+result)
                 		   $scope.displayedCollection = [].concat($scope.identityRequestView);
                 		   $scope.recordlength=$scope.identityRequestView.length;
             	
@@ -158,16 +153,7 @@
                if(result.$promise.$$state.status == 1)
            	{
             	   {
-            		   $scope.trData=result;
-            		  /* console.log("fn"+$scope.trData[0].firstName);
-            		   console.log("ls"+$scope.trData[0].lastName);
-            		   console.log("on"+$scope.trData[0].organizationName);
-            		   console.log("sp"+$scope.trData[0].specility);
-            		   console.log("country"+$scope.trData[0].country);
-            		   console.log("profiletype"+$scope.trData[0].profileType);
-            		   console.log("onwith-s"+$scope.trData[0].organisationName);
-            		   console.log("city"+$scope.trData[0].city);
-            		   console.log("add"+$scope.trData[0].address);*/
+            		   $scope.trData=result;            	
             		   $scope.validation="true";
             		   $scope.success="TR ID is valid,Please Approve or Reject "
                	}
@@ -195,11 +181,11 @@
       .then(function(response) {
           if(response.$promise.$$state.status == 1)
       	{
-          	console.log(response);
+          	console.log("Yes");
           }
           else
           	{
-          	console.log(response);
+          	console.log("No");
           	}
          
         });
@@ -223,17 +209,14 @@
 	  		 //var notes = ($scope.resultcopy.notes == null)? '' : $scope.resultcopy.notes;
 	  		 var status = ($scope.resultcopy.status == null)? '' : $scope.resultcopy.status;
 	          // $scope.profileRequestSender = $scope.resultcopy.createdBy; 
-	  		 $scope.reviewerFullName = currentprofile.firstName+" "+currentprofile.lastName;
-	          console.log($scope.user);
+	  		 $scope.reviewerFullName = currentprofile.firstName+" "+currentprofile.lastName;	        
 	          
 	          for(var i in $scope.user){
 					if ($scope.user[i].userName == $scope.profileRequestSender){
 						$scope.requestorFirstName = $scope.user[i].firstName;    
-						console.log($scope.requestorFirstName );
 					}				
 				} 
-	          
-			$http.get('./emailproperties.json').then(function (response) {					  				     
+	          				  				     
 			     if( $scope.configFile.emailTo != ""){
 						$scope.emaildetails[emailTo] = $scope.configFile.emailTo; 
 						$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom; 
@@ -243,7 +226,7 @@
 						$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom;
 					}
 			     
-			    	$scope.msgRequestor = response.data.development.msgRequestor;
+			    	$scope.msgRequestor = $scope.configFile.msgRequestor;
 			    	$scope.msgRequestor = $scope.msgRequestor.replace("REQUESTOR_FIRST_NAME",$scope.requestorFirstName);
 					$scope.msgRequestor = $scope.msgRequestor.replace(new RegExp("REVIEWER_FULL_NAME", 'g'),$scope.reviewerFullName);
 					$scope.msgRequestor = $scope.msgRequestor.replace(new RegExp("PROFILE_TYPE", 'g'),$scope.profile_type_id);
@@ -263,8 +246,7 @@
 		        $scope.emaildetails[requestID] = $scope.logged_In_User;
 			    	$scope.emaildetails[subject] = "GCMS - "+$scope.profile_type_id+" Profile Review Status for "+$scope.countryCopy;
 			    	emaildetails = $scope.emaildetails;
-			    	$scope.generateEmail(emaildetails);
-			         });    			    	
+			    	$scope.generateEmail(emaildetails);			           			    	
 			  
 	  	          };
 	      
@@ -309,7 +291,6 @@
         	}
 
            IdentityRequestView.update({ id:item.id },item).$promise.then(function(response){
-           	console.log(response);
          	if(response.$promise.$$state.status==1){ 
          		
            	if($scope.profile_status=="Approved"){
@@ -372,7 +353,6 @@
     		item.bpid="";
     	}
          	IdentityRequestView.update({ id:item.id }, item).$promise.then(function(response){
-           	console.log(response);
            	if(response.$promise.$$state.status==1){	
           
          	if($scope.profile_status=="Rejected"){

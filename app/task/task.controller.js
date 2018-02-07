@@ -83,7 +83,7 @@
 		    var start = pagination.start || 0;
 		    var number = pagination.number || $scope.itemsByPage;
 		    
-		    console.log(tableState);
+		  
 		    return Task.get({
 		    	payercountry :tableState.search.predicateObject.payercountry,
 		    	lastName : tableState.search.predicateObject.lastname,
@@ -113,6 +113,11 @@
 			 $scope.callServer($scope.tableState);
 			 
 		 }
+		 
+		 $scope.refreshTask = function(item){
+			 refresh();
+		 }
+		 
 		var assigned=$scope.assigned;
         var updateUsers = function(result){
             $scope.user = result;
@@ -147,8 +152,7 @@
           
 
           $scope.loadData = function() {
-            if (!$scope.loaded) {
-               console.log($scope.searchparam);
+            if (!$scope.loaded) {               
                Task.get({
    		    	payercountry :$scope.searchparam.predicateObject.payercountry,
    		    	lastName : $scope.searchparam.predicateObject.lastname,
@@ -202,7 +206,7 @@
              	delete item.click; 
              	// Task.update({ id:item.id }, item);
              	Task.update({ id:item.id }, item).$promise.then(function(response){
-	            	console.log(response);
+	            	
 	            	if(response.$promise.$$state.status==1)
 	            		{
 	            		refresh();
@@ -233,7 +237,7 @@
         	$scope.download=function(item){
     			console.log("inside download")       			
     			PDFDownload.update({ id:item.id }, item).$promise.then(function(res){
-	            	console.log(res);
+	            	
 	            	if(res.$promise.$$state.status==1){
 	            		$http.get('./config.json').then(function (response) {
 	    					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-pdf/'+item.id;
@@ -285,7 +289,7 @@
        
 		 $scope.update = function(item) {
 			 console.log("Inside update function");
-			 console.log(item.id);
+			 
 			 $scope.success='';
 			 $scope.error='';
 	         angular.forEach($scope.TaskAttributes, function(con){
@@ -352,7 +356,7 @@
 		         delete item.click;
 	           // Task.update({ id:item.id }, item);
 	         	Task.update({ id:item.id }, item).$promise.then(function(response){
-	            	console.log(response);
+	            	
 	            	if(response.$promise.$$state.status==1)
 	            		{
 	            		refresh();
@@ -390,7 +394,7 @@
            */
   		 $scope.revoke = function(item) {
   			 console.log("Inside revoke function");
-  			 console.log(item.id);
+  			
   			$scope.success='';
 			$scope.error='';
   	         angular.forEach($scope.TaskAttributes, function(con){
@@ -402,7 +406,7 @@
   	            });            
   	           // Task.update({ id:item.id }, item);
   	         	Task.update({ id:item.id }, item).$promise.then(function(response){
- 	           	console.log(response);
+ 	          
  	           	if(response.$promise.$$state.status==1)
  	           		{
  	           	toasty.success({
@@ -432,7 +436,7 @@
 
   	     $scope.updateDelete = function(item) {
 			console.log("Inside updateDelete function");
-			console.log(item.id);
+			
 			$scope.success='';
 			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
@@ -447,7 +451,7 @@
 				}
 			});
 			Task.update({ id:item.id }, item).$promise.then(function(response){
-	           	console.log(response);
+	          
 	           	if(response.$promise.$$state.status==1)
 	           		{
 	           		refresh();
@@ -487,7 +491,7 @@
 			console.log("Inside updateReassign function");
 			
 			item.assignedto=item.changedowner;
-			console.log(item.id);
+			
 			$scope.success='';
 			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
@@ -501,7 +505,7 @@
 				}
 			});
 			Task.update({ id:item.id }, item).$promise.then(function(response){
-	           	console.log(response);
+	          
 	           	if(response.$promise.$$state.status==1)
 	           		{
 	           		refresh();
@@ -532,7 +536,7 @@
 
 		$scope.updateUnDelete = function(item) {
 			console.log("Inside updateDelete function");
-			console.log(item.id);
+			
 			$scope.success='';
 			$scope.error='';
 			angular.forEach($scope.TaskAttributes, function(con) {
@@ -548,7 +552,7 @@
 			//	id : item.id
 			//}, item);
 			Task.update({ id:item.id }, item).$promise.then(function(response){
-	           	console.log(response);
+	           
 	           	if(response.$promise.$$state.status==1)
 	           		{
 	           		refresh();

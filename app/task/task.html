@@ -47,7 +47,7 @@
 						  	<a href="" ng-if="uploader.progress==100 && !uploader.isUploading"  ng-init="upload()"><span class="fa fa-spin fa-spinner "></span>
 						 	 Validating...</a>						  						  	
 							<gcms-modal template="bulk.upload.html"
-							controller="ModalDefaultCtrl" ok="" content="Result"
+							controller="ModalDefaultCtrl" ok="refreshTask" content="Result"
 							alt="Upload images"> 
 							<button ng-show="a == true" class="btn btn-default2" style="margin-top:1px;">View Upload Status</button></gcms-modal>
 

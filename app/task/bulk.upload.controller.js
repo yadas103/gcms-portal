@@ -23,7 +23,7 @@
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
       $scope.userID= $rootScope.loggedInUserRoleId;
-      console.log($scope.userID);
+ 
       
       $scope.uploader = new FileUploader({
         filters: [{
@@ -71,8 +71,7 @@
     	        theme: 'bootstrap'
     	      });
    		      // $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
-   		       $scope.uploader.clearQueue();
-   		       console.log(result)		       
+   		       $scope.uploader.clearQueue();       
    		      }).catch(function(){
      		    	$scope.uploader.clearQueue(); 
      		    	toasty.error({

@@ -44,7 +44,6 @@
 
         $scope.uploadFiles = function (item) {
         	console.log("uploadFiles");
-        	console.log(item);
         	delete item.startDate;
 	        delete item.endDate;
         	$scope.apiMiddleware.getConfigFile().then(function (result) {
@@ -124,7 +123,6 @@
 	     			        	   delete item.validity_end_date;
 	     			           }
 	        		            Templates.update({ id:item.id },item).$promise.then(function(response){
-	        		            	console.log(response);
 	        		            	if(response.validity_start_date != null && response.validity_end_date != null ){
 		        		            	  item.startDate = moment(response.validity_start_date,'YYYY-MM-DD');
 		        			        	  item.endDate = moment(response.validity_end_date,'YYYY-MM-DD')  ;
@@ -213,7 +211,6 @@
             		            console.log("Function calling from Task module");
             		            $scope.item.consannexid.annnexlocation=docLink;            		           
             		            Task.update({ id:item.id },item).$promise.then(function(response){
-	        		            	console.log(response);
 	        		            	if(response.$promise.$$state.status==1)
 	        		            		{
 	        		            		toasty.success({
@@ -522,7 +519,6 @@
        		
        		
 	        	var location=$scope.link.annnexlocation;
-	        	console.log(location);
                $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
                var doc=resp.data;
                return $scope.apiMiddleware.getDocumentDownload(doc).then(function (resp) {

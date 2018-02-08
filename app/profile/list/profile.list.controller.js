@@ -527,7 +527,8 @@
 			}); 
 		};
 
-		//Collects the checked profile id's and related info    
+		//Collects the checked profile id's and related info
+		$scope.templateDate = {};
 		$scope.list = function(){ 
 			$scope.currentYear = new Date();
 			$scope.dataToSend = {checkedIds :{},templates :{},request : {}};
@@ -547,14 +548,11 @@
 			$scope.dataToSend.templates = $scope.templates;
 			$scope.currentYear = (new Date()).getFullYear();
 			
-			for(var i  in $scope.checkedIds){
-				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : "","eventEndDate": ""};
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate =  moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) ;
-				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz($scope.currentYear+'/12/31',moment.tz.guess());				
-			}
 			for(var i in $scope.templates){
 				if($scope.templates[i].id == $scope.request.tmpl_id){							
 					$scope.daterange = $scope.templates[i].dates_rages;
+					$scope.templateDate['validity_start_date'] = $scope.templates[i].validity_start_date;
+					$scope.templateDate['validity_end_date'] = $scope.templates[i].validity_end_date;
 					if($scope.daterange == 'Y' ){
 						$scope.dataToSend.setDates = false;
 					}
@@ -564,6 +562,20 @@
 					}
 			}
 			}
+			$scope.templateDate['start_year'] = $scope.templateDate.validity_start_date.substring(0,4);
+			$scope.templateDate['start_month'] = $scope.templateDate.validity_start_date.substring(5,7);
+			$scope.templateDate['start_day']= $scope.templateDate.validity_start_date.substring(8,10);
+			
+			$scope.templateDate['end_year'] = $scope.templateDate.validity_end_date.substring(0,4);
+			$scope.templateDate['end_month'] = $scope.templateDate.validity_end_date.substring(5,7);
+			$scope.templateDate['end_day']= $scope.templateDate.validity_end_date.substring(8,10);
+			
+			for(var i  in $scope.checkedIds){
+				$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : "","eventEndDate": ""};
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate = moment.tz($scope.templateDate.start_year+'/'+$scope.templateDate.start_month+'/'+$scope.templateDate.start_day,moment.tz.guess()) ;
+				$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz($scope.templateDate.end_year+'/'+$scope.templateDate.end_month+'/'+$scope.templateDate.end_day,moment.tz.guess());				
+			}
+		
 
 		};
 
@@ -585,10 +597,10 @@
 				item.request[$scope.copyCheckedIds[i]].eventEndDate = copy.eventEndDate.clone();
 				}
 				if(copy.consentstartdate != undefined && copy.consentstartdate != ""){
-				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz($scope.currentYear+'/01/01',moment.tz.guess()) : copy.consentstartdate.clone();
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz($scope.templateDate.start_year+'/'+$scope.templateDate.start_month+'/'+$scope.templateDate.start_day,moment.tz.guess()) : copy.consentstartdate.clone();
 				}
 				if(copy.consentstartdate != undefined && copy.consentstartdate != ""){
-				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz($scope.currentYear+'/12/31',moment.tz.guess()) : copy.consentenddate.clone();
+				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz($scope.templateDate.end_year+'/'+$scope.templateDate.end_month+'/'+$scope.templateDate.end_day,moment.tz.guess()) : copy.consentenddate.clone();
 				}
 				
 			}

@@ -114,9 +114,7 @@
 			 
 		 }
 		 
-		 $scope.refreshTask = function(item){
-			 refresh();
-		 }
+		
 		 
 		var assigned=$scope.assigned;
         var updateUsers = function(result){

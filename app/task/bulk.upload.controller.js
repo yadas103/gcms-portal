@@ -70,6 +70,7 @@
     	        shake: false,
     	        theme: 'bootstrap'
     	      });
+   		    $scope.callServer($scope.tableState);
    		      // $scope.alerts.push({type:'success', msg: $scope.uploader.queue.length + 'File(s) Processing Successful'});
    		       $scope.uploader.clearQueue();       
    		      }).catch(function(){

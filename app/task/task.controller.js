@@ -51,6 +51,7 @@
 		 $scope.currentProfile={};
 		 var mydata= $rootScope.loggedInUserRoleId;
 		 $scope.loaded = false;
+		 $scope.downloadAll = false;
          $scope.data = [];
 		 $scope.searchparam=null;
 		 $scope.sortparam=null;
@@ -140,39 +141,112 @@
                 
              	  
           $scope.select = function(id) {		    
-          		    var found = $scope.selected.indexOf(id);
-          		    if(found == -1) $scope.selected.push(id);		    
-          		    else $scope.selected.splice(found, 1);	    
-          }
+    		    var found = $scope.selected.indexOf(id);
+    		    if(id.consannexid.bpid.profileType == 'HCP'){
+    		    	id.consannexid.bpid.profileType = 'PERSON';
+				}
+				else if(id.consannexid.bpid.profileType == 'HCO'){
+					id.consannexid.bpid.profileType = 'ORGANIZATION';
+				}
+    		    if(id.consannexid.consentenddate != null){
+					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format('DD/MM/YYYY');
+					}
+					if(id.consannexid.consentstartdate != null){
+					id.consannexid.consentstartdate = moment(id.consannexid.consentstartdate).format('DD/MM/YYYY');
+					}
+					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
+    		    id.consannexid.PartyAddressType = "Primary Address";
+    		    id.consannexid.SourceSystemCode = "DLU-P";
+    		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS"
+    		    if(found == -1) $scope.selected.push(id);		    
+    		    else $scope.selected.splice(found, 1);	    
+    }
 
-		 
-          
-          
+	 
+    
+    
+    $scope.loadDataDLUAll = function() {
+        if (!$scope.downloadAll) {               
+           Task.get({
+		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+		    	lastName : $scope.searchparam.predicateObject.lastname,
+		    	firstName :$scope.searchparam.predicateObject.firstname,
+		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+		    	eventName :$scope.searchparam.predicateObject.eventname,
+		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+		        page : 1,
+		        size : $scope.totalcount,
+		        sort : $scope.sortparam,
+		        reverse : false 
+		        }).$promise.then(function(task) {
+		        	$scope.data = task.currentPageData;
+		        	for(var i  in $scope.data){
+						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
+							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
+						}
+						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
+							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
+						}
+						if($scope.data[i].consannexid.consentenddate != null){
+						$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
+						}
+						if($scope.data[i].consannexid.consentstartdate != null){
+						$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
+						}
+						$scope.data[i].consannexid.PartyAddressType = "Primary Address";
+						$scope.data[i].consannexid.SourceSystemCode = "DLU-P";
+						$scope.data[i].consannexid.CustomFlexField15 = "Consent Downloaded from GCMS";
+					}
+		        	$scope.downloadAll = true;
+		            
+		        });
+        }
+      }
 
-          $scope.loadData = function() {
-            if (!$scope.loaded) {               
-               Task.get({
-   		    	payercountry :$scope.searchparam.predicateObject.payercountry,
-   		    	lastName : $scope.searchparam.predicateObject.lastname,
-   		    	firstName :$scope.searchparam.predicateObject.firstname,
-   		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
-   		    	eventName :$scope.searchparam.predicateObject.eventname,
-   		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
-   		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
-   		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
-   		    	updateddate : $scope.searchparam.predicateObject.updateddate,
-   		        page : 1,
-   		        size : $scope.totalcount,
-   		        sort : $scope.sortparam,
-   		        reverse : false 
-   		        }).$promise.then(function(task) {
-   		        	$scope.data = task.currentPageData;        		        	
-   		        	$scope.loaded = true;
-   		            
-   		        });
-            }
-          }
-	  
+    
+    $scope.loadData = function() {
+      if (!$scope.loaded) {               
+         Task.get({
+		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+		    	lastName : $scope.searchparam.predicateObject.lastname,
+		    	firstName :$scope.searchparam.predicateObject.firstname,
+		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+		    	eventName :$scope.searchparam.predicateObject.eventname,
+		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+		        page : 1,
+		        size : $scope.totalcount,
+		        sort : $scope.sortparam,
+		        reverse : false 
+		        }).$promise.then(function(task) {
+		        	$scope.data = task.currentPageData;
+		        	for(var i  in $scope.data){
+						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
+							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
+						}
+						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
+							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
+						}
+						if($scope.data[i].consannexid.consentenddate != null){
+							$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
+							}
+							if($scope.data[i].consannexid.consentstartdate != null){
+							$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
+							}
+							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');
+					}
+		        	$scope.loaded = true;
+		            
+		        });
+      }
+    }
+
+
           
         //On Click of Task Edit, initialize dates
           $scope.taskdate = function(item){        	  	

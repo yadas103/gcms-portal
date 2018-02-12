@@ -149,15 +149,43 @@
 					id.consannexid.bpid.profileType = 'ORGANIZATION';
 				}
     		    if(id.consannexid.consentenddate != null){
-					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format('DD/MM/YYYY');
+					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format('DD/MM/YYYY');					
 					}
 					if(id.consannexid.consentstartdate != null){
-					id.consannexid.consentstartdate = moment(id.consannexid.consentstartdate).format('DD/MM/YYYY');
+					id.consannexid.consentstartdate = moment(id.consannexid.consentstartdate).format('DD/MM/YYYY');				
 					}
+					if(id.consannexid.bpid.city != null){
+						if(id.consannexid.bpid.city.match(',') != null ){
+							id.consannexid.bpid.city = id.consannexid.bpid.city.replace(/,/g , " ");
+						}
+						}
+						if(id.consannexid.bpid.address != null){
+							if(id.consannexid.bpid.address.match(',') != null ){
+								id.consannexid.bpid.address = id.consannexid.bpid.address.replace(/,/g , " ");
+							}
+							}
+						if(id.consannexid.bpid.address2 != null){
+							if(id.consannexid.bpid.address2.match(',') != null ){
+								id.consannexid.bpid.address2 = id.consannexid.bpid.address2.replace(/,/g , " ");
+							}
+							}
+						if(id.consannexid.bpid.address3 != null){
+							if(id.consannexid.bpid.address3.match(',') != null ){
+								id.consannexid.bpid.address3 = id.consannexid.bpid.address3.replace(/,/g , " ");
+							}
+							}
+						if(id.consannexid.bpid.address4 != null){
+							if(id.consannexid.bpid.address4.match(',') != null ){
+								id.consannexid.bpid.address4 = id.consannexid.bpid.address4.replace(/,/g , " ");
+							}
+							}	
+						id.consannexid.profilecountry.code = id.consannexid.profilecountry.code.substring(0,2);
 					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
     		    id.consannexid.PartyAddressType = "Primary Address";
     		    id.consannexid.SourceSystemCode = "DLU-P";
     		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS"
+    		    id.consannexid.trid = "TR-ID";
+    		    
     		    if(found == -1) $scope.selected.push(id);		    
     		    else $scope.selected.splice(found, 1);	    
     }
@@ -196,9 +224,36 @@
 						if($scope.data[i].consannexid.consentstartdate != null){
 						$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
 						}
+						if($scope.data[i].consannexid.bpid.city != null){
+						if($scope.data[i].consannexid.bpid.city.match(',') != null ){
+							$scope.data[i].consannexid.bpid.city = $scope.data[i].consannexid.bpid.city.replace(/,/g , " ");
+						}
+						}
+						if($scope.data[i].consannexid.bpid.address != null){
+							if($scope.data[i].consannexid.bpid.address.match(',') != null ){
+								$scope.data[i].consannexid.bpid.address = $scope.data[i].consannexid.bpid.address.replace(/,/g , " ");
+							}
+							}
+						if($scope.data[i].consannexid.bpid.address2 != null){
+							if($scope.data[i].consannexid.bpid.address2.match(',') != null ){
+								$scope.data[i].consannexid.bpid.address2 = $scope.data[i].consannexid.bpid.address2.replace(/,/g , " ");
+							}
+							}
+						if($scope.data[i].consannexid.bpid.address3 != null){
+							if($scope.data[i].consannexid.bpid.address3.match(',') != null ){
+								$scope.data[i].consannexid.bpid.address3 = $scope.data[i].consannexid.bpid.address3.replace(/,/g , " ");
+							}
+							}
+						if($scope.data[i].consannexid.bpid.address4 != null){
+							if($scope.data[i].consannexid.bpid.address4.match(',') != null ){
+								$scope.data[i].consannexid.bpid.address4 = $scope.data[i].consannexid.bpid.address4.replace(/,/g , " ");
+							}
+							}
+						$scope.data[i].consannexid.profilecountry.code = $scope.data[i].consannexid.profilecountry.code.substring(0,2);
 						$scope.data[i].consannexid.PartyAddressType = "Primary Address";
 						$scope.data[i].consannexid.SourceSystemCode = "DLU-P";
 						$scope.data[i].consannexid.CustomFlexField15 = "Consent Downloaded from GCMS";
+						$scope.data[i].consannexid.trid = "TR-ID";
 					}
 		        	$scope.downloadAll = true;
 		            
@@ -238,7 +293,7 @@
 							if($scope.data[i].consannexid.consentstartdate != null){
 							$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
 							}
-							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');
+							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');						
 					}
 		        	$scope.loaded = true;
 		            

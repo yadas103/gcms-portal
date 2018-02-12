@@ -321,9 +321,9 @@
 			ProfileSearch.get(data).$promise
 			.then(function(profileSearch) {
 				$scope.profileSearch = profileSearch;				
-				if($scope.search !== undefined){
+				/*if($scope.search !== undefined){
 					$scope.search = undefined;
-				}
+				}*/
 				$scope.isReset = true;
 				if($scope.request.profileType == 'HCP'){
 					$scope.hideHCO = true;

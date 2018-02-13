@@ -31,7 +31,7 @@
 
                         var blob = new Blob([strData], {type: "text/plain;charset=utf-8"});
 
-                        return saveAs(blob, [scope.filename + '.csv']);
+                        return saveAs(blob, [scope.filename + '.xls']);
                     });
 
                     function _bodyData() {

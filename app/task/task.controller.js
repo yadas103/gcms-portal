@@ -144,9 +144,11 @@
     		    var found = $scope.selected.indexOf(id);
     		    if(id.consannexid.bpid.profileType == 'HCP'){
     		    	id.consannexid.bpid.profileType = 'PERSON';
+    		    	id.consannexid.lastOrgName = id.consannexid.bpid.lastName;
 				}
 				else if(id.consannexid.bpid.profileType == 'HCO'){
 					id.consannexid.bpid.profileType = 'ORGANIZATION';
+					id.consannexid.lastOrgName = id.consannexid.bpid.organisationName;
 				}
     		    if(id.consannexid.consentenddate != null){
 					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format('DD/MM/YYYY');					
@@ -179,6 +181,9 @@
 								id.consannexid.bpid.address4 = id.consannexid.bpid.address4.replace(/,/g , " ");
 							}
 							}	
+						if(id.consannexid.eventEndDate != null){
+							id.consannexid.eventEndDate = moment(id.consannexid.eventEndDate).format('DD/MM/YYYY');
+						}
 						id.consannexid.profilecountry.code = id.consannexid.profilecountry.code.substring(0,2);
 					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
     		    id.consannexid.PartyAddressType = "Primary Address";
@@ -283,9 +288,11 @@
 		        	for(var i  in $scope.data){
 						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
 							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
+							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.lastName;
 						}
 						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
 							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
+							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.organisationName;
 						}
 						if($scope.data[i].consannexid.consentenddate != null){
 							$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
@@ -293,7 +300,10 @@
 							if($scope.data[i].consannexid.consentstartdate != null){
 							$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
 							}
-							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');						
+							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');	
+							if($scope.data[i].consannexid.eventEndDate != null){
+								$scope.data[i].consannexid.eventEndDate = moment($scope.data[i].consannexid.eventEndDate).format('DD/MM/YYYY');
+							}
 					}
 		        	$scope.loaded = true;
 		            

@@ -373,11 +373,12 @@
 							<button   class="btn btn-warning" ng-click="loadData()" data="data"
 							filename="'Summary'"
 							report-fields="{
-											'consannexid.bpid.organisationName':'Org Name',											
-								            'consannexid.bpid.lastName': 'Last Name',
+											'consannexid.bpid.profileType': 'Party Type',
+											'consannexid.bpid.id': 'BP ID',
+											'consannexid.lastOrgName':'Last/Org Name',									
 								            'consannexid.bpid.firstName': 'First Name',
-								            'consannexid.profilecountry.name': 'Profile Country',
-								            'consannexid.payercountry.name': 'Payer Country',
+								            'consannexid.profilecountry.isoCode': 'Profile Country',
+								            'consannexid.payercountry.isoCode': 'Payer Country',
 								            'consannexid.eventname': 'Event Name',
 								            'consannexid.pocode': 'PO Code',
 								            'consannexid.acmcode': 'ACM Code',
@@ -385,6 +386,7 @@
 								            'updatedDate': 'Consent Updated Date',
 								            'consannexid.consentstartdate': 'Consent Start Date',
 								            'consannexid.consentenddate': 'Consent End Date',
+								            'consannexid.eventEndDate': 'Event End Date',
 								            'assignedto.lastName': 'Task Owner Last Name',
 								            'assignedto.firstName': 'Task Owner First Name',
 								            'assignedto.userName': 'NTID',
@@ -483,11 +485,12 @@
 							<button ng-show="selected.length != '0'" class="btn btn-warning" ng-json-export-excel
 									data="selected"
 									report-fields="{
-											'consannexid.bpid.organisationName':'Org Name',											
-								            'consannexid.bpid.lastName': 'Last Name',
+											'consannexid.bpid.profileType': 'Party Type',
+											'consannexid.bpid.id': 'BP ID',
+											'consannexid.lastOrgName':'Last/Org Name',									
 								            'consannexid.bpid.firstName': 'First Name',
-								            'consannexid.profilecountry.name': 'Profile Country',
-								            'consannexid.payercountry.name': 'Payer Country',
+								            'consannexid.profilecountry.isoCode': 'Profile Country',
+								            'consannexid.payercountry.isoCode': 'Payer Country',
 								            'consannexid.eventname': 'Event Name',
 								            'consannexid.pocode': 'PO Code',
 								            'consannexid.acmcode': 'ACM Code',
@@ -495,6 +498,7 @@
 								            'updatedDate': 'Consent Updated Date',
 								            'consannexid.consentstartdate': 'Consent Start Date',
 								            'consannexid.consentenddate': 'Consent End Date',
+								            'consannexid.eventEndDate': 'Event End Date',
 								            'assignedto.lastName': 'Task Owner Last Name',
 								            'assignedto.firstName': 'Task Owner First Name',
 								            'assignedto.userName': 'NTID',

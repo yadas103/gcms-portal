@@ -1,9 +1,8 @@
 /**
  * @ngdoc overview
  * @name gcms.task
- *
- * @description
- * Represents a task controller.
+ * 
+ * @description Represents a task controller.
  */
 (function () {
   'use strict';
@@ -140,16 +139,18 @@
           $scope.$on('$localeChangeSuccess', loadUsers);
           
 	  /**
-	   	 * selim 
-	     * @ngdoc method
-	     * @methodOf this method used for DLU-P/T excel generation
-	     * @description Gets data
-	     */
+		 * selim
+		 * 
+		 * @ngdoc method
+		 * @methodOf this method used for DLU-P/T excel generation
+		 * @description Gets data
+		 */
 
                 
              	  
-          $scope.select = function(id) {		    
-    		    var found = $scope.selected.indexOf(id);
+          $scope.select = function(inputId) {
+        	  	var id =  angular.copy(inputId);       	 
+    		      var found = $scope.selected.indexOf(id);
     		    if(id.consannexid.bpid.profileType == 'HCP'){
     		    	id.consannexid.bpid.profileType = 'PERSON';
     		    	id.consannexid.lastOrgName = id.consannexid.bpid.lastName;
@@ -298,10 +299,11 @@
 	            		refresh();
 	            		
 	            		
-	            		//$scope.success= item.id + " task has been updated successfully";
+	            		// $scope.success= item.id + " task has been updated
+						// successfully";
 	            		}else{
 	            			unspecifiedError();
-	            		//$scope.error= item.id + " task failed to update";
+	            		// $scope.error= item.id + " task failed to update";
 	            		}
 	 		      }).catch(function(){
 		 		    	 refresh();
@@ -311,13 +313,14 @@
              	}
 		
         	/**
-    		 * selim
-             * @ngdoc method
-             * @name Pdf Download
-             * @methodOf 
-             * @description 
-             * 
-             */
+			 * selim
+			 * 
+			 * @ngdoc method
+			 * @name Pdf Download
+			 * @methodOf
+			 * @description
+			 * 
+			 */
           
         	
         	$scope.download=function(item){
@@ -365,12 +368,14 @@
 	
 		/**
 		 * selim
-         * @ngdoc method
-         * @name update
-         * @methodOf 
-         * @description Updates Task
-         * @param {object} item Task to update
-         */
+		 * 
+		 * @ngdoc method
+		 * @name update
+		 * @methodOf
+		 * @description Updates Task
+		 * @param {object}
+		 *            item Task to update
+		 */
       
        
 		 $scope.update = function(item) {
@@ -404,7 +409,7 @@
    				item.taskstatus="INCOMPLETE"; 
   			 }
 	         
-	       //Input Date format
+	       // Input Date format
 	           if(item.consannexid.consentstart != undefined){
 	           item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
 	           }
@@ -418,11 +423,11 @@
 		           item.consannexid.consentend = moment(item.consannexid.enddate,'DD-MM-YYYY');
 		           }
    		
-	           //Adding timezone
+	           // Adding timezone
 	           item.consannexid.consentstartdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
 	           item.consannexid.consentenddate = moment.tz(item.consannexid.consentend,moment.tz.guess());
      	   
-	           //Convert to DB date format
+	           // Convert to DB date format
 	           item.consannexid.consentstartdate = moment(item.consannexid.consentstart).format('YYYY-MM-DD');   			
 	           item.consannexid.consentenddate = moment(item.consannexid.consentend).format('YYYY-MM-DD');
 
@@ -458,10 +463,11 @@
 	            	        theme: 'bootstrap'
 	            	      });
 	            		
-	            		//$scope.success= item.id + " task has been updated successfully";
+	            		// $scope.success= item.id + " task has been updated
+						// successfully";
 	            		}else{
 	            			unspecifiedError();
-	            		//$scope.error= item.id + " task failed to update";
+	            		// $scope.error= item.id + " task failed to update";
 	            		}
 	 		      }).catch(function(){
 		 		    	 refresh();
@@ -472,12 +478,13 @@
 	          
 	       
           /**
-           * @ngdoc method
-           * @name update
-           * @methodOf 
-           * @description Updates Task
-           * @param {object} item Task to update
-           */
+			 * @ngdoc method
+			 * @name update
+			 * @methodOf
+			 * @description Updates Task
+			 * @param {object}
+			 *            item Task to update
+			 */
   		 $scope.revoke = function(item) {
   			 console.log("Inside revoke function");
   			
@@ -506,10 +513,10 @@
         	        shake: false,
         	        theme: 'bootstrap'
         	      });
- 	           		//$scope.success= item.id + " task has been revoked ";
+ 	           		// $scope.success= item.id + " task has been revoked ";
  	           		}else{
  	           		unspecifiedError();
- 	           		//$scope.error= item.id + " task failed to revoke";
+ 	           		// $scope.error= item.id + " task failed to revoke";
  	           		}
  			      }).catch(function(){
 	 		    	 refresh();
@@ -552,18 +559,18 @@
 	        	        shake: false,
 	        	        theme: 'bootstrap'
 	        	      });
-	           		//$scope.success= item.id + " task has been deleted ";
+	           		// $scope.success= item.id + " task has been deleted ";
 	           		}else{
 	           		unspecifiedError();
-	           		//$scope.error= item.id + " task failed to delete";
+	           		// $scope.error= item.id + " task failed to delete";
 	           		}
 			      }).catch(function(){
 		 		    	 refresh();
 		 		    	 internalError();	
 		       		      });
-			//Task.update({
-			//	id : item.id
-			//}, item);
+			// Task.update({
+			// id : item.id
+			// }, item);
 		};
 		$scope.count='null';
 	
@@ -606,18 +613,19 @@
 	        	        shake: false,
 	        	        theme: 'bootstrap'
 	        	      });
-	           		//$scope.success= item.id + " task has been reassigned to "+ item.assignedto;
+	           		// $scope.success= item.id + " task has been reassigned to
+					// "+ item.assignedto;
 	           		}else{
 	           			unspecifiedError();
-	           		//$scope.error= item.id + " task failed to reassigned";
+	           		// $scope.error= item.id + " task failed to reassigned";
 	           		}
 			      }).catch(function(){
 		 		    	 refresh();
 		 		    	 internalError();	
 		       		      });
-			//Task.update({
-			//	id : item.id
-			//}, item);
+			// Task.update({
+			// id : item.id
+			// }, item);
 		};
 
 		$scope.updateUnDelete = function(item) {
@@ -634,9 +642,9 @@
 					con.updatedDate = new Date();
 				}
 			});
-			//Task.update({
-			//	id : item.id
-			//}, item);
+			// Task.update({
+			// id : item.id
+			// }, item);
 			Task.update({ id:item.id }, item).$promise.then(function(response){
 	           
 	           	if(response.$promise.$$state.status==1)
@@ -653,10 +661,10 @@
 	        	        shake: false,
 	        	        theme: 'bootstrap'
 	        	      });
-	           		//$scope.success= item.id + " task has been undeleted";
+	           		// $scope.success= item.id + " task has been undeleted";
 	           		}else{
 	           			unspecifiedError();
-	           		//$scope.error= item.id + " task failed to undelete";
+	           		// $scope.error= item.id + " task failed to undelete";
 	           		}
 			      }).catch(function(){
 		 		    	 refresh();

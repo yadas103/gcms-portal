@@ -148,6 +148,7 @@
 	 				$scope.Templates[i].validity_end_date = moment($scope.Templates[i].validity_end_date).format('DD-MM-YYYY')  ;
 	 				$scope.Templates[i].startDate = $scope.Templates[i].validity_start_date;
 	 				$scope.Templates[i].endDate = $scope.Templates[i].validity_end_date;
+	 				$scope.date($scope.Templates[i]);
 	  		    	 }
 	  		    	 }
 	  		    	 } 

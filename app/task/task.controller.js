@@ -100,7 +100,15 @@
 		        sort : predicate,
 		        reverse : reverse 
 		        }).$promise.then(function(task) {
-		        	$scope.TaskAttributes = task.currentPageData;	
+		        	$scope.TaskAttributes = task.currentPageData;
+		        	for(var i in $scope.TaskAttributes){
+			        	if(($scope.TaskAttributes[i].consannexid.consentstartdate != null || $scope.TaskAttributes[i].consannexid.consentstartdate != undefined) && ($scope.TaskAttributes[i].consannexid.consentenddate != null || $scope.TaskAttributes[i].consannexid.consentenddate != undefined)){
+			        	$scope.TaskAttributes[i].consannexid.startdate = moment($scope.TaskAttributes[i].consannexid.consentstartdate,'YYYY-MM-DD');
+		                $scope.TaskAttributes[i].consannexid.enddate = moment($scope.TaskAttributes[i].consannexid.consentenddate,'YYYY-MM-DD');  
+		                $scope.TaskAttributes[i].consannexid.consentstart = moment($scope.TaskAttributes[i].consannexid.consentstartdate,'YYYY-MM-DD');
+		                $scope.TaskAttributes[i].consannexid.consentend = moment($scope.TaskAttributes[i].consannexid.consentenddate,'YYYY-MM-DD');
+			        	}
+			        	}
 		        	$scope.totalcount=task.totalRecordsCount;
 		        	tableState.pagination.numberOfPages =Math.ceil(task.totalRecordsCount/$scope.itemsByPage);
 		            $scope.isLoading = false;
@@ -260,16 +268,7 @@
 		        });
       }
     }
-
-
-          
-        //On Click of Task Edit, initialize dates
-          $scope.taskdate = function(item){        	  	
-        	  	item.consannexid.startdate = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
-                item.consannexid.enddate = moment(item.consannexid.consentenddate,'YYYY-MM-DD');  
-                item.consannexid.consentstart = moment(item.consannexid.consentstartdate,'YYYY-MM-DD');
-                item.consannexid.consentend = moment(item.consannexid.consentenddate,'YYYY-MM-DD');
-        	};
+               
 		
       	
         	$scope.close=function(item) {

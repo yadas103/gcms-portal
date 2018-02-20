@@ -12,7 +12,7 @@
     .module('gcms.components.data')
     .factory('ProfileSearch', ProfileSearch);
 
-  ProfileSearch.$inject = ['$resource', 'ENVIRONMENT'];
+  ProfileSearch.$inject = ['$resource','$locale','localeMapper', 'ENVIRONMENT'];
 
   /**
    * @ngdoc method
@@ -25,21 +25,23 @@
       consistent service uri to use across the application
    * @returns {object} Profiles
    */
-  function ProfileSearch($resource, ENVIRONMENT) {
+  function ProfileSearch($resource,$locale,localeMapper, ENVIRONMENT) {
 
     return $resource(
-      ENVIRONMENT.SERVICE_URI + 'profile-results/:country/:profileType/:collectingCountry/:lastName/:city/:firstName/:address/:speciality',
+      ENVIRONMENT.SERVICE_URI + ':locale/profile-results',
       {
-    	  country: '@country',
-    	  profileType: '@profileType',
-    	  lastName: '@lastName',
-    	  city: '@city',
-    	  firstName: '@firstName',
-    	  address: '@address',
-    	  speciality: '@speciality'
-        },
+    	  locale: function(){ return localeMapper.getCurrentISOCode(); }
+      },
         {
-            get:    { method:'GET', isArray:true },
+            get:    { method:'GET',params:{	
+        		country:'@country',
+          	  	profileType:'@profileType',
+          	  	lastName:'@lastName',
+          	  	city:'@city',
+          	  	firstName:'@firstName',
+          	  	address:'@address',
+          	  	speciality:'@speciality'
+        		}, isArray:true },
             query:  { method:'GET', isArray:true },
             update: { method:'PUT' }
           }

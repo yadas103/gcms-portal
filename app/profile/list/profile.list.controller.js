@@ -318,7 +318,15 @@
 			data.address = (params.address !== undefined && params.address !== "" ) ? params.address : 'address';
 			data.speciality = (params.speciality !== undefined && params.speciality !== "") ? params.speciality : 'speciality';
 			data.collectingCountry = params.collectingCountry;
-			ProfileSearch.get(data).$promise
+			ProfileSearch.get({
+				country : data.country,
+				profileType : data.profileType,
+				lastName : data.lastName,
+				city : data.city,
+				firstName : data.firstName,
+				address : data.address,
+				speciality : data.speciality
+			}).$promise
 			.then(function(profileSearch) {
 				$scope.profileSearch = profileSearch;				
 				/*if($scope.search !== undefined){

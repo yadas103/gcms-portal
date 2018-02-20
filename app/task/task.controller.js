@@ -149,36 +149,48 @@
                 
              	  
           $scope.select = function(inputId) {
-        	  	var id =  angular.copy(inputId);       	 
-    		      var found = $scope.selected.indexOf(id);
-    		    if(id.consannexid.bpid.profileType == 'HCP'){
-    		    	id.consannexid.bpid.profileType = 'PERSON';
-    		    	id.consannexid.lastOrgName = id.consannexid.bpid.lastName;
-				}
-				else if(id.consannexid.bpid.profileType == 'HCO'){
-					id.consannexid.bpid.profileType = 'ORGANIZATION';
-					id.consannexid.lastOrgName = id.consannexid.bpid.organisationName;
-				}
-    		    if(id.consannexid.consentenddate != null){
-					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format('DD/MM/YYYY');					
-					}
-					if(id.consannexid.consentstartdate != null){
-					id.consannexid.consentstartdate = moment(id.consannexid.consentstartdate).format('DD/MM/YYYY');				
-					}						
-						if(id.consannexid.eventEndDate != null){
-							id.consannexid.eventEndDate = moment(id.consannexid.eventEndDate).format('DD/MM/YYYY');
-						}
-						id.consannexid.profilecountry.code = id.consannexid.profilecountry.code.substring(0,2);
-					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
-    		    id.consannexid.PartyAddressType = "Primary Address";
-    		    id.consannexid.SourceSystemCode = "DLU-P";
-    		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS"
-    		    id.consannexid.trid = "TR-ID";
-    		    
-    		    if(found == -1) $scope.selected.push(id);		    
-    		    else $scope.selected.splice(found, 1);	    
-    }
-
+          	var result = false;      	  
+        	  	var id =  angular.copy(inputId);
+        	  	$scope.compare = function() {
+  	      		for(var i in $scope.selected){
+  	      			result = angular.equals($scope.selected[i].id, id.id);
+  	      	    if(result == true){
+  	      	    	$scope.selected.splice(i, 1);
+  	      	    }     	    
+  	      		  }
+  	      		 if(result == false) {
+  	      			$scope.selected.push(id); 
+  	      		 }
+  	      	  };
+        	  	
+      		    if(id.consannexid.bpid.profileType == 'HCP'){
+      		    	id.consannexid.bpid.profileType = 'PERSON';
+      		    	id.consannexid.lastOrgName = id.consannexid.bpid.lastName;
+  				}
+  				else if(id.consannexid.bpid.profileType == 'HCO'){
+  					id.consannexid.bpid.profileType = 'ORGANIZATION';
+  					id.consannexid.lastOrgName = id.consannexid.bpid.organisationName;
+  				}
+      		    if(id.consannexid.consentenddate != null){
+  					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format('DD/MM/YYYY');					
+  					}
+  					if(id.consannexid.consentstartdate != null){
+  					id.consannexid.consentstartdate = moment(id.consannexid.consentstartdate).format('DD/MM/YYYY');				
+  					}						
+  						if(id.consannexid.eventEndDate != null){
+  							id.consannexid.eventEndDate = moment(id.consannexid.eventEndDate).format('DD/MM/YYYY');
+  						}
+  						id.consannexid.profilecountry.code = id.consannexid.profilecountry.code.substring(0,2);
+  					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
+      		    id.consannexid.PartyAddressType = "Primary Address";
+      		    id.consannexid.SourceSystemCode = "DLU-P";
+      		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS"
+      		    id.consannexid.trid = "TR-ID";
+      		    
+      		    
+      	      	  
+      	      	  $scope.compare();
+      }
 	 
     
     

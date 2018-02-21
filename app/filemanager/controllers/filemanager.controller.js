@@ -209,7 +209,60 @@
             		            var link =respn.data.links[0];
             		            var docLink = link.href;		            
             		            console.log("Function calling from Task module");
-            		            $scope.item.consannexid.annnexlocation=docLink;            		           
+            		            $scope.item.consannexid.annnexlocation=docLink; 
+            		            
+            		            
+            		            
+            		            if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+            		            	item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,'DD-MM-YYYY');
+ 	     		 		       }
+ 	     		 	           if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,'DD-MM-YYYY');
+ 	     		 		       }
+ 	     		            	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+ 	     		            	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+ 	     		            	item.consannexid.startdate = moment(item.consannexid.consentstart).format('YYYY-MM-DD');   			
+ 	     		            	item.consannexid.enddate = moment(item.consannexid.consentend).format('YYYY-MM-DD');
+ 	     		            	delete item.consannexid.consentstart;
+ 	     				        delete item.consannexid.consentend;
+ 	     				        delete item.consannexid.startdate;
+ 	     				        delete item.consannexid.enddate;	
+ 	     				       if(item.consannexid.startdate  == "Invalid date" || item.consannexid.startdate  == undefined ){
+ 	     			        	   delete item.consannexid.startdate ;
+ 	     			           }	     			           
+ 	     			           if(item.consannexid.enddate == "Invalid date" || item.consannexid.enddate == undefined){
+ 	     			        	   delete item.consannexid.enddate;
+ 	     			           }
+            		            
+            		            
+            		            
+            		            
             		            Task.update({ id:item.id },item).$promise.then(function(response){
 	        		            	if(response.$promise.$$state.status==1)
 	        		            		{

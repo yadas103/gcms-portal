@@ -156,6 +156,7 @@
   	      			result = angular.equals($scope.selected[i].id, id.id);
   	      	    if(result == true){
   	      	    	$scope.selected.splice(i, 1);
+  	      	    	break;
   	      	    }     	    
   	      		  }
   	      		 if(result == false) {

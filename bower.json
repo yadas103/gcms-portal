@@ -25,7 +25,8 @@
     "ng-idle": "^1.3.2",
     "angular-toasty": "^1.0.6",
     "angular-ui-bootstrap-datetimepicker": "^2.5.1",
-    "angularjs-datepicker": "^2.1.23"
+    "angularjs-datepicker": "^2.1.23",
+    "alasql": "^0.4.5"
   },
   "devDependencies": {
     "angular-bootstrap": "^2.5.0"

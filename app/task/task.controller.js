@@ -59,6 +59,9 @@
 		 $scope.firstload=false;
 		 $scope.selected = [];
 		 $scope.itemsByPage = 15;
+		 $scope.excelSheetDLUAll = {} ;
+		 $scope.excelSheetSummaryAll = {} ;
+		 var taskOwner = {};
 		 $scope.callServer = function(tableState) {
 			 $scope.tableState =tableState;
 			 if(!$scope.firstload){
@@ -147,7 +150,6 @@
 		 */
 
                 
-             	  
           $scope.select = function(inputId) {
           	var result = false;      	  
         	  	var id =  angular.copy(inputId);
@@ -163,7 +165,7 @@
   	      			$scope.selected.push(id); 
   	      		 }
   	      	  };
-        	  	
+  	      
       		    if(id.consannexid.bpid.profileType == 'HCP'){
       		    	id.consannexid.bpid.profileType = 'PERSON';
       		    	id.consannexid.lastOrgName = id.consannexid.bpid.lastName;
@@ -186,103 +188,339 @@
       		    id.consannexid.PartyAddressType = "Primary Address";
       		    id.consannexid.SourceSystemCode = "DLU-P";
       		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS"
-      		    id.consannexid.trid = "TR-ID";
-      		    
-      		    
-      	      	  
-      	      	  $scope.compare();
-      }
-	 
-    
-    
-    $scope.loadDataDLUAll = function() {
-        if (!$scope.downloadAll) {               
+      		    id.consannexid.trid = "TR-ID";     		    
+      	      	  $scope.compare();   	      	
+      };  
+      
+      
+      $scope.selectedDLUPDownload = function(selected){
+      	var excelSheetDLUPSel = {};
+      	for(var i in selected){
+      	excelSheetDLUPSel[i] = { 
+  				'Record_type':'',
+  				'TR Party ID': selected[i].consannexid.bpid.id, 
+  				'Party_Type':selected[i].consannexid.bpid.profileType,
+  				'Organization':(selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? '' : selected[i].consannexid.bpid.organisationName,
+  				'Party Last Name':(selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? '' : selected[i].consannexid.bpid.lastName,
+  				'Party First Name':(selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? '' : selected[i].consannexid.bpid.firstName, 
+  				'Party Middle Name':'',
+  				'Party Credential':'',
+  				'Party Primary Specialty':'',
+  				'Party Title':'',
+  				'Party Prefix':'',
+  				'Party Suffix Name':'',
+  				'Party Email Address':'',
+  				'Party Role/Type of Attendee':'',
+  				'Source System Identifier for Party':'',
+  				'Party ID_1':'',
+  				'Party ID Type_1':'',
+  				'Party ID_2':'',
+  				'Party ID Type_2':'',
+  				'Party ID_3':'',
+  				'Party ID Type_3':'',
+  				'Party ID_4':'',
+  				'Party ID Type_4':'',
+  				'Party ID_5':'',
+  				'Party ID Type_5':'',
+  				'Party ID_6':'',
+  				'Party ID Type_6':'',
+  				'Party ID_7':'',
+  				'Party ID Type_7':'',
+  				'Party ID_8':'',
+  				'Party ID Type_8':'',
+  				'Party ID_9':'',
+  				'Party ID Type_9':'',
+  				'Party ID_10':'',
+  				'Party ID Type_10':'',
+  				'Party Address Type':"Primary Address",
+  				'Party Address Line 1':(selected[i].consannexid.bpid.address == null || selected[i].consannexid.bpid.address == undefined ) ? '' : selected[i].consannexid.bpid.address,
+  				'Party Address Line 2':'', 
+  				'Party Address Line 3':'', 
+  				'Party Address Line 4':'', 
+  				'Party Region':'',
+  				'Party County':'',
+  				'Party Province':'',
+  				'Party Canton':'',
+  				'Party City':(selected[i].consannexid.bpid.city == null || selected[i].consannexid.bpid.city == undefined ) ? '' : selected[i].consannexid.bpid.city,
+  				'Party Postal/Zip Code':'',
+  				'Party State':'',
+  				'Party Country Code (2 character ISO)':selected[i].consannexid.profilecountry.code.substring(0,2), 
+  				'Source System Identifier for Party_s Address': '',
+  				'Consent_editor':'',
+  				'Consent_required':'',
+  				'Consent_Status':selected[i].consannexid.consentstatus.consentName,
+  				'Consent_status_reason': '',
+  				'Consent_Start_Date':(selected[i].consannexid.consentstartdate == null || selected[i].consannexid.consentstartdate == undefined ) ? '' : selected[i].consannexid.consentstartdate,
+  				'Consent_End_Date':(selected[i].consannexid.consentenddate == null || selected[i].consannexid.consentenddate == undefined ) ? '' : selected[i].consannexid.consentenddate,
+  				'Active Flag SAP':'',
+  				'Parent Institution ID':'',
+  				'Parent Institution Type':'',
+  				'FCPA Type':'',
+  				'File Name':'',
+  				'Source System Code':'DLU-P',
+  				'Source Sub-System Code':'',
+  				'Custom/Flex Field 1':'',
+  				'Custom/Flex Field 2':'',
+  				'Custom/Flex Field 3':'',
+  				'Custom/Flex Field 4':'',
+  				'Custom/Flex Field 5':'',
+  				'Custom/Flex Field 6':'',
+  				'Custom/Flex Field 7':'',
+  				'Custom/Flex Field 8':'',
+  				'Custom/Flex Field 9':'',
+  				'Custom/Flex Field 10':'',
+  				'Custom/Flex Field 11':'',
+  				'Custom/Flex Field 12':'',
+  				'Custom/Flex Field 13':'',
+  				'Custom/Flex Field 14':'',
+  				'Custom/Flex Field 15':"Consent Downloaded from GCMS",
+  				'Custom/Flex Field 16':'',
+  				'Custom/Flex Field 17':'',
+  				'Custom/Flex Field 18':'',
+  				'Custom/Flex Field 19':'',
+  				'Custom/Flex Field 20':''						
+  				} ;				
+      	}
+  		var data1 = excelSheetDLUPSel;
+          var opts = [{sheetid:'Data',header:true}];
+          var res = alasql('SELECT INTO XLSX("Data.xlsx",?) FROM ?',[opts,[data1]]); 
+      };
+      
+      $scope.selectedTableSummaryDownload = function(selected){
+      	var excelSheetSummarySel = {};
+      	for(var i in selected){
+      		var taskOwnerFN = ($scope.selected[i].assignedto.firstName == null || $scope.selected[i].assignedto.firstName == undefined ) ? '' : $scope.selected[i].assignedto.firstName;
+  			var taskOwnerLN = ($scope.selected[i].assignedto.lastName == null || $scope.selected[i].assignedto.lastName == undefined ) ? '' : $scope.selected[i].assignedto.lastName;
+  			var taskOwnerUN = $scope.selected[i].assignedto.userName;
+  			var space = " ";
+  			taskOwner = taskOwnerFN.concat(space);
+  			taskOwner = taskOwner.concat(taskOwnerLN);
+  			taskOwner = taskOwner.concat("(");
+  			taskOwner = taskOwner.concat(taskOwnerUN);
+  			taskOwner = taskOwner.concat(")");
+      	excelSheetSummarySel[i] = { 'PayerCountry':'', 'LastName': '', 'FirstName': '','OrganizationName':'', 'ProfileCountry': '', 'EventName': '', 'ConsentStatus': '','UpdatedDate': '','TaskOwner': '','TaskStatus': '' } ;
+  		excelSheetSummarySel[i].PayerCountry = (selected[i].consannexid.payercountry.name == null || selected[i].consannexid.payercountry.name == undefined ) ? '' : selected[i].consannexid.payercountry.name;
+  		excelSheetSummarySel[i].LastName = (selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? '' : selected[i].consannexid.bpid.lastName;
+  		excelSheetSummarySel[i].FirstName =  (selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? '' : selected[i].consannexid.bpid.firstName;
+  		excelSheetSummarySel[i].OrganizationName = (selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? '' : selected[i].consannexid.bpid.organisationName;
+  		excelSheetSummarySel[i].ProfileCountry = selected[i].consannexid.profilecountry.name;
+  		excelSheetSummarySel[i].UpdatedDate = selected[i].updatedDate;
+  		excelSheetSummarySel[i].TaskOwner = taskOwner;
+  		excelSheetSummarySel[i].TaskStatus = selected[i].taskstatus;	
+  		excelSheetSummarySel[i].EventName =  (selected[i].consannexid.eventname == null || selected[i].consannexid.eventname == undefined ) ? '' : selected[i].consannexid.eventname;
+  		excelSheetSummarySel[i].ConsentStatus =  selected[i].consannexid.consentstatus.consentName;			
+      	}
+  		var data1 = excelSheetSummarySel;
+  		var opts = [{sheetid:'Summary',header:true}];
+  		var res = alasql('SELECT INTO XLSX("Summary.xlsx",?) FROM ?',[opts,[data1]]);
+      
+      };
+      
+      
+      
+      $scope.loadDataDLUAll = function() {   
+          if (!$scope.downloadAll) {               
+             Task.get({
+  		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+  		    	lastName : $scope.searchparam.predicateObject.lastname,
+  		    	firstName :$scope.searchparam.predicateObject.firstname,
+  		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+  		    	eventName :$scope.searchparam.predicateObject.eventname,
+  		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+  		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+  		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+  		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+  		        page : 1,
+  		        size : $scope.totalcount,
+  		        sort : $scope.sortparam,
+  		        reverse : false 
+  		        }).$promise.then(function(task) {
+  		        	$scope.data = task.currentPageData;
+  		        	for(var i  in $scope.data){
+  						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
+  							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
+  						}
+  						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
+  							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
+  						}
+  						if($scope.data[i].consannexid.consentenddate != null){
+  						$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
+  						}
+  						if($scope.data[i].consannexid.consentstartdate != null){
+  						$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
+  						}						
+  	
+  							$scope.excelSheetDLUAll[i] = { 
+  							'Record_type':'',
+  							'TR Party ID': $scope.data[i].consannexid.bpid.id, 
+  							'Party_Type':$scope.data[i].consannexid.bpid.profileType,
+  							'Organization':($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? '' : $scope.data[i].consannexid.bpid.organisationName,
+  							'Party Last Name':($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? '' : $scope.data[i].consannexid.bpid.lastName,
+  							'Party First Name':($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? '' : $scope.data[i].consannexid.bpid.firstName, 
+  							'Party Middle Name':'',
+  							'Party Credential':'',
+  							'Party Primary Specialty':'',
+  							'Party Title':'',
+  							'Party Prefix':'',
+  							'Party Suffix Name':'',
+  							'Party Email Address':'',
+  							'Party Role/Type of Attendee':'',
+  							'Source System Identifier for Party':'',
+  							'Party ID_1':'',
+  							'Party ID Type_1':'',
+  							'Party ID_2':'',
+  							'Party ID Type_2':'',
+  							'Party ID_3':'',
+  							'Party ID Type_3':'',
+  							'Party ID_4':'',
+  							'Party ID Type_4':'',
+  							'Party ID_5':'',
+  							'Party ID Type_5':'',
+  							'Party ID_6':'',
+  							'Party ID Type_6':'',
+  							'Party ID_7':'',
+  							'Party ID Type_7':'',
+  							'Party ID_8':'',
+  							'Party ID Type_8':'',
+  							'Party ID_9':'',
+  							'Party ID Type_9':'',
+  							'Party ID_10':'',
+  							'Party ID Type_10':'',
+  							'Party Address Type':"Primary Address",
+  							'Party Address Line 1':($scope.data[i].consannexid.bpid.address == null || $scope.data[i].consannexid.bpid.address == undefined ) ? '' : $scope.data[i].consannexid.bpid.address,  
+  							'Party Address Line 2':'', 
+  							'Party Address Line 3':'', 
+  							'Party Address Line 4':'', 
+  							'Party Region':'',
+  							'Party County':'',
+  							'Party Province':'',
+  							'Party Canton':'',
+  							'Party City':($scope.data[i].consannexid.bpid.city == null || $scope.data[i].consannexid.bpid.city == undefined ) ? '' : $scope.data[i].consannexid.bpid.city,
+  							'Party Postal/Zip Code':'',
+  							'Party State':'',
+  							'Party Country Code (2 character ISO)':$scope.data[i].consannexid.profilecountry.code.substring(0,2), 
+  							'Source System Identifier for Party_s Address': '',
+  							'Consent_editor':'',
+  							'Consent_required':'',
+  							'Consent_Status':$scope.data[i].consannexid.consentstatus.consentName,
+  							'Consent_status_reason': '',
+  							'Consent_Start_Date':($scope.data[i].consannexid.consentstartdate == null || $scope.data[i].consannexid.consentstartdate == undefined ) ? '' : $scope.data[i].consannexid.consentstartdate,
+  							'Consent_End_Date':($scope.data[i].consannexid.consentenddate == null || $scope.data[i].consannexid.consentenddate == undefined ) ? '' : $scope.data[i].consannexid.consentenddate,
+  							'Active Flag SAP':'',
+  							'Parent Institution ID':'',
+  							'Parent Institution Type':'',
+  							'FCPA Type':'',
+  							'File Name':'',
+  							'Source System Code':'DLU-P',
+  							'Source Sub-System Code':'',
+  							'Custom/Flex Field 1':'',
+  							'Custom/Flex Field 2':'',
+  							'Custom/Flex Field 3':'',
+  							'Custom/Flex Field 4':'',
+  							'Custom/Flex Field 5':'',
+  							'Custom/Flex Field 6':'',
+  							'Custom/Flex Field 7':'',
+  							'Custom/Flex Field 8':'',
+  							'Custom/Flex Field 9':'',
+  							'Custom/Flex Field 10':'',
+  							'Custom/Flex Field 11':'',
+  							'Custom/Flex Field 12':'',
+  							'Custom/Flex Field 13':'',
+  							'Custom/Flex Field 14':'',
+  							'Custom/Flex Field 15':"Consent Downloaded from GCMS",
+  							'Custom/Flex Field 16':'',
+  							'Custom/Flex Field 17':'',
+  							'Custom/Flex Field 18':'',
+  							'Custom/Flex Field 19':'',
+  							'Custom/Flex Field 20':''
+  							
+  							
+  							
+  							} ;	
+  																				
+  					}
+  					var data1 = $scope.excelSheetDLUAll;
+  		            var opts = [{sheetid:'Data',header:true}];
+  		            var res = alasql('SELECT INTO XLSX("Data.xlsx",?) FROM ?',[opts,[data1]]);
+  		        	$scope.downloadAll = true;
+  		            
+  		        });
+          }
+        }
+
+
+     
+      $scope.loadData = function() {
+        if (!$scope.loaded) {               
            Task.get({
-		    	payercountry :$scope.searchparam.predicateObject.payercountry,
-		    	lastName : $scope.searchparam.predicateObject.lastname,
-		    	firstName :$scope.searchparam.predicateObject.firstname,
-		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
-		    	eventName :$scope.searchparam.predicateObject.eventname,
-		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
-		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
-		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
-		    	updateddate : $scope.searchparam.predicateObject.updateddate,
-		        page : 1,
-		        size : $scope.totalcount,
-		        sort : $scope.sortparam,
-		        reverse : false 
-		        }).$promise.then(function(task) {
-		        	$scope.data = task.currentPageData;
-		        	for(var i  in $scope.data){
-						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
-							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
-						}
-						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
-							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
-						}
-						if($scope.data[i].consannexid.consentenddate != null){
-						$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
-						}
-						if($scope.data[i].consannexid.consentstartdate != null){
-						$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
-						}						
-						$scope.data[i].consannexid.profilecountry.code = $scope.data[i].consannexid.profilecountry.code.substring(0,2);
-						$scope.data[i].consannexid.PartyAddressType = "Primary Address";
-						$scope.data[i].consannexid.SourceSystemCode = "DLU-P";
-						$scope.data[i].consannexid.CustomFlexField15 = "Consent Downloaded from GCMS";
-						$scope.data[i].consannexid.trid = "TR-ID";
-					}
-		        	$scope.downloadAll = true;
-		            
-		        });
+  		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+  		    	lastName : $scope.searchparam.predicateObject.lastname,
+  		    	firstName :$scope.searchparam.predicateObject.firstname,
+  		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+  		    	eventName :$scope.searchparam.predicateObject.eventname,
+  		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+  		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+  		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+  		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+  		        page : 1,
+  		        size : $scope.totalcount,
+  		        sort : $scope.sortparam,
+  		        reverse : false 
+  		        }).$promise.then(function(task) {
+  		        	$scope.data = task.currentPageData;
+  		        	for(var i  in $scope.data){
+  						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
+  							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
+  							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.lastName;
+  						}
+  						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
+  							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
+  							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.organisationName;
+  						}
+  						if($scope.data[i].consannexid.consentenddate != null){
+  							$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
+  							}
+  							if($scope.data[i].consannexid.consentstartdate != null){
+  							$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
+  							}
+  							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');	
+  							if($scope.data[i].consannexid.eventEndDate != null){
+  								$scope.data[i].consannexid.eventEndDate = moment($scope.data[i].consannexid.eventEndDate).format('DD/MM/YYYY');
+  							}
+  							
+  							var taskOwnerFN = ($scope.data[i].assignedto.firstName == null || $scope.data[i].assignedto.firstName == undefined ) ? '' : $scope.data[i].assignedto.firstName;
+  							var taskOwnerLN = ($scope.data[i].assignedto.lastName == null || $scope.data[i].assignedto.lastName == undefined ) ? '' : $scope.data[i].assignedto.lastName;
+  							var taskOwnerUN = $scope.data[i].assignedto.userName;
+  							var space = " ";
+  							taskOwner = taskOwnerFN.concat(space);
+  							taskOwner = taskOwner.concat(taskOwnerLN);
+  							taskOwner = taskOwner.concat("(");
+  							taskOwner = taskOwner.concat(taskOwnerUN);
+  							taskOwner = taskOwner.concat(")");
+  							
+  							$scope.excelSheetSummaryAll[i] = { 'PayerCountry':'', 'LastName': '', 'FirstName': '','OrganizationName':'', 'ProfileCountry': '', 'EventName': '', 'ConsentStatus': '','UpdatedDate': '','TaskOwner': '','TaskStatus': '' } ;
+  							$scope.excelSheetSummaryAll[i].PayerCountry = ($scope.data[i].consannexid.payercountry.name == null || $scope.data[i].consannexid.payercountry.name == undefined ) ? '' : $scope.data[i].consannexid.payercountry.name;
+  							$scope.excelSheetSummaryAll[i].LastName = ($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? '' : $scope.data[i].consannexid.bpid.lastName;
+  							$scope.excelSheetSummaryAll[i].FirstName =  ($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? '' : $scope.data[i].consannexid.bpid.firstName;
+  							$scope.excelSheetSummaryAll[i].OrganizationName = ($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? '' : $scope.data[i].consannexid.bpid.organisationName;
+  							$scope.excelSheetSummaryAll[i].ProfileCountry = $scope.data[i].consannexid.profilecountry.name;
+  							$scope.excelSheetSummaryAll[i].UpdatedDate = $scope.data[i].updatedDate;
+  							$scope.excelSheetSummaryAll[i].TaskOwner = taskOwner;
+  							$scope.excelSheetSummaryAll[i].TaskStatus = $scope.data[i].taskstatus;	
+  							$scope.excelSheetSummaryAll[i].EventName =  ($scope.data[i].consannexid.eventname == null || $scope.data[i].consannexid.eventname == undefined ) ? '' : $scope.data[i].consannexid.eventname;
+  							$scope.excelSheetSummaryAll[i].ConsentStatus =  $scope.data[i].consannexid.consentstatus.consentName;
+  					}	
+  		        	
+  		        	var data1 = $scope.excelSheetSummaryAll;
+  		            var opts = [{sheetid:'Summary',header:true}];
+  		            var res = alasql('SELECT INTO XLSX("Summary.xlsx",?) FROM ?',[opts,[data1]]);
+  		        	
+  		        	$scope.loaded = true;
+  		            
+  		        });
         }
       }
 
-    
-    $scope.loadData = function() {
-      if (!$scope.loaded) {               
-         Task.get({
-		    	payercountry :$scope.searchparam.predicateObject.payercountry,
-		    	lastName : $scope.searchparam.predicateObject.lastname,
-		    	firstName :$scope.searchparam.predicateObject.firstname,
-		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
-		    	eventName :$scope.searchparam.predicateObject.eventname,
-		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
-		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
-		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
-		    	updateddate : $scope.searchparam.predicateObject.updateddate,
-		        page : 1,
-		        size : $scope.totalcount,
-		        sort : $scope.sortparam,
-		        reverse : false 
-		        }).$promise.then(function(task) {
-		        	$scope.data = task.currentPageData;
-		        	for(var i  in $scope.data){
-						if($scope.data[i].consannexid.bpid.profileType == 'HCP'){
-							$scope.data[i].consannexid.bpid.profileType = 'PERSON';
-							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.lastName;
-						}
-						else if($scope.data[i].consannexid.bpid.profileType == 'HCO'){
-							$scope.data[i].consannexid.bpid.profileType = 'ORGANIZATION';
-							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.organisationName;
-						}
-						if($scope.data[i].consannexid.consentenddate != null){
-							$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format('DD/MM/YYYY');
-							}
-							if($scope.data[i].consannexid.consentstartdate != null){
-							$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format('DD/MM/YYYY');
-							}
-							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format('DD/MM/YYYY');	
-							if($scope.data[i].consannexid.eventEndDate != null){
-								$scope.data[i].consannexid.eventEndDate = moment($scope.data[i].consannexid.eventEndDate).format('DD/MM/YYYY');
-							}
-					}
-		        	$scope.loaded = true;
-		            
-		        });
-      }
-    }
-               
 		
       	
         	$scope.close=function(item) {

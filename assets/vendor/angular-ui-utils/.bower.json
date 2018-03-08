@@ -1,0 +1,18 @@
+{
+  "name": "angular-ui-unique",
+  "main": "./unique.js",
+  "dependencies": {
+    "angular": ">= 1.0.2"
+  },
+  "homepage": "https://github.com/angular-ui/ui-utils",
+  "_release": "f2ae906461",
+  "_resolution": {
+    "type": "branch",
+    "branch": "bower-unique",
+    "commit": "f2ae90646145665fabd467c6b9ae7705917f7a02"
+  },
+  "_source": "git://github.com/angular-ui/ui-utils.git",
+  "_target": "bower-unique",
+  "_originalSource": "angular-ui-utils",
+  "_direct": true
+}

@@ -298,17 +298,26 @@
   			taskOwner = taskOwner.concat("(");
   			taskOwner = taskOwner.concat(taskOwnerUN);
   			taskOwner = taskOwner.concat(")");
-      	excelSheetSummarySel[i] = { 'PayerCountry':'', 'LastName': '', 'FirstName': '','OrganizationName':'', 'ProfileCountry': '', 'EventName': '', 'ConsentStatus': '','UpdatedDate': '','TaskOwner': '','TaskStatus': '' } ;
-  		excelSheetSummarySel[i].PayerCountry = (selected[i].consannexid.payercountry.name == null || selected[i].consannexid.payercountry.name == undefined ) ? '' : selected[i].consannexid.payercountry.name;
-  		excelSheetSummarySel[i].LastName = (selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? '' : selected[i].consannexid.bpid.lastName;
-  		excelSheetSummarySel[i].FirstName =  (selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? '' : selected[i].consannexid.bpid.firstName;
-  		excelSheetSummarySel[i].OrganizationName = (selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? '' : selected[i].consannexid.bpid.organisationName;
-  		excelSheetSummarySel[i].ProfileCountry = selected[i].consannexid.profilecountry.name;
-  		excelSheetSummarySel[i].UpdatedDate = selected[i].updatedDate;
-  		excelSheetSummarySel[i].TaskOwner = taskOwner;
-  		excelSheetSummarySel[i].TaskStatus = selected[i].taskstatus;	
-  		excelSheetSummarySel[i].EventName =  (selected[i].consannexid.eventname == null || selected[i].consannexid.eventname == undefined ) ? '' : selected[i].consannexid.eventname;
-  		excelSheetSummarySel[i].ConsentStatus =  selected[i].consannexid.consentstatus.consentName;			
+      	excelSheetSummarySel[i] = { 
+      			'Party Type':selected[i].consannexid.bpid.profileType, 
+    			'BP ID':selected[i].consannexid.bpid.id, 
+    			'Last/Org Name':(selected[i].consannexid.bpid.profileType == 'PERSON' ? ((selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? '' : selected[i].consannexid.bpid.lastName) : ((selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? '' : selected[i].consannexid.bpid.organisationName) ), 
+    			'First Name':(selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? '' : selected[i].consannexid.bpid.firstName, 
+    			'Profile Country':selected[i].consannexid.profilecountry.code.substring(0,2),	
+    			'Payer Country':selected[i].consannexid.payercountry.code.substring(0,2), 
+    			'Event Name':(selected[i].consannexid.eventname == null || selected[i].consannexid.eventname == undefined ) ? '' : selected[i].consannexid.eventname,
+    			'PO Code':selected[i].consannexid.pocode,
+    			'ACM Code':selected[i].consannexid.acmcode,
+    			'Consent Status':selected[i].consannexid.consentstatus.consentName,
+    			'Consent Updated Date':selected[i].updatedDate,
+    			'Consent Start Date':(selected[i].consannexid.consentstartdate == null || selected[i].consannexid.consentstartdate == undefined ) ? '' : selected[i].consannexid.consentstartdate,
+				'Consent End Date':(selected[i].consannexid.consentenddate == null || selected[i].consannexid.consentenddate == undefined ) ? '' : selected[i].consannexid.consentenddate,
+    			'Event End Date': (selected[i].consannexid.eventEndDate == null || selected[i].consannexid.eventEndDate == undefined ) ? '' : selected[i].consannexid.eventEndDate,
+    			'Task Owner Last Name':selected[i].assignedto.lastName, 
+    			'Task Owner First Name':selected[i].assignedto.firstName, 
+    			'NTID':selected[i].assignedto.userName,
+    			'Task Status':selected[i].taskstatus
+    			} ;     	
       	}
   		var data1 = excelSheetSummarySel;
   		var opts = [{sheetid:'Summary',header:true}];
@@ -498,18 +507,28 @@
   							taskOwner = taskOwner.concat(taskOwnerUN);
   							taskOwner = taskOwner.concat(")");
   							
-  							$scope.excelSheetSummaryAll[i] = { 'PayerCountry':'', 'LastName': '', 'FirstName': '','OrganizationName':'', 'ProfileCountry': '', 'EventName': '', 'ConsentStatus': '','UpdatedDate': '','TaskOwner': '','TaskStatus': '' } ;
-  							$scope.excelSheetSummaryAll[i].PayerCountry = ($scope.data[i].consannexid.payercountry.name == null || $scope.data[i].consannexid.payercountry.name == undefined ) ? '' : $scope.data[i].consannexid.payercountry.name;
-  							$scope.excelSheetSummaryAll[i].LastName = ($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? '' : $scope.data[i].consannexid.bpid.lastName;
-  							$scope.excelSheetSummaryAll[i].FirstName =  ($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? '' : $scope.data[i].consannexid.bpid.firstName;
-  							$scope.excelSheetSummaryAll[i].OrganizationName = ($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? '' : $scope.data[i].consannexid.bpid.organisationName;
-  							$scope.excelSheetSummaryAll[i].ProfileCountry = $scope.data[i].consannexid.profilecountry.name;
-  							$scope.excelSheetSummaryAll[i].UpdatedDate = $scope.data[i].updatedDate;
-  							$scope.excelSheetSummaryAll[i].TaskOwner = taskOwner;
-  							$scope.excelSheetSummaryAll[i].TaskStatus = $scope.data[i].taskstatus;	
-  							$scope.excelSheetSummaryAll[i].EventName =  ($scope.data[i].consannexid.eventname == null || $scope.data[i].consannexid.eventname == undefined ) ? '' : $scope.data[i].consannexid.eventname;
-  							$scope.excelSheetSummaryAll[i].ConsentStatus =  $scope.data[i].consannexid.consentstatus.consentName;
-  					}	
+  							$scope.excelSheetSummaryAll[i] = { 
+  									'Party Type':$scope.data[i].consannexid.bpid.profileType, 
+  									'BP ID':$scope.data[i].consannexid.bpid.id, 
+  									'Last/Org Name':($scope.data[i].consannexid.bpid.profileType == 'PERSON' ? (($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? '' : $scope.data[i].consannexid.bpid.lastName) : (($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? '' : $scope.data[i].consannexid.bpid.organisationName) ), 
+  									'First Name':($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? '' : $scope.data[i].consannexid.bpid.firstName, 
+  									'Profile Country':$scope.data[i].consannexid.profilecountry.code.substring(0,2),	
+  									'Payer Country':$scope.data[i].consannexid.payercountry.code.substring(0,2), 
+  									'Event Name':($scope.data[i].consannexid.eventname == null || $scope.data[i].consannexid.eventname == undefined ) ? '' : $scope.data[i].consannexid.eventname,
+  									'PO Code':$scope.data[i].consannexid.pocode,
+  									'ACM Code':$scope.data[i].consannexid.acmcode,
+  									'Consent Status':$scope.data[i].consannexid.consentstatus.consentName,
+  									'Consent Updated Date':$scope.data[i].updatedDate,
+  									'Consent Start Date':($scope.data[i].consannexid.consentstartdate == null || $scope.data[i].consannexid.consentstartdate == undefined ) ? '' : $scope.data[i].consannexid.consentstartdate,
+  									'Consent End Date':($scope.data[i].consannexid.consentenddate == null || $scope.data[i].consannexid.consentenddate == undefined ) ? '' : $scope.data[i].consannexid.consentenddate,
+  									'Event End Date': ($scope.data[i].consannexid.eventEndDate == null || $scope.data[i].consannexid.eventEndDate == undefined ) ? '' : $scope.data[i].consannexid.eventEndDate,
+  									'Task Owner Last Name':$scope.data[i].assignedto.lastName, 
+  									'Task Owner First Name':$scope.data[i].assignedto.firstName, 
+  									'NTID':$scope.data[i].assignedto.userName,
+  									'Task Status':$scope.data[i].taskstatus
+  									} ;
+  							 							
+  		        	}	
   		        	
   		        	var data1 = $scope.excelSheetSummaryAll;
   		            var opts = [{sheetid:'Summary',header:true}];

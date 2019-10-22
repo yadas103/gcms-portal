@@ -544,7 +544,8 @@
       	
         	$scope.close=function(item) {
           		if(item.consannexid.annnexlocation != undefined){
-		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != null && item.consannexid.eventname != ""){
+          			//if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != null && item.consannexid.eventname != "")
+		      		if(item.consannexid.consentstatus.id != '7004' && item.consannexid.eventname != null && item.consannexid.eventname != ""){
 		      			 if(item.consannexid.acmcode != null  ||item.consannexid.pocode != null ){
 		      				 if(item.consannexid.acmcode != "" || item.consannexid.pocode != "" ){
 		      					item.taskstatus="COMPLETED";
@@ -711,7 +712,8 @@
 	         }
 	            });
 	         if(item.consannexid.annnexlocation != undefined){
-		      		if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != null && item.consannexid.eventname != ""){
+	        	 //if(item.consannexid.consentstatus.id != '63' && item.consannexid.eventname != null && item.consannexid.eventname != "")
+		      		if(item.consannexid.consentstatus.id != '7004' && item.consannexid.eventname != null && item.consannexid.eventname != ""){
 		      			 if(item.consannexid.acmcode != null  ||item.consannexid.pocode != null ){
 		      				 if(item.consannexid.acmcode != "" || item.consannexid.pocode != "" ){
 		      					item.taskstatus="COMPLETED";

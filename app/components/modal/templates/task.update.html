@@ -34,7 +34,8 @@
        <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"    ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"></gcms-lov> 
     </div>
   </div>
-  <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'">
+  <!--<div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'"> -->
+  <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='7004'">
     <label for="middleName" class="col-sm-4 control-label" style="padding-left: 4px;">Consent Status Reason :</label>
     <div class="col-sm-8">
        <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup form-control" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" ></textarea> 

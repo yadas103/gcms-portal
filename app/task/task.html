@@ -170,15 +170,18 @@
 							   		<span  title="Document = Missing" data-toggle="tooltip"   style="color: gray">{{con.taskstatus | lowercase}}</span>							   
 							   		<span  title="Document = Missing" data-toggle="tooltip"  class="fa fa-exclamation-circle" style="color: #337ab7;margin-left: 7%;"></span>
 							   </div>
-							 <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id =='63'">
+							   <!-- <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id =='63'"> -->
+							 <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id =='7004'">
 							 		<span  title="Document=OK , Consent=Missing" data-toggle="tooltip"  style="color: #337ab7">{{con.taskstatus | lowercase}}</span>
 							   		<span  title="Document=OK , Consent=Missing" data-toggle="tooltip"  class="fa fa-exclamation-circle cap"  style="color: #337ab7;margin-left: 7%;"></span>
 							   </div>
-							    <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname==undefined" >
+							   <!-- <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname==undefined" > -->
+							    <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='7004' && con.consannexid.eventname==undefined" >
 							 		<span  title=" Document = OK , Consent = OK , Event = Missing" data-toggle="tooltip" style="color: #337ab7">{{con.taskstatus | lowercase}}</span>
 							   		<span  title=" Document = OK , Consent = OK , Event = Missing" data-toggle="tooltip"  class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
 							   </div>
-							   <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname!=undefined && (con.consannexid.pocode == undefined ||con.consannexid.acmcode == undefined )">
+							   <!-- <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='63' && con.consannexid.eventname!=undefined && (con.consannexid.pocode == undefined ||con.consannexid.acmcode == undefined )"> -->
+							   <div ng-if="con.consannexid.annnexlocation != undefined && con.consannexid.consentstatus.id !='7004' && con.consannexid.eventname!=undefined && (con.consannexid.pocode == undefined ||con.consannexid.acmcode == undefined )">
 							 		<span  title="Document = OK , Consent = OK,  PO Code/ACM Code = Missing" data-toggle="tooltip" style="color: #337ab7">{{con.taskstatus | lowercase}}</span>
 							   		<span  title="Document = OK , Consent = OK,  PO Code/ACM Code = Missing" data-toggle="tooltip"  class="fa fa-exclamation-circle"  style="color: #337ab7;margin-left: 7%;"></span>
 							   </div> 

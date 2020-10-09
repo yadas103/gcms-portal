@@ -749,7 +749,49 @@
                      console.log($scope.error);
                }
         };    
-           
-                     
-	}
+      
+        //Start : Changes for View Link of Pending Task
+        $scope.viewTemplate = function(item){
+        	ConsentAnnexView.update({ id:item.id }, item).$promise.then(function(res){
+            	
+            	if(res.$promise.$$state.status==1){
+            		$http.get('./config.json').then(function (response) {
+    					var link = response.data["test-server"].ENVIRONMENT.SERVICE_URI+'consent-pdf/'+item.id;
+    					$http({method: 'GET',url: link,responseType: 'arraybuffer'}).then(function (response) {
+    						var bin = new Blob([response.data]);
+    						var docName='';
+    						if(item.bpid.profileType == "HCP"){
+    						docName = item.bpid.lastName+','+item.bpid.firstName+'.pdf'; 
+    						}else{
+    						docName = item.bpid.organisationName+'.pdf'; 
+    						}
+      
+    						saveAs(bin, docName); 
+    						toasty.success({
+    	            	        title: 'Success',
+    	            	        msg: 'PDF Downloaded Successfully!',
+    	            	        showClose: true,
+    	            	        clickToClose: true,
+    	            	        timeout: 5000,
+    	            	        sound: false,
+    	            	        html: false,
+    	            	        shake: false,
+    	            	        theme: 'bootstrap'
+    	            	      });
+    					}).catch(function(){
+    						internalError();
+    					});	
+    					
+    				});
+            	}else{
+            			unspecifiedError();	            		
+            		}
+            	    	            	
+ 		      }).catch(function(){
+	 		    	// refresh();
+	 		    	 internalError();	
+	       		 });
+        };
+        //End
+	}               
 })();

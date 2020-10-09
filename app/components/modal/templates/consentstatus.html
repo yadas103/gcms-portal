@@ -55,8 +55,14 @@
 					<td>{{field.updatedDate | date:'dd-MM-yyyy' }}</td>
 					<td></td>
 					<td>
-						<div ng-if="field.annnexlocation==undefined">
+						<!-- Changes for View Link of Pending Task -->
+						<!--<div ng-if="field.annnexlocation==undefined">
 							<span style="color: red;"></span>
+						</div> -->
+						<div ng-if="field.annnexlocation==undefined">
+							<div ng-show="true" ng-controller="ProfileListCtrl">
+								<a href="" ng-click="viewTemplate(field)" style="margin-left: 29%;"> View </a>
+							</div>
 						</div>
 						<div ng-if="field.annnexlocation!=undefined">
 							<div ng-show="true" ng-controller="FileManagerController">

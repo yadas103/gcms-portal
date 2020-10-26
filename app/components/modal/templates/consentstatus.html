@@ -24,6 +24,7 @@
 						End Date</th>
 					<th st-sort="updatedDate" style="width: 10%;">Consent Updated</th>
 						<th st-sort="consentenddate" style="width: 8%;">Event End Date</th>
+					<th st-sort="createdBy" style="width: 8%;">Task Owner</th>
 					<th style="width: 5%;">Document</th>
 				</tr>
 				<tr>
@@ -41,6 +42,8 @@
                                                 <th><input st-search="consentenddate" placeholder=""
                                                 class="form-control" type="search" /></th>
                                           <th></th>
+                                            <th><input st-search="createdBy" placeholder=""
+                                                class="form-control" type="search" /></th>
                         </tr>
 			
 			</thead>
@@ -54,6 +57,7 @@
 					<td>{{field.consentenddate | date:'dd-MM-yyyy'}}</td>
 					<td>{{field.updatedDate | date:'dd-MM-yyyy' }}</td>
 					<td></td>
+					<td ng-controller="ProfileListCtrl"><a href="" ng-click="evaluateMail(field)">{{field.assignedTo}}</a></td>
 					<td>
 						<!-- Changes for View Link of Pending Task -->
 						<!--<div ng-if="field.annnexlocation==undefined">

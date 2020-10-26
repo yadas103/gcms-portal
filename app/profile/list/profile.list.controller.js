@@ -795,5 +795,10 @@
 	       		 });
         };
         //End
+        $scope.evaluateMail = function(item){
+        	console.log("item details : "+item.createdBy);
+        	var emailDetails = item.createdBy+"@pfizer.com";
+        	window.location.href = 'mailto:'+emailDetails;
+        };
 	}               
 })();

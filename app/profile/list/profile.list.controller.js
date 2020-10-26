@@ -61,9 +61,9 @@
 		})
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexView','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexPdf,$rootScope,toasty,ngDialog) {
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexView,ConsentAnnexPdf,$rootScope,toasty,ngDialog) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -570,7 +570,7 @@
 					}
 			}
 			}
-			if($scope.templateDate.validity_start_date != null && $scope.templateDate.validity_end_date != null){
+			/*if($scope.templateDate.validity_start_date != null && $scope.templateDate.validity_end_date != null){
 				$scope.templateDate['start_year'] = $scope.templateDate.validity_start_date.substring(0,4);
 				$scope.templateDate['start_month'] = $scope.templateDate.validity_start_date.substring(5,7);
 				$scope.templateDate['start_day']= $scope.templateDate.validity_start_date.substring(8,10);
@@ -578,13 +578,13 @@
 				$scope.templateDate['end_year'] = $scope.templateDate.validity_end_date.substring(0,4);
 				$scope.templateDate['end_month'] = $scope.templateDate.validity_end_date.substring(5,7);
 				$scope.templateDate['end_day']= $scope.templateDate.validity_end_date.substring(8,10);
-				}
+				}*/
 				
 				for(var i  in $scope.checkedIds){
 					$scope.dataToSend.request[$scope.checkedIds[i].id] = {"acmcode" : "","eventname" : "","pocode" : "","tmpl_id" : "","consentstartdate" : "","consentenddate" : "","eventEndDate": ""};
 					if($scope.templateDate.validity_start_date != null && $scope.templateDate.validity_end_date != null){
-					$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate = moment.tz($scope.templateDate.start_year+'/'+$scope.templateDate.start_month+'/'+$scope.templateDate.start_day,moment.tz.guess()) ;
-					$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz($scope.templateDate.end_year+'/'+$scope.templateDate.end_month+'/'+$scope.templateDate.end_day,moment.tz.guess());
+					$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate = moment.tz(moment($scope.templateDate.validity_start_date,'YYYY-MM-DD'),moment.tz.guess()) ;
+					$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz(moment($scope.templateDate.validity_end_date,'YYYY-MM-DD'),moment.tz.guess()) ;
 					}				
 				}
 		
@@ -609,10 +609,12 @@
 				item.request[$scope.copyCheckedIds[i]].eventEndDate = copy.eventEndDate.clone();
 				}
 				if(copy.consentstartdate != undefined && copy.consentstartdate != ""){
-				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz($scope.templateDate.start_year+'/'+$scope.templateDate.start_month+'/'+$scope.templateDate.start_day,moment.tz.guess()) : copy.consentstartdate.clone();
+				//item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz($scope.templateDate.start_year+'/'+$scope.templateDate.start_month+'/'+$scope.templateDate.start_day,moment.tz.guess()) : copy.consentstartdate.clone();
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz(moment($scope.templateDate.validity_start_date,'YYYY-MM-DD'),moment.tz.guess()) : copy.consentstartdate.clone();
 				}
 				if(copy.consentstartdate != undefined && copy.consentstartdate != ""){
-				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz($scope.templateDate.end_year+'/'+$scope.templateDate.end_month+'/'+$scope.templateDate.end_day,moment.tz.guess()) : copy.consentenddate.clone();
+				//item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz($scope.templateDate.end_year+'/'+$scope.templateDate.end_month+'/'+$scope.templateDate.end_day,moment.tz.guess()) : copy.consentenddate.clone();
+				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz(moment($scope.templateDate.validity_end_date,'YYYY-MM-DD'),moment.tz.guess()) : copy.consentenddate.clone();
 				}
 				
 			}

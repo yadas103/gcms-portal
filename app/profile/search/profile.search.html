@@ -112,6 +112,32 @@
                         <td class="td-search-panel-text col-xs-3">Template Type</td>
                     </tr>
 				</div>
+				<div class="row">
+					<tr>
+						<td ng-show="sysAdminCCID" class="td-search-panel col-xs-3">
+
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.uniqueTypeId" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{CCID_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                   		</td>
+                   		<td ng-show="sysAdminNIT" class="td-search-panel col-xs-3">
+
+                            <div class="input-group">
+                                <input class="form-control input-sm td-search-panel-text" ng-model="request.uniqueTypeId" type="text" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{NIT_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                   		</td>
+					</tr>
+					<tr>
+						<td ng-show="sysAdminCCID" class="td-search-panel-text col-xs-3">CCID</td>
+						<td ng-show="sysAdminNIT" class="td-search-panel-text col-xs-3">NIT</td>
+					</tr>
+				</div>
 
                 </table>
 			</form>

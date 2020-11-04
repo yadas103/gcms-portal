@@ -40,7 +40,9 @@
           	  	city:'@city',
           	  	firstName:'@firstName',
           	  	address:'@address',
-          	  	speciality:'@speciality'
+          	  	speciality:'@speciality',
+          	  	uniqueTypeCode:'@uniqueTypeCode',
+          	  	uniqueTypeId:'@uniqueTypeId'
         		}, isArray:true },
             query:  { method:'GET', isArray:true },
             update: { method:'PUT' }

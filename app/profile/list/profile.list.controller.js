@@ -86,6 +86,8 @@
 		$scope.readOnlyCC = false;
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';	
+		$scope.request.CCID = '';
+		$scope.request.NIT = '';
 		$scope.profile.readOnly = false;
 		$scope.hideHCO = true;
 		$scope.crossInCountry = {};
@@ -93,6 +95,8 @@
 		$scope.templateTypeSelected = {};	
 		$scope.clearText = "";
 		$scope.sysAdmin = false;		
+		$scope.sysAdminCCID = false;
+		$scope.sysAdminNIT = false;
 		$scope.profile_types = [{
 			name: 'HCP',
 			value: 'HCP'
@@ -190,7 +194,16 @@
 		        		  "title": "Title",
 		        		  "content": "Enter the HCP or HCO Address here. The system will search using partial criteria too. For example, if you are looking for -GNEISENAUSTRASSE 5-, entering -GNE- will bring all the profiles where their Addresses contains -GNE-. The system is not case sensitive."
         		};
-		        		
+		        	
+		        $scope.CCID_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the CCID here. If you do not know exactly the CCID, leave it empty. The system will search using partial criteria too. The system is not case sensitive."
+		        };
+		        
+		        $scope.NIT_MSG = {
+		        		  "title": "Title",
+		        		  "content": "Enter the NIT here. If you do not know exactly the NIT, leave it empty. The system will search using partial criteria too. The system is not case sensitive."
+		        };
 
 		        
 		//Getting Logged in User Profile
@@ -200,6 +213,7 @@
 					
 					$scope.loggedInUserCountry = currentprofile.countryId;
 					$scope.loggedInUserCountryName = currentprofile.countryName ;
+
 					$scope.loggedInUserRole = currentprofile.roleId;
 					$scope.logged_In_User= currentprofile.userName;
 					$scope.fullName = currentprofile.firstName+" "+currentprofile.lastName;
@@ -207,17 +221,22 @@
 					if($scope.loggedInUserRole == 5){
 						$scope.sysAdmin = true;
 					}
-						
+					
+					if($scope.loggedInUserRegionId == 5 && $scope.request.profileType == 'HCP' ){
+						$scope.sysAdminCCID = true;
+					}	
 					
 					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
 						 $scope.request.country = $scope.loggedInUserCountryName;
+
 						 $scope.readOnlyCC = true;
 						 $scope.readOnlyPC = true;
 					}
 					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5)
 					{	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
+
 						 //$scope.readOnlyCC = true;
 					}											               
 		};
@@ -226,7 +245,21 @@
 		
 		$scope.compare = function(){	
 			$scope.request.tmpl_id = $scope.clearText;
+
+			$scope.sysAdminNIT = $scope.clearText;
+			$scope.sysAdminCCID = $scope.clearText;
 			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
+			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
+				$scope.sysAdminNIT = true;
+				$scope.sysAdminCCID = false;
+
+			}
+			
+			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
+				$scope.sysAdminNIT = false;
+				$scope.sysAdminCCID = true;
+
+			}
 			if(($scope.request.collectingCountry == $scope.request.country) && $scope.loggedInUserRole == 1){				
 				$http.get('./emailproperties.json').then(function (response) {
 				$scope.str =  response.data.countryinfo.msg;
@@ -283,7 +316,21 @@
 			$scope.request.address = $scope.clearText;
 			$scope.request.tmpl_id = $scope.clearText;
 			$scope.request.speciality = $scope.clearText;
+			$scope.request.uniqueTypeId = $scope.clearText;
+			$scope.request.uniqueTypeCode = $scope.clearText;
+			$scope.sysAdminNIT = $scope.clearText;
+			$scope.sysAdminCCID = $scope.clearText;
 			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
+			
+			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
+				$scope.sysAdminNIT = true;
+				$scope.sysAdminCCID = false;
+			}
+			
+			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
+				$scope.sysAdminNIT = false;
+				$scope.sysAdminCCID = true;
+			}
 		};				
 		
 		//Function to search for requested profiles
@@ -293,7 +340,7 @@
 			$scope.profile.country = request.country;        	
 			$scope.selectedids = [];
 			$scope.cntryValue = request.country;
-			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":""};
+			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":""};
 			/*if($scope.request.profileType == 'HCP'){
 				$scope.hideHCO = true;
 				$scope.hideHCP = false;
@@ -316,8 +363,16 @@
 			data.city = (params.city !== undefined && params.city !== "") ? params.city : 'city';
 			data.firstName = (params.firstName !== undefined && params.firstName !== "") ? params.firstName : 'firstName';
 			data.address = (params.address !== undefined && params.address !== "" ) ? params.address : 'address';
+			if(data.profileType == 'HCP' && data.country == 'COLOMBIA'){
+				data.uniqueTypeCode = 'CCID';
+			}
+			if(data.profileType == 'HCO' && data.country == 'COLOMBIA'){
+				data.uniqueTypeCode = 'NIT';
+			}
 			data.speciality = (params.speciality !== undefined && params.speciality !== "") ? params.speciality : 'speciality';
+			data.uniqueTypeId = (params.uniqueTypeId !== undefined && params.uniqueTypeId !== "") ? params.uniqueTypeId : '';
 			data.collectingCountry = params.collectingCountry;
+
 			ProfileSearch.get({
 				country : data.country,
 				profileType : data.profileType,
@@ -326,6 +381,9 @@
 				firstName : data.firstName,
 				address : data.address,
 				speciality : data.speciality
+				uniqueTypeCode  : data.uniqueTypeCode,
+				uniqueTypeId : data.uniqueTypeId,
+
 			}).$promise
 			.then(function(profileSearch) {
 				$scope.profileSearch = profileSearch;				

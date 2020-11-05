@@ -382,8 +382,7 @@
 				address : data.address,
 				speciality : data.speciality
 				uniqueTypeCode  : data.uniqueTypeCode,
-				uniqueTypeId : data.uniqueTypeId,
-
+				uniqueTypeId : data.uniqueTypeId
 			}).$promise
 			.then(function(profileSearch) {
 				$scope.profileSearch = profileSearch;				

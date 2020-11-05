@@ -380,7 +380,7 @@
 				city : data.city,
 				firstName : data.firstName,
 				address : data.address,
-				speciality : data.speciality
+				speciality : data.speciality,
 				uniqueTypeCode  : data.uniqueTypeCode,
 				uniqueTypeId : data.uniqueTypeId
 			}).$promise

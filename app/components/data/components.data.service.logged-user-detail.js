@@ -50,6 +50,7 @@ console.log('Here in user-detail***22....');
         var country = getItemById(profiles[i].countryId, countries);
         profiles[i].countryName = country.name;
         profiles[i].countryISOCode = country.isoCode;
+        profiles[i].regionId = country.regionId;
       }
     };
 

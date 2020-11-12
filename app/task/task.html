@@ -84,6 +84,7 @@
 							<th style="width:11%;"st-sort="updateddate" st-sort-default="reverse">Updated Date</th>
 							<th style="width:18%;" st-sort="initiatedby">Task Owner</th> 
 							<th style="width:6%;">Task Status</th>
+							<th style="width:6%;" ng-show = 'regionId == 5'>GCMS Profile</th>
 							<th ng-hide="status=='DELETED'">Document</th>
 							<th style="width:10%;" ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " 
 								>Activity								
@@ -110,11 +111,17 @@
 								class="form-control" type="search" /></th>
 								<th><input st-search="initiatedby" placeholder=""
 								class="form-control" type="search" /></th> 
-							<th style="width:6%;"><select st-input-event="change keydown" st-search="taskstatus" style=" padding: 4px 3px;height: 27px;">
-									<option value="INCOMPLETE">Incomplete</option>
+							<th style="width:6%;"><select st-input-event="change keydown" st-search="taskstatus" style=" padding: 4px 3px;height: 27px;" ng-model="status">
+									<option selected="true" value="INCOMPLETE">Incomplete</option>
 									<option value="COMPLETED">Completed</option>
 									<option value="DELETED">Deleted</option>
 							</select> 							
+														
+							</th>	
+							<th style="width:2%;" ng-show = 'regionId == 5'><select st-input-event="change keydown" st-search="tempProfile" style=" padding: 4px 3px;height: 27px;">
+									<option value="N" selected>No</option>
+									<option value="Y">Yes</option>
+							</select> 					
 														
 							</th>							 
 							<th ng-hide="status=='DELETED'"></th>
@@ -193,6 +200,7 @@
 							 </div>
 							 <div ng-if="con.taskstatus=='DELETED'" >{{con.taskstatus | lowercase}}</div>
 							 </td>
+							 <td ng-show = 'regionId == 5' >{{con.consannexid.tempProfile}}</td>
 							<td ng-hide="status=='DELETED'">
 								<div ng-show="con.taskstatus !='DELETED'">
 

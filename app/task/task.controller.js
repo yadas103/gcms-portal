@@ -48,7 +48,9 @@
 	        };
 	  
 		 $scope.currentProfile={};
-		 var mydata= $rootScope.loggedInUserRoleId;
+		 var mydata= $rootScope.loggedInUserRoleId;	
+		 var currentProfileDetail = $rootScope.currentProfile;
+		 $scope.regionId = currentProfileDetail.regionId;
 		 $scope.loaded = false;
 		 $scope.downloadAll = false;
          $scope.data = [];
@@ -73,7 +75,7 @@
 		    var pagination = tableState.pagination;
 		    var search = tableState.search;
 		    $scope.searchparam=tableState.search;
-		    $scope.status=tableState.search.predicateObject.taskstatus;
+		    $scope.status=tableState.search.predicateObject.taskstatus == undefined ? 'INCOMPLETE' : tableState.search.predicateObject.taskstatus;
 		    if($scope.status=='INCOMPLETE'||$scope.status=='DELETED'){
 		    	 $scope.selected = [];
 		    }
@@ -97,6 +99,8 @@
 		    	taskStatus : tableState.search.predicateObject.taskstatus,
 		    	initiatedBy :tableState.search.predicateObject.initiatedby,	
 		    	updateddate : tableState.search.predicateObject.updateddate,
+		    	regionId : $scope.regionId,
+		    	tempProfile : tableState.search.predicateObject.tempProfile,
 		        page : 1+(start/number),
 		        size : number,
 		        sort : predicate,

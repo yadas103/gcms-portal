@@ -37,9 +37,10 @@
   function ValidatedProfile($resource,localeMapper, ENVIRONMENT) {
 
 	return $resource(
-      ENVIRONMENT.SERVICE_URI + ':locale/identityProfiles/:id' + ENVIRONMENT.SERVICE_EXT,
+      ENVIRONMENT.SERVICE_URI + ':locale/identityProfiles/:id/:regionId' + ENVIRONMENT.SERVICE_EXT,
      {
         id: '@id',
+        regionId: '@regionId',
         locale: function(){ return localeMapper.getCurrentISOCode();}
       },
       {

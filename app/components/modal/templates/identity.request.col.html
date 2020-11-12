@@ -1,0 +1,129 @@
+<!-- Create Missing Profile -->
+<div class="modal-header" style="background-color: #337ab7;
+    color: white; padding: 5px;">
+  <h3 class="modal-title" style="font-size: medium; padding-left: 10px;">Create missing profile</h3>
+</div>
+<div class="modal-body" >
+<p style="font-size: 12px;">Before requesting a new profile, please make sure you searched
+ using multiple criteria</p>
+	<div ng-controller = "ProfileListCtrl" style="margin-bottom: 105px;">
+		<div style="color:maroon;">
+			{{item.msg}} 
+		</div>
+            <form novalidate name="saveProfiles" class="form-vertical">
+                 <legend style="color: black; font-size: small;">General Details</legend>
+                 
+                <div class="form-group">
+                    <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 45px;">Profile Type:*</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+					<!-- <select class="form-control" ng-model="item.profileTypeId" ng-change="erase(item)" class="drop-down" required><option ng-repeat="Group1 in Groupss">{{Group1.Name}}</option></select> -->                      
+					<select class="form-control" ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-down" required><option value="" ng-show="{{empty}}"></option></select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group" ng-controller = "ProfileListCtrl" ng-hide="item.profileTypeId.Name == 'HCO'">
+                	<table>
+                	<tr>
+                	<td>
+                	<label for="Duplicate CCID" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 45px;">Duplicate CCID:*</label>
+                	<div class="input-group input-group-sm" style="padding-left: 55px">
+                	<input id="text1" type="text" ng-model="uniqueTypeCodeCCID" class="form-control " name="text1" placeholder="Insert CCID Here...">
+                	<span class="input-group-btn">
+     				<button class="btn btn-primary" type="button" ng-click="validateCCID()" value="{{uniqueTypeCodeCCID}}">Validate</button>
+      				</span>
+                	</div>
+                	<div>
+                	<label style="color:red; padding-left: 55px" ng-show="validationCCID=='false'">{{success}}</label>
+					<label style="color:green;; padding-left: 55px" ng-show="validationCCID=='true'">{{error}}</label>
+                	</div>
+                	</tr>
+                	</td>
+					</table>
+				</div>
+			
+				<div class="form-group" ng-controller = "ProfileListCtrl" ng-hide="item.profileTypeId.Name == 'HCP'">
+                	<table>
+                	<tr>
+                	<td>
+                	<label for="Duplicate NIT" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 45px;">Duplicate NIT*</label>
+                	<div class="input-group input-group-sm" style="padding-left: 55px">
+                	<input id="text1" type="text" ng-model="uniqueTypeCodeNIT" class="form-control " name="text1" placeholder="Insert NIT Here...">
+                	<span class="input-group-btn">
+     				<button class="btn btn-primary" type="button" ng-click="validateNIT()" value="{{uniqueTypeCodeNIT}}">Validate</button>
+      				</span>
+                	</div>
+                	<div>
+                	<label style="color:red; padding-left: 55px" ng-show="validationNIT=='false'">{{success}}</label>
+					<label style="color:green;; padding-left: 55px" ng-show="validationNIT=='true'">{{error}}</label>
+                	</div>
+                	</tr>
+                	</td>
+					</table>
+				</div>
+				 
+                <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
+                    <label for="fname" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 49px;">First Name:*</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                   <input type="text" ng-maxlength="100" class="form-control" id="firstName" ng-model="item.firstName" ng-required="item.profileTypeId.Name == 'HCP'">   
+                    </div>
+                </div>
+                <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
+                    <label for="lastname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Last Name:*</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                       <input type="text" ng-maxlength="100" class="form-control" id="lastName" placeholder="" ng-model="item.lastName" ng-required="item.profileTypeId.Name == 'HCP'">
+                    </div>
+                </div>
+                <div class="form-group" name="New1Value" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCP'">
+                    <label for="oragname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 6px;">Organization Name:*</label>
+                    <div class="col-sm-9"style="height: 29px;">
+                        <input type="text" ng-maxlength="500" id="organizationName" class="form-control" ng-model="item.organizationName" ng-required="item.profileTypeId.Name == 'HCO'">
+                    </div>
+                </div>
+				 <legend style="color: black; font-size: small;">Professional Details</legend>
+				 <div class="form-group">
+                    <label for="Procity" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Profile City:</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                        <input type="text" ng-maxlength="100" id="city" placeholder="" class="form-control" ng-model="item.city">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 30px;">Profile Country:*</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                        <select class="form-control" ng-model="item.country" class="drop-down" ng-disabled="item.readOnly" required>
+                  			<option ng-repeat="contry in counties |filter : efpiaFilter">{{contry.name}}</option>
+               			</select>               			
+                    </div>
+                </div>
+				<div class="form-group" ng-model="new1Value">
+                    <label for="Prosp" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Specialty:*</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                        <input type="text" ng-maxlength="100" id="specility" placeholder="" class="form-control" ng-model="item.specility" required>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Address:*</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                        <input type="text" ng-maxlength="1024" id="address" placeholder="" class="form-control" ng-model="item.address" required>
+                        <input type="text" ng-show="false" ng-maxlength="10" id="region" placeholder="" class="form-control" ng-model="item.regionId" >
+                    </div>
+                </div>
+                 <!-- /.form-group -->
+              <legend style="color: black; font-size: small;">Other Details</legend>
+			  <div class="form-group">
+                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;margin-top: 10px; padding-left: 24px;">Note for reviewer:</label>
+                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                        	<textarea id="notes" ng-maxlength="1000" class="form-control" rows="2" style="resize: none" ng-model="item.notes"></textarea>
+                    </div>
+                </div>  
+             
+	<span style="float: right;margin-top: 18px;margin-right: 14px;">
+	
+	<button class="btn btn-primary" ng-click="ok()" ng-disabled="saveProfiles.$invalid">Create Profile</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>	
+	</span>
+	</form>	
+	</div>
+	
+</div>	
+

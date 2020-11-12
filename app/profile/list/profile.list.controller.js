@@ -61,9 +61,9 @@
 		})
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexView','ConsentAnnexPdf','$rootScope','toasty','ngDialog'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexView','ConsentAnnexPdf','$rootScope','toasty','ngDialog','ValidatedCode'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexView,ConsentAnnexPdf,$rootScope,toasty,ngDialog) {
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexView,ConsentAnnexPdf,$rootScope,toasty,ngDialog,ValidatedCode) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -84,6 +84,7 @@
 		$scope.id = [];                
 		$scope.templId = {};
 		$scope.readOnlyCC = false;
+		$scope.profileFiler = false;
 		$scope.readOnlyPC = false;
 		$scope.request.profileType = 'HCP';	
 		$scope.request.CCID = '';
@@ -144,6 +145,20 @@
         	        theme: 'bootstrap'
         	      });
 		        };
+		        
+		        var successTempProfile = function(){ 
+			        toasty.success({
+	        	        title: 'Success',
+	        	        msg: 'Temporary Profile created successfully, you may generated Consent Annex now!',
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 30000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: 'bootstrap'
+	        	      });
+			        };
 		       	
 		        UIConfig.query().$promise.then(function(result){
 		        	$scope.configFile = result;
@@ -213,7 +228,7 @@
 					
 					$scope.loggedInUserCountry = currentprofile.countryId;
 					$scope.loggedInUserCountryName = currentprofile.countryName ;
-
+					$scope.loggedInUserRegionId = currentprofile.regionId ;
 					$scope.loggedInUserRole = currentprofile.roleId;
 					$scope.logged_In_User= currentprofile.userName;
 					$scope.fullName = currentprofile.firstName+" "+currentprofile.lastName;
@@ -223,20 +238,21 @@
 					}
 					
 					if($scope.loggedInUserRegionId == 5 && $scope.request.profileType == 'HCP' ){
+						$scope.profileFiler = true;
 						$scope.sysAdminCCID = true;
 					}	
 					
 					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
 						 $scope.request.country = $scope.loggedInUserCountryName;
-
+						 $scope.request.regionId = $scope.loggedInUserRegionId;
 						 $scope.readOnlyCC = true;
 						 $scope.readOnlyPC = true;
 					}
 					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5)
 					{	
 						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
-
+						 $scope.request.regionId = $scope.loggedInUserRegionId;
 						 //$scope.readOnlyCC = true;
 					}											               
 		};
@@ -245,11 +261,14 @@
 		
 		$scope.compare = function(){	
 			$scope.request.tmpl_id = $scope.clearText;
-
+			$scope.request.regionId = $scope.loggedInUserRegionId;
+			$scope.profileFiler = false;
 			$scope.sysAdminNIT = $scope.clearText;
 			$scope.sysAdminCCID = $scope.clearText;
 			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
 			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
+				$scope.request.regionId = 5;
+				$scope.profileFiler = true;
 				$scope.sysAdminNIT = true;
 				$scope.sysAdminCCID = false;
 
@@ -258,6 +277,8 @@
 			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
 				$scope.sysAdminNIT = false;
 				$scope.sysAdminCCID = true;
+				$scope.request.regionId = 5;
+				$scope.profileFiler = true;
 
 			}
 			if(($scope.request.collectingCountry == $scope.request.country) && $scope.loggedInUserRole == 1){				
@@ -340,7 +361,8 @@
 			$scope.profile.country = request.country;        	
 			$scope.selectedids = [];
 			$scope.cntryValue = request.country;
-			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":""};
+			//R2.0 - arunkv - for time being using isTempProfile as tempProfile attribute, need to add this in bus profile
+			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":"","isTempProfile":""};
 			/*if($scope.request.profileType == 'HCP'){
 				$scope.hideHCO = true;
 				$scope.hideHCP = false;
@@ -591,6 +613,54 @@
 
 			}); 
 		};
+		
+		//Creates the temporary profile capable of getting consent 
+		$scope.createTempProfile = function(item){   
+			$scope.responseOnSave = '';
+			$scope.responseOnUnsave = '';
+			item.regionId = 5;
+			item.uniqueTypeCodeForNIT = $rootScope.NIT;
+			item.uniqueTypeCodeForCCID = $rootScope.CCID;
+			var request = item;
+			var reqID = {};
+			request.profileTypeId = item.profileTypeId.Name;
+			request.status = 'Pending';
+			delete request.readOnly;
+			delete request.msg;
+			IdentityRequest.save(request).$promise
+			.then(function(result) {
+				if(result.$promise.$$state.status == 1)
+				{
+
+					reqID = result.id;
+					$scope.countryCopy = result.country;
+					$scope.profile_type_id = result.profileTypeId;
+					$scope.resultcopy = result;
+					//Gets Reviewer Details and sends out email to respected Reviewer on save of the requested data
+					$scope.getReviewerDetails(reqID);					
+					successTempProfile();
+					item.firstName = '';
+					item.profileTypeId = '';
+					item.uniqueTypeCodeForNIT = '';
+					item.uniqueTypeCodeForCCID = '';
+					item.lastName = '';
+					item.organizationName = '';
+					item.city = '';
+					item.country = '';
+					item.specility = '';
+					item.address = '';
+					item.notes = '';
+					item.regionId = '';
+
+				}
+
+			}).catch(function(){
+				
+				internalError();
+
+
+			}); 
+		};
 
 		//Collects the checked profile id's and related info
 		$scope.templateDate = {};
@@ -599,14 +669,16 @@
 			$scope.dataToSend = {checkedIds :{},templates :{},request : {}};
 
 			ids['selid'] =  {checked: JSON.stringify($scope.selectedids)};
-			ids['selectedParams'] = {selection: JSON.stringify(params)}
+			ids['selectedParams'] = {selection: JSON.stringify(params)};
 			ids['collectingCtry'] = collecting_country_id;
 			ids['profileCountry'] = profile_country_id;
+			ids['regionId'] = {regId: $scope.request.regionId};
 			myService.set(ids);
 			$scope.id = myService.get();
 			$scope.checkedIds = $scope.id.selid.checked;
 			$scope.checkedIds = JSON.parse($scope.checkedIds);
 			$scope.cntryValue = $scope.id.selectedParams.selection;
+			$scope.regionIdSelection = $scope.id.regionId.regId;
 			$scope.searchCriteria = JSON.parse($scope.cntryValue);
 			$scope.cntryValue = $scope.searchCriteria.country;
 			$scope.dataToSend.checkedIds = $scope.checkedIds;
@@ -772,6 +844,11 @@
 					modifiedparams['eventname'] = item.request[currentId].eventname;
 					modifiedparams['pocode'] = item.request[currentId].pocode;
 					modifiedparams['acmcode'] = item.request[currentId].acmcode;
+					//R2.0 - arunkv
+					//TODO: conditionally set
+					modifiedparams['regionId'] = $scope.regionIdSelection;
+					modifiedparams['tempProfile'] = values[y].isTempProfile;
+
 					if($scope.dataToSend.setDates == false){
 					modifiedparams['consentstartdate'] = item.request[currentId].consentstartdate;
 					modifiedparams['consentenddate'] = item.request[currentId].consentenddate;
@@ -796,9 +873,12 @@
 		
 		//Loading History
 		$scope.consentAttributes = {};
-        $scope.view = function(id,firstName,lastName) { 
-        var profileid = id;             
-        $scope.consentAttributes = ConsentAnnex.query({id : profileid});
+        $scope.view = function(id,firstName,lastName,organisationName) { 
+        $rootScope.fname = firstName;
+        $rootScope.lname = lastName;
+        $rootScope.organisationName = organisationName;
+        var profileid = id
+        $scope.consentAttributes = ConsentAnnex.query({id : profileid, regId : $scope.request.regionId});
         $scope.consentAttributes.hisFirstName = firstName;
         $scope.consentAttributes.hisLastName = lastName;
         $scope.itemCopy = [].concat($scope.consentAttributes);
@@ -811,6 +891,7 @@
       
         //Start : Changes for View Link of Pending Task
         $scope.viewTemplate = function(item){
+        	console.log("fname : "+$rootScope.fname);
         	ConsentAnnexView.update({ id:item.id }, item).$promise.then(function(res){
             	
             	if(res.$promise.$$state.status==1){
@@ -820,11 +901,11 @@
     						var bin = new Blob([response.data]);
     						var docName='';
     						if(item.bpid.profileType == "HCP"){
-    						docName = item.bpid.lastName+','+item.bpid.firstName+'.pdf'; 
+    						docName = $rootScope.lname+','+$rootScope.fname+'.pdf'; 
     						}else{
-    						docName = item.bpid.organisationName+'.pdf'; 
+    						docName = $rootScope.organisationName+'.pdf'; 
     						}
-      
+    						console.log("doc name is : "+docName);
     						saveAs(bin, docName); 
     						toasty.success({
     	            	        title: 'Success',
@@ -852,10 +933,61 @@
 	       		 });
         };
         //End
-        $scope.evaluateMail = function(item){
-        	console.log("item details : "+item.createdBy);
-        	var emailDetails = item.createdBy+"@pfizer.com";
-        	window.location.href = 'mailto:'+emailDetails;
-        };
-	}               
+        $scope.validationCCID='false';
+        $scope.uniqueTypeCodeCCID = '';
+        $scope.validateCCID = function(){
+        	$rootScope.CCID = $scope.uniqueTypeCodeCCID;
+        	var regionId = 5;
+        	console.log("Item in here : "+$scope.uniqueTypeCodeCCID);
+        	
+        	ValidatedCode.get({id : $scope.uniqueTypeCodeCCID,regionId : regionId}).$promise
+        	.then(function(result) {
+                if(result.$promise.$$state.status == 1)
+            	{
+             	   {
+             		   $scope.trData=result;  
+             		   $scope.validationCCID="false";
+             		   $scope.success="NIT/CCID is duplicate"
+                	}
+                	
+                	}
+               
+              }).catch(function(){
+           	  
+             	 $scope.validationCCID="true";
+             	 $scope.error="NIT/CCID is valid"
+              });
+        	
+      	  
+      	   
+         }; 
+         
+         $scope.validationNIT='false';
+         $scope.uniqueTypeCodeNIT = '';
+         $scope.validateNIT = function(){ 
+        	 $rootScope.NIT = $scope.uniqueTypeCodeNIT;
+         	var regionId = 5;
+         	console.log("NIT in here : "+$scope.uniqueTypeCodeNIT);
+         	ValidatedCode.get({id : $scope.uniqueTypeCodeNIT,regionId : regionId}).$promise
+         	.then(function(result) {
+                 if(result.$promise.$$state.status == 1)
+             	{
+              	   {
+              		   $scope.trData=result;  
+              		   $scope.validationNIT="false";
+              		   $scope.success="NIT/CCID is duplicate"
+                 	}
+                 	
+                 	}
+                
+               }).catch(function(){
+            	  
+              	 $scope.validationNIT="true";
+              	 $scope.error="NIT/CCID is valid"
+               });
+         	
+       	  
+       	   
+          };
+	}
 })();

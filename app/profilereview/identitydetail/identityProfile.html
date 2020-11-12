@@ -41,7 +41,8 @@
 						            <option value="Pending">Pending</option>
 									 <option value="Approved">Approved</option> 									
 									<option value="Rejected">Rejected</option>
-							</select> 	
+									<option value="Merge">Merge</option>
+							</select></th> 	
 							<th  ng-hide="status=='False'"></th>
 						</tr>
 					</thead>
@@ -75,11 +76,16 @@
 
 									<div ng-switch-when="Approved">Approve/Reject</div>
 									<div ng-switch-when="Rejected">Approve/Reject</div>
-									<div ng-switch-default>
-										<gcms-modal template="indentity.search.html"
-											ng-init="item=identity" controller="ModalDefaultCtrl"
-											content="identity"   ok="close" >
-										<a href="">Approve/Reject</a> </gcms-modal>
+									<div ng-switch-when="Merge">Merge</div>
+									<div ng-switch-default ng-show="identity.regionId == 3">
+										<gcms-modal template="indentity.search.html" controller="ModalDefaultCtrl"
+											ok="close" content="identity" ng-init="item=identity">
+										<a href="" ng-click="updateRegion(identity)">Approve/Reject</a> </gcms-modal>
+									</div>
+									<div ng-switch-default ng-show="identity.regionId == 5">
+										<gcms-modal template="indentity.search.html" controller="ModalDefaultCtrl"
+											ok="close" content="identity" ng-init="item=identity">
+										<a href="" ng-click="updateRegion(identity)">Merge</a> </gcms-modal>
 									</div>
 									
 								</div>

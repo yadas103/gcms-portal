@@ -99,7 +99,8 @@
        */
       $scope.close=function(item){
     	  
-    	 }
+    	};
+      
     //sending parameters for status
       var params={};
       $scope.request={};
@@ -135,7 +136,7 @@
         					$scope.records="No records to show";
         					//$scope.profileSearchCopy.length = 0;                               	
         				}); ;
-        }
+        };
 
       /**
        * @ngdoc method
@@ -147,8 +148,11 @@
       $scope.validate = function(item){ 
     	   
     	  $scope.validation='';
-    	  var id  ={id:item.bpid};
-    	  ValidatedProfile.get(id).$promise
+    	  console.log("Profile country in identity : "+item.country);
+    	  console.log("Profile country in identity region : "+item.regionId);
+    	  $scope.regionId = item.regionId;
+    	  //var id  ={id:item.bpid};
+    	  ValidatedProfile.get({id:item.bpid,regionId : $scope.regionId}).$promise
            .then(function(result) {
                if(result.$promise.$$state.status == 1)
            	{
@@ -166,6 +170,33 @@
             	 $scope.error="TR ID is not valid,Please verify!"
              }); 
        }; 
+       
+       $scope.validationCol='';
+       $scope.validateColombia = function(item){ 
+     	   
+     	  $scope.validation='';
+     	  console.log("Profile country in identity : "+item.country);
+     	  console.log("Profile country in identity region : "+item.regionId);
+     	  $scope.regionId = item.regionId;
+     	  //var id  ={id:item.bpid};
+     	  ValidatedProfile.get({id:item.bpid,regionId : $scope.regionId}).$promise
+            .then(function(result) {
+                if(result.$promise.$$state.status == 1)
+            	{
+             	   {
+             		   $scope.trData=result;  
+             		   $scope.validationCol="true";
+             		   $scope.successCol="TR ID is valid, Please Merge this profile "
+                	}
+                	
+                	}
+               
+              }).catch(function(){
+           	  
+             	 $scope.validationCol="false";
+             	 $scope.errorCol="TR ID is not valid, Please verify!"
+              }); 
+        }; 
      
       
       $scope.emaildetails = {};
@@ -319,6 +350,69 @@
           };
           
           /**
+           * Updates Profile request for tempProfile
+           */
+          $scope.updateApproveCol = function(item) {
+              console.log("Temp BP ID :"+item.tempBpId);
+              
+              if( $scope.validationCol=='true')
+                  
+              {
+                  
+                   item.status="Approved";
+                   item.updatedDate = new Date();
+                       var reqID = {};
+                   reqID = item.id;
+                    
+                     $scope.resultcopy = $scope.trData[0];
+                     $scope.resultcopy.status=item.status;
+                     $scope.resultcopy.organizationName=$scope.trData[0].organisationName;
+                     $scope.profile_type_id =$scope.trData[0].profileType;
+                  $scope.countryCopy = $scope.trData[0].country;
+                   var Createdby=item.createdBy;
+                   var index = Createdby.indexOf("(");
+                     var startIndex = Createdby.indexOf("(");
+                     var endIndex = Createdby.indexOf(")");
+                     var ntidUser = Createdby.substring(startIndex + 1, endIndex);
+                     $scope.profileRequestSender = ntidUser;   
+                //     $scope.resultcopy = item;
+                     $scope.getSenderDetails(reqID);
+                     $scope.profile_status= item.status;
+                     $scope.TRID=item.bpid;
+                     
+              }else{
+                  item.bpid="";
+              }
+              
+             IdentityRequestView.update({ id:item.id },item).$promise.then(function(response){
+               if(response.$promise.$$state.status==1){ 
+                   
+                 if($scope.profile_status=="Approved"){
+                     toasty.success({
+                         title: 'Success',
+                         msg: 'Status : Approved ',
+                         showClose: true,
+                         clickToClose: true,
+                         timeout: 5000,
+                         sound: false,
+                         html: false,
+                         shake: false,
+                         theme: 'bootstrap'
+                       })};
+                     $scope.ok(item);
+                     loadIdentityRequestView();
+                  $scope.displayedCollection = [].concat($scope.identityRequestView);
+               }
+               
+                }).catch(function(){
+                   
+                        internalError();
+                        
+                      });
+             //$state.reload();
+            };
+          
+          /**
            * @ngdoc method
            * @name updateDismiss
            * @description used to Reject  the ProfileRequest   after Validation is Done 
@@ -380,6 +474,15 @@
           };
       
   
+        $scope.updateRegion = function(identity) {
+        	 if(identity.regionId == 3){
+        		 $rootScope.filterRegion= true;
+        	 }
+        	 if(identity.regionId == 5){
+        		 $rootScope.filterRegion= false;
+        	 }
+
+         };
   }
  
 })();

@@ -160,7 +160,10 @@
 
                         <td class="td-search-panel col-xs-6" style="align:left">
 							<gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" ok="create" content="profile">                            
-							<span class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >Cannot find a profile? Create a request here!</span>
+							<span ng-hide="profileFiler" class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >Cannot find a profile? Create a request here!</span>
+							</gcms-modal>
+							<gcms-modal template="identity.request.col.html" controller="ModalDefaultCtrl" ok="createTempProfile" content="profile">
+							<span ng-show="profileFiler" class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >Cannot find a profile? Create a Profile here!</span>
 							</gcms-modal>
                         </td>
 
@@ -196,6 +199,11 @@
 							ng-click="orderByField='profileType'; reverseSort = !reverseSort"
 							style="font-size: 13px; width: 86px;"
 							st-sort="profileType"class="td-search-panel-text">Profile Type</th>
+						<th 
+							ng-hide = "true"
+							ng-click="orderByField='isTempProfile'; reverseSort = !reverseSort"
+							style="font-size: 13px; width: 86px;"
+							st-sort="isTempProfile"class="td-search-panel-text">isTempProfile</th>
 						<th 
 							ng-hide = "hideHCP"
 							ng-click="orderByField='lastName'; reverseSort = !reverseSort"
@@ -238,6 +246,9 @@
 						<th ng-hide = "true"><input ng-model="search.profileType"
 							st-search="profileType" placeholder=" " class="form-control td-search-panel-text"
 							type="search" /></th>
+						<th ng-hide = "true"><input ng-model="search.isTempProfile"
+							st-search="isTempProfile" placeholder=" " class="form-control td-search-panel-text"
+							type="search" /></th>
 						<th ng-hide = "hideHCP"><input ng-model="search.lastName" st-search="lastName"
 							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "hideHCP"><input ng-model="search.firstName" st-search="firstName"
@@ -261,6 +272,8 @@
 							ng-model="checkboxes.items[pro.id]" class="recipient-checkbox"></td>
 						<td class="td-search-panel-text">{{pro.id}}</td>
 						<td ng-hide = "true" class="td-search-panel-text">{{pro.profileType}}</td>
+						<!-- R2.0 - arunkv: for time being setting isTempProfile later change it to isTempProfile -->
+						<td ng-hide = "true" class="td-search-panel-text">{{pro.isTempProfile}}</td>
 						<td class="tasktd td-search-panel-text" title="{{pro.lastName}}" ng-hide = "hideHCP">{{pro.lastName}}</td>
 						<td class="tasktd td-search-panel-text" title="{{pro.firstName}}" ng-hide = "hideHCP">{{pro.firstName}}</td>
 						<td class="tasktd td-search-panel-text" ng-hide = "hideHCO" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
@@ -269,7 +282,7 @@
 						<td class="tasktd td-search-panel-text" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>						
 						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
-						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id,pro.firstName,pro.lastName)" class="tasktd td-search-panel-text">View</a></gcms-modal></td>					
+						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id,pro.firstName,pro.lastName,pro.organisationName)" class="tasktd td-search-panel-text">View</a></gcms-modal></td>					
 					</tr>
 				</tbody>
 				<tfoot>

@@ -41,6 +41,8 @@
     			  		taskStatus:'@taskStatus',
     			  		initiatedBy:'@initiatedBy',
     			  		updateddate:'@updateddate',
+    			  		regionId:'@regionId',
+    			  		tempProfile:'@tempProfile',
     			  		page:'@page',
     			  		size:'@size',
     			  		sort:'@sort',

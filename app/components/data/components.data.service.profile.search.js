@@ -42,7 +42,8 @@
           	  	address:'@address',
           	  	speciality:'@speciality',
           	  	uniqueTypeCode:'@uniqueTypeCode',
-          	  	uniqueTypeId:'@uniqueTypeId'
+          	  	uniqueTypeId:'@uniqueTypeId',
+          	  	regionId:'@regionId'
         		}, isArray:true },
             query:  { method:'GET', isArray:true },
             update: { method:'PUT' }

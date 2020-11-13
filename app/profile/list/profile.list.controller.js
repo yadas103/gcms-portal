@@ -362,7 +362,7 @@
 			$scope.selectedids = [];
 			$scope.cntryValue = request.country;
 			//R2.0 - arunkv - for time being using isTempProfile as tempProfile attribute, need to add this in bus profile
-			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":"","isTempProfile":""};
+			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":"","isTempProfile":"","regionId":""};
 			/*if($scope.request.profileType == 'HCP'){
 				$scope.hideHCO = true;
 				$scope.hideHCP = false;
@@ -392,9 +392,9 @@
 				data.uniqueTypeCode = 'NIT';
 			}
 			data.speciality = (params.speciality !== undefined && params.speciality !== "") ? params.speciality : 'speciality';
-			data.uniqueTypeId = (params.uniqueTypeId !== undefined && params.uniqueTypeId !== "") ? params.uniqueTypeId : '';
+			data.uniqueTypeId = (params.uniqueTypeId !== undefined && params.uniqueTypeId !== "") ? params.uniqueTypeId : 'uniqueTypeId';
 			data.collectingCountry = params.collectingCountry;
-
+			data.regionId = $scope.request.regionId;
 			ProfileSearch.get({
 				country : data.country,
 				profileType : data.profileType,
@@ -404,7 +404,8 @@
 				address : data.address,
 				speciality : data.speciality,
 				uniqueTypeCode  : data.uniqueTypeCode,
-				uniqueTypeId : data.uniqueTypeId
+				uniqueTypeId : data.uniqueTypeId,
+				regionId : data.regionId
 			}).$promise
 			.then(function(profileSearch) {
 				$scope.profileSearch = profileSearch;				

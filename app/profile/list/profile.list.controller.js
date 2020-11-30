@@ -266,7 +266,7 @@
 			$scope.sysAdminNIT = $scope.clearText;
 			$scope.sysAdminCCID = $scope.clearText;
 			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
-			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
+			if(($scope.request.country == 'COLOMBIA' && $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
 				$scope.request.regionId = 5;
 				$scope.profileFiler = true;
 				$scope.sysAdminNIT = true;
@@ -274,7 +274,7 @@
 
 			}
 			
-			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
+			if(($scope.request.country == 'COLOMBIA' && $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
 				$scope.sysAdminNIT = false;
 				$scope.sysAdminCCID = true;
 				$scope.request.regionId = 5;
@@ -343,12 +343,12 @@
 			$scope.sysAdminCCID = $scope.clearText;
 			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == "" ) ? true : false;
 			
-			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
+			if(($scope.request.country == 'COLOMBIA' && $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCO' ){
 				$scope.sysAdminNIT = true;
 				$scope.sysAdminCCID = false;
 			}
 			
-			if(($scope.request.country == 'COLOMBIA' || $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
+			if(($scope.request.country == 'COLOMBIA' && $scope.request.collectingCountry == 'COLOMBIA') && $scope.request.profileType == 'HCP' ){
 				$scope.sysAdminNIT = false;
 				$scope.sysAdminCCID = true;
 			}
@@ -564,12 +564,16 @@
 		
 		//Create missing profile : Empty First/Last/Org name text box based on the profile type selection
 		$scope.erase = function(item){
+			$scope.validationCCID = '';
+			$scope.validationNIT = '';
 			if(item.profileTypeId.Name == 'HCP'){
 				item.organizationName = '';
+				$scope.uniqueTypeCodeNIT = '';
 			}
 			else if(item.profileTypeId.Name == 'HCO'){
 				item.firstName = '';
-				item.lastName = ''
+				item.lastName = '';				
+				$scope.uniqueTypeCodeCCID = '';
 			}			
 		};
 		
@@ -853,6 +857,8 @@
 					if($scope.dataToSend.setDates == false){
 					modifiedparams['consentstartdate'] = item.request[currentId].consentstartdate;
 					modifiedparams['consentenddate'] = item.request[currentId].consentenddate;
+					modifiedparams['startdate'] = item.request[currentId].consentstartdate.format("YYYY-MM-DD");;
+					modifiedparams['enddate'] = item.request[currentId].consentenddate.format("YYYY-MM-DD");;
 					}
 					else{
 					modifiedparams['eventEndDate'] = item.request[currentId].eventEndDate;
@@ -942,7 +948,7 @@
         	window.location.href = 'mailto:'+emailDetails;
         };
         
-        $scope.validationCCID='false';
+        $scope.validationCCID='';
         $scope.uniqueTypeCodeCCID = '';
         $scope.validateCCID = function(){
         	$rootScope.CCID = $scope.uniqueTypeCodeCCID;
@@ -956,7 +962,8 @@
              	   {
              		   $scope.trData=result;  
              		   $scope.validationCCID="false";
-             		   $scope.success="NIT/CCID is duplicate"
+             		   $scope.success="CCID is duplicate";
+             		   $scope.uniqueTypeCodeCCID = '';
                 	}
                 	
                 	}
@@ -964,14 +971,14 @@
               }).catch(function(){
            	  
              	 $scope.validationCCID="true";
-             	 $scope.error="NIT/CCID is valid"
+             	 $scope.error="CCID is valid";
               });
         	
       	  
       	   
          }; 
          
-         $scope.validationNIT='false';
+         $scope.validationNIT='';
          $scope.uniqueTypeCodeNIT = '';
          $scope.validateNIT = function(){ 
         	 $rootScope.NIT = $scope.uniqueTypeCodeNIT;
@@ -984,7 +991,8 @@
               	   {
               		   $scope.trData=result;  
               		   $scope.validationNIT="false";
-              		   $scope.success="NIT/CCID is duplicate"
+              		   $scope.success="NIT is duplicate";
+              		   $scope.uniqueTypeCodeNIT = '';
                  	}
                  	
                  	}
@@ -992,7 +1000,7 @@
                }).catch(function(){
             	  
               	 $scope.validationNIT="true";
-              	 $scope.error="NIT/CCID is valid"
+              	 $scope.error="NIT is valid";
                });
          	
        	  

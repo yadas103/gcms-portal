@@ -187,7 +187,7 @@
   						if(id.consannexid.eventEndDate != null){
   							id.consannexid.eventEndDate = moment(id.consannexid.eventEndDate).format('DD/MM/YYYY');
   						}
-  						id.consannexid.profilecountry.code = id.consannexid.profilecountry.code.substring(0,2);
+  						id.consannexid.profilecountry.code = id.consannexid.profilecountry.isoCode;
   					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
       		    id.consannexid.PartyAddressType = "Primary Address";
       		    id.consannexid.SourceSystemCode = "DLU-P";
@@ -248,7 +248,7 @@
   				'Party City':(selected[i].consannexid.bpid.city == null || selected[i].consannexid.bpid.city == undefined ) ? '' : selected[i].consannexid.bpid.city,
   				'Party Postal/Zip Code':'',
   				'Party State':'',
-  				'Party Country Code (2 character ISO)':selected[i].consannexid.profilecountry.code.substring(0,2), 
+  				'Party Country Code (2 character ISO)':selected[i].consannexid.profilecountry.isoCode, 
   				'Source System Identifier for Party_s Address': '',
   				'Consent_editor':'',
   				'Consent_required':'',
@@ -307,8 +307,8 @@
     			'BP ID':selected[i].consannexid.bpid.id, 
     			'Last/Org Name':(selected[i].consannexid.bpid.profileType == 'PERSON' ? ((selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? '' : selected[i].consannexid.bpid.lastName) : ((selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? '' : selected[i].consannexid.bpid.organisationName) ), 
     			'First Name':(selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? '' : selected[i].consannexid.bpid.firstName, 
-    			'Profile Country':selected[i].consannexid.profilecountry.code.substring(0,2),	
-    			'Payer Country':selected[i].consannexid.payercountry.code.substring(0,2), 
+    			'Profile Country':selected[i].consannexid.profilecountry.isoCode,	
+    			'Payer Country':selected[i].consannexid.payercountry.isoCode, 
     			'Event Name':(selected[i].consannexid.eventname == null || selected[i].consannexid.eventname == undefined ) ? '' : selected[i].consannexid.eventname,    			    		
     			'PO Code': (selected[i].consannexid.pocode == null || selected[i].consannexid.pocode == undefined ) ? '' : selected[i].consannexid.pocode,
 				'ACM Code':(selected[i].consannexid.acmcode == null || selected[i].consannexid.acmcode == undefined ) ? '' : selected[i].consannexid.acmcode,
@@ -413,7 +413,7 @@
   							'Party City':($scope.data[i].consannexid.bpid.city == null || $scope.data[i].consannexid.bpid.city == undefined ) ? '' : $scope.data[i].consannexid.bpid.city,
   							'Party Postal/Zip Code':'',
   							'Party State':'',
-  							'Party Country Code (2 character ISO)':$scope.data[i].consannexid.profilecountry.code.substring(0,2), 
+  							'Party Country Code (2 character ISO)':$scope.data[i].consannexid.profilecountry.isoCode, 
   							'Source System Identifier for Party_s Address': '',
   							'Consent_editor':'',
   							'Consent_required':'',
@@ -520,8 +520,8 @@
   									'BP ID':$scope.data[i].consannexid.bpid.id, 
   									'Last/Org Name':($scope.data[i].consannexid.bpid.profileType == 'PERSON' ? (($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? '' : $scope.data[i].consannexid.bpid.lastName) : (($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? '' : $scope.data[i].consannexid.bpid.organisationName) ), 
   									'First Name':($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? '' : $scope.data[i].consannexid.bpid.firstName, 
-  									'Profile Country':$scope.data[i].consannexid.profilecountry.code.substring(0,2),	
-  									'Payer Country':$scope.data[i].consannexid.payercountry.code.substring(0,2), 
+  									'Profile Country':$scope.data[i].consannexid.profilecountry.isoCode,	
+  									'Payer Country':$scope.data[i].consannexid.payercountry.isoCode, 
   									'Event Name':($scope.data[i].consannexid.eventname == null || $scope.data[i].consannexid.eventname == undefined ) ? '' : $scope.data[i].consannexid.eventname,
   									'PO Code': ($scope.data[i].consannexid.pocode == null || $scope.data[i].consannexid.pocode == undefined ) ? '' : $scope.data[i].consannexid.pocode,
   									'ACM Code':($scope.data[i].consannexid.acmcode == null || $scope.data[i].consannexid.acmcode == undefined ) ? '' : $scope.data[i].consannexid.acmcode,

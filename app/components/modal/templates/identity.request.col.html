@@ -17,15 +17,15 @@
                     <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 45px;">Profile Type:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
 					<!-- <select class="form-control" ng-model="item.profileTypeId" ng-change="erase(item)" class="drop-down" required><option ng-repeat="Group1 in Groupss">{{Group1.Name}}</option></select> -->                      
-					<select class="form-control" ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-down" required><option value="" ng-show="{{empty}}"></option></select>
+					<select class="form-control" ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="resetForm(item)" class="drop-down" required><option value="" ng-show="{{empty}}"></option></select>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 
                 <div class="form-group" ng-hide="item.profileTypeId.Name == 'HCO'">                	
                 	<label for="text1" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 80px;">CCID:*</label>
-                	<div class="col-sm-9 input-group input-group-sm" style="font-size: 13px;padding-left: 18px; padding-right: 14px;">
-	                	<input id="text1" type="text" ng-model="uniqueTypeCodeCCID" class="form-control " name="text1" placeholder="Insert CCID Here...">
+                	<div class="col-sm-9 input-group input-group-sm" style="font-size: 13px;padding-left: 15px; padding-right: 14px;">
+	                	<input id="text1" type="number" ng-model="uniqueTypeCodeCCID" class="form-control " onkeydown="return event.keyCode !== 69" name="text1" placeholder="Insert CCID Here...">
 	                	<span class="input-group-btn">
 	     				<button class="btn btn-primary" type="button" ng-click="validateCCID()" value="{{uniqueTypeCodeCCID}}">Validate</button>
 	      			</span>
@@ -38,8 +38,8 @@
 			
 		<div class="form-group" ng-hide="item.profileTypeId.Name == 'HCP'">
                 	<label for="text2" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 85px;">NIT:*</label>
-                	<div class="col-sm-9 input-group input-group-sm" style="font-size: 13px;padding-left: 18px; padding-right: 14px;">
-                		<input id="text2" type="text" ng-model="uniqueTypeCodeNIT" class="form-control " name="text2" placeholder="Insert NIT Here...">
+                	<div class="col-sm-9 input-group input-group-sm" style="font-size: 13px;padding-left: 15px; padding-right: 14px;">
+                		<input id="text2" type="number" ng-model="uniqueTypeCodeNIT" class="form-control " onkeydown="return event.keyCode !== 69" name="text2"  placeholder="Insert NIT Here...">
                 		<span class="input-group-btn">
      					<button class="btn btn-primary" type="button" ng-click="validateNIT()" value="{{uniqueTypeCodeNIT}}">Validate</button>
       				</span>
@@ -53,26 +53,36 @@
                 <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
                     <label for="fname" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 49px;">First Name:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                   <input type="text" ng-maxlength="100" class="form-control" id="firstName" ng-model="item.firstName" ng-required="item.profileTypeId.Name == 'HCP'">   
+                   <input type="text" ng-maxlength="100" class="form-control" id="firstName" ng-model="item.firstName" ng-required="item.profileTypeId.Name == 'HCP'"/>   
                     </div>
                 </div>
                 <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
                     <label for="lastname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Last Name:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                       <input type="text" ng-maxlength="100" class="form-control" id="lastName" placeholder="" ng-model="item.lastName" ng-required="item.profileTypeId.Name == 'HCP'">
+                       <input type="text" ng-maxlength="100" class="form-control" id="lastName" placeholder="" ng-model="item.lastName" ng-required="item.profileTypeId.Name == 'HCP'"/>
                     </div>
                 </div>
                 <div class="form-group" name="New1Value" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCP'">
                     <label for="oragname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 6px;">Organization Name:*</label>
-                    <div class="col-sm-9"style="height: 29px;">
-                        <input type="text" ng-maxlength="500" id="organizationName" class="form-control" ng-model="item.organizationName" ng-required="item.profileTypeId.Name == 'HCO'">
+                    <div class="col-sm-9"style="margin-bottom: 10px; height: 29px;">
+                        <input type="text" ng-maxlength="500" id="organizationName" class="form-control" ng-model="item.organizationName" ng-required="item.profileTypeId.Name == 'HCO'"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="credtl" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 54px;">Credential:*</label>
+                    <div class="col-sm-9" style="height: 29px;">
+                        <select class="form-control" ng-model="item.credential" class="drop-down"  required>
+										<!-- <option value="">Select Credential</option> -->
+                  			<!--<option ng-repeat="rep in credential" value="{{rep.credentialCode}}">{{rep.credentialDesc}}</option>  -->
+                  			<option ng-repeat="rep in credential" >{{rep.credentialDesc}}</option>
+               			</select>
                     </div>
                 </div>
 				 <legend style="color: black; font-size: small;">Professional Details</legend>
 				 <div class="form-group">
                     <label for="Procity" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Profile City:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <input type="text" ng-maxlength="100" id="city" placeholder="" class="form-control" ng-model="item.city" required>
+                        <input type="text" ng-maxlength="100" id="city" placeholder="" class="form-control" ng-model="item.city" required/>
                     </div>
                 </div>
 				<div class="form-group">
@@ -86,7 +96,7 @@
 				<div class="form-group" ng-model="new1Value">
                     <label for="Prosp" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Specialty:*</label>
                     <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
-                        <input type="text" ng-maxlength="100" id="specility" placeholder="" class="form-control" ng-model="item.specility" required>
+                        <input type="text" ng-maxlength="100" id="specility" placeholder="" class="form-control" ng-model="item.specility" required/>
                     </div>
                 </div>
 				<div class="form-group">

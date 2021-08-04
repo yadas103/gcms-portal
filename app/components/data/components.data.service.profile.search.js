@@ -43,7 +43,8 @@
           	  	speciality:'@speciality',
           	  	uniqueTypeCode:'@uniqueTypeCode',
           	  	uniqueTypeId:'@uniqueTypeId',
-          	  	regionId:'@regionId'
+          	  	regionId:'@regionId',
+          	  credential:'@credential'
         		}, isArray:true },
             query:  { method:'GET', isArray:true },
             update: { method:'PUT' }

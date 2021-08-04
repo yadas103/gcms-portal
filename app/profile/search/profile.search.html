@@ -237,6 +237,12 @@
 							st-sort="specialit"
 							class="td-search-panel-text"
 							>Specialty</th>
+						<th
+							ng-hide = "hideCredential"
+							ng-click="orderByField='credential'; reverseSort = !reverseSort"
+							st-sort="credential"
+							class="td-search-panel-text"
+							>Credential</th>
 						<th style="width:105px;" class="td-search-panel-text">Consent History</th>
 					</tr>
 					<tr>
@@ -262,6 +268,8 @@
 							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th ng-hide = "hideHCP"><input ng-model="search.speciality" st-search="speciality"
 							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
+						<th ng-hide = "hideCredential"><input ng-model="search.credential" st-search="credential"
+							placeholder=" " class="form-control td-search-panel-text" type="search" /></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -279,7 +287,8 @@
 						<td class="tasktd td-search-panel-text" ng-hide = "hideHCO" title="{{pro.organisationName}}">{{pro.organisationName}}</td>
 						<td class="tasktd td-search-panel-text" title="{{pro.city}}">{{pro.city}}</td>
 						<td class="tasktd td-search-panel-text" title="{{pro.address}}">{{pro.address}}</td>
-						<td class="tasktd td-search-panel-text" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>						
+						<td class="tasktd td-search-panel-text" title="{{pro.speciality}}" ng-hide = "hideHCP">{{pro.speciality}}</td>
+						<td class="tasktd td-search-panel-text" title="{{pro.credential}}" ng-hide = "hideCredential">{{pro.credential}}</td>						
 						<td style="text-align:center"><gcms-modal template="consentstatus.html"
 						controller="ModalDefaultCtrl" resolve="" content="consentAttributes">
 						<a href="" title="View consent history" title="View consent history" ng-click="view(pro.id,pro.firstName,pro.lastName,pro.organisationName)" class="tasktd td-search-panel-text">View</a></gcms-modal></td>					

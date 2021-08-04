@@ -61,9 +61,9 @@
 		})
 	.controller('ProfileListCtrl', ProfileSearch);
 
-	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexView','ConsentAnnexPdf','$rootScope','toasty','ngDialog','ValidatedCode'];
+	ProfileSearch.$inject = ['ProfileSearch','$scope','$http','myService','Templates','Country','IdentityRequest','Review','UIConfig','EmailGeneration','UserProfile','LoggedUserDetail','ConsentAnnex','ConsentAnnexView','ConsentAnnexPdf','$rootScope','toasty','ngDialog','ValidatedCode','Credential'];
 
-	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexView,ConsentAnnexPdf,$rootScope,toasty,ngDialog,ValidatedCode) {
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexView,ConsentAnnexPdf,$rootScope,toasty,ngDialog,ValidatedCode,Credential) {
 
 		var params = {};
 		console.log("Inside Profile.list.controller");
@@ -149,7 +149,7 @@
 		        var successTempProfile = function(){ 
 			        toasty.success({
 	        	        title: 'Success',
-	        	        msg: 'Temporary Profile created successfully, you may generated Consent Annex now!',
+	        	        msg: 'Temporary Profile created successfully, you may generate Consent Annex now!',
 	        	        showClose: true,
 	        	        clickToClose: true,
 	        	        timeout: 30000,
@@ -228,6 +228,7 @@
 					
 					$scope.loggedInUserCountry = currentprofile.countryId;
 					$scope.loggedInUserCountryName = currentprofile.countryName ;
+					$scope.loggedInUserCountryCode = currentprofile.isoCode;
 					$scope.loggedInUserRegionId = currentprofile.regionId ;
 					$scope.loggedInUserRole = currentprofile.roleId;
 					$scope.logged_In_User= currentprofile.userName;
@@ -329,7 +330,17 @@
 
 		$scope.$on('$localeChangeSuccess', loadCountry);
 		
-		$scope.clear = function()
+		var updateCredential = function(result){
+  			$scope.credential = result;
+  		};
+  		
+		var loadCredential = function(profType){
+			$scope.credential = [];
+	  		Credential.query({id : $scope.loggedInUserCountry,partyType : profType}).$promise.then(updateCredential);
+	  			
+	  	};
+	  		
+	  	$scope.clear = function()
 		{
 			$scope.request.lastName = $scope.clearText;
 			$scope.request.city = $scope.clearText;
@@ -362,7 +373,7 @@
 			$scope.selectedids = [];
 			$scope.cntryValue = request.country;
 			//R2.0 - arunkv - for time being using isTempProfile as tempProfile attribute, need to add this in bus profile
-			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":"","isTempProfile":"","regionId":""};
+			var data = {"country":"","profileType":"","lastName":"","city":"","firstName":"","address":"","collectingCountry":"","speciality":"","uniqueTypeCode":"","uniqueTypeId":"","isTempProfile":"","regionId":"","credential":""};
 			/*if($scope.request.profileType == 'HCP'){
 				$scope.hideHCO = true;
 				$scope.hideHCP = false;
@@ -395,6 +406,7 @@
 			data.uniqueTypeId = (params.uniqueTypeId !== undefined && params.uniqueTypeId !== "") ? params.uniqueTypeId : 'uniqueTypeId';
 			data.collectingCountry = params.collectingCountry;
 			data.regionId = $scope.request.regionId;
+			data.credential = $scope.request.credential;
 			ProfileSearch.get({
 				country : data.country,
 				profileType : data.profileType,
@@ -405,7 +417,8 @@
 				speciality : data.speciality,
 				uniqueTypeCode  : data.uniqueTypeCode,
 				uniqueTypeId : data.uniqueTypeId,
-				regionId : data.regionId
+				regionId : data.regionId,
+				credential : data.credential
 			}).$promise
 			.then(function(profileSearch) {
 				$scope.profileSearch = profileSearch;				
@@ -420,6 +433,12 @@
 					$scope.hideHCP = true;
 					$scope.hideHCO = false;
 				}
+				
+				// show Credentials in Search results only for Colombia
+				if($scope.loggedInUserCountry == 2046)
+					$scope.hideCredential = false;
+				else
+					$scope.hideCredential = true;
 
 			}).catch(function(){
 				$scope.responseOnSearch = "No records to show"
@@ -563,7 +582,8 @@
 		};
 		
 		//Create missing profile : Empty First/Last/Org name text box based on the profile type selection
-		$scope.erase = function(item){
+		// refresh the Credentials dropdown
+		$scope.resetForm = function(item){
 			$scope.validationCCID = '';
 			$scope.validationNIT = '';
 			if(item.profileTypeId.Name == 'HCP'){
@@ -574,7 +594,9 @@
 				item.firstName = '';
 				item.lastName = '';				
 				$scope.uniqueTypeCodeCCID = '';
-			}			
+			}	
+			
+			loadCredential(item.profileTypeId.Name);
 		};
 		
 		//Creates the missing profile 

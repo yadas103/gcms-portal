@@ -5,7 +5,7 @@
   xdescribe('gcms.components.session', function() {
 
     var $q, $rootScope, $scope, session, testSession,
-      User, Country, Role, Specialty, Credential, UniqueId, CONFIG, LoggedUserDetail, localeMapper, Lov, UIConfig;
+      User, Country, Role, Specialty, Credential, UniqueId, CONFIG, LoggedUserDetail, localeMapper, Lov, UIConfig, Language;
 
     var mockCONFIG = {
       type: [
@@ -221,7 +221,11 @@
           'updatedBy': null,
           'bobjURL': 'http://bi4dev.pfizer.com'
       };
-
+      
+      var mockLanguages =[
+    	  {"id":100063,"createdDate":null,"updatedDate":null,"createdBy":null,"updatedBy":null,"countryCode":"FR","countryId":2071,"deleteRecord":null,"errors":null,"languageCode":"EN","languageName":"ENGLISH","delete":null,"comments":null,"comment":null},
+    	  {"id":100064,"createdDate":null,"updatedDate":null,"createdBy":null,"updatedBy":null,"countryCode":"FR","countryId":2071,"deleteRecord":null,"errors":null,"languageCode":"FR","languageName":"FRANÇAIS","delete":null,"comments":null,"comment":null}
+      ];
 
     beforeEach(module('gcms.components.session'));
 
@@ -384,6 +388,22 @@
       });
     }));
 
+    beforeEach(module(function($provide){
+        $provide.factory('Language', function() {
+        	Language = {
+            query : function(){
+              return { $promise : $q.when(JSON.parse(JSON.stringify(mockLanguages))) };
+            },
+            get : function(){},
+            update : function(){},
+            save : function(){},
+            delete : function(){}
+          };
+          return Language;
+        });
+      }));
+
+    
     beforeEach(inject(function(_$q_, _$rootScope_, _session_) {
       $q = _$q_;
       $rootScope = _$rootScope_;

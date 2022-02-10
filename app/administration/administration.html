@@ -1,5 +1,5 @@
 <div class="panel panel-primary table-responsive">
-	<div class="panel-heading">Manage Countries and Templates</div>
+	<div class="panel-heading">{{('Manage Countries and Templates' | gTranslate:translationData:'MNG_CNTRY_TMPL')}}</div>
 
 	<div class="panel-body">
 
@@ -11,11 +11,11 @@
 			<thead style="background-color: #337ab7; color: white">
 				<tr style="height:6%;">
 					
-					<th style="width:7%;text-align:center">Action</th>
-					<th style="width: 10%;" st-sort="countries.isoCode">Country ISO Code</th>
-					<th style="width: 15%;" st-sort="countries.name" st-sort-default="true">Country Name</th>
-					<th style="width: 28%;" st-sort="cntryContact">Country Contact</th>
-					<th style="width: 45%;" >Identity Reviewers</th>
+					<th style="width:7%;text-align:center">{{('Action' | gTranslate:translationData:'ACTN')}}</th>
+					<th style="width: 10%;" st-sort="countries.isoCode">{{('Country ISO Code' | gTranslate:translationData:'CNTRY_ISO')}}</th>
+					<th style="width: 15%;" st-sort="countries.name" st-sort-default="true">{{('Country Name' | gTranslate:translationData:'CNTRY_NM')}}</th>
+					<th style="width: 28%;" st-sort="cntryContact">{{('Country Contact' | gTranslate:translationData:'CNTRY_CNT')}}</th>
+					<th style="width: 45%;" >{{('Identity Reviewers' | gTranslate:translationData:'IDN_REVR')}}</th>
 					
 					
 
@@ -64,14 +64,14 @@
 											alt="Add Templates"><a href="" title="Add Templates"><i style="color: white; margin-top: 8px;" class="fa fa-plus-circle fa-2x"></i></a>
 										</gcms-modal></th>
 
-									<th style="width: 12%;">Template Name</th>
-									<th>Template Code</th>
-									<th style="width: 28%;">Template Description</th>
-									<th>Dates Range</th>
-									<th>Validity Start Date</th>
-									<th>Validity End Date</th>
-									<th style="width: 9%;">Template Status</th>
-									<th>Template Upload</th>
+									<th style="width: 12%;">{{('Template Name' | gTranslate:translationData:'TMPL_NM')}}</th>
+									<th>{{('Template Code' | gTranslate:translationData:'TMPL_CD')}}</th>
+									<th style="width: 28%;">{{('Template Description' | gTranslate:translationData:'TMPL_DSC')}}</th>
+									<th>{{('Dates Range' | gTranslate:translationData:'DATE_RNG')}}</th>
+									<th>{{('Validity Start Date' | gTranslate:translationData:'VALD_ST_DT')}}</th>
+									<th>{{('Validity End Date' | gTranslate:translationData:'VALD_END_DT')}}</th>
+									<th style="width: 9%;">{{('Template Status' | gTranslate:translationData:'VALD_STS')}}</th>
+									<th>{{('Template Upload' | gTranslate:translationData:'TMPL_UPLD')}}</th>
 									<!-- data-ng-if="temp.cntry_id.id==con.countries.id" -->
 								</tr>
 							</thead>
@@ -167,7 +167,7 @@
 	<br/>
 	
 <div class="panel panel-primary ng-scope">	
-  <div class="panel-heading">Manage Users and Roles</div>
+  <div class="panel-heading">{{('Manage Users and Roles' | gTranslate:translationData:'MNG_USR_ROL')}}</div>
   
   <div class="panel-body">
    <span style="color: green;">{{success}}</span>
@@ -224,8 +224,8 @@
 						  </gcms-modal>
 						</th> -->
 						
-						<th>Username</th>
-						<th>Country </th>
+						<th>{{('Username' | gTranslate:translationData:'USR_NM')}}</th>
+						<th>{{('Country' | gTranslate:translationData:'CNTRY')}}</th>
 						
 						<th ng-repeat="role in roles">
 						<gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" ><span style="background-color: #337ab7; color: white !important">{{role.roleName}}</span></gcms-modal>

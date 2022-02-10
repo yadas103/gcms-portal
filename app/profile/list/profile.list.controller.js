@@ -57,7 +57,7 @@
 		    	else{
 		    		return input;
 		    	}		        
-		    }	
+		    };
 		})
 	.controller('ProfileListCtrl', ProfileSearch);
 
@@ -303,7 +303,7 @@
 			}
 			else
 				{
-				$scope.profile.msg = "Please select Reporting Country to auto populate Profile Country"
+				$scope.profile.msg = "Please select Reporting Country to auto populate Profile Country";
 				$scope.profile.readOnly = true;
 				}
 		};
@@ -329,7 +329,6 @@
 		loadCountry();
 
 		$scope.$on('$localeChangeSuccess', loadCountry);
-		
 		var updateCredential = function(result){
   			$scope.credential = result;
   		};
@@ -337,9 +336,8 @@
 		var loadCredential = function(profType){
 			$scope.credential = [];
 	  		Credential.query({id : $scope.loggedInUserCountry,partyType : profType}).$promise.then(updateCredential);
-	  			
 	  	};
-	  		
+	  	
 	  	$scope.clear = function()
 		{
 			$scope.request.lastName = $scope.clearText;
@@ -441,7 +439,7 @@
 					$scope.hideCredential = true;
 
 			}).catch(function(){
-				$scope.responseOnSearch = "No records to show"
+				$scope.responseOnSearch = "No records to show";
 				$scope.profileSearch.length = 0;
 				$scope.profileSearchCopy.length = 0;                               	
 			});                       
@@ -603,6 +601,7 @@
 		$scope.create = function(item){   
 			$scope.responseOnSave = '';
 			$scope.responseOnUnsave = '';
+			item.regionId = 3;	// setting regionId
 			var request = item;
 			var reqID = {};
 			request.profileTypeId = item.profileTypeId.Name;
@@ -645,7 +644,7 @@
 		$scope.createTempProfile = function(item){   
 			$scope.responseOnSave = '';
 			$scope.responseOnUnsave = '';
-			item.regionId = 5;
+			item.regionId = 5;	// setting regionId for Colombia
 			item.uniqueTypeCodeForNIT = $rootScope.NIT;
 			item.uniqueTypeCodeForCCID = $rootScope.CCID;
 			var request = item;
@@ -774,7 +773,7 @@
 				}
 				
 			}
-		}
+		};
 		
 		//Loads all templates 
 		var updateTemplates = function(result){
@@ -790,7 +789,7 @@
 			$scope.templateTypeSelected = $scope.crossInCountry+'-'+$scope.profileTypeSelected;					
 			
 			return ((result.cntry_id.name == $scope.request.country) && (result.tmpl_status == "ACTIVE") && (result.tmpl_type == $scope.templateTypeSelected ) && result.tmpl_location != null);
-		}
+		};
 				
 		
 		$scope.change = function(){			
@@ -856,7 +855,7 @@
 					});	
 					
 				});			
-			}
+			};
 
 			var y = 0;
 			$scope.createTask = function(y){
@@ -879,8 +878,8 @@
 					if($scope.dataToSend.setDates == false){
 					modifiedparams['consentstartdate'] = item.request[currentId].consentstartdate;
 					modifiedparams['consentenddate'] = item.request[currentId].consentenddate;
-					modifiedparams['startdate'] = item.request[currentId].consentstartdate.format("YYYY-MM-DD");;
-					modifiedparams['enddate'] = item.request[currentId].consentenddate.format("YYYY-MM-DD");;
+					modifiedparams['startdate'] = item.request[currentId].consentstartdate.format("YYYY-MM-DD");
+					modifiedparams['enddate'] = item.request[currentId].consentenddate.format("YYYY-MM-DD");
 					}
 					else{
 					modifiedparams['eventEndDate'] = item.request[currentId].eventEndDate;
@@ -906,7 +905,7 @@
         $rootScope.fname = firstName;
         $rootScope.lname = lastName;
         $rootScope.organisationName = organisationName;
-        var profileid = id
+        var profileid = id;
         $scope.consentAttributes = ConsentAnnex.query({id : profileid, regId : $scope.request.regionId});
         $scope.consentAttributes.hisFirstName = firstName;
         $scope.consentAttributes.hisLastName = lastName;
@@ -975,7 +974,7 @@
         $scope.validateCCID = function(){
         	$rootScope.CCID = $scope.uniqueTypeCodeCCID;
         	var regionId = 5;
-        	console.log("Item in here : "+$scope.uniqueTypeCodeCCID);
+        	console.log("CCID in here : "+$scope.uniqueTypeCodeCCID);
         	
         	ValidatedCode.get({id : $scope.uniqueTypeCodeCCID,regionId : regionId}).$promise
         	.then(function(result) {

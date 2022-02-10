@@ -1,10 +1,10 @@
 <div class="panel panel-primary table-responsive">
-	<div class="panel-heading">Identity Request</div>
+	<div class="panel-heading">{{('Identity Request' | gTranslate:translationData:'IDN_REQ')}}</div>
 <div ng-controller="identityCtrl">
 	<div class="panel-body">
 		<table class="table table-hover ">
 			<div class="table-responsive">
-				<!-- st-set-filter="myStrictFilter" -->
+				<!-- st-set-filter="myStrictFilter" --> 
 				<table  st-table="displayedCollection" 
 				
 					st-safe-src="identityRequestView"
@@ -12,14 +12,14 @@
 					<thead>
 						<tr style="color: white; background-color: #337ab7;">
 							<th class="pro-rev" > </th>
-							<th class="pro-rev" style="width:12%;" st-sort="profileTypeId">Profile Type</th>
-							<th class="pro-rev" style="width:15%;" st-sort="firstName">First Name</th>
-							<th class="pro-rev" style="width:15%;" st-sort="lastName">Last Name</th> 
-							<th class="pro-rev" style="width:14%;" st-sort="organizationName" > Organization Name</th> 
-							<th class="pro-rev" style="width:12%;"st-sort="country">Profile Country</th>
-							<th class="pro-rev"  style="width:14%;"st-sort="createdBy">Created By</th> 
-							<th class="pro-rev"style="width:6%;" >Status</th>
-							<th class="pro-rev"  ng-hide="status=='False'">Action</th>
+							<th class="pro-rev" style="width:12%;" st-sort="profileTypeId">{{('Profile Type' | gTranslate:translationData:'PRF_TYP')}}</th>
+							<th class="pro-rev" style="width:15%;" st-sort="firstName">{{('First Name' | gTranslate:translationData:'FRS_NM')}}</th>
+							<th class="pro-rev" style="width:15%;" st-sort="lastName">{{('Last Name' | gTranslate:translationData:'LST_NM')}}</th> 
+							<th class="pro-rev" style="width:14%;" st-sort="organizationName" >{{('Organization Name' | gTranslate:translationData:'ORG_NM')}}</th> 
+							<th class="pro-rev" style="width:12%;"st-sort="country">{{('Profile Country' | gTranslate:translationData:'PRF_CTRY')}}</th>
+							<th class="pro-rev"  style="width:14%;"st-sort="createdBy">{{('Created By' | gTranslate:translationData:'CRTD_BY')}}</th> 
+							<th class="pro-rev"style="width:6%;" >{{('Status' | gTranslate:translationData:'STATS')}}</th>
+							<th class="pro-rev"  ng-hide="status=='False'">{{('Action' | gTranslate:translationData:'ACTN')}}</th>
 
 						</tr>
 
@@ -38,10 +38,10 @@
 								<th><input st-search="createdBy" placeholder=" "
 								class="form-control" type="search" /></th>
 						<th><select st-input-event="change keydown" st-search="status"  ng-model="request.downchk" ng-change="onCategoryChange(request)" style="height: 27px;padding-left:3px;width:95px;">
-						            <option value="Pending">Pending</option>
-									 <option value="Approved">Approved</option> 									
-									<option value="Rejected">Rejected</option>
-									<option value="Merge">Merge</option>
+						            <option value="Pending">{{('Pending' | gTranslate:translationData:'ST_PND')}}</option>
+									 <option value="Approved">{{('Approved' | gTranslate:translationData:'ST_APR')}}</option> 									
+									<option value="Rejected">{{('Rejected' | gTranslate:translationData:'ST_REJ')}}</option>
+									<option value="Merge">{{('Merge' | gTranslate:translationData:'ST_MRG')}}</option>
 							</select></th> 	
 							<th  ng-hide="status=='False'"></th>
 						</tr>
@@ -54,7 +54,7 @@
 							<gcms-modal template="identity.view.html"
 										controller="ModalDefaultCtrl" content="identity" ok="update"
 										alt="Edit Task {{identity.id}}"> <span
-										style="color: #337ab7;margin-left: 3px;" title="Identity View"> View</span> </gcms-modal>
+										style="color: #337ab7;margin-left: 3px;" title="Identity View">{{('View' | gTranslate:translationData:'ACT_VW')}}</span> </gcms-modal>
 										
 							<!-- <a herf="" ng-if="identity.expanded" ng-click="identity.expanded = false" >
                                                            Close  </a>
@@ -69,23 +69,23 @@
 							 <td  class="tasktd">{{ identity.organizationName}}</td>
 							<td class="tasktd">{{ identity.country}}</td>
 							<td class="tasktd">{{ identity.createdBy}}</td>
-							<td style="word-break: break-all;">{{ identity.status }}</td>
+							<td style="word-break: break-all;">{{(identity.status | gTranslate:translationData:identity.status)}}</td>
 
 							<td  ng-hide="status=='False'">
 								<div ng-switch="identity.status">
 
-									<div ng-switch-when="Approved">Approve/Reject</div>
-									<div ng-switch-when="Rejected">Approve/Reject</div>
-									<div ng-switch-when="Merge">Merge</div>
+									<div ng-switch-when="Approved">{{('Approve/Reject' | gTranslate:translationData:'APR_REJ')}}</div>
+									<div ng-switch-when="Rejected">{{('Approve/Reject' | gTranslate:translationData:'APR_REJ')}}</div>
+									<div ng-switch-when="Merge">{{('Merge' | gTranslate:translationData:'ACT_MRG')}}</div>
 									<div ng-switch-default ng-show="identity.regionId == 3">
 										<gcms-modal template="indentity.search.html" controller="ModalDefaultCtrl"
 											ok="close" content="identity" ng-init="item=identity">
-										<a href="" ng-click="updateRegion(identity)">Approve/Reject</a> </gcms-modal>
+										<a href="" ng-click="updateRegion(identity)">{{('Approve/Reject' | gTranslate:translationData:'APR_REJ')}}</a> </gcms-modal>
 									</div>
 									<div ng-switch-default ng-show="identity.regionId == 5">
 										<gcms-modal template="indentity.search.html" controller="ModalDefaultCtrl"
 											ok="close" content="identity" ng-init="item=identity">
-										<a href="" ng-click="updateRegion(identity)">Merge</a> </gcms-modal>
+										<a href="" ng-click="updateRegion(identity)">{{('Merge' | gTranslate:translationData:'ACT_MRG')}}</a> </gcms-modal>
 									</div>
 									
 								</div>

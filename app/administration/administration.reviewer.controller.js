@@ -44,7 +44,7 @@
 			console.log( item.cntryReviewer);
 			$scope.error='';
 			 if(item.cntryReviewer.endsWith(';')){
-				 item.cntryReviewer = item.cntryReviewer.substr(0, item.cntryReviewer.length - 1)
+				 item.cntryReviewer = item.cntryReviewer.substr(0, item.cntryReviewer.length - 1);
 		    	}else{
 		    		// item.cntryReviewer=item.cntryReviewer+";"
 		    		// item.cntryReviewer = item.cntryReviewer.substr(0,
@@ -115,22 +115,14 @@
 			      	          shake: false,
 			      	          theme: 'bootstrap'
 			      	        });	
-		       		  })
+		       		  });
 		    		// console.log("Update");
 	    	    }
 		    	
 		    	
 		    	}
 	          };
-	          
-	         
-	          
-	          
-	        
-	  
-	    	
-	    };
-	    	 
-	  
-  
+	 
+  }
+	 
 })();

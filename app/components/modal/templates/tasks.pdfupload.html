@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h3 class="modal-title">Upload Files</h3> 
+  <h3 class="modal-title">{{('Upload Files' | gTranslate:translationData:'UPLD_FLS')}}</h3> 
 </div>
 
 <div class="modal-body uploadModal">
 
   <label class="fileContainer">
-    <a class="btn btn-default" role="button">Select files...</a>
-    <input type="file" ngf-select="" ng-model="picFile" name="file"  ngf-pattern="'image/*,application/pdf'" nv-file-select uploader="item" multiple="" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+    <a class="btn btn-default" role="button">{{('Select files' | gTranslate:translationData:'SLCT_FLS')}}...</a>
+    <input type="file" ngf-select="" placeholder="{{('No file chosen' | gTranslate:translationData:'NO_FL_CHSN')}}" ng-model="picFile" name="file"  ngf-pattern="'image/*,application/pdf'" nv-file-select uploader="item" multiple="" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
   </label>
    <!--form name="myForm">    
       Picture & Resume: <input type="file" ngf-select="" 
@@ -21,16 +21,16 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th ng-show="item.isHTML5">Size</th>
-          <th ng-show="item.isHTML5">Progress</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>{{('Name' | gTranslate:translationData:'FL_NM')}}</th>
+          <th ng-show="item.isHTML5">{{('Size' | gTranslate:translationData:'FL_SZ')}}</th>
+          <th ng-show="item.isHTML5">{{('Progress' | gTranslate:translationData:'FL_PRGRS')}}</th>
+          <th>{{('Status' | gTranslate:translationData:'FL_STS')}}</th>
+          <th>{{('Actions' | gTranslate:translationData:'FL_ACTNS')}}</th>
         </tr>
 		<tr>
-		<td>Eric</td>
-		<td>Upload</td>
-		<td>Active</td>
+		<td>{{('Eric' | gTranslate:translationData:'FL_ERC')}}</td>
+		<td>{{('Upload' | gTranslate:translationData:'ACT_UPLD')}}</td>
+		<td>{{('Active' | gTranslate:translationData:'FL_ACTV')}}</td>
 		
           
         </tr>
@@ -51,7 +51,7 @@
           </td>
           <td nowrap>
             <button type="button" class="btn btn-success btn-xs uploadModalButtonText" ng-click="obj.upload()" ng-disabled="obj.isReady || obj.isUploading || obj.isSuccess">
-              <span class="fa fa-upload"></span> Upload
+              <span class="fa fa-upload"></span> {{('Upload' | gTranslate:translationData:'ACT_UPLD')}}
             </button>
             <!--
             <button type="button" class="btn btn-warning btn-xs uploadModalButtonText" ng-click="obj.cancel()" ng-disabled="!obj.isUploading">
@@ -59,7 +59,7 @@
             </button>
             -->
             <button type="button" class="btn btn-danger btn-xs uploadModalButtonText" ng-click="obj.remove()">
-              <span class="fa fa-trash"></span> Remove
+              <span class="fa fa-trash"></span> {{('Remove' | gTranslate:translationData:'FL_RMV')}}
             </button>
           </td>
         </tr>
@@ -68,13 +68,13 @@
 
     <div class="queue">
       <div>
-        Queue progress:
+        {{('Queue progress' | gTranslate:translationData:'FL_UPLD_PGRS')}}:
         <div class="progress" style="">
             <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 0%;"></div>
         </div>
       </div>
       <button type="button" class="btn btn-success btn-s uploadModalButtonText" ng-click="item.uploadAll()" ng-disabled="!item.getNotUploadedItems().length" disabled="disabled">
-        <span class="fa fa-upload"></span> Upload all
+        <span class="fa fa-upload"></span> {{('Upload all' | gTranslate:translationData:'FL_UPLD_ALL')}}
       </button>
       <!--
       <button type="button" class="btn btn-warning btn-s uploadModalButtonText" ng-click="item.cancelAll()" ng-disabled="!item.isUploading" disabled="disabled">
@@ -82,7 +82,7 @@
       </button>
       -->
       <button type="button" class="btn btn-danger btn-s uploadModalButtonText" ng-click="item.clearQueue()" ng-disabled="!item.queue.length" disabled="disabled">
-        <span class="fa fa-trash"></span> Remove all
+        <span class="fa fa-trash"></span> {{('Remove all' | gTranslate:translationData:'HOM')}}
       </button>
     </div>
 
@@ -91,5 +91,5 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">Done</button>
+  <button class="btn btn-primary" ng-click="ok()">{{('Done' | gTranslate:translationData:'FL_DONE')}}</button>
 </div>

@@ -12,14 +12,21 @@
     .module('gcms.task')
     .controller('TaskCtrl', TaskController);
 
-  TaskController.$inject = ['$rootScope','$scope','$filter','Task','Users','toasty','PDFDownload','$http','ConsentPdf' ];
+  TaskController.$inject = ['$rootScope','$scope','$filter','Task','Users','toasty','PDFDownload','$http','ConsentPdf','session' ];
 
   
-  function TaskController($rootScope, $scope,$filter,Task,Users,toasty,PDFDownload,$http,ConsentPdf ){
+  function TaskController($rootScope, $scope,$filter,Task,Users,toasty,PDFDownload,$http,ConsentPdf,session){
 	  
 	  console.log("Inside task controller");
-	  	
-	  	
+	  	//session.
+	  //$scope.localData = $rootScope.currentProfile.localData;
+/*
+	  $scope.$watch($rootScope.currentProfile.localData, function(newValue, oldValue) {
+		    console.log(newValue);
+		    $scope.localData=newValue;
+		   
+		});*/
+	  
 	    var internalError = function(){
 	        toasty.error({
 	          title: 'Error',
@@ -121,13 +128,13 @@
 		            $scope.loaded = false;
 		        });
 		    
-		  }
+		  };
 		
 		
 		 var refresh=function(){
 			 $scope.callServer($scope.tableState);
 			 
-		 }
+		 };
 		 
 		
 		 
@@ -191,7 +198,7 @@
   					id.updatedDate = moment(id.updatedDate).format('DD/MM/YYYY');
       		    id.consannexid.PartyAddressType = "Primary Address";
       		    id.consannexid.SourceSystemCode = "DLU-P";
-      		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS"
+      		    id.consannexid.CustomFlexField15 = "Consent Downloaded from GCMS";
       		    id.consannexid.trid = "TR-ID";     		    
       	      	  $scope.compare();   	      	
       };  
@@ -461,7 +468,7 @@
   		            
   		        });
           }
-        }
+        };
 
 
      
@@ -546,7 +553,7 @@
   		            
   		        });
         }
-      }
+      };
 
 		
       	
@@ -589,7 +596,7 @@
 		 		    	 internalError();	
 		       		 });
              	 
-             	}
+             	};
 		
         	/**
 			 * selim
@@ -602,8 +609,8 @@
 			 */
           
         	
-        	$scope.download=function(item){
-    			console.log("inside download") 
+        	$scope.download=function(item){ console.log('localData:'+$rootScope.currentProfile.localData);
+    			console.log("inside download"); 
     			
     			 
 	            if(item.consannexid.consentstart != undefined)
@@ -953,9 +960,9 @@
 	    $scope.onCategoryChange = function (item) {
 	    	item.reassignReason='';
 	    	 $scope.count=1;
-	    	
-	    	 
-	    } 
+	    		    	 
+	    };
+	    
 		$scope.updateReassign = function(item) {
 			console.log("Inside updateReassign function");
 			

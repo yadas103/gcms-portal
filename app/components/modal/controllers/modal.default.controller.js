@@ -12,7 +12,7 @@
     .module('gcms.components.modal')
     .controller('ModalDefaultCtrl', ModalDefault);
 
-    ModalDefault.$inject = ['$scope','$modalInstance','$timeout','item'];
+    ModalDefault.$inject = ['$scope', '$modalInstance', '$timeout', 'item', 'gTranslate'];
 
     /**
      * @ngdoc method
@@ -23,7 +23,7 @@
      * @param {object} $modalInstance An object which represents a modal window instance
      * @param {object} item The object received from the modal directive controller
      */
-    function ModalDefault($scope,$modalInstance,$timeout, item) {
+    function ModalDefault($scope, $modalInstance, $timeout, item, gTranslate) {
     	
       $scope.item = item;
       $scope.maxLength = 100;
@@ -69,10 +69,10 @@
         $scope.Groups.push(obj);
         $scope.group.name = obj;
         $scope.newValue = '';
-    }
+    };
 
     $scope.Groups = [{
-        Name: 'Wrong name selected',
+        Name: 'Wrong name selected',//gTranslate('Wrong name selected',$rootScope.translationData,'Wrong name selected'),
         Value: 'd1'
     }, {
         Name: 'Event canceled',
@@ -86,7 +86,7 @@
     }];
     $scope.group = {
         name: ""
-    }
+    };
 	$scope.add = function (new1Value) {
         var obj = {};
         obj.Name = new1Value;
@@ -94,7 +94,7 @@
         $scope.Groupss.push(obj);
         $scope.group1.name = obj;
         $scope.new1Value = '';
-    }
+    };
 
     $scope.Groupss = [{
         Name: 'HCP',
@@ -105,7 +105,7 @@
     }];
     $scope.group1 = {
         name: ""
-    }
+    };
 	 $scope.tableRowExpanded = false;
     $scope.tableRowIndexCurrExpanded = "";
     $scope.tableRowIndexPrevExpanded = "";
@@ -215,3 +215,4 @@
       };
     }
 })();
+

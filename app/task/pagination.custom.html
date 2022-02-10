@@ -1,9 +1,9 @@
 <nav ng-if="pages.length >= 2">
   <ul class="pagination">
-    <li><a ng-click="selectPage(1)">First</a>
+    <li><a ng-click="selectPage(1)">{{('First' | gTranslate:currentProfile.translationData:'PG_FRST')}}</a>
     </li><li><a ng-click="selectPage(currentPage - 1)">&lt;</a>
-    </li><li><a><page-select></page-select> of {{numPages}}</a>
+    </li><li><a><page-select></page-select> {{('of' | gTranslate:currentProfile.translationData:'PG_OF')}} {{numPages}}</a>
     </li><li><a ng-click="selectPage(currentPage + 1)">&gt;</a>
-    </li><li><a ng-click="selectPage(numPages)">Last</a></li>
+    </li><li><a ng-click="selectPage(numPages)">{{('Last' | gTranslate:currentProfile.translationData:'PG_LST')}}</a></li>
   </ul>
 </nav>

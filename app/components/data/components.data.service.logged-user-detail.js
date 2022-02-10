@@ -14,7 +14,7 @@
     .module('gcms.components.data')
     .factory('LoggedUserDetail', LoggedUserDetail);
 
-  LoggedUserDetail.$inject = ['$rootScope', '$resource', '$log', 'ENVIRONMENT'];
+  LoggedUserDetail.$inject = ['$rootScope', '$resource', '$log', 'ENVIRONMENT','Language'];
 
   /**
    * @ngdoc method
@@ -27,7 +27,7 @@
       consistent service uri to use across the application
    * @returns {object} The logged user detail data service
    */
-  function LoggedUserDetail($rootScope, $resource, $log, ENVIRONMENT) {
+  function LoggedUserDetail($rootScope, $resource, $log, ENVIRONMENT,Language) {
 	console.log('Here in user-detail....');
     var hydrateUserDetails = function(response) {
       var collections = $rootScope.session.collections;
@@ -60,6 +60,21 @@ console.log('Here in user-detail***22....');
         profiles[i].roleName = role.roleName;
       }
     };
+    var getAllLanguages = function(countryId){console.log("inside getAllLanguages : "+countryId);
+	Language.query({id : countryId}).$promise.then(updateLanguages);
+};
+
+var updateLanguages = function(result){
+	//console.log(profiles);
+	$rootScope.currentProfile.languages = result;
+	
+	var arr = result.filter(d => d.default === 'Y');
+	$rootScope.defaultLanguage = arr[0].languageName;
+
+	console.log(result);
+	console.log($rootScope.defaultLanguage);
+};
+
 
     var getItemById = function(id, types){
       for (var i in types) {

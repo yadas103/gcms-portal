@@ -29,7 +29,7 @@
                   predicate = scope.predicateExpression;
                 }
                 return predicate;
-              }
+              };
 
               scope.$watch('collection', function(newValue) {
                 var predicate = getPredicate();
@@ -68,7 +68,7 @@
                 table.search(query, predicate);
               };
             }
-          }
+          };
         }])
         .directive('myDirective', function($compile, $timeout) {
         	  return {
@@ -90,7 +90,7 @@
         		        }
         		      });
         		    }
-        		  }
+        		  };
         		})
        .directive('pageSelect', [function() {
     	   return {
@@ -103,7 +103,7 @@
             scope.inputPage = c;
           	});
         	}
-    	   }
+    	   };
        }])
        .directive('toggle', function(){
     	   return {

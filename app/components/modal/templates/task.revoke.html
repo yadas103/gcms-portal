@@ -76,7 +76,7 @@
 		<div ng-controller ="FileManagerController" >
 		
 		  <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
-          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
+          <input type="file" placeholder="{{('No file chosen' | gTranslate:translationData:'NO_FL_CHSN')}}" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
           
            <div ng-show="!apiMiddleware.inprocess">
           <button  ng-click="uploadFilesR()" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess" style="margin-top: 8px;">{{'upload' | translate}}</button>

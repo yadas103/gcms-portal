@@ -1,9 +1,9 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: medium;">Uploaded File details
-		<div ng-if="item.consannexid==undefined">Template Code :
+  <h3 class="modal-title" style="font-size: medium;">{{('Uploaded File details' | gTranslate:currentProfile.translationData:'UPLD_FL_DTLS')}}
+		<div ng-if="item.consannexid==undefined">{{('Template Code' | gTranslate:currentProfile.translationData:'TMPL_CD')}} :
 			{{item.tmpl_code}}</div>
-		<div ng-if="item.consannexid != undefined">Task ID : {{item.id}}
+		<div ng-if="item.consannexid != undefined">{{('Task ID' | gTranslate:currentProfile.translationData:'TSK_ID')}} : {{item.id}}
 		</div>
 	</h3>
   
@@ -20,26 +20,26 @@
            <div ng-show="item.consannexid==undefined">
           <span style="color:red;">{{warning}}</span>
           <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
-          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".doc,.docx" style="padding-top: 3px;"/> 
+          <input type="file" class="form-control" placeholder="{{('No file chosen' | gTranslate:translationData:'NO_FL_CHSN')}}" ng-file="uploadFileList" autofocus="autofocus" accept=".doc,.docx" style="padding-top: 3px;"/> 
           <!-- onchange="angular.element(this).scope().uploadFiles() -->
      
                </div>
           <div ng-show="item.consannexid != undefined">
           <span style="color:red;">{{warning}}</span>
           <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
-          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
+          <input type="file" class="form-control" placeholder="{{('No file chosen' | gTranslate:translationData:'NO_FL_CHSN')}}" ng-file="uploadFileList" autofocus="autofocus" accept=".pdf"  style="padding-top: 3px;"/> 
           </div> 
           <!-- 
           <label class="radio">{{"files_will_uploaded_to" | translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b></label>
-          <input type="file" class="form-control" ng-file="uploadFileList" autofocus="autofocus" />
+          <input type="file" class="form-control" placeholder="{{('No file chosen' | gTranslate:translationData:'NO_FL_CHSN')}}" ng-file="uploadFileList" autofocus="autofocus" />
           <div ng-include data-src="'error-bar'" class="clearfix"></div>
            -->
            
           <div ng-show="!apiMiddleware.inprocess">
-          <button type="submit" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess" style="margin-top: 8px;">{{'upload' | translate}}</button>
+          <button type="submit" class="btn btn-primary" ng-disabled="!uploadFileList.length || apiMiddleware.inprocess" style="margin-top: 8px;">{{('Upload' | gTranslate:currentProfile.translationData:'ACT_UPLD')}}</button>
           </div>
           <div ng-show="apiMiddleware.inprocess">
-            <span class="label label-warning">{{"uploading" | translate}} ...</span>
+            <span class="label label-warning">{{('Uploading' | gTranslate:currentProfile.translationData:'STS_UPLDNG')}} ...</span>
           </div>
 
           
@@ -51,12 +51,12 @@
              
             
            <div ng-show="item.consannexid==undefined">
-           <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-           <button class="btn btn-primary" ng-disabled="item.tmpl_location==undefined "  ng-click="ok()" >Save</button>          
+           <button class="btn btn-warning" ng-click="cancel()">{{('Cancel' | gTranslate:currentProfile.translationData:'ACT_CNCL')}}</button>
+           <button class="btn btn-primary" ng-disabled="item.tmpl_location==undefined "  ng-click="ok()" >{{('Save' | gTranslate:currentProfile.translationData:'ACT_SVE')}}</button>          
           </div>
           <div ng-show="item.consannexid != undefined">
-           <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-           <button class="btn btn-primary" ng-disabled="item.consannexid.annnexlocation==undefined"  ng-click="ok()" >Save</button>
+           <button class="btn btn-warning" ng-click="cancel()">{{('Cancel' | gTranslate:currentProfile.translationData:'ACT_CNCL')}}</button>
+           <button class="btn btn-primary" ng-disabled="item.consannexid.annnexlocation==undefined"  ng-click="ok()" >{{('Save' | gTranslate:currentProfile.translationData:'ACT_SVE')}}</button>
            </div>
           
   <!-- <button class="btn btn-primary" ng-click="ok()" >OK</button> uploadFiles() -->

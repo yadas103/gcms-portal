@@ -48,6 +48,6 @@
 	  'moment-picker',
 	  'ngDialog',
 	  'mgcrea.ngStrap.popover'
-	
     ]);
 })();
+

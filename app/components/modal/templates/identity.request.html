@@ -1,84 +1,83 @@
 <!-- Create Missing Profile -->
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: medium; padding-left: 10px;">Create missing profile</h3>
+  <h3 class="modal-title" style="font-size: medium; padding-left: 10px;">{{('Create missing profile' | gTranslate:translationData:'PRF_CRT_MSNG')}}</h3>
 </div>
 <div class="modal-body" >
-<p style="font-size: 12px;">Before requesting a new profile, please make sure you searched
- using multiple criteria</p>
+<p style="font-size: 12px;">{{('Before requesting a new profile, please make sure you searched using multiple criteria' | gTranslate:translationData:'PRF_RQST_SRCH')}}</p>
 	<div ng-controller = "ProfileListCtrl" style="margin-bottom: 105px;">
 		<div style="color:maroon;">
 			{{item.msg}} 
 		</div>
             <form novalidate name="saveProfiles" class="form-vertical">
-                 <legend style="color: black; font-size: small;">General Details</legend>
+                 <legend style="color: black; font-size: small;">{{('General Details' | gTranslate:translationData:'PRF_GNR_DTLS')}}</legend>
                  
                 <div class="form-group">
-                    <label for="Profile Type" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 45px;">Profile Type:*</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="Profile Type" class="col-sm-4 control-label" style="font-size: 13px;padding-left: 45px;">{{('Profile Type' | gTranslate:translationData:'PRF_TYP')}}:*</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
 					<select class="form-control" ng-model="item.profileTypeId" ng-options="Group1.Name for Group1 in Groupss" ng-change="erase(item)" class="drop-down" required><option value="" ng-show="{{empty}}"></option></select>                      
                         <span class="help-block"></span>
                     </div>
                 </div>
 				 
                 <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
-                    <label for="fname" class="col-sm-3 control-label" style="font-size: 13px;padding-left: 49px;">First Name:*</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="fname" class="col-sm-4 control-label" style="font-size: 13px;padding-left: 49px;">{{('First Name' | gTranslate:translationData:'FRS_NM')}}:*</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                    <input type="text" ng-maxlength="100" class="form-control" id="firstName" ng-model="item.firstName" ng-required="item.profileTypeId.Name == 'HCP'">   
                     </div>
                 </div>
                 <div class="form-group" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCO'">
-                    <label for="lastname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Last Name:*</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="lastname" class="col-sm-4 control-label" style="font-size: 13px; padding-left: 49px;">{{('Last Name' | gTranslate:translationData:'LST_NM')}}:*</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                        <input type="text" ng-maxlength="100" class="form-control" id="lastName" placeholder="" ng-model="item.lastName" ng-required="item.profileTypeId.Name == 'HCP'">
                     </div>
                 </div>
                 <div class="form-group" name="New1Value" ng-model="new1Value" ng-hide="item.profileTypeId.Name == 'HCP'">
-                    <label for="oragname" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 6px;">Organization Name:*</label>
-                    <div class="col-sm-9"style="height: 29px;">
+                    <label for="oragname" class="col-sm-4 control-label" style="font-size: 13px; padding-left: 6px;">{{('Organization Name' | gTranslate:translationData:'ORG_NM')}}:*</label>
+                    <div class="col-sm-8"style="height: 29px;">
                         <input type="text" ng-maxlength="500" id="organizationName" class="form-control" ng-model="item.organizationName" ng-required="item.profileTypeId.Name == 'HCO'">
                     </div>
                 </div>
-				 <legend style="color: black; font-size: small;">Professional Details</legend>
+				 <legend style="color: black; font-size: small;">{{('Professional Details' | gTranslate:translationData:'PRF_DTLS')}}</legend>
 				 <div class="form-group">
-                    <label for="Procity" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 49px;">Profile City:</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="Procity" class="col-sm-4 control-label" style="font-size: 13px; padding-left: 49px;">{{('Profile City' | gTranslate:translationData:'PRF_CTY')}}:</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                         <input type="text" ng-maxlength="100" id="city" placeholder="" class="form-control" ng-model="item.city">
                     </div>
                 </div>
 				<div class="form-group">
-                    <label for="Procnt" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 30px;">Profile Country:*</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="Procnt" class="col-sm-4 control-label" style="font-size: 13px; padding-left: 30px;">{{('Profile Country' | gTranslate:translationData:'PRF_CTRY')}}:*</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                         <select class="form-control" ng-model="item.country" class="drop-down" ng-disabled="item.readOnly" required>
                   			<option ng-repeat="contry in counties |filter : efpiaFilter">{{contry.name}}</option>
                			</select>               			
                     </div>
                 </div>
 				<div class="form-group" ng-model="new1Value">
-                    <label for="Prosp" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Specialty:*</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="Prosp" class="col-sm-4 control-label" style="font-size: 13px; padding-left: 25px;">{{('Profile Specialty' | gTranslate:translationData:'PRF_SPLT')}}:*</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                         <input type="text" ng-maxlength="100" id="specility" placeholder="" class="form-control" ng-model="item.specility" required>
                     </div>
                 </div>
 				<div class="form-group">
-                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px; padding-left: 25px;">Profile Address:*</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="Proadd" class="col-sm-4 control-label" style="font-size: 13px; padding-left: 25px;">{{('Profile Address' | gTranslate:translationData:'PRF_ADRS')}}:*</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                         <input type="text" ng-maxlength="1024" id="address" placeholder="" class="form-control" ng-model="item.address" required>
                     </div>
                 </div>
                  <!-- /.form-group -->
-              <legend style="color: black; font-size: small;">Other Details</legend>
+              <legend style="color: black; font-size: small;">{{('Other Details' | gTranslate:translationData:'OTHR_DTLS')}}</legend>
 			  <div class="form-group">
-                    <label for="Proadd" class="col-sm-3 control-label" style="font-size: 13px;margin-top: 10px; padding-left: 24px;">Note for reviewer:</label>
-                    <div class="col-sm-9" style="margin-bottom: 10px; height: 29px;">
+                    <label for="Proadd" class="col-sm-4 control-label" style="font-size: 13px;margin-top: 10px; padding-left: 24px;">{{('Note for reviewer' | gTranslate:translationData:'NT_FR_RVWR')}}:</label>
+                    <div class="col-sm-8" style="margin-bottom: 10px; height: 29px;">
                         	<textarea id="notes" ng-maxlength="1000" class="form-control" rows="2" style="resize: none" ng-model="item.notes"></textarea>
                     </div>
                 </div>  
              
 	<span style="float: right;margin-top: 18px;margin-right: 14px;">
 	
-	<button class="btn btn-primary" ng-click="ok()" ng-disabled="saveProfiles.$invalid">Request</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>	
+	<button class="btn btn-primary" ng-click="ok()" ng-disabled="saveProfiles.$invalid">{{('Request' | gTranslate:translationData:'PRF_RQST_V')}}</button>
+	<button class="btn btn-warning" ng-click="cancel()">{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>	
 	</span>
 	</form>	
 	</div>

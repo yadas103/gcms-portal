@@ -123,7 +123,7 @@
 	  		  $scope.id=con.countries.id;
 	  		  $scope.isoCode=con.countries.isoCode;
 
-	  	  } 
+	  	  };
 	          
 	          /**
 	  		 * @author: selim
@@ -232,7 +232,7 @@
 		          
 		          	$scope.close=function(item){
 		          		getTemplateData();
-		          	}
+		          	};
 		          /**selim
 					 * @ngdoc method
 					 * @name update
@@ -677,7 +677,7 @@
 					  });
 			  });
 			};
-
+			
 			/**
 			 * @ngdoc method
 			 * @name delete

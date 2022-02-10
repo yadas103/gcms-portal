@@ -1,21 +1,23 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: medium;">Identity Status</h3>
+  <h3 class="modal-title" style="font-size: medium;">{{('Identity Status' | gTranslate:translationData:'IDNTY_STS')}}</h3>
 </div>
 <div ng-controller="identityCtrl">
-<div class="panel-body" ng-show="filterRegion">Please search for the profile in TRS using the given details. <br/><br/> <ul style="margin-left: 20px;"> <li>If the profile is not found, please create it in TRS first. Once created, you will have the TR-ID. Put it in the textbox below and press Validate button. Once the profile is validated, press the Approve button.</li><li>If the profile exists, take its TR-ID and put it in the textbox below then press Validate button. Once the profile is validated, press the Reject button.</li></ul>
+<div class="panel-body" ng-show="filterRegion">{{('Please search for the profile in TRS using the given details' | gTranslate:translationData:'PRF_SRCH_TRS')}}. <br/><br/> <ul style="margin-left: 20px;"> 
+	<li>{{('If the profile is not found, please create it in TRS first. Once created, you will have the TR-ID. Put it in the textbox below and press Validate button. Once the profile is validated, press the Approve button.' | gTranslate:translationData:'PRF_NT_EXSTS_APRV')}}</li>
+	<li>{{('If the profile exists, take its TR-ID and put it in the textbox below then press Validate button. Once the profile is validated, press the Reject button.' | gTranslate:translationData:'PRF_EXSTS_RJCT')}}</li></ul>
 <form name="administrationForm" class="form-horizontal" novalidate>
 
   <table >
   <div class="input-group input-group-sm">
    <span class="input-group-addon">
    <i class="fa fa-search" aria-hidden="true"></i></span> 
-   <input id="text1" type="text" ng-model="item.bpid" class="form-control " name="text1" placeholder="Insert TR-ID Here...">
+   <input id="text1" type="text" ng-model="item.bpid" class="form-control " name="text1" placeholder="{{('Insert TR-ID Here' | gTranslate:translationData:'INSRT_TRID_HR')}}...">
     <span class="input-group-btn">
-     <button class="btn btn-primary" type="button" ng-click="validate(item)" value="{{item.bpid}}">Validate</button>
+     <button class="btn btn-primary" type="button" ng-click="validate(item)" value="{{item.bpid}}">{{('Validate' | gTranslate:translationData:'PRF_VLDT')}}</button>
       </span>
        </div>
-       <span>Your action will generate an email message to the requestor including all the details to find the profile.</span> </div>
+       <span>{{('Your action will generate an email message to the requestor including all the details to find the profile' | gTranslate:translationData:'PRFL_EML_INFO')}}.</span> </div>
 		<tr>	
 		<td>
 			<div>
@@ -29,18 +31,20 @@
 			</table>
 			</form>
 		</div>
-	<div class="panel-body" ng-hide="filterRegion">Please search for the profile in TRS using the given details. <br/><br/> <ul style="margin-left: 20px;"> <li>If the profile is not found, please create it in TRS first. Once created, you will have the TR-ID. Put it in the textbox below and press Validate button. Once the profile is validated, press the Merge button.</li><li>If the profile exists, take its TR-ID and put it in the textbox below then press Validate button. Once the profile is validated, press the Merge button.</li></ul>
+	<div class="panel-body" ng-hide="filterRegion">{{('Please search for the profile in TRS using the given details' | gTranslate:translationData:'SRCH_TRS_DTLS')}}. <br/><br/> <ul style="margin-left: 20px;"> 
+	<li>{{('If the profile is not found, please create it in TRS first. Once created, you will have the TR-ID. Put it in the textbox below and press Validate button. Once the profile is validated, press the Merge button' | gTranslate:translationData:'PRF_NT_EXSTS_VLDT')}}.</li>
+	<li>{{('If the profile exists, take its TR-ID and put it in the textbox below then press Validate button. Once the profile is validated, press the Merge button' | gTranslate:translationData:'PRF_EXSTS_VLDT')}}.</li></ul>
 	<form name="administrationForm" class="form-horizontal" novalidate  ng-hide="filterRegion">
 	<table>
   <div class="input-group input-group-sm">
    <span class="input-group-addon">
    <i class="fa fa-search" aria-hidden="true"></i></span> 
-   <input id="text1" type="text" ng-model="item.bpid" class="form-control " name="text1" placeholder="Insert TR-ID Here...">
+   <input id="text1" type="text" ng-model="item.bpid" class="form-control " name="text1" placeholder="{{('Insert TR-ID Here' | gTranslate:translationData:'INSRT_TRID_HR')}}...">
     <span class="input-group-btn">
-     <button class="btn btn-primary" type="button" ng-click="validateColombia(item)" value="{{item.bpid}}">Validate</button>
+     <button class="btn btn-primary" type="button" ng-click="validateColombia(item)" value="{{item.bpid}}">{{('Validate' | gTranslate:translationData:'PRF_VLDT')}}</button>
       </span>
        </div>
-       <span>Your action will generate an email message to the requestor including all the details to find the profile.</span> </div>
+       <span>{{('Your action will generate an email message to the requestor including all the details to find the profile' | gTranslate:translationData:'PRFL_EML_INFO')}}.</span> </div>
 		<tr>	
 		<td>
 			<div>
@@ -56,9 +60,9 @@
 			
 </div>
 <div class="modal-footer" style="text-align:right; background-color: #eeeeee;">
-<span ng-show="filterRegion"><button class="btn btn-primary" ng-click="updateApprove(item)" value="{{item.identity.id}}" ng-disabled="validation=='false' || validation==''">Approve</button></span>
-<span ng-show="filterRegion"><button class="btn btn-primary" ng-click="updateDismiss(item)" value="{{item.identity.id}}" ng-disabled="validation=='false' || validation==''">Reject</button></span>
-	<span ng-hide="filterRegion"><button class="btn btn-primary" ng-click="updateApproveCol(item)" value="{{item.identity.id}}" ng-disabled="validationCol=='false' || validationCol==''">Merge</button></span>
+<span ng-show="filterRegion"><button class="btn btn-primary" ng-click="updateApprove(item)" value="{{item.identity.id}}" ng-disabled="validation=='false' || validation==''">{{('Approve' | gTranslate:translationData:'ACT_APRV')}}</button></span>
+<span ng-show="filterRegion"><button class="btn btn-primary" ng-click="updateDismiss(item)" value="{{item.identity.id}}" ng-disabled="validation=='false' || validation==''">{{('Reject' | gTranslate:translationData:'ACT_RJCT')}}</button></span>
+	<span ng-hide="filterRegion"><button class="btn btn-primary" ng-click="updateApproveCol(item)" value="{{item.identity.id}}" ng-disabled="validationCol=='false' || validationCol==''">{{('Merge' | gTranslate:translationData:'ACT_MRG')}}</button></span>
 <span><button class="btn btn-warning" ng-click="cancel()" >Cancel</button></span>
 </div>
 

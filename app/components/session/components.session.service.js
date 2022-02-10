@@ -22,7 +22,7 @@
 
 	console.log('Here in user-detail***1....');
 	
-  session.$inject = ['$rootScope','$q', 'LoggedUserDetail', 'Country', 'Role', 'Lov', 'UIConfig', 'tmhDynamicLocale', 'localeMapper', 'CONFIG'];
+  session.$inject = ['$rootScope','$q', 'LoggedUserDetail', 'Country', 'Role', 'Lov', 'UIConfig', 'tmhDynamicLocale', 'localeMapper', 'CONFIG', 'Language', 'LocalText'];
 
   console.log('Here in user-detail***2....');
   /**
@@ -42,7 +42,7 @@
    * @param {object} CONFIG The configuration constants for the application
    * @returns {object} The session service
    */
-  function session($rootScope, $q, LoggedUserDetail, Country, Role, Lov, UIConfig, tmhDynamicLocale, localeMapper, CONFIG) {
+  function session($rootScope, $q, LoggedUserDetail, Country, Role, Lov, UIConfig, tmhDynamicLocale, localeMapper, CONFIG, Language, LocalText) {
 	  
 	  console.log('Here in user-detail***3....');
     // private variables
@@ -52,6 +52,8 @@
     var userName = null;
     var userDetailPromise = null;
     var currentProfile = null;
+    //var languages = null;
+    //var currentLanguage = null;
 
     /**
      * @ngdoc method
@@ -81,7 +83,7 @@
       return userDetailPromise.then(function(result){
 		  console.log('Here in user-detail***getCurrentUser....4');
         if(result){
-          //faild to get user details
+          // faild to get user details
           userName = result.userName;
         }
         userDetailPromise = null;
@@ -90,7 +92,7 @@
       })
       .catch(function(error){
 		  console.log('Here in user-detail***getCurrentUser....ERROR');
-        //console.log('Current User ID Error', error);
+        // console.log('Current User ID Error', error);
         if(error.status === 0 && error.statusText === ''){
           window.location.assign('/');
           window.location.reload(true);
@@ -167,7 +169,7 @@
 
 		console.log('Here in user-detail***UP10....');
 		console.log('Here in user-detail***UP20....'+getPrimaryProfile());
-	  
+		
       return getPrimaryProfile().then(function(profile){
 		  console.log('Here in user-detail***UP3....'+profile);
         return profile;
@@ -184,12 +186,31 @@
      */
     var setProfile = function(profile){
 		console.log('Here in user-detail***UP4....'+profile);
+		getAllLanguages(profile.countryId);
+
       setLocale(profile.countryId);
       resetLocalizableCache();
       $rootScope.currentProfile = profile;
       currentProfile = profile;
       return profile;
     };
+    
+    /**
+     * @ngdoc method
+     * @name getLocalText(language)
+     * @methodOf gcms.components.session.service:session
+     * @description Sets profile for a user
+     * @param {Number} id The profile id for the profile to be set
+     * @returns {object} A profile object
+     */
+  /*  var getLocalText = function(){
+		console.log('Here in local-***UPL....');
+      
+      resetLocalizableCache();
+      $rootScope.currentProfile = profile;
+      currentProfile = profile;
+      return profile;
+    };*/
 
     /**
      * @ngdoc method
@@ -211,13 +232,45 @@
           };
           CONFIG.locale.push(selectedLocale);
         }
-
         tmhDynamicLocale.set(selectedLocale.locale);
         localizableLovs = [];
         return selectedLocale;
       });
     };
+    
+    var getAllLanguages = function(countryId){
+    	Language.query({id : countryId}).$promise.then(loadLanguages);
+    };
+    
+    var loadLanguages = function(languages){
+    	//console.log("curnt profile: "+JSON.stringify($rootScope.currentProfile));
+    	$rootScope.currentProfile.languages = languages;
+    	$rootScope.languages = languages;
+    	//console.log("curnt profile: "+JSON.stringify($rootScope.currentProfile));
+    	//var arr = languages.filter(d => d.default === 'Y');
+    	var defaultLanguage = (languages.filter(d => d.default === 'Y'))[0];
 
+    	$rootScope.currentProfile.defaultLanguage = defaultLanguage;
+    	setLanguage(defaultLanguage);
+		};
+
+		var setLanguage = function(language){
+			console.log('Here in setLanguage***SL1....' + language);
+				
+			resetLocalizableCache();
+			$rootScope.currentProfile.currentLanguage = language;
+			getLocalText($rootScope.currentProfile.countryId, $rootScope.currentProfile.currentLanguage.languageCode);
+			return language;
+	    };
+	    
+	    var getLocalText = function(countryId, languageCode){//console.log(countryId+languageCode);
+	    	LocalText.query({id : countryId,language:languageCode}).$promise.then(loadLocalText);
+	    };
+	    
+	    var loadLocalText = function(localData){
+	    	$rootScope.translationData = localData;
+	    };
+			
     /**
      * @ngdoc method
      * @name getPermissions

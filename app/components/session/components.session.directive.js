@@ -48,7 +48,7 @@
     .module('gcms.components.session')
     .directive('gcmsSession', Session);
 
-    Session.$inject = ['$log', '$rootScope','$state','$interval','Review'];
+    Session.$inject = ['$log', '$rootScope', '$state', '$interval', 'Review', 'LocalText'];
 
     /**
      * @ngdoc method
@@ -57,7 +57,7 @@
      * @description Constructor for the session directive
      * @returns {object} Session directive
      */
-    function Session($log, $rootScope, $state, $interval,Review) {
+    function Session($log, $rootScope, $state, $interval, Review, LocalText) {
       return {
         restrict: 'E',
         scope: {
@@ -148,6 +148,22 @@
               });
             };
 
+            $scope.setLanguage = function(language){
+    			console.log('Here in setLanguage***SD1....' + language);
+    				
+    			$rootScope.currentProfile.currentLanguage = language;
+    			getLocalText($rootScope.currentProfile.countryId, $rootScope.currentProfile.currentLanguage.languageCode);
+    			return language;
+    	    };
+    	    
+    	    var getLocalText = function(countryId, languageCode){
+	    	LocalText.query({id : countryId,language:languageCode}).$promise.then(loadLocalText);
+	    };
+	    
+	    var loadLocalText = function(localData){
+	    	$rootScope.translationData = localData;
+		};
+
             $scope.getReviewersData = function(currentProfile){		  								
         		   Review.query().$promise.then(function(review){		    	 					
         		       $scope.ReviewAttributes = review;
@@ -175,4 +191,3 @@
     }
 
 })();
-

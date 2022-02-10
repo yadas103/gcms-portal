@@ -43,7 +43,7 @@
 	                            element.val(ngModel.$modelValue.toString().replace(".", ","));
 	                        }
 	                     }
-		              }
+		              };
 	            }
                 //After entering the value, this will be invoked
                 ngModel.$parsers.unshift(function(newValue) {
@@ -72,7 +72,7 @@
                 });
               }
             }
-        }
+        };
     }
 
 })();

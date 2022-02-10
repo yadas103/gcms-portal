@@ -2,7 +2,7 @@
 	<div class="modal-header"
 		style="background-color: #337ab7; color: white; padding: 5px;">
 		<h3 class="modal-title" style="font-size: medium;">
-			Upload Template For {{item.tmpl_name}}
+			{{('Upload Template For' | gTranslate:translationData:'TMPL_UPLD_FR')}} {{item.tmpl_name}}
 			
 		</h3>
 	</div>
@@ -10,7 +10,7 @@
 		<span style="color: green;">{{success}}</span>
 		<span style="color: red;">{{error}}</span>
 		  <label class="radio"><!-- {{"files_will_uploaded_to"| translate}} <b>/{{fileNavigator.currentPath.join('/')}}</b> --></label> 
-		  <input type="file" class="form-control" ng-file="uploadFileList"
+		  <input type="file" class="form-control" ng-file="uploadFileList" placeholder="{{('No file chosen' | gTranslate:translationData:'NO_FL_CHSN')}}"
 			autofocus="autofocus" accept=".doc,.docx" style="padding-top: 3px;" />
 		<!-- onchange="angular.element(this).scope().uploadFiles() -->
 		<label class="radio"></label>
@@ -19,10 +19,8 @@
 		<div ng-show="!apiMiddleware.inprocess">
 			
 			<button ng-click="uploadFiles(item)" class="btn btn-primary"
-				ng-disabled="!uploadFileList.length">{{'Upload' |
-				translate}}</button>
-				<button ng-click="cancel()" type="button" class="btn btn-warning">{{"Cancel"
-				| translate}}</button>
+				ng-disabled="!uploadFileList.length">{{('Upload' | gTranslate:translationData:'ACT_UPLD')}}</button>
+				<button ng-click="cancel()" type="button" class="btn btn-warning">{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
 		</div>
 	</div>
 </form>

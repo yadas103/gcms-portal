@@ -1,6 +1,6 @@
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 5px;">
-  <h3 class="modal-title" style="font-size: medium;">Edit Task : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}} {{item.consannexid.bpid.organisationName}}
+  <h3 class="modal-title" style="font-size: medium;">{{('Edit Task' | gTranslate:translationData:'EDT_TSK')}} : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}} {{item.consannexid.bpid.organisationName}}
                          
   </h3>
   
@@ -11,32 +11,32 @@
     
     <div class="form-group">
     
-       <label for="consannexid.eventname" class="col-sm-4 control-label">Event Name :</label>
+       <label for="consannexid.eventname" class="col-sm-4 control-label">{{('Event Name' | gTranslate:translationData:'EVT_NM')}} :</label>
     <div class="col-sm-8">
       <input  type="text" class="form-control form-popup"  id="eventname" name="eventname" ng-model="item.consannexid.eventname" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
   <div class="form-group" >
-    <label for="consannexid.pocode" class="col-sm-4 control-label">PO Code :</label>
+    <label for="consannexid.pocode" class="col-sm-4 control-label">{{('PO Code' | gTranslate:translationData:'PO_CD')}} :</label>
     <div class="col-sm-8">
       <input ng-maxlength="30" type="text" class="form-control form-popup" id="pocode" name="pocode" ng-model="item.consannexid.pocode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
     </div>
   </div>
       <div class="form-group" >
-    <label for="consannexid.acmcode" class="col-sm-4 control-label">ACM Code :</label>
+    <label for="consannexid.acmcode" class="col-sm-4 control-label">{{('ACM Code' | gTranslate:translationData:'ACM_CD')}} :</label>
     <div class="col-sm-8">
       <input ng-maxlength="30" type="text" class="form-control form-popup" id="acmcode" name="acmcode" ng-model="item.consannexid.acmcode" placeholder="" ng-readonly="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" >
     </div>    
   </div>
   <div class="form-group" >
-    <label for="middleName" class="col-sm-4 control-label">Consent Status :</label>
+    <label for="middleName" class="col-sm-4 control-label">{{('Consent Status' | gTranslate:translationData:'CONST_ST')}} :</label>
     <div class="col-sm-8 form-popup1">
        <gcms-lov list="consentType" value="item.consannexid.consentstatus.id"    ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName"></gcms-lov> 
     </div>
   </div>
   <!--<div class="form-group" ng-hide="item.consannexid.consentstatus.id =='63'"> -->
   <div class="form-group" ng-hide="item.consannexid.consentstatus.id =='7004'">
-    <label for="middleName" class="col-sm-4 control-label" style="padding-left: 4px;">Consent Status Reason :</label>
+    <label for="middleName" class="col-sm-4 control-label" style="padding-left: 4px;">{{('Consent Status Reason' | gTranslate:translationData:'COSNT_STS_RSN')}} :</label>
     <div class="col-sm-8">
        <textarea style="resize: none" ng-model="item.consannexid.consentstatuschangeReason" rows="2" cols="66" class="form-popup form-control" ng-disabled="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" ></textarea> 
     </div>  
@@ -44,12 +44,12 @@
   <div ng-if=" !(loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName)" >
   <div ng-if="item.consannexid.tmpl_id.dates_rages=='Y'">
   <div class="form-group" >
-    <label for="consannexid.consentstartdate" class="col-sm-4 control-label">Consent Start Date :</label>
+    <label for="consannexid.consentstartdate" class="col-sm-4 control-label">{{('Consent Start Date' | gTranslate:translationData:'CONS_ST_DT')}} :</label>
        <div class="col-sm-8">
         <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
-             placeholder="Select a date..."
+             ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
              moment-picker="item.consannexid.consentstart"
              locale="en"
              format="DD-MM-YYYY"
@@ -60,12 +60,12 @@
   </div>
   </div>
   <div class="form-group" > 
-    <label  for="consannexid.consentenddate" class="col-sm-4 control-label">Consent End Date :</label>
+    <label  for="consannexid.consentenddate" class="col-sm-4 control-label">{{('Consent End Date' | gTranslate:translationData:'CONS_END_DT')}} :</label>
     <div class="col-sm-8">
           <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
-             placeholder="Select a date..."
+             ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
              moment-picker="item.consannexid.consentend"
              locale="en"
              format="DD-MM-YYYY"
@@ -81,12 +81,12 @@
   <div ng-if="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName" >
   <div ng-if="item.consannexid.tmpl_id.dates_rages=='Y'">
   <div class="form-group" >
-    <label for="consannexid.consentstartdate" class="col-sm-4 control-label">Consent Start Date :</label>
+    <label for="consannexid.consentstartdate" class="col-sm-4 control-label">{{('Consent Start Date' | gTranslate:translationData:'CONS_ST_DT')}} :</label>
        <div class="col-sm-8">
         <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;pointer-events: none;"
-             placeholder="Select a date..."
+             ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
              moment-picker="item.consannexid.consentstart"
              locale="en"
              format="DD-MM-YYYY"
@@ -98,12 +98,12 @@
   </div>
   </div>
   <div class="form-group" > 
-    <label  for="consannexid.consentenddate" class="col-sm-4 control-label">Consent End Date :</label>
+    <label  for="consannexid.consentenddate" class="col-sm-4 control-label">{{('Consent End Date' | gTranslate:translationData:'CONS_END_DT')}} :</label>
     <div class="col-sm-8">
           <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;pointer-events: none;"
-             placeholder="Select a date..."
+             ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
              moment-picker="item.consannexid.consentend"
              locale="en"
              format="DD-MM-YYYY"
@@ -158,7 +158,7 @@
          <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
-             placeholder="Select a date..."
+             ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
              moment-picker="item.consannexid.consentstart"
              locale="en"
              format="DD-MM-YYYY"
@@ -173,7 +173,7 @@
          <input    		 
     		 class="form-control form-popup"
     		 style="width: 138px;"
-             placeholder="Select a date..."
+             ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
              moment-picker="item.consannexid.consentend"
              locale="en"
              format="DD-MM-YYYY"
@@ -185,10 +185,10 @@
  </div>
 </div> -->
 
-<a href="" ng-if="!item.click" ng-click="item.click=true" style="float:right;">Show Additional Details</a>											
+<a href="" ng-if="!item.click" ng-click="item.click=true" style="float:right;">{{('Show Additional Details' | gTranslate:translationData:'SHW_ADL_DTLS')}}</a>											
 <div ng-show="item.click">
 		<div class="form-group">
-			<label for="profileid" class="col-sm-4 control-label">HCP/O ID :</label>
+			<label for="profileid" class="col-sm-4 control-label">{{('HCP/O ID' | gTranslate:translationData:'HCPO_ID')}} :</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control form-popup" id="bpid" name="bpid"
 					ng-model="item.consannexid.bpid.id" placeholder=""
@@ -196,49 +196,49 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="taskid" class="col-sm-4 control-label">Task ID :</label>
+			<label for="taskid" class="col-sm-4 control-label">{{('Task ID' | gTranslate:translationData:'TSK_ID')}} :</label>
 			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.id" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="taskid" class="col-sm-4 control-label">Task Created Date :</label>
+			<label for="taskid" class="col-sm-4 control-label">{{('Task Created Date' | gTranslate:translationData:'TSK_CRTD_DT')}} :</label>
 			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="taskid" name="taskid" ng-model="item.createdDate | date:'dd-MM-yyyy'" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmpltcode" class="col-sm-4 control-label">Template Code :</label>
+			<label for="tmpltcode" class="col-sm-4 control-label">{{('Template Code' | gTranslate:translationData:'TMPL_CD')}} :</label>
 			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpltcode" name="tmpltcode" ng-model="item.consannexid.tmpl_id.tmpl_code" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmplttype" class="col-sm-4 control-label">Template Type :</label>
+			<label for="tmplttype" class="col-sm-4 control-label">{{('Template Type' | gTranslate:translationData:'TMPL_TYP')}} :</label>
 			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmplttype" name="tmplttype" ng-model="item.consannexid.tmpl_id.tmpl_type" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="tmpl_name" class="col-sm-4 control-label">Template Name :</label>
+			<label for="tmpl_name" class="col-sm-4 control-label">{{('Template Name' | gTranslate:translationData:'TMPL_NM')}} :</label>
 			<div class="col-sm-8">
 				<input ng-maxlength="60" type="text" class="form-control form-popup" id="tmpl_name" name="tmpl_name" ng-model="item.consannexid.tmpl_id.tmpl_name" placeholder="" ng-readonly="true">
 			</div>
 		</div>
 		
 </div>
-<a href="" ng-if="item.click" ng-click="item.click=false" style="float:right;">Hide Additional Details</a>
+<a href="" ng-if="item.click" ng-click="item.click=false" style="float:right;">{{('Hide Additional Details' | gTranslate:translationData:'HD_ADL_DTLS')}}</a>
 	</form>
 </div>
 
 <div class="modal-footer">
 <div ng-hide="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">Update</button>
-  <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskForm.$invalid">{{('Update' | gTranslate:translationData:'ACT_UPDT')}}Update</button>
+  <button class="btn btn-warning" ng-click="cancel()" >{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
   </div>
   <div ng-show="loggedInUserRoleId !='5' && loggedInUserRole.userName !=item.assignedto.userName">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="true">Update</button>
-  <button class="btn btn-warning" ng-click="cancel()" >Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="true">{{('Update' | gTranslate:translationData:'ACT_UPDT')}}</button>
+  <button class="btn btn-warning" ng-click="cancel()" >{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
   </div>
   
 </div>

@@ -112,7 +112,7 @@
 	             
                 }, function (resp) {
                   self.apiMiddleware.parseError(resp.data);
-                })
+                });
                           	
             }
           }

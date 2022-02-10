@@ -135,7 +135,7 @@
         					$scope.status='True';
         					$scope.records="No records to show";
         					//$scope.profileSearchCopy.length = 0;                               	
-        				}); ;
+        				});
         };
 
       /**
@@ -159,7 +159,7 @@
             	   {
             		   $scope.trData=result;            	
             		   $scope.validation="true";
-            		   $scope.success="TR ID is valid,Please Approve or Reject "
+            		   $scope.success="TR ID is valid,Please Approve or Reject ";
                	}
                	
                	}
@@ -167,7 +167,7 @@
              }).catch(function(){
           	  
             	 $scope.validation="false";
-            	 $scope.error="TR ID is not valid,Please verify!"
+            	 $scope.error="TR ID is not valid,Please verify!";
              }); 
        }; 
        
@@ -186,7 +186,7 @@
              	   {
              		   $scope.trData=result;  
              		   $scope.validationCol="true";
-             		   $scope.successCol="TR ID is valid, Please Merge this profile "
+             		   $scope.successCol="TR ID is valid, Please Merge this profile ";
                 	}
                 	
                 	}
@@ -194,7 +194,7 @@
               }).catch(function(){
            	  
              	 $scope.validationCol="false";
-             	 $scope.errorCol="TR ID is not valid, Please verify!"
+             	 $scope.errorCol="TR ID is not valid, Please verify!";
               }); 
         }; 
      
@@ -335,7 +335,7 @@
            	        html: false,
            	        shake: false,
            	        theme: 'bootstrap'
-           	      })};
+           	      });};
            		$scope.ok(item);
            		loadIdentityRequestView();
                 $scope.displayedCollection = [].concat($scope.identityRequestView);
@@ -398,7 +398,7 @@
                          html: false,
                          shake: false,
                          theme: 'bootstrap'
-                       })};
+                       });};
                      $scope.ok(item);
                      loadIdentityRequestView();
                   $scope.displayedCollection = [].concat($scope.identityRequestView);
@@ -460,10 +460,10 @@
            	        html: false,
            	        shake: false,
            	        theme: 'bootstrap'
-           	      })
+           	      });
            	   $scope.ok(item);
          	}
-         	};
+         	}
            		
            		
            	

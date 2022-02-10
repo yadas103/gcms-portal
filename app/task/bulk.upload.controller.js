@@ -23,7 +23,9 @@
       $scope.alerts = [];
       $scope.locale = localeMapper.getCurrentISOCode();
       $scope.userID= $rootScope.loggedInUserRoleId;
- 
+    
+      //$scope.localData = $rootScope.currentProfile.localData;
+	  //$scope.watch;
       
       $scope.uploader = new FileUploader({
         filters: [{
@@ -58,7 +60,7 @@
  	   $scope.error='';
        	   return FileMonitor.query({userid:$scope.userID}).$promise.then(function(result){
    		       $scope.Result = result;
-   		       $scope.a=result.$resolved
+   		       $scope.a=result.$resolved;
    		    toasty.success({
     	        title: 'Success',
     	        msg: 'File Processed ! See results',
@@ -88,9 +90,9 @@
    			        });
        		    	//$scope.error="File(s) not able to process ";
        		      });
-   		  };
+   		  }
             
-          }
+          };
 	  
     
   }

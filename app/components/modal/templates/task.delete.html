@@ -1,24 +1,24 @@
 
 <div class="modal-header" style="background-color: #337ab7;
     color: white; padding: 4px; padding-left: 9px;">
-  <h3 class="modal-title" style="font-size: medium;">Delete Task : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
+  <h3 class="modal-title" style="font-size: medium;">{{('Delete Task' | gTranslate:translationData:'DLT_TSK')}} : {{item.consannexid.bpid.firstName}} {{item.consannexid.bpid.lastName}}
   </h3>
 </div>
 <div class="modal-body">
 <form name="taskReassignForm" novalidate class="form-horizontal">
 
 <div class="form-group">
-    <label class="col-sm-3 control-label" >Please provide reason for deleting task :</label>
+    <label class="col-sm-3 control-label" >{{('Please provide reason for deleting task' | gTranslate:translationData:'DLT_TSK_HDR')}} :</label>
     <div class="col-sm-9">
-      <select class="col-sm-9" ng-model="item.deleteReason" ng-options="Group.Name for Group in Groups" style="width: 100%;margin-top: 4%;"><option  value="" ng-show="{{empty}}"> ---Select---</option></select> 
+      <select class="col-sm-9" ng-model="item.deleteReason" ng-options="Group.Name for Group in Groups" style="width: 100%;margin-top: 4%;"><option  value="" ng-show="{{empty}}"> ---{{('Select' | gTranslate:translationData:'ACT_SLCT')}}---</option></select> 
        </div>
   </div>
-  <div class="form-group" ng-show="item.deleteReason.Name == 'Other reason'" >
-    <label for="consannexid.pocode" class="col-sm-3 control-label">Comments :</label>
+  <div class="form-group" ng-show="item.deleteReason.Name == '{{('Other reason' | gTranslate:translationData:'Other reason')}}'" >
+    <label for="consannexid.pocode" class="col-sm-3 control-label">{{('Comments' | gTranslate:translationData:'COMNTS')}} :</label>
     <div class="col-sm-9" >
     
       <textarea class="form-control" rows="3" cols="50" name="comment" form="usrform form-control" name="NewValue" ng-model="item.deleteReasonDesc" style="resize: none; width: 100%;" >
-	Enter text here...</textarea>    </div>
+	{{('Enter text here' | gTranslate:translationData:'ENTR_TXT_HR')}}...</textarea>    </div>
   </div>
 
 <!--<br/>
@@ -62,8 +62,8 @@ Enter text here...</textarea>
  
 
   <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskReassignForm.$invalid">Delete</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="taskReassignForm.$invalid">{{('Delete' | gTranslate:translationData:'ACT_DLT')}}</button>
+  <button class="btn btn-warning" ng-click="cancel()">{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
 </div>
  
 

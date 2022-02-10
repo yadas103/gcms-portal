@@ -2,31 +2,31 @@
     background-color: #337ab7;">
   <h3 class="modal-title"  style="font-size: 15px;
     height: 13px;
-    padding-bottom: inherit;">Add Template</h3>
+    padding-bottom: inherit;">{{('Add Template' | gTranslate:translationData:'ADD_TMPL')}}</h3>
 </div>
 
 <div class="modal-body">
   <form name="adminRoleForm" novalidate>
     <div class="form-group">
       <div>
-        <label for="userName">Template Name</label>
+        <label for="userName">{{('Template Name' | gTranslate:translationData:'TMPL_NM')}}</label>
          <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
        
 
       </div>
 
       <div style="margin-top:20px">
-        <label for="role">QR Code Page</label>
+        <label for="role">{{('QR Code Page' | gTranslate:translationData:'QR_CD_PG')}}</label>
         <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
 
       </div>
 	  <div style="margin-top:20px">
-        <label for="role">Consent Page</label>
+        <label for="role">{{('Consent Page' | gTranslate:translationData:'COSNT_PG')}}</label>
          <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
 
       </div>
 	  <div style="margin-top:20px">
-        <label for="role">Template Code	</label>
+        <label for="role">{{('Template Code' | gTranslate:translationData:'TMPL_CD')}}</label>
          <input type="text" ng-model="item.user" typeahead="item.userName for item in item.users | filter:$viewValue | limitTo:10" class="form-control">
 
       </div>
@@ -36,6 +36,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminRoleForm.$invalid">OK</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="adminRoleForm.$invalid">{{('OK' | gTranslate:translationData:'ACTN_OK')}}</button>
+  <button class="btn btn-warning" ng-click="cancel()">{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
 </div>

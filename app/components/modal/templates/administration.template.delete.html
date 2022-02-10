@@ -1,14 +1,14 @@
 <div class="modal-header" style="background-color: #337ab7;
    color: white; padding: 5px;">
-   <h3 class="modal-title" style="font-size: medium;"> Delete Template : {{item.tmpl_name}} </h3>
+   <h3 class="modal-title" style="font-size: medium;">{{('Delete Template' | gTranslate:translationData:'DLT_TMPL')}} : {{item.tmpl_name}} </h3>
 </div>
 
 
 <div class="modal-body">
-  <p>Are you sure you want to delete {{item.tmpl_name}} template?
+  <p>{{('Are you sure you want to delete template' | gTranslate:translationData:'CNFRM_DLT_TMPL')}} {{item.tmpl_name}}?</p>
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">Delete</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()">{{('Delete' | gTranslate:translationData:'ACT_DLT')}}</button>
+  <button class="btn btn-warning" ng-click="cancel()">{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
 </div>

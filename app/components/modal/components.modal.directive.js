@@ -79,7 +79,7 @@
              // $scope.modelBeingEdited = item;
              $scope.ok()(item);
           
-             console.log("in resove" +item)
+             console.log("in resove" +item);
            };
 
            /**

@@ -1,7 +1,7 @@
 <!-- Home page -->	
 	<div class=".container-search-panel" style="width:100%;">
         <div class="panel panel-primary">
-            <div class="panel-heading td-search-panel-text">Search Details</div>
+            <div class="panel-heading td-search-panel-text">{{('Search Details' | gTranslate:translationData:'SRCH_DET')}}</div>
             <div class="panel-body">
 			<form name="requestSearchForm">
                 <table style="width:100%; border-spacing:0px">
@@ -9,19 +9,19 @@
                     <tr>
                         <td ng-show="sysAdmin" class="td-search-panel col-xs-3">
                             <div class="input-group">
-                                <select class="form-control input-sm td-search-panel-text" ng-model="request.collectingCountry" ng-change="compare()" ng-disabled="readOnlyCC" required><option value = "">Please select</option>
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.collectingCountry" ng-change="compare()" ng-disabled="readOnlyCC" required><option value = "">{{('Please select' | gTranslate:translationData:'PLS_SLCT')}}</option>
 								<option ng-repeat="con in counties" >{{con.name}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PAY_CNTRY_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(HOME_PAY_CNTRY_MSG.content|gTranslate:translationData:'HOME_PAY_CNTRY_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
                         <td class="td-search-panel col-xs-3">
                             <div class="input-group">
-                                <select class="form-control input-sm td-search-panel-text" ng-model="request.country" ng-disabled="readOnlyPC" ng-change="compare()" required><option value = "">Please select</option>
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.country" ng-disabled="readOnlyPC" ng-change="compare()" required><option value = "">{{('Please select' | gTranslate:translationData:'PLS_SLCT')}}</option>
 							<option ng-repeat="rep in counties|filter : efpiaFilter" >{{rep.name}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus"  data-content="{{HOME_REP_CNTRY_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus"  data-content="{{(HOME_REP_CNTRY_MSG.content|gTranslate:translationData:'HOME_REP_CNTRY_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
@@ -29,7 +29,7 @@
                             <div class="input-group">
                                 <select class="form-control input-sm td-search-panel-text" ng-model="request.profileType" ng-change="clear()" required><option ng-repeat="prof in profile_types">{{prof.name}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PROFILE_TYP_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(HOME_PROFILE_TYP_MSG.content|gTranslate:translationData:'HOME_PROFILE_TYP_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
@@ -38,7 +38,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.firstName" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-trigger="focus" data-content="{{HOME_FRS_NM_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-trigger="focus" data-content="{{(HOME_FRS_NM_MSG.content|gTranslate:translationData:'HOME_FRS_NM_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -49,7 +49,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.address" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-trigger="focus" data-content="{{HOME_ADDRESS_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm"  data-placement="bottom" data-trigger="focus" data-content="{{(HOME_ADDRESS_MSG.content|gTranslate:translationData:'HOME_ADDRESS_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -57,11 +57,11 @@
 
                     </tr>
                     <tr>
-                        <td ng-show="sysAdmin" class="td-search-panel-text col-xs-3">Paying Country</td>
-                        <td class="td-search-panel-text col-xs-3">Reporting Country</td>
-                        <td class="td-search-panel-text col-xs-3">Profile Type</td>
-                        <td class="td-search-panel-text col-xs-3">First Name</td>
-                        <td ng-hide="sysAdmin" class="td-search-panel-text col-xs-3">Address</td>
+                        <td ng-show="sysAdmin" class="td-search-panel-text col-xs-3">{{('Paying Country' | gTranslate:translationData:'PAY_CNTRY')}}</td>
+                        <td class="td-search-panel-text col-xs-3">{{('Reporting Country' | gTranslate:translationData:'RPT_CNTRY')}}</td>
+                        <td class="td-search-panel-text col-xs-3">{{('Profile Type' | gTranslate:translationData:'PRF_TYP')}}</td>
+                        <td class="td-search-panel-text col-xs-3">{{('First Name' | gTranslate:translationData:'FRS_NM')}}</td>
+                        <td ng-hide="sysAdmin" class="td-search-panel-text col-xs-3">{{('Address' | gTranslate:translationData:'PRF_ADDR')}}</td>
                     </tr>
                     </div>
                     <div class="row"> 
@@ -71,7 +71,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.lastName" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_LST_NM_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(HOME_LST_NM_MSG.content|gTranslate:translationData:'HOME_LST_NM_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -81,7 +81,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.city" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PROFILE_CITY_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(HOME_PROFILE_CITY_MSG.content|gTranslate:translationData:'HOME_PROFILE_CITY_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
@@ -91,25 +91,25 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.speciality" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_PROFILE_SPEC_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(HOME_PROFILE_SPEC_MSG.content|gTranslate:translationData:'HOME_PROFILE_SPEC_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
 
                         </td>
                         <td class="td-search-panel col-xs-3">
                             <div class="input-group">
-                                <select class="form-control input-sm td-search-panel-text" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter"><option value="" ng-show="{{empty}}">Select Template</option></select>
+                                <select class="form-control input-sm td-search-panel-text" ng-model="request.tmpl_id" ng-change="change()" ng-options="template.id as template.tmpl_name for template in templates | filter:templateFilter"><option value="" ng-show="{{empty}}">{{('Select Template' | gTranslate:translationData:'SLCT_TMPL')}}</option></select>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{HOME_TEMPLATE_TYPE_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(HOME_TEMPLATE_TYPE_MSG.content|gTranslate:translationData:'HOME_TEMPLATE_TYPE_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="td-search-panel-text col-xs-3">Last Name / Organization Name</td>
-                        <td class="td-search-panel-text col-xs-3">Profile City</td>
-                        <td class="td-search-panel-text col-xs-3">Profile Specialty</td>
-                        <td class="td-search-panel-text col-xs-3">Template Type</td>
+                        <td class="td-search-panel-text col-xs-3">{{('Last Name / Organization Name' | gTranslate:translationData:'LST_ORG_NM')}}</td>
+                        <td class="td-search-panel-text col-xs-3">{{('Profile City' | gTranslate:translationData:'PRF_CTY')}}</td>
+                        <td class="td-search-panel-text col-xs-3">{{('Profile Specialty' | gTranslate:translationData:'PRF_SPLT')}}</td>
+                        <td class="td-search-panel-text col-xs-3">{{('Template Type' | gTranslate:translationData:'TMPL_TYP')}}</td>
                     </tr>
 				</div>
 				<div class="row">
@@ -119,7 +119,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.uniqueTypeId" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{CCID_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(CCID_MSG.content|gTranslate:translationData:'CCID_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                    		</td>
@@ -128,7 +128,7 @@
                             <div class="input-group">
                                 <input class="form-control input-sm td-search-panel-text" ng-model="request.uniqueTypeId" type="text" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{NIT_MSG.content}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default btn-sm" data-placement="bottom" data-trigger="focus" data-content="{{(NIT_MSG.content|gTranslate:translationData:'NIT_MSG')}}" style="height: 30px;" bs-popover><i class="fa fa-lg fa-question-circle" aria-hidden="true"></i></button>
                                 </span>
                             </div>
                    		</td>
@@ -144,14 +144,14 @@
                 <table style="width:100%; border-spacing:0px; ">
                     <tr class="row">
                         <td class="td-search-panel col-xs-6" style="width:100%; padding-top:10px;align:left">
-                            <button type="submit" class="btn btn-primary btn-sm td-search-panel-text" ng-click="submit(request)" ng-disabled="requestSearchForm.$invalid">Search</button>                          
+                            <button type="submit" class="btn btn-primary btn-sm td-search-panel-text" ng-click="submit(request)" ng-disabled="requestSearchForm.$invalid">{{('Search' | gTranslate:translationData:'ACT_SRCH')}}</button>                          
 					
 						<span ng-show="!setDownload"> 
 								<gcms-modal template="template.download.html" controller="ModalDefaultCtrl" ok="submittry" content="dataToSend" >
-							    <span class="btn btn-warning btn-sm td-search-panel-text" role="button"  ng-click="list()" ng-disabled="setDownload" >Download Consent Form(s)</span></gcms-modal>
+							    <span class="btn btn-warning btn-sm td-search-panel-text" role="button"  ng-click="list()" ng-disabled="setDownload" >{{('Download Consent Form(s)' | gTranslate:translationData:'DWNL_CONS')}}</span></gcms-modal>
 						</span> 
 						<span ng-show="setDownload">
-								<button type="submit" class="btn btn-warning btn-sm td-search-panel-text" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top" title="Download Consent Annex Template" ng-disabled="true">Download Consent Form(s)</button>
+								<button type="submit" class="btn btn-warning btn-sm td-search-panel-text" ng-click="" alt="Download" data-toggle="tooltip" data-placement="top" title="Download Consent Annex Template" ng-disabled="true">{{('Download Consent Form(s)' | gTranslate:translationData:'DWNL_CONS')}}</button>
 						</span> 
 					
 				
@@ -160,10 +160,10 @@
 
                         <td class="td-search-panel col-xs-6" style="align:left">
 							<gcms-modal template="identity.request.html" controller="ModalDefaultCtrl" ok="create" content="profile">                            
-							<span ng-hide="profileFiler" class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >Cannot find a profile? Create a request here!</span>
+							<span ng-hide="profileFiler" class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >{{('Cannot find a profile? Create a request here' | gTranslate:translationData:'CRT_RQST')}}</span>
 							</gcms-modal>
 							<gcms-modal template="identity.request.col.html" controller="ModalDefaultCtrl" ok="createTempProfile" content="profile">
-							<span ng-show="profileFiler" class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >Cannot find a profile? Create a Profile here!</span>
+							<span ng-show="profileFiler" class="btn btn-primary btn-sm td-search-panel-text" role="button" ng-click="passCountryName()" >{{('Cannot find a profile? Create a Profile here' | gTranslate:translationData:'CRT_PRF')}}</span>
 							</gcms-modal>
                         </td>
 
@@ -198,7 +198,7 @@
 							ng-hide = "true"
 							ng-click="orderByField='profileType'; reverseSort = !reverseSort"
 							style="font-size: 13px; width: 86px;"
-							st-sort="profileType"class="td-search-panel-text">Profile Type</th>
+							st-sort="profileType"class="td-search-panel-text">{{('Profile Type' | gTranslate:translationData:'PRF_TYP')}}</th>
 						<th 
 							ng-hide = "true"
 							ng-click="orderByField='isTempProfile'; reverseSort = !reverseSort"
@@ -209,41 +209,40 @@
 							ng-click="orderByField='lastName'; reverseSort = !reverseSort"
 							st-sort="lastName"
 							class="td-search-panel-text"
-							>Last Name</th>
+							>{{('Last Name' | gTranslate:translationData:'LST_NM')}}</th>
 						<th
 							ng-hide = "hideHCP"
 							ng-click="orderByField='firstName'; reverseSort = !reverseSort"
 							st-sort="firstName"
 							class="td-search-panel-text"
-							>First Name</th>
+							>{{('First Name' | gTranslate:translationData:'FRS_NM')}}</th>
 						<th
 							ng-hide = "hideHCO"
 							ng-click="orderByField='organisationName'; reverseSort = !reverseSort"
 							st-sort="organisationName"
 							class="td-search-panel-text"
-							>Organization Name</th>
+							>{{('Organization Name' | gTranslate:translationData:'ORG_NM')}}</th>
 						<th ng-click="orderByField='city'; reverseSort = !reverseSort"
 							st-sort="city"
 							class="td-search-panel-text"
-							>City
-							Name</th>
+							>{{('City Name' | gTranslate:translationData:'CTY_NM')}}</th>
 						<th ng-click="orderByField='address'; reverseSort = !reverseSort"
 							st-sort="address"
 							class="td-search-panel-text"
-							>Address</th>
+							>{{('Address' | gTranslate:translationData:'PRF_ADDR')}}</th>
 						<th
 							ng-hide = "hideHCP"
 							ng-click="orderByField='speciality'; reverseSort = !reverseSort"
 							st-sort="specialit"
 							class="td-search-panel-text"
-							>Specialty</th>
+							>{{('Specialty' | gTranslate:translationData:'PF_SPLT')}}</th>
 						<th
 							ng-hide = "hideCredential"
 							ng-click="orderByField='credential'; reverseSort = !reverseSort"
 							st-sort="credential"
 							class="td-search-panel-text"
-							>Credential</th>
-						<th style="width:105px;" class="td-search-panel-text">Consent History</th>
+							>{{('Credential' | gTranslate:translationData:'PF_CRDNL')}}</th>
+						<th style="width:105px;" class="td-search-panel-text">{{('Consent History' | gTranslate:translationData:'CONS_HST')}}</th>
 					</tr>
 					<tr>
 						<th></th>

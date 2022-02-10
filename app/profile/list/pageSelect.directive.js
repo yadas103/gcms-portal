@@ -17,5 +17,5 @@ angular.module('gcms.profile')
             scope.inputPage = c;
           });
         }
-      }
+      };
     });

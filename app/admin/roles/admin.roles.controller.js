@@ -165,13 +165,25 @@
         $scope.addItem = { users: $scope.users, roles: $scope.roles};
         return $rootScope.session.user.getCurrentProfile();
       }).then(function(profile){
-        var countryId = profile.countryId;
+        var countryId = profile.countryId;	//console.log(countryId);
+        getAllLanguages(countryId);
         return $rootScope.session.user.getAttributes(countryId);
       }).then(function(attributes){
         $scope.countryAttributes = attributes;
       });
     };
 
+    var getAllLanguages = function(countryId){
+    	Language.query({id : countryId}).$promise.then(updateLanguages);
+    };
+    var updateLanguages = function(result){
+    	$rootScope.languages = result;
+    	
+    	var arr = result.filter(d => d.default === 'Y');
+    	$rootScope.defaultLanguage = arr[0].languageName;
+	};
+
+    	
     getData();
 
     /**

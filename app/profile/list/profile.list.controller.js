@@ -223,17 +223,27 @@
 		        
 		//Getting Logged in User Profile
 				
-		        $scope.userProfileData = function(){		        	
+		        $scope.userProfileData = function(){	
 					var currentprofile = $rootScope.currentProfile;
-					
-					$scope.loggedInUserCountry = currentprofile.countryId;
-					$scope.loggedInUserCountryName = currentprofile.countryName ;
-					$scope.loggedInUserCountryCode = currentprofile.isoCode;
-					$scope.loggedInUserRegionId = currentprofile.regionId ;
-					$scope.loggedInUserRole = currentprofile.roleId;
-					$scope.logged_In_User= currentprofile.userName;
-					$scope.fullName = currentprofile.firstName+" "+currentprofile.lastName;
-					
+					if(localStorage.getItem("currentProfile") != null && localStorage.getItem("currentProfile") != undefined){
+						$scope.loggedInUserCountry = JSON.parse(localStorage.getItem("currentProfile")).countryId;
+						$scope.loggedInUserCountryName = JSON.parse(localStorage.getItem("currentProfile")).countryName;
+						$scope.loggedInUserCountryCode = JSON.parse(localStorage.getItem("currentProfile")).countryISOCode;
+						$scope.loggedInUserRegionId = JSON.parse(localStorage.getItem("currentProfile")).regionId;
+						$scope.loggedInUserRole = JSON.parse(localStorage.getItem("currentProfile")).roleId;
+						$scope.logged_In_User= JSON.parse(localStorage.getItem("currentProfile")).userName;
+						$scope.fullName = JSON.parse(localStorage.getItem("currentProfile")).firstName+" "+JSON.parse(localStorage.getItem("currentProfile")).lastName;
+					}        	
+					else{
+						$scope.loggedInUserCountry = currentprofile.countryId;
+						$scope.loggedInUserCountryName = currentprofile.countryName ;
+						$scope.loggedInUserCountryCode = currentprofile.isoCode;
+						$scope.loggedInUserRegionId = currentprofile.regionId ;
+						$scope.loggedInUserRole = currentprofile.roleId;
+						$scope.logged_In_User= currentprofile.userName;
+						$scope.fullName = currentprofile.firstName+" "+currentprofile.lastName;
+					}
+				
 					if($scope.loggedInUserRole == 5){
 						$scope.sysAdmin = true;
 					}

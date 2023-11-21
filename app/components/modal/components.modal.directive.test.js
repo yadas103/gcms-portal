@@ -6,13 +6,6 @@
 
     var scope, element, q, modalInstance;
 
-    // var mockData = {
-    //   'id': 1,
-    //   'title': 'Title text',
-    //   'description': 'Description text',
-    // };
-
-    // load the modules we want to test
     beforeEach(module('gcms.components.modal'));
     beforeEach(module('templates'));
 
@@ -88,10 +81,8 @@
         expect(element.isolateScope().reject).toBeDefined();
       });
 
-      //TODO: Test actual calls on resolution
       xit('Should call the ok function when a promise is satisfied', function(){
         element.isolateScope().resolve({});
-        // scope.$digest();
         expect(scope.ok).toHaveBeenCalled();
       });
 

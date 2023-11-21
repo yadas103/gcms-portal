@@ -20,12 +20,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName===>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -112,12 +110,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -204,12 +200,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -296,12 +290,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -388,12 +380,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -480,12 +470,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -572,12 +560,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 
@@ -664,12 +650,10 @@
    */
   function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
 	  console.log("Inside UserRole===>>>");
-    // private variables
     var userName = $stateParams.id;
     console.log("Inside UserRole:userName==>>>"+userName);
     var defaultProfile = {};
     var session = $rootScope.session;
-    // scope variables
     $scope.allowDefaultCountryChange = false;
     $scope.currentProfile = {};
 

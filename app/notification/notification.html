@@ -1,0 +1,176 @@
+<div>
+	<div class="panel panel-primary table-responsive">
+		<div class="panel-heading">Manage Templates</div>
+		<div class="panel-body" ng-controller="ExcelCtrl">
+
+			<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
+				class="table table-bordered table-hover table-condensed">
+
+
+				<span style="margin-top: 1px; margin-right: 14px; margin-bottom: 3px;">
+
+					<label class="fileContainer">
+						<button type="button" class="btn btn-secondary" style="margin-top: 1px;">Load excel
+							file</button> <input type="file" ngf-select="" ng-model="picFile" name="file"
+							ngf-pattern="'application/pdf'" nv-file-select ngf-max-size="50MB" ngf-min-height="100"
+							uploader="uploader" multiple="false"
+							accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+							ng-file="uploadFileList" />
+					</label> <a href="" ng-if="uploader.getNotUploadedItems().length"
+						ng-init="uploader.uploadAll()"></a> <a href=""
+						ng-if="uploader.progress==100 && !uploader.isUploading" ng-init="upload()"><span
+							class="fa fa-spin fa-spinner "></span>
+						Validating...</a> <gcms-modal template="excel.upload.html" controller="ModalDefaultCtrl" ok=""
+						content="exceldata" alt="Upload images">
+						<button ng-show="a == true" class="btn btn-default2" style="margin-top: 1px;width:84px;">View
+							Data</button>
+					</gcms-modal> <!-- end of xcel controller -->
+					<span>
+						<select style="padding-bottom: 10px; height: 31px; width: 192px; font-size: 13px;"
+							ng-model="testselect" ng-change="loadPlaceholder()">
+							<!-- <option style="font-size: 13px;" value="" disabled selected>Email Template</option> -->
+							<option style="font-size: 13px;" value={{temp}} ng-repeat="temp in PreTemplates | filter: filterExpression">
+								{{temp.tmpl_name}}</option>
+						</select>
+					</span>
+				</span>
+
+				<span>
+					<button style="float: right; margin-top: 1px;" class="btn btn-warning" ng-click="startOver()">Start
+						Over</button>
+				</span>
+
+				<thead style="background-color: #337ab7; color: white">
+					<tr style="height: 6%;">
+
+						<th style="width: 33%;">Placeholder</th>
+						<th style="width: 34%;" st-sort="countries.isoCode">Replacing
+							With</th>
+						<th style="width: 33%;" st-sort="cntryContact">Custom Value</th>
+					</tr>
+				</thead>
+				<tbody ng-app="gcms.notification">
+					<style>
+						option:empty {
+							display: none;
+						}
+
+						.gridView:hover {
+							cursor: pointer;
+
+						}
+
+						.gridView tr:focus {
+							background-color: #ddd;
+
+						}
+
+						.disabled {
+							pointer-events: none;
+						}
+					</style>
+					<tr ng-repeat="x in placeHolderList " ng-if="x != 'DATA_TABLE'">
+						<td><input type="text" style="width:365px;" ng-model="datamodel[$index].PlaceHolderName"
+								ng-init="datamodel[$index].PlaceHolderName=x" readOnly /></td>
+
+						<td><select ng-model="datamodel[$index].FieldName"
+								style="width:377px" 
+								ng-init="datamodel[$index].FieldName= ''"
+								ng-change="getPlaceHolderValueSelect(datamodel[$index])">
+								<option ng-repeat="fld in fieldlist">{{fld}}</option>
+							</select>
+
+						</td>
+
+						<td colspan="2"><input type="text" placeholder="Enter Custom Value"
+								ng-model="datamodel[$index].FreeText" ng-init="datamodel[$index].FreeText=''"
+								style="width:364px;" ng-disabled="isRadOnly(datamodel[$index].FieldName)" />
+						</td>
+					</tr>
+					<tr ng-repeat="x in placeHolderList" ng-if="x == 'DATA_TABLE'">
+						<td><input type="text" style="width:365px;" ng-model="datamodel[$index].PlaceHolderName"
+								ng-init="datamodel[$index].PlaceHolderName=x" readOnly /></td>
+						<td>
+							<table>
+								<thead class="form-group">
+									<tr>
+										<th style="border: 1px solid #dddddd;text-align: left; padding: 8px;">CheckBox
+										</th>
+										<th style="border: 1px solid #dddddd;text-align: left; padding: 8px; width:310px;">Choose Excel Field</th>
+									</tr>
+								</thead>
+								<tbody">
+									<tr ng-repeat="fld in fieldlist" style="cursor:move;" ng-if="fld != 'Custom Value'">
+										<td style="border: 1px solid #dddddd;text-align: left; padding: 8px;">
+											<span><input type="checkbox" ng-model="active"
+													ng-change="selectDataTableFields(fld, active)" /></span></td>
+										<td style="border: 1px solid #dddddd;text-align: left; padding: 8px; width:300px;">
+											{{fld}}</td>
+									</tr>
+				</tbody>
+			</table>
+			</td>
+			</tr>
+			</tbody>
+
+			</table>
+			<div class="form-inline" ng-show="filteredItems">
+				<input style="overflow: hidden; width: 40%;" class="form-control" type="search" ng-model="SearchText" placeholder="Search..." ng-change="searchInItem(SearchText)">
+				<button class="btn btn-warning" ng-click="clearSearch()">Clear</button>
+			</div>
+
+			<br>
+
+			<table st-table="displayedCollection" st-safe-src="ReviewAttributes"
+				class="table table-bordered table-hover table-condensed">
+				<thead style="background-color: #337ab7; color: white">
+					<tr style="height: 6%;">
+						<th style="width: 45%;">Email</th>
+						<th style="width: 45%;">Full Name</th>
+					</tr>
+				</thead>
+				<style>
+                    .selected {
+                        background-color: #ddd;
+                        }
+                </style>
+				<tbody class="gridView">
+					<tr ng-repeat="(index, c) in filteredItems|filter:SearchText track by $index"
+                        ng-click="getIndexNumber(index,c)" ng-class="{selected : c == selectedRow}">
+                        <td class="tasktd" style="font-size: small; font-weight: 400; font-family: Calibri;">{{c.Email}}</td>
+                        <td class="tasktd" style="font-size: small; font-weight: 400; font-family: Calibri;">{{c.RecipientName}}</td>
+                    </tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="14">
+							<div class="row" style="margin-top: 12px; margin-bottom: 2px;">
+								<div class="col-sm-6">
+									<gcms-modal template="email.preview.html" controller="ModalDefaultCtrl" ok="close"
+										content="htmldata" id="openTemplate" test="showPreviewButton"
+										alt="Preview Email Template">
+										<button class="btn btn-primary" ng-click="validate();"
+											ng-disabled="!showPreviewButton">Preview Email</button>
+									</gcms-modal>
+									<gcms-modal template="send.all.email.html" controller="ModalDefaultCtrl" ok=""
+										content="dataobj" ng-init="item=dataobj" alt="Send Email to all Email Ids"
+										test="sendAllButton">
+										<button class="btn btn-warning" ng-disabled="!sendAllButton">Send All</button>
+									</gcms-modal>
+								</div>
+							</div>
+						</td>
+
+					</tr>
+					<tr>
+						<td colspan="14" class="text-center" ng-show="filterExceldata.length>=10 && filteredItems != ''">
+							<!-- <pagination ng-model="curPage" total-items="filterExceldata.length" max-size="maxSize"
+								boundary-links="true"></pagination> -->
+								<pagination total-items="filterExceldata.length" ng-model="curPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage" max-size="maxSize" boundary-links="true"></pagination>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>

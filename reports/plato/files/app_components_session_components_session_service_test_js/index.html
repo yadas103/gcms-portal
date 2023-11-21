@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/components/session/components.session.service.test.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/components/session/components.session.service.test.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">74.34</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">498</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">19.32</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">4.32</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function () {
+
+  &#039;use strict&#039;;
+
+  xdescribe(&#039;gcms.components.session&#039;, function() {
+
+    var $q, $rootScope, $scope, session, testSession,
+      User, Country, Role, Specialty, Credential, UniqueId, CONFIG, LoggedUserDetail, localeMapper, Lov, UIConfig, Language;
+
+    var mockCONFIG = {
+      type: [
+        {&#039;id&#039;: 1, &#039;name&#039;: &#039;type1&#039;},
+        {&#039;id&#039;: 2, &#039;name&#039;: &#039;type2&#039;}
+      ],
+      suffix: [
+        {&#039;id&#039;: 1, &#039;name&#039;: &#039;suffix1&#039;},
+        {&#039;id&#039;: 2, &#039;name&#039;: &#039;suffix2&#039;}
+      ]
+    };
+
+    var mockUser = [
+      {
+        &#039;id&#039;: 1,
+        &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+        &#039;updatedDate&#039;: &#039;2015-05-07&#039;,
+        &#039;createdBy&#039;: &#039;talapr01&#039;,
+        &#039;updatedBy&#039;: &#039;narner&#039;,
+        &#039;countryCode&#039;: null,
+        &#039;countryId&#039;: null,
+        &#039;deleteRecord&#039;: null,
+        &#039;errors&#039;: null,
+        &#039;userName&#039;: &#039;narner&#039;,
+        &#039;firstName&#039;: &#039;Ramadevi&#039;,
+        &#039;lastName&#039;: &#039;Narne&#039;,
+        &#039;middleName&#039;: null,
+        &#039;suffix&#039;: &#039;Mrs               &#039;,
+        &#039;userProfiles&#039;: [
+            {
+                &#039;id&#039;: 8,
+                &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+                &#039;updatedDate&#039;: &#039;2015-05-08&#039;,
+                &#039;createdBy&#039;: &#039;talapr01&#039;,
+                &#039;updatedBy&#039;: &#039;narner&#039;,
+                &#039;countryCode&#039;: null,
+                &#039;countryId&#039;: 1624,
+                &#039;deleteRecord&#039;: false,
+                &#039;errors&#039;: null,
+                &#039;userName&#039;: &#039;narner&#039;,
+                &#039;firstName&#039;: &#039;Ramadevi&#039;,
+                &#039;lastName&#039;: &#039;Narne&#039;,
+                &#039;roles&#039;: null,
+                &#039;defaultProfileIndicator&#039;: false,
+                &#039;country&#039;: null,
+                &#039;roleId&#039;: 7,
+                &#039;deleted&#039;: false
+            }]
+          }
+
+    ];
+
+    var mockCountries = [
+      {
+        &#039;id&#039;: 1,
+        &#039;countryCode&#039;: &#039;en-gb&#039;,
+        &#039;countryName&#039;: &#039;United Kingdom&#039;,
+        &#039;businessRules&#039;: []
+      },
+      {
+        &#039;id&#039;: 2,
+        &#039;countryCode&#039;: &#039;de&#039;,
+        &#039;countryName&#039;: &#039;Germany&#039;,
+        &#039;businessRules&#039;: []
+      },
+      {
+        &#039;id&#039;: 3,
+        &#039;countryCode&#039;: &#039;en-us&#039;,
+        &#039;countryName&#039;: &#039;United States&#039;,
+        &#039;businessRules&#039;: []
+      },
+      {
+        &#039;id&#039;: 4,
+        &#039;countryCode&#039;: &#039;ja&#039;,
+        &#039;countryName&#039;: &#039;Japan&#039;,
+        &#039;businessRules&#039;: []
+      },
+      {
+        &#039;id&#039;: 5,
+        &#039;countryCode&#039;: &#039;fr&#039;,
+        &#039;countryName&#039;: &#039;France&#039;,
+        &#039;businessRules&#039;: []
+      }
+    ];
+
+    var mockRoles =
+      {
+        &#039;id&#039;: 1,
+        &#039;countryCode&#039;: null,
+        &#039;countryId&#039;: null,
+        &#039;createdDate&#039;: &#039;2015-03-25&#039;,
+        &#039;updatedDate&#039;: null,
+        &#039;createdBy&#039;: &#039;Test&#039;,
+        &#039;updatedBy&#039;: null,
+        &#039;deleteRecord&#039;: false,
+        &#039;errors&#039;: null,
+        &#039;roleName&#039;: &#039;Guest&#039;,
+        &#039;roleDescription&#039;: &#039;Default (based on assignment of NT-ID) role, can only see Search HCP/O&#039;,
+        &#039;rolePermissions&#039;: [
+            {
+                &#039;id&#039;: 100,
+                &#039;countryCode&#039;: null,
+                &#039;countryId&#039;: null,
+                &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                &#039;updatedDate&#039;: null,
+                &#039;createdBy&#039;: &#039;talapr01&#039;,
+                &#039;updatedBy&#039;: null,
+                &#039;deleteRecord&#039;: false,
+                &#039;errors&#039;: null,
+                &#039;roleID&#039;: 1,
+                &#039;roleActionId&#039;: 2,
+                &#039;roleActionName&#039;: &#039;Read&#039;,
+                &#039;entityTypeName&#039;: &#039;Landing&#039;,
+                &#039;entityTypeId&#039;: 1
+            },
+            {
+                &#039;id&#039;: 101,
+                &#039;countryCode&#039;: null,
+                &#039;countryId&#039;: null,
+                &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                &#039;updatedDate&#039;: null,
+                &#039;createdBy&#039;: &#039;talapr01&#039;,
+                &#039;updatedBy&#039;: null,
+                &#039;deleteRecord&#039;: false,
+                &#039;errors&#039;: null,
+                &#039;roleID&#039;: 1,
+                &#039;roleActionId&#039;: 2,
+                &#039;roleActionName&#039;: &#039;Read&#039;,
+                &#039;entityTypeName&#039;: &#039;Covered Recipient&#039;,
+                &#039;entityTypeId&#039;: 2
+            },
+            {
+                &#039;id&#039;: 102,
+                &#039;countryCode&#039;: null,
+                &#039;countryId&#039;: null,
+                &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                &#039;updatedDate&#039;: null,
+                &#039;createdBy&#039;: &#039;talapr01&#039;,
+                &#039;updatedBy&#039;: null,
+                &#039;deleteRecord&#039;: false,
+                &#039;errors&#039;: null,
+                &#039;roleID&#039;: 1,
+                &#039;roleActionId&#039;: 2,
+                &#039;roleActionName&#039;: &#039;Read&#039;,
+                &#039;entityTypeName&#039;: &#039;Value Exchange&#039;,
+                &#039;entityTypeId&#039;: 3
+            }]
+          };
+
+
+    var mockSpecialties = [
+      {&#039;id&#039;: 1, &#039;name&#039;: &#039;Anesthesiology&#039;},
+      {&#039;id&#039;: 2, &#039;name&#039;: &#039;Dermatology&#039;}
+    ];
+
+    var mockUniqueIds = [
+      [
+        { &#039;id&#039;: 1, &#039;name&#039;: &#039;Cegedim OneKey&#039;},
+        { &#039;id&#039;: 2, &#039;name&#039;: &#039;TR ID&#039;},
+        { &#039;id&#039;: 3, &#039;name&#039;: &#039;Longlife ID&#039;},
+        { &#039;id&#039;: 4, &#039;name&#039;: &#039;TIN&#039;},
+        { &#039;id&#039;: 5, &#039;name&#039;: &#039;SAP Vendor ID&#039;},
+        { &#039;id&#039;: 6, &#039;name&#039;: &#039;Fiscal ID&#039;},
+        { &#039;id&#039;: 7, &#039;name&#039;: &#039;Oracle Vendor ID&#039;},
+        { &#039;id&#039;: 8, &#039;name&#039;: &#039;SUN Vendor ID&#039;}
+      ]
+    ];
+
+    var mockCredentials = [
+      { &#039;id&#039;: 1, &#039;name&#039;: &#039;MD&#039; }
+    ];
+
+    var mockUserDetail =   {
+          &#039;id&#039;: 8,
+          &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+          &#039;updatedDate&#039;: &#039;2015-05-08&#039;,
+          &#039;createdBy&#039;: &#039;talapr01&#039;,
+          &#039;updatedBy&#039;: &#039;narner&#039;,
+          &#039;countryCode&#039;: null,
+          &#039;countryId&#039;: 1624,
+          &#039;deleteRecord&#039;: false,
+          &#039;errors&#039;: null,
+          &#039;userName&#039;: &#039;narner&#039;,
+          &#039;firstName&#039;: &#039;Ramadevi&#039;,
+          &#039;lastName&#039;: &#039;Narne&#039;,
+          &#039;roles&#039;: null,
+          &#039;defaultProfileIndicator&#039;: false,
+          &#039;country&#039;: null,
+          &#039;roleId&#039;: 7,
+          &#039;deleted&#039;: false
+      };
+
+      var mockLov =
+        {
+          &#039;id&#039;: 1033,
+          &#039;createdDate&#039;: &#039;2015-04-19&#039;,
+          &#039;updatedDate&#039;: &#039;2015-04-19&#039;,
+          &#039;createdBy&#039;: &#039;INFORMATICA&#039;,
+          &#039;updatedBy&#039;: &#039;INFORMATICA&#039;,
+          &#039;name&#039;: &#039;ADDITIONAL ADDRESS 1&#039;,
+          &#039;value&#039;: &#039;ADDITIONAL ADDRESS 1&#039;,
+          &#039;deleted&#039;: false,
+          &#039;addressTypeCode&#039;: null,
+          &#039;addressTypeDescription&#039;: null
+      };
+
+      var mockUIConfig =
+      {
+          &#039;id&#039;: null,
+          &#039;createdDate&#039;: null,
+          &#039;updatedDate&#039;: null,
+          &#039;createdBy&#039;: null,
+          &#039;updatedBy&#039;: null,
+          &#039;bobjURL&#039;: &#039;http://bi4dev.pfizer.com&#039;
+      };
+      
+      var mockLanguages =[
+    	  {&quot;id&quot;:100063,&quot;createdDate&quot;:null,&quot;updatedDate&quot;:null,&quot;createdBy&quot;:null,&quot;updatedBy&quot;:null,&quot;countryCode&quot;:&quot;FR&quot;,&quot;countryId&quot;:2071,&quot;deleteRecord&quot;:null,&quot;errors&quot;:null,&quot;languageCode&quot;:&quot;EN&quot;,&quot;languageName&quot;:&quot;ENGLISH&quot;,&quot;delete&quot;:null,&quot;comments&quot;:null,&quot;comment&quot;:null},
+    	  {&quot;id&quot;:100064,&quot;createdDate&quot;:null,&quot;updatedDate&quot;:null,&quot;createdBy&quot;:null,&quot;updatedBy&quot;:null,&quot;countryCode&quot;:&quot;FR&quot;,&quot;countryId&quot;:2071,&quot;deleteRecord&quot;:null,&quot;errors&quot;:null,&quot;languageCode&quot;:&quot;FR&quot;,&quot;languageName&quot;:&quot;FRANÇAIS&quot;,&quot;delete&quot;:null,&quot;comments&quot;:null,&quot;comment&quot;:null}
+      ];
+
+    beforeEach(module(&#039;gcms.components.session&#039;));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;CONFIG&#039;, function() {
+        CONFIG = {
+          query : function(){},
+          get : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockCONFIG))) };
+          },
+          update : function(){},
+          save : function(){},
+          delete : function(){}
+        };
+        return CONFIG;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;User&#039;, function() {
+        User = {
+          query : function(){},
+          get : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockUser))) };
+          },
+          update : function(){},
+          save : function(){},
+          delete : function(){},
+          setRole : function(){}
+        };
+        return User;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;Country&#039;, function() {
+        Country = {
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockCountries))) };
+          },
+          get : function(){},
+          update : function(){},
+          save : function(){},
+          delete : function(){}
+        };
+        return Country;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;UniqueId&#039;, function() {
+        UniqueId = {
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockUniqueIds))) };
+          },
+          get : function(){},
+          update : function(){},
+          save : function(){},
+          delete : function(){}
+        };
+        return UniqueId;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;Specialty&#039;, function() {
+        Specialty = {
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockSpecialties))) };
+          },
+          get : function(){},
+          update : function(){},
+          save : function(){},
+          delete : function(){}
+        };
+        return Specialty;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;Credential&#039;, function() {
+        Credential = {
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockCredentials))) };
+          },
+          get : function(){},
+          update : function(){},
+          save : function(){},
+          delete : function(){}
+        };
+        return Credential;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;Role&#039;, function() {
+        Role = {
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockRoles))) };
+          },
+          get : function(){},
+          update : function(){},
+          save : function(){},
+          delete : function(){}
+        };
+        return Role;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;tmhDynamicLocale&#039;, function() {
+        return {
+          set : function(){}
+        };
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;Lov&#039;, function() {
+        Lov = {
+          get : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockLov))) };
+          }
+        };
+        return Lov;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;UIConfig&#039;, function() {
+        UIConfig = {
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockUIConfig))) };
+          }
+        };
+        return UIConfig;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;LoggedUserDetail&#039;, function() {
+        LoggedUserDetail = {
+          get : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockUserDetail))) };
+          },
+          query : function(){
+            return { $promise : $q.when(JSON.parse(JSON.stringify(mockUIConfig))) };
+          }
+        };
+        return LoggedUserDetail;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+      $provide.factory(&#039;localeMapper&#039;, function() {
+        localeMapper = {
+          getCurrentISOCode : function(){}
+        };
+        return localeMapper;
+      });
+    }));
+
+    beforeEach(module(function($provide){
+        $provide.factory(&#039;Language&#039;, function() {
+        	Language = {
+            query : function(){
+              return { $promise : $q.when(JSON.parse(JSON.stringify(mockLanguages))) };
+            },
+            get : function(){},
+            update : function(){},
+            save : function(){},
+            delete : function(){}
+          };
+          return Language;
+        });
+      }));
+
+    
+    beforeEach(inject(function(_$q_, _$rootScope_, _session_) {
+      $q = _$q_;
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
+      session = _session_;
+    }));
+
+    describe(&#039;user session service&#039;, function(){
+
+      beforeEach(inject(function() {
+        testSession = session.set();
+      }));
+
+      describe(&#039;when the session service is called&#039;, function() {
+
+        it(&#039;should return the correct user id&#039;, function() {
+          //console.log(&#039;testSession&#039;, testSession.user );
+          expect(testSession.user.id).toBe(1);
+        });
+
+        xit(&#039;should return the correct full name&#039;, function(done) {
+          testSession.user.fullName.then(function(result){
+            expect(result).toBe(&#039;Test User&#039;);
+          }).catch(function(error) {
+            //console.log(error);
+          }).finally(function(){
+            done();
+          });
+          $scope.$apply();
+        });
+
+        it(&#039;should return the correct current role&#039;, function(done) {
+          testSession.user.getCurrentRole().then(function(role){
+            expect(role.roleName).toBe(&#039;Super Admin&#039;);
+          }).catch(function(error) {
+            //console.log(error);
+          }).finally(function(){
+            done();
+          });
+          $scope.$apply();
+        });
+
+        it(&#039;should return the correct primary role&#039;, function(done) {
+          testSession.user.primaryRole.then(function(role){
+            expect(role.roleName).toBe(&#039;Super Admin&#039;);
+          }).catch(function(error) {
+            //console.log(error);
+          }).finally(function(){
+            done();
+          });
+          $scope.$apply();
+        });
+
+        it(&#039;should return the correct permissions&#039;, function(done) {
+          testSession.user.getPermissions().then(function(permissions){
+            expect(permissions[0].create).toBe(true);
+          }).catch(function(error) {
+            //console.log(error);
+          }).finally(function(){
+            done();
+          });
+          $scope.$apply();
+        });
+
+        it(&#039;should return the correct roles&#039;, function(done) {
+          testSession.user.roles.then(function(roles){
+            expect(roles[0].roleName).toBe(&#039;Super Admin&#039;);
+          }).catch(function(error) {
+            //console.log(error);
+          }).finally(function(){
+            done();
+          });
+          $scope.$apply();
+        });
+
+        it(&#039;should set a role correctly&#039;, function(done) {
+          testSession.user.setRole(1).then(function(role){
+            expect(role.countryId).toBe(2);
+          }).catch(function(error) {
+            //console.log(error);
+          }).finally(function(){
+            done();
+          });
+          $scope.$apply();
+        });
+
+      });
+
+    });
+  });
+
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

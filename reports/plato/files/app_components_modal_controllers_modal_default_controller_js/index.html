@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/components/modal/controllers/modal.default.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/components/modal/controllers/modal.default.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">62.03</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">386</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">47.72</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">3.39</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc overview
+ * @name gcms.components.modal.controller:ModalDefaultCtrl
+ *
+ * @description
+ * Represents a default modal controller.
+ */
+(function() {
+	&#039;use strict&#039;;
+
+	angular.module(&#039;gcms.components.modal&#039;).controller(&#039;ModalDefaultCtrl&#039;,
+			ModalDefault);
+	
+	ModalDefault.$inject = [ &#039;$rootScope&#039;,&#039;$scope&#039;,&#039;SendEmailItem&#039;, &#039;$modalInstance&#039;, &#039;$timeout&#039;, &#039;item&#039;,&#039;ENVIRONMENT&#039;,&#039;toasty&#039;,&#039;$state&#039;,&#039;localeMapper&#039;,&#039;$window&#039;];
+	
+	
+
+	/**
+	 * @ngdoc method
+	 * @name ModalDefault
+	 * @methodOf gcms.components.modal.controller:ModalDefaultCtrl
+	 * @description Constructor for the default modal controller
+	 * @param {object} $scope An object that refers to the application model
+	 * @param {object} $modalInstance An object which represents a modal window instance
+	 * @param {object} item The object received from the modal directive controller
+	 */
+	function ModalDefault($rootScope,$scope,SendEmailItem, $modalInstance, $timeout, item, gTranslate, ENVIRONMENT,toasty,localeMapper) {
+		$scope.locale = localeMapper.getCurrentISOCode();
+		$scope.item = item;
+		if(angular.isArray($scope.item)){
+			$scope.checkConflictedData = findConflicts($scope.item);
+			$scope.copyOfConflictedData =angular.copy($scope.checkConflictedData)
+			$scope.displayedCollection = [].concat($scope.checkConflictedData);
+			console.log(&quot;*********display Collection***********&quot;);
+			console.log($scope.displayedCollection);
+			$scope.columns = Object.keys($scope.displayedCollection[0]);
+			$scope.columns.push(&quot;Status&quot;);
+			console.log(&quot;******columns*********&quot;);
+			console.log($scope.columns);
+			$scope.columSearches ={};
+			angular.forEach($scope.columns, function(column){
+				$scope.columSearches[column] = {term: &#039;&#039;};
+			});
+		}
+		$scope.filteredItems=&#039;&#039;;
+		$scope.checkConflictedData=[];
+		$scope.array = &#039;&#039;;
+		$scope.emailsuccess= false;
+		// $scope.search ={};
+	
+		
+		/*
+		 * selim
+		 * handdled for date
+		 */
+		$scope.dt = new Date();
+		$scope.startDate = function() {
+			$timeout(function() {
+				$scope.openedStart = true;
+			});
+		};
+		$scope.openedStart = false;
+		$scope.endDate = function() {
+			$timeout(function() {
+				$scope.openedEnd = true;
+			});
+		};
+		$scope.openedEnd = false;
+
+		//hide popovers in case we came from there
+		//$(&#039;.popover-link&#039;).popover(&#039;hide&#039;);
+		$(&#039;.popover&#039;).hide();
+
+		/**
+		 * @ngdoc method
+		 * @name ok
+		 * @methodOf gcms.components.modal.controller:ModalDefaultCtrl
+		 * @description
+		 * Closes the modal and returns the item
+		 */
+		$scope.ok = function(item) {
+			$scope.item = (typeof item === &#039;undefined&#039;) ? $scope.item : item;
+			$modalInstance.close($scope.item);
+		};
+		$scope.add = function(newValue) {
+			var obj = {};
+			obj.Name = newValue;
+			obj.Value = newValue;
+			$scope.Groups.push(obj);
+			$scope.group.name = obj;
+			$scope.newValue = &#039;&#039;;
+		};
+
+		$scope.Groups = [ {
+			Name : &#039;Wrong name selected&#039;,//gTranslate(&#039;Wrong name selected&#039;,$rootScope.translationData,&#039;Wrong name selected&#039;),
+			Value : &#039;d1&#039;
+		}, {
+			Name : &#039;Event canceled&#039;,
+			Value : &#039;A2&#039;
+		}, {
+			Name : &#039;No payment&#039;,
+			Value : &#039;c3&#039;
+		}, {
+			Name : &#039;Other reason&#039;,
+			Value : &#039;new&#039;
+		} ];
+		$scope.group = {
+			name : &quot;&quot;
+		};
+		$scope.add = function(new1Value) {
+			var obj = {};
+			obj.Name = new1Value;
+			obj.Value = new1Value;
+			$scope.Groupss.push(obj);
+			$scope.group1.name = obj;
+			$scope.new1Value = &#039;&#039;;
+		};
+
+		$scope.Groupss = [ {
+			Name : &#039;HCP&#039;,
+			Value : &#039;d1&#039;
+		}, {
+			Name : &#039;HCO&#039;,
+			Value : &#039;new1&#039;
+		} ];
+		$scope.group1 = {
+			name : &quot;&quot;
+		};
+		$scope.tableRowExpanded = false;
+		$scope.tableRowIndexCurrExpanded = &quot;&quot;;
+		$scope.tableRowIndexPrevExpanded = &quot;&quot;;
+		$scope.storeIdExpanded = &quot;&quot;;
+		$scope.dayDataCollapse = [];
+
+		$scope.dayDataCollapseFn = function() {
+			for (var i = 0; $scope.dataModel.ConsentAnnex.length - 1; i += 1) {
+				$scope.dayDataCollapse.append(&#039;true&#039;);
+
+			}
+		};
+
+		$scope.selectTableRow = function(index, storeId) {
+
+			if ($scope.dayDataCollapse === &#039;undefined&#039;) {
+				$scope.dayDataCollapse = $scope.dayDataCollapseFn();
+
+			} else {
+
+				if ($scope.tableRowExpanded === false
+						&amp;&amp; $scope.tableRowIndexCurrExpanded === &quot;&quot;
+						&amp;&amp; $scope.storeIdExpanded === &quot;&quot;) {
+					$scope.tableRowIndexPrevExpanded = &quot;&quot;;
+					$scope.tableRowExpanded = true;
+					$scope.tableRowIndexCurrExpanded = index;
+					$scope.storeIdExpanded = storeId;
+					$scope.dayDataCollapse[index] = true;
+
+				} else if ($scope.tableRowExpanded === true) {
+					if ($scope.tableRowIndexCurrExpanded === index
+							&amp;&amp; $scope.storeIdExpanded === storeId) {
+
+						$scope.tableRowExpanded = false;
+						$scope.tableRowIndexCurrExpanded = &quot;&quot;;
+						$scope.storeIdExpanded = &quot;&quot;;
+						$scope.dayDataCollapse[index] = false;
+
+					} else {
+
+						$scope.tableRowIndexPrevExpanded = $scope.tableRowIndexCurrExpanded;
+						$scope.tableRowIndexCurrExpanded = index;
+						$scope.storeIdExpanded = storeId;
+						$scope.dayDataCollapse[$scope.tableRowIndexPrevExpanded] = false;
+						$scope.dayDataCollapse[$scope.tableRowIndexCurrExpanded] = true;
+
+					}
+
+				}
+
+			}
+		};
+
+		$scope.profileModle = {
+
+			&quot;BusinessProfile&quot; : [ {
+				&quot;Tname&quot; : &quot;123&quot;,
+				&quot;DR&quot; : &quot;xyz&quot;,
+				&quot;QRcode&quot; : &quot;231&quot;,
+				&quot;conpage&quot; : &quot;&quot;,
+				&quot;Tcode&quot; : &quot;&quot;,
+
+			}, {
+				&quot;Tname&quot; : &quot;234&quot;,
+				&quot;DR&quot; : &quot;Consent Form&quot;,
+				&quot;QRcode&quot; : &quot;23&quot;,
+				&quot;conpage&quot; : &quot;&quot;,
+				&quot;Tcode&quot; : &quot;&quot;,
+
+			}, {
+				&quot;Tname&quot; : &quot;369&quot;,
+				&quot;DR&quot; : &quot;BG&quot;,
+				&quot;QRcode&quot; : &quot;123&quot;,
+				&quot;conpage&quot; : &quot;&quot;,
+				&quot;Tcode&quot; : &quot;&quot;,
+
+			}, ]
+
+		};
+		
+		$scope.emailObj={
+				&quot;CountryCode&quot;: &quot;&quot;,
+				&quot;templatetype&quot;: &quot;&quot;,
+				&quot;Message&quot;: &quot;&quot;,
+				&quot;EmailListData&quot;: [{
+
+						&quot;Email&quot;: &quot;&quot;,
+						&quot;UniqueId&quot;: &quot;&quot;,
+						&quot;data&quot;: [{ }]
+				}]
+		}
+		
+
+		
+	
+		
+		$scope.sendAll = function(item){
+			
+			$scope.success = &#039;&#039;;
+			$scope.error = &#039;&#039;;
+			var EMAIL_REGEX = &quot;^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@&quot;
+            + &quot;[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$&quot;;
+			
+			let emailListCopy =[];
+			$scope.item.emailListData.forEach(Element =&gt;{
+				if(Element.email.match(EMAIL_REGEX)){
+					emailListCopy.push(Element);
+				}
+			});
+			if($scope.item.emailListData.length == emailListCopy.length){
+				return SendEmailItem.query(item).$promise.then(function(result){
+					// console.log(result[0].errors);
+					if(result[0].errors != null){
+						alert(&quot;email sent successfully&quot;)
+						console.log(toasty);
+						// toasty.success({
+						// 	title: &#039;Success&#039;,
+						// 	msg: &#039;Email successfully sent to all recipients &#039;,
+						// 	showClose: true,
+						// 	clickToClose: true,
+						// 	timeout: 5000,
+						// 	sound: false,
+						// 	html: false,
+						// 	shake: false,
+						// 	theme: &#039;bootstrap&#039;
+						// });
+						$scope.ok(item);
+						// $scope.emailsuccess = true;
+					}
+					else{
+						toasty.error({
+							title: &#039;Error&#039;,
+							msg: &#039;Error&#039;,
+							showClose: true,
+							clickToClose: true,
+							timeout: 5000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+					}
+					
+				});
+			}
+			else{
+				alert(&quot;Recipient list contains invalid email....&quot;);
+			}
+		};
+		
+	
+
+		/**
+		 * @ngdoc method
+		 * @name cancel
+		 * @methodOf gcms.components.modal.controller:ModalDefaultCtrl
+		 * @description
+		 * Dismisses the modal
+		 */
+		$scope.cancel = function() {
+			$modalInstance.dismiss(&#039;cancel&#039;);
+		};
+		/*select all checkbox*/
+
+		$scope.checkAll = function() {
+			angular.forEach($scope.item, function(c) {
+				c.select = $scope.selectAll;
+			});
+		};
+
+		function findConflicts(data){ 
+			$scope.errorDataArray= [];
+			
+			const emailToIds = {};
+			const idToEmails ={};
+			const conflictedEmails = new Set();
+			const conflictedIds = new Set();
+			data.forEach(item =&gt;{
+				if((item.Email!= undefined &amp;&amp; item.Email!=null &amp;&amp; item.Email!=&quot;&quot;) &amp;&amp; (item.UniqueID!= undefined &amp;&amp; item.UniqueID!=null &amp;&amp; item.UniqueID!=&quot;&quot;)){
+					if(!emailToIds[item.Email]){
+						emailToIds[item.Email] = [item.UniqueID];
+					}else if(!emailToIds[item.Email].includes(item.UniqueID)){
+						conflictedEmails.add(item.Email);
+					}
+					if(!idToEmails[item.UniqueID]){
+						idToEmails[item.UniqueID] = [item.Email];
+					}else if(!idToEmails[item.UniqueID].includes(item.Email)){
+						conflictedIds.add(item.UniqueID);
+					}
+					// if(item.Email == null){
+					// 	conflictedIds.add(item.UniqueID);
+					// }
+				}
+				
+			});
+			
+			data.forEach(item =&gt;{
+				if(item.Country == null || item.Country == undefined || angular.lowercase(item.Country) != $scope.locale){
+					item.hasConflict = true;
+					item.Status = &quot;Country is missing or country mismatch&quot;;
+					$scope.errorDataArray.push(item);
+				}
+				
+				if(item.UniqueID == null || item.UniqueID == undefined){
+					item.hasConflict = true;
+					item.Status = &quot;Unique id is missing&quot;;
+					$scope.errorDataArray.push(item);
+				}
+				if(item.Email == null || item.Email == undefined){
+					item.hasConflict = true;
+					item.Status = &quot;Email is missing&quot;;
+					$scope.errorDataArray.push(item);
+				}
+				if(item.RecipientName == null || item.RecipientName == undefined){
+					item.hasConflict = true;
+					item.Status = &quot;Recipient Name is missing&quot;;
+					$scope.errorDataArray.push(item);
+				}
+				if(conflictedEmails.has(item.Email)){
+					item.hasConflict = true;
+					item.Status = &quot;This email is associated with multiple unique id&quot;;
+					$scope.errorDataArray.push(item);
+				}
+				if(conflictedIds.has(item.UniqueID)){
+					item.hasConflict = true;
+					item.Status = &quot;This unique id is associated with multiple email&quot;;
+					$scope.errorDataArray.push(item);
+				}
+				if(item.Email != null || item.Email!=undefined){
+					let email = item.Email.replace(/^\s+|\s+$/gm,&#039;&#039;);	
+					var EMAIL_REGEX = &quot;^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@&quot;
+					+ &quot;[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$&quot;;
+					if(!email.match(EMAIL_REGEX)){
+						item.hasConflict = true;
+						item.Status = &quot;Invalid email&quot;
+						$scope.errorDataArray.push(item);
+					}
+				}
+
+			});
+				
+			return data;
+		}
+		$scope.displayBack =false;
+		$scope.showErrors = function(){	
+			$scope.item =$scope.errorDataArray;
+			$scope.displayBack = true;
+			$scope.displayError = false;
+		}
+		$scope.displayError = true;
+		$scope.back = function(){
+			$scope.item = $scope.copyOfConflictedData;
+			$scope.displayError = true;
+			$scope.displayBack = false;
+		}
+	}
+	
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

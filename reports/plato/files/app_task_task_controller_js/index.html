@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/task/task.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/task/task.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">53.16</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">1165</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">115.49</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">18.74</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ 
+ * @name gcms.task
+ * 
+ * @description Represents a task controller.
+ */
+(function () {
+  &#039;use strict&#039;;
+
+
+  angular
+    .module(&#039;gcms.task&#039;)
+    .controller(&#039;TaskCtrl&#039;, TaskController);
+
+  TaskController.$inject = [&#039;$rootScope&#039;,&#039;$scope&#039;,&#039;$filter&#039;,&#039;Task&#039;,&#039;Users&#039;,&#039;toasty&#039;,&#039;PDFDownload&#039;,&#039;$http&#039;,&#039;ConsentPdf&#039;,&#039;session&#039; ];
+
+  
+  function TaskController($rootScope, $scope,$filter,Task,Users,toasty,PDFDownload,$http,ConsentPdf,session){
+	  
+	  console.log(&quot;Inside task controller&quot;);
+	 
+	  	//session.
+	  //$scope.localData = $rootScope.currentProfile.localData;
+/*
+	  $scope.$watch($rootScope.currentProfile.localData, function(newValue, oldValue) {
+		    console.log(newValue);
+		    $scope.localData=newValue;
+		   
+		});*/
+	
+	    var internalError = function(){
+	        toasty.error({
+	          title: &#039;Error&#039;,
+	          msg: &#039;Internal Server Error!&#039;,
+	          showClose: true,
+	          clickToClose: true,
+	          timeout: 5000,
+	          sound: false,
+	          html: false,
+	          shake: false,
+	          theme: &#039;bootstrap&#039;
+	        });
+	      };
+	      var unspecifiedError = function(){
+	          toasty.error({
+	            title: &#039;Error&#039;,
+	            msg: &#039;Unspecified error!&#039;,
+	            showClose: true,
+	            clickToClose: true,
+	            timeout: 5000,
+	            sound: false,
+	            html: false,
+	            shake: false,
+	            theme: &#039;bootstrap&#039;
+	          });
+	        };
+	  
+		 $scope.currentProfile={};
+		 var mydata= $rootScope.loggedInUserRoleId;	
+		 var currentProfileDetail = $rootScope.currentProfile;
+		 $scope.regionId = currentProfileDetail.regionId;
+		 $scope.loaded = false;
+		 $scope.downloadAll = false;
+         $scope.data = [];
+		 $scope.searchparam=null;
+		 $scope.sortparam=null;
+		 $scope.totalcount=null;
+		 $scope.tableState = null;
+		 $scope.firstload=false;
+		 $scope.selected = [];
+		 $scope.itemsByPage = 15;
+		 $scope.excelSheetDLUAll = {} ;
+		 $scope.excelSheetSummaryAll = {} ;
+		 var taskOwner = {};
+		 $scope.callServer = function(tableState) {
+			 $scope.tableState =tableState;
+			 if(!$scope.firstload){
+				 $scope.firstload=true;
+				 return;
+			 }
+			 			 
+		    $scope.isLoading = true;
+		    var pagination = tableState.pagination;
+		    var search = tableState.search;
+		    $scope.searchparam=tableState.search;
+		    $scope.status=tableState.search.predicateObject.taskstatus == undefined ? &#039;INCOMPLETE&#039; : tableState.search.predicateObject.taskstatus;
+		    if($scope.status==&#039;INCOMPLETE&#039;||$scope.status==&#039;DELETED&#039;){
+		    	 $scope.selected = [];
+		    }
+		    $scope.data = [];
+		   // $scope.selected = [];
+		    var sort = tableState.sort;
+		    var predicate = sort.predicate;
+		    $scope.sortparam=sort.predicate;
+		    var reverse = sort.reverse || false;
+		    var start = pagination.start || 0;
+		    var number = pagination.number || $scope.itemsByPage;
+		    
+		  
+		    return Task.get({
+		    	payercountry :tableState.search.predicateObject.payercountry,
+		    	lastName : tableState.search.predicateObject.lastname,
+		    	firstName :tableState.search.predicateObject.firstname,
+		    	profilecountry : tableState.search.predicateObject.profilecountry,
+		    	eventName :tableState.search.predicateObject.eventname,
+		    	consentStaus : tableState.search.predicateObject.consentstaus,
+		    	taskStatus : tableState.search.predicateObject.taskstatus,
+		    	initiatedBy :tableState.search.predicateObject.initiatedby,	
+		    	updateddate : tableState.search.predicateObject.updateddate,
+		    	regionId : $scope.regionId,
+		    	tempProfile : tableState.search.predicateObject.tempProfile,
+		        page : 1+(start/number),
+		        size : number,
+		        sort : predicate,
+		        reverse : reverse 
+		        }).$promise.then(function(task) {
+		        	$scope.TaskAttributes = task.currentPageData;
+		        	for(var i in $scope.TaskAttributes){
+			        	if(($scope.TaskAttributes[i].consannexid.consentstartdate != null || $scope.TaskAttributes[i].consannexid.consentstartdate != undefined) &amp;&amp; ($scope.TaskAttributes[i].consannexid.consentenddate != null || $scope.TaskAttributes[i].consannexid.consentenddate != undefined)){
+			        	$scope.TaskAttributes[i].consannexid.startdate = moment($scope.TaskAttributes[i].consannexid.consentstartdate,&#039;YYYY-MM-DD&#039;);
+		                $scope.TaskAttributes[i].consannexid.enddate = moment($scope.TaskAttributes[i].consannexid.consentenddate,&#039;YYYY-MM-DD&#039;);  
+		                $scope.TaskAttributes[i].consannexid.consentstart = moment($scope.TaskAttributes[i].consannexid.consentstartdate,&#039;YYYY-MM-DD&#039;);
+		                $scope.TaskAttributes[i].consannexid.consentend = moment($scope.TaskAttributes[i].consannexid.consentenddate,&#039;YYYY-MM-DD&#039;);
+			        	}
+			        	}
+		        	$scope.totalcount=task.totalRecordsCount;
+		        	tableState.pagination.numberOfPages =Math.ceil(task.totalRecordsCount/$scope.itemsByPage);
+		            $scope.isLoading = false;
+		            $scope.loaded = false;
+		        });
+		    
+		  };
+		
+		
+		 var refresh=function(){
+			 $scope.callServer($scope.tableState);
+			 
+		 };
+		 
+		
+		 
+		var assigned=$scope.assigned;
+        var updateUsers = function(result){
+            $scope.user = result;
+          };
+	  
+          var loadUsers = function(){
+            $scope.user = [];
+            Users.query().$promise.then(updateUsers);
+          };
+
+          loadUsers();
+
+          $scope.$on(&#039;$localeChangeSuccess&#039;, loadUsers);
+          
+	  /**
+		 * selim
+		 * 
+		 * @ngdoc method
+		 * @methodOf this method used for DLU-P/T excel generation
+		 * @description Gets data
+		 */
+
+                
+          $scope.select = function(inputId) {
+          	var result = false;      	  
+        	  	var id =  angular.copy(inputId);
+        	  	$scope.compare = function() {
+  	      		for(var i in $scope.selected){
+  	      			result = angular.equals($scope.selected[i].id, id.id);
+  	      	    if(result == true){
+  	      	    	$scope.selected.splice(i, 1);
+  	      	    	break;
+  	      	    }     	    
+  	      		  }
+  	      		 if(result == false) {
+  	      			$scope.selected.push(id); 
+  	      		 }
+  	      	  };
+  	      
+      		    if(id.consannexid.bpid.profileType == &#039;HCP&#039;){
+      		    	id.consannexid.bpid.profileType = &#039;PERSON&#039;;
+      		    	id.consannexid.lastOrgName = id.consannexid.bpid.lastName;
+  				}
+  				else if(id.consannexid.bpid.profileType == &#039;HCO&#039;){
+  					id.consannexid.bpid.profileType = &#039;ORGANIZATION&#039;;
+  					id.consannexid.lastOrgName = id.consannexid.bpid.organisationName;
+  				}
+      		    if(id.consannexid.consentenddate != null){
+  					id.consannexid.consentenddate = moment(id.consannexid.consentenddate).format(&#039;DD/MM/YYYY&#039;);					
+  					}
+  					if(id.consannexid.consentstartdate != null){
+  					id.consannexid.consentstartdate = moment(id.consannexid.consentstartdate).format(&#039;DD/MM/YYYY&#039;);				
+  					}						
+  						if(id.consannexid.eventEndDate != null){
+  							id.consannexid.eventEndDate = moment(id.consannexid.eventEndDate).format(&#039;DD/MM/YYYY&#039;);
+  						}
+  						id.consannexid.profilecountry.code = id.consannexid.profilecountry.isoCode;
+  					id.updatedDate = moment(id.updatedDate).format(&#039;DD/MM/YYYY&#039;);
+      		    id.consannexid.PartyAddressType = &quot;Primary Address&quot;;
+      		    id.consannexid.SourceSystemCode = &quot;DLU-P&quot;;
+      		    id.consannexid.CustomFlexField15 = &quot;Consent Downloaded from GCMS&quot;;
+      		    id.consannexid.trid = &quot;TR-ID&quot;;     		    
+      	      	  $scope.compare();   	      	
+      };  
+      
+      
+      $scope.selectedDLUPDownload = function(selected){
+      	var excelSheetDLUPSel = {};
+      	for(var i in selected){
+      	excelSheetDLUPSel[i] = { 
+  				&#039;Record_type&#039;:&#039;&#039;,
+  				&#039;TR Party ID&#039;: selected[i].consannexid.bpid.id, 
+  				&#039;Party_Type&#039;:selected[i].consannexid.bpid.profileType,
+  				&#039;Organization&#039;:(selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.organisationName,
+  				&#039;Party Last Name&#039;:(selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.lastName,
+  				&#039;Party First Name&#039;:(selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.firstName, 
+  				&#039;Party Middle Name&#039;:&#039;&#039;,
+  				&#039;Party Credential&#039;:&#039;&#039;,
+  				&#039;Party Primary Specialty&#039;:&#039;&#039;,
+  				&#039;Party Title&#039;:&#039;&#039;,
+  				&#039;Party Prefix&#039;:&#039;&#039;,
+  				&#039;Party Suffix Name&#039;:&#039;&#039;,
+  				&#039;Party Email Address&#039;:&#039;&#039;,
+  				&#039;Party Role/Type of Attendee&#039;:&#039;&#039;,
+  				&#039;Source System Identifier for Party&#039;:&#039;&#039;,
+  				&#039;Party ID_1&#039;:&#039;&#039;,
+  				&#039;Party ID Type_1&#039;:&#039;&#039;,
+  				&#039;Party ID_2&#039;:&#039;&#039;,
+  				&#039;Party ID Type_2&#039;:&#039;&#039;,
+  				&#039;Party ID_3&#039;:&#039;&#039;,
+  				&#039;Party ID Type_3&#039;:&#039;&#039;,
+  				&#039;Party ID_4&#039;:&#039;&#039;,
+  				&#039;Party ID Type_4&#039;:&#039;&#039;,
+  				&#039;Party ID_5&#039;:&#039;&#039;,
+  				&#039;Party ID Type_5&#039;:&#039;&#039;,
+  				&#039;Party ID_6&#039;:&#039;&#039;,
+  				&#039;Party ID Type_6&#039;:&#039;&#039;,
+  				&#039;Party ID_7&#039;:&#039;&#039;,
+  				&#039;Party ID Type_7&#039;:&#039;&#039;,
+  				&#039;Party ID_8&#039;:&#039;&#039;,
+  				&#039;Party ID Type_8&#039;:&#039;&#039;,
+  				&#039;Party ID_9&#039;:&#039;&#039;,
+  				&#039;Party ID Type_9&#039;:&#039;&#039;,
+  				&#039;Party ID_10&#039;:&#039;&#039;,
+  				&#039;Party ID Type_10&#039;:&#039;&#039;,
+  				&#039;Party Address Type&#039;:&quot;Primary Address&quot;,
+  				&#039;Party Address Line 1&#039;:(selected[i].consannexid.bpid.address == null || selected[i].consannexid.bpid.address == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.address,
+  				&#039;Party Address Line 2&#039;:&#039;&#039;, 
+  				&#039;Party Address Line 3&#039;:&#039;&#039;, 
+  				&#039;Party Address Line 4&#039;:&#039;&#039;, 
+  				&#039;Party Region&#039;:&#039;&#039;,
+  				&#039;Party County&#039;:&#039;&#039;,
+  				&#039;Party Province&#039;:&#039;&#039;,
+  				&#039;Party Canton&#039;:&#039;&#039;,
+  				&#039;Party City&#039;:(selected[i].consannexid.bpid.city == null || selected[i].consannexid.bpid.city == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.city,
+  				&#039;Party Postal/Zip Code&#039;:&#039;&#039;,
+  				&#039;Party State&#039;:&#039;&#039;,
+  				&#039;Party Country Code (2 character ISO)&#039;:selected[i].consannexid.profilecountry.isoCode, 
+  				&#039;Source System Identifier for Party_s Address&#039;: &#039;&#039;,
+  				&#039;Consent_editor&#039;:&#039;&#039;,
+  				&#039;Consent_required&#039;:&#039;&#039;,
+  				&#039;Consent_Status&#039;:selected[i].consannexid.consentstatus.consentName,
+  				&#039;Consent_status_reason&#039;: &#039;&#039;,
+  				&#039;Consent_Start_Date&#039;:(selected[i].consannexid.consentstartdate == null || selected[i].consannexid.consentstartdate == undefined ) ? &#039;&#039; : selected[i].consannexid.consentstartdate,
+  				&#039;Consent_End_Date&#039;:(selected[i].consannexid.consentenddate == null || selected[i].consannexid.consentenddate == undefined ) ? &#039;&#039; : selected[i].consannexid.consentenddate,
+  				&#039;Active Flag SAP&#039;:&#039;&#039;,
+  				&#039;Parent Institution ID&#039;:&#039;&#039;,
+  				&#039;Parent Institution Type&#039;:&#039;&#039;,
+  				&#039;FCPA Type&#039;:&#039;&#039;,
+  				&#039;File Name&#039;:&#039;&#039;,
+  				&#039;Source System Code&#039;:&#039;DLU-P&#039;,
+  				&#039;Source Sub-System Code&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 1&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 2&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 3&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 4&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 5&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 6&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 7&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 8&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 9&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 10&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 11&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 12&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 13&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 14&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 15&#039;:&quot;Consent Downloaded from GCMS&quot;,
+  				&#039;Custom/Flex Field 16&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 17&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 18&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 19&#039;:&#039;&#039;,
+  				&#039;Custom/Flex Field 20&#039;:&#039;&#039;						
+  				} ;				
+      	}
+  		var data1 = excelSheetDLUPSel;
+          var opts = [{sheetid:&#039;Data&#039;,header:true}];
+          var res = alasql(&#039;SELECT INTO XLSX(&quot;Data.xlsx&quot;,?) FROM ?&#039;,[opts,[data1]]); 
+      };
+      
+      $scope.selectedTableSummaryDownload = function(selected){
+      	var excelSheetSummarySel = {};
+      	for(var i in selected){
+      		var taskOwnerFN = ($scope.selected[i].assignedto.firstName == null || $scope.selected[i].assignedto.firstName == undefined ) ? &#039;&#039; : $scope.selected[i].assignedto.firstName;
+  			var taskOwnerLN = ($scope.selected[i].assignedto.lastName == null || $scope.selected[i].assignedto.lastName == undefined ) ? &#039;&#039; : $scope.selected[i].assignedto.lastName;
+  			var taskOwnerUN = $scope.selected[i].assignedto.userName;
+  			var space = &quot; &quot;;
+  			taskOwner = taskOwnerFN.concat(space);
+  			taskOwner = taskOwner.concat(taskOwnerLN);
+  			taskOwner = taskOwner.concat(&quot;(&quot;);
+  			taskOwner = taskOwner.concat(taskOwnerUN);
+  			taskOwner = taskOwner.concat(&quot;)&quot;);
+      	excelSheetSummarySel[i] = { 
+      			&#039;Party Type&#039;:selected[i].consannexid.bpid.profileType, 
+    			&#039;BP ID&#039;:selected[i].consannexid.bpid.id, 
+    			&#039;Last/Org Name&#039;:(selected[i].consannexid.bpid.profileType == &#039;PERSON&#039; ? ((selected[i].consannexid.bpid.lastName == null || selected[i].consannexid.bpid.lastName == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.lastName) : ((selected[i].consannexid.bpid.organisationName == null || selected[i].consannexid.bpid.organisationName == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.organisationName) ), 
+    			&#039;First Name&#039;:(selected[i].consannexid.bpid.firstName == null || selected[i].consannexid.bpid.firstName == undefined ) ? &#039;&#039; : selected[i].consannexid.bpid.firstName, 
+    			&#039;Profile Country&#039;:selected[i].consannexid.profilecountry.isoCode,	
+    			&#039;Payer Country&#039;:selected[i].consannexid.payercountry.isoCode, 
+    			&#039;Event Name&#039;:(selected[i].consannexid.eventname == null || selected[i].consannexid.eventname == undefined ) ? &#039;&#039; : selected[i].consannexid.eventname,    			    		
+    			&#039;PO Code&#039;: (selected[i].consannexid.pocode == null || selected[i].consannexid.pocode == undefined ) ? &#039;&#039; : selected[i].consannexid.pocode,
+				&#039;ACM Code&#039;:(selected[i].consannexid.acmcode == null || selected[i].consannexid.acmcode == undefined ) ? &#039;&#039; : selected[i].consannexid.acmcode,
+    			&#039;Consent Status&#039;:selected[i].consannexid.consentstatus.consentName,
+    			&#039;Consent Updated Date&#039;:selected[i].updatedDate,
+    			&#039;Consent Start Date&#039;:(selected[i].consannexid.consentstartdate == null || selected[i].consannexid.consentstartdate == undefined ) ? &#039;&#039; : selected[i].consannexid.consentstartdate,
+				&#039;Consent End Date&#039;:(selected[i].consannexid.consentenddate == null || selected[i].consannexid.consentenddate == undefined ) ? &#039;&#039; : selected[i].consannexid.consentenddate,
+    			&#039;Event End Date&#039;: (selected[i].consannexid.eventEndDate == null || selected[i].consannexid.eventEndDate == undefined ) ? &#039;&#039; : selected[i].consannexid.eventEndDate,
+    			&#039;Task Owner Last Name&#039;:selected[i].assignedto.lastName, 
+    			&#039;Task Owner First Name&#039;:selected[i].assignedto.firstName, 
+    			&#039;NTID&#039;:selected[i].assignedto.userName,
+    			&#039;Task Status&#039;:selected[i].taskstatus
+    			} ;     	
+      	}
+  		var data1 = excelSheetSummarySel;
+  		var opts = [{sheetid:&#039;Summary&#039;,header:true}];
+  		var res = alasql(&#039;SELECT INTO XLSX(&quot;Summary.xlsx&quot;,?) FROM ?&#039;,[opts,[data1]]);
+      
+      };
+      
+      
+      
+      $scope.loadDataDLUAll = function() {   
+          if (!$scope.downloadAll) {               
+             Task.get({
+  		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+  		    	lastName : $scope.searchparam.predicateObject.lastname,
+  		    	firstName :$scope.searchparam.predicateObject.firstname,
+  		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+  		    	eventName :$scope.searchparam.predicateObject.eventname,
+  		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+  		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+  		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+  		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+		    	regionId : $scope.regionId,
+		    	tempProfile : $scope.searchparam.predicateObject.tempProfile,
+  		        page : 1,
+  		        size : $scope.totalcount,
+  		        sort : $scope.sortparam,
+  		        reverse : false 
+  		        }).$promise.then(function(task) {
+  		        	$scope.data = task.currentPageData;
+  		        	for(var i  in $scope.data){
+  						if($scope.data[i].consannexid.bpid.profileType == &#039;HCP&#039;){
+  							$scope.data[i].consannexid.bpid.profileType = &#039;PERSON&#039;;
+  						}
+  						else if($scope.data[i].consannexid.bpid.profileType == &#039;HCO&#039;){
+  							$scope.data[i].consannexid.bpid.profileType = &#039;ORGANIZATION&#039;;
+  						}
+  						if($scope.data[i].consannexid.consentenddate != null){
+  						$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format(&#039;DD/MM/YYYY&#039;);
+  						}
+  						if($scope.data[i].consannexid.consentstartdate != null){
+  						$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format(&#039;DD/MM/YYYY&#039;);
+  						}						
+  	
+  							$scope.excelSheetDLUAll[i] = { 
+  							&#039;Record_type&#039;:&#039;&#039;,
+  							&#039;TR Party ID&#039;: $scope.data[i].consannexid.bpid.id, 
+  							&#039;Party_Type&#039;:$scope.data[i].consannexid.bpid.profileType,
+  							&#039;Organization&#039;:($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.organisationName,
+  							&#039;Party Last Name&#039;:($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.lastName,
+  							&#039;Party First Name&#039;:($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.firstName, 
+  							&#039;Party Middle Name&#039;:&#039;&#039;,
+  							&#039;Party Credential&#039;:&#039;&#039;,
+  							&#039;Party Primary Specialty&#039;:&#039;&#039;,
+  							&#039;Party Title&#039;:&#039;&#039;,
+  							&#039;Party Prefix&#039;:&#039;&#039;,
+  							&#039;Party Suffix Name&#039;:&#039;&#039;,
+  							&#039;Party Email Address&#039;:&#039;&#039;,
+  							&#039;Party Role/Type of Attendee&#039;:&#039;&#039;,
+  							&#039;Source System Identifier for Party&#039;:&#039;&#039;,
+  							&#039;Party ID_1&#039;:&#039;&#039;,
+  							&#039;Party ID Type_1&#039;:&#039;&#039;,
+  							&#039;Party ID_2&#039;:&#039;&#039;,
+  							&#039;Party ID Type_2&#039;:&#039;&#039;,
+  							&#039;Party ID_3&#039;:&#039;&#039;,
+  							&#039;Party ID Type_3&#039;:&#039;&#039;,
+  							&#039;Party ID_4&#039;:&#039;&#039;,
+  							&#039;Party ID Type_4&#039;:&#039;&#039;,
+  							&#039;Party ID_5&#039;:&#039;&#039;,
+  							&#039;Party ID Type_5&#039;:&#039;&#039;,
+  							&#039;Party ID_6&#039;:&#039;&#039;,
+  							&#039;Party ID Type_6&#039;:&#039;&#039;,
+  							&#039;Party ID_7&#039;:&#039;&#039;,
+  							&#039;Party ID Type_7&#039;:&#039;&#039;,
+  							&#039;Party ID_8&#039;:&#039;&#039;,
+  							&#039;Party ID Type_8&#039;:&#039;&#039;,
+  							&#039;Party ID_9&#039;:&#039;&#039;,
+  							&#039;Party ID Type_9&#039;:&#039;&#039;,
+  							&#039;Party ID_10&#039;:&#039;&#039;,
+  							&#039;Party ID Type_10&#039;:&#039;&#039;,
+  							&#039;Party Address Type&#039;:&quot;Primary Address&quot;,
+  							&#039;Party Address Line 1&#039;:($scope.data[i].consannexid.bpid.address == null || $scope.data[i].consannexid.bpid.address == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.address,  
+  							&#039;Party Address Line 2&#039;:&#039;&#039;, 
+  							&#039;Party Address Line 3&#039;:&#039;&#039;, 
+  							&#039;Party Address Line 4&#039;:&#039;&#039;, 
+  							&#039;Party Region&#039;:&#039;&#039;,
+  							&#039;Party County&#039;:&#039;&#039;,
+  							&#039;Party Province&#039;:&#039;&#039;,
+  							&#039;Party Canton&#039;:&#039;&#039;,
+  							&#039;Party City&#039;:($scope.data[i].consannexid.bpid.city == null || $scope.data[i].consannexid.bpid.city == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.city,
+  							&#039;Party Postal/Zip Code&#039;:&#039;&#039;,
+  							&#039;Party State&#039;:&#039;&#039;,
+  							&#039;Party Country Code (2 character ISO)&#039;:$scope.data[i].consannexid.profilecountry.isoCode, 
+  							&#039;Source System Identifier for Party_s Address&#039;: &#039;&#039;,
+  							&#039;Consent_editor&#039;:&#039;&#039;,
+  							&#039;Consent_required&#039;:&#039;&#039;,
+  							&#039;Consent_Status&#039;:$scope.data[i].consannexid.consentstatus.consentName,
+  							&#039;Consent_status_reason&#039;: &#039;&#039;,
+  							&#039;Consent_Start_Date&#039;:($scope.data[i].consannexid.consentstartdate == null || $scope.data[i].consannexid.consentstartdate == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.consentstartdate,
+  							&#039;Consent_End_Date&#039;:($scope.data[i].consannexid.consentenddate == null || $scope.data[i].consannexid.consentenddate == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.consentenddate,
+  							&#039;Active Flag SAP&#039;:&#039;&#039;,
+  							&#039;Parent Institution ID&#039;:&#039;&#039;,
+  							&#039;Parent Institution Type&#039;:&#039;&#039;,
+  							&#039;FCPA Type&#039;:&#039;&#039;,
+  							&#039;File Name&#039;:&#039;&#039;,
+  							&#039;Source System Code&#039;:&#039;DLU-P&#039;,
+  							&#039;Source Sub-System Code&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 1&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 2&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 3&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 4&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 5&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 6&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 7&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 8&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 9&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 10&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 11&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 12&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 13&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 14&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 15&#039;:&quot;Consent Downloaded from GCMS&quot;,
+  							&#039;Custom/Flex Field 16&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 17&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 18&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 19&#039;:&#039;&#039;,
+  							&#039;Custom/Flex Field 20&#039;:&#039;&#039;
+  							
+  							
+  							
+  							} ;	
+  																				
+  					}
+  					var data1 = $scope.excelSheetDLUAll;
+  		            var opts = [{sheetid:&#039;Data&#039;,header:true}];
+  		            var res = alasql(&#039;SELECT INTO XLSX(&quot;Data.xlsx&quot;,?) FROM ?&#039;,[opts,[data1]]);
+  		        	$scope.downloadAll = true;
+  		            
+  		        });
+          }
+        };
+
+
+     
+      $scope.loadData = function() {
+        if (!$scope.loaded) {               
+           Task.get({
+  		    	payercountry :$scope.searchparam.predicateObject.payercountry,
+  		    	lastName : $scope.searchparam.predicateObject.lastname,
+  		    	firstName :$scope.searchparam.predicateObject.firstname,
+  		    	profilecountry : $scope.searchparam.predicateObject.profilecountry,
+  		    	eventName :$scope.searchparam.predicateObject.eventname,
+  		    	consentStaus : $scope.searchparam.predicateObject.consentstaus,
+  		    	taskStatus : $scope.searchparam.predicateObject.taskstatus,
+  		    	initiatedBy :$scope.searchparam.predicateObject.initiatedby,	
+  		    	updateddate : $scope.searchparam.predicateObject.updateddate,
+		    	regionId : $scope.regionId,
+		    	tempProfile : $scope.searchparam.predicateObject.tempProfile,
+  		        page : 1,
+  		        size : $scope.totalcount,
+  		        sort : $scope.sortparam,
+  		        reverse : false 
+  		        }).$promise.then(function(task) {
+  		        	$scope.data = task.currentPageData;
+  		        	for(var i  in $scope.data){
+  						if($scope.data[i].consannexid.bpid.profileType == &#039;HCP&#039;){
+  							$scope.data[i].consannexid.bpid.profileType = &#039;PERSON&#039;;
+  							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.lastName;
+  						}
+  						else if($scope.data[i].consannexid.bpid.profileType == &#039;HCO&#039;){
+  							$scope.data[i].consannexid.bpid.profileType = &#039;ORGANIZATION&#039;;
+  							$scope.data[i].consannexid.lastOrgName = $scope.data[i].consannexid.bpid.organisationName;
+  						}
+  						if($scope.data[i].consannexid.consentenddate != null){
+  							$scope.data[i].consannexid.consentenddate = moment($scope.data[i].consannexid.consentenddate).format(&#039;DD/MM/YYYY&#039;);
+  							}
+  							if($scope.data[i].consannexid.consentstartdate != null){
+  							$scope.data[i].consannexid.consentstartdate = moment($scope.data[i].consannexid.consentstartdate).format(&#039;DD/MM/YYYY&#039;);
+  							}
+  							$scope.data[i].updatedDate = moment($scope.data[i].updatedDate).format(&#039;DD/MM/YYYY&#039;);	
+  							if($scope.data[i].consannexid.eventEndDate != null){
+  								$scope.data[i].consannexid.eventEndDate = moment($scope.data[i].consannexid.eventEndDate).format(&#039;DD/MM/YYYY&#039;);
+  							}
+  							
+  							var taskOwnerFN = ($scope.data[i].assignedto.firstName == null || $scope.data[i].assignedto.firstName == undefined ) ? &#039;&#039; : $scope.data[i].assignedto.firstName;
+  							var taskOwnerLN = ($scope.data[i].assignedto.lastName == null || $scope.data[i].assignedto.lastName == undefined ) ? &#039;&#039; : $scope.data[i].assignedto.lastName;
+  							var taskOwnerUN = $scope.data[i].assignedto.userName;
+  							var space = &quot; &quot;;
+  							taskOwner = taskOwnerFN.concat(space);
+  							taskOwner = taskOwner.concat(taskOwnerLN);
+  							taskOwner = taskOwner.concat(&quot;(&quot;);
+  							taskOwner = taskOwner.concat(taskOwnerUN);
+  							taskOwner = taskOwner.concat(&quot;)&quot;);
+  							
+  							$scope.excelSheetSummaryAll[i] = { 
+  									&#039;Party Type&#039;:$scope.data[i].consannexid.bpid.profileType, 
+  									&#039;BP ID&#039;:$scope.data[i].consannexid.bpid.id, 
+  									&#039;Last/Org Name&#039;:($scope.data[i].consannexid.bpid.profileType == &#039;PERSON&#039; ? (($scope.data[i].consannexid.bpid.lastName == null || $scope.data[i].consannexid.bpid.lastName == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.lastName) : (($scope.data[i].consannexid.bpid.organisationName == null || $scope.data[i].consannexid.bpid.organisationName == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.organisationName) ), 
+  									&#039;First Name&#039;:($scope.data[i].consannexid.bpid.firstName == null || $scope.data[i].consannexid.bpid.firstName == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.bpid.firstName, 
+  									&#039;Profile Country&#039;:$scope.data[i].consannexid.profilecountry.isoCode,	
+  									&#039;Payer Country&#039;:$scope.data[i].consannexid.payercountry.isoCode, 
+  									&#039;Event Name&#039;:($scope.data[i].consannexid.eventname == null || $scope.data[i].consannexid.eventname == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.eventname,
+  									&#039;PO Code&#039;: ($scope.data[i].consannexid.pocode == null || $scope.data[i].consannexid.pocode == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.pocode,
+  									&#039;ACM Code&#039;:($scope.data[i].consannexid.acmcode == null || $scope.data[i].consannexid.acmcode == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.acmcode,
+  									&#039;Consent Status&#039;:$scope.data[i].consannexid.consentstatus.consentName,
+  									&#039;Consent Updated Date&#039;:$scope.data[i].updatedDate,
+  									&#039;Consent Start Date&#039;:($scope.data[i].consannexid.consentstartdate == null || $scope.data[i].consannexid.consentstartdate == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.consentstartdate,
+  									&#039;Consent End Date&#039;:($scope.data[i].consannexid.consentenddate == null || $scope.data[i].consannexid.consentenddate == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.consentenddate,
+  									&#039;Event End Date&#039;: ($scope.data[i].consannexid.eventEndDate == null || $scope.data[i].consannexid.eventEndDate == undefined ) ? &#039;&#039; : $scope.data[i].consannexid.eventEndDate,
+  									&#039;Task Owner Last Name&#039;:$scope.data[i].assignedto.lastName, 
+  									&#039;Task Owner First Name&#039;:$scope.data[i].assignedto.firstName, 
+  									&#039;NTID&#039;:$scope.data[i].assignedto.userName,
+  									&#039;Task Status&#039;:$scope.data[i].taskstatus
+  									} ;
+  							 							
+  		        	}	
+  		        	
+  		        	var data1 = $scope.excelSheetSummaryAll;
+  		            var opts = [{sheetid:&#039;Summary&#039;,header:true}];
+  		            var res = alasql(&#039;SELECT INTO XLSX(&quot;Summary.xlsx&quot;,?) FROM ?&#039;,[opts,[data1]]);
+  		        	
+  		        	$scope.loaded = true;
+  		            
+  		        });
+        }
+      };
+
+		
+      	
+        	$scope.close=function(item) {
+          		if(item.consannexid.annnexlocation != undefined){
+          			//if(item.consannexid.consentstatus.id != &#039;63&#039; &amp;&amp; item.consannexid.eventname != null &amp;&amp; item.consannexid.eventname != &quot;&quot;)
+		      		if(item.consannexid.consentstatus.id != &#039;7004&#039; &amp;&amp; item.consannexid.eventname != null &amp;&amp; item.consannexid.eventname != &quot;&quot;){
+		      			 if(item.consannexid.acmcode != null  ||item.consannexid.pocode != null ){
+		      				 if(item.consannexid.acmcode != &quot;&quot; || item.consannexid.pocode != &quot;&quot; ){
+		      					item.taskstatus=&quot;COMPLETED&quot;;
+		      				 }else{
+				       			item.taskstatus=&quot;INCOMPLETE&quot;; 
+			     			 }		      				
+		      			 }else{
+		       				item.taskstatus=&quot;INCOMPLETE&quot;; 
+		     			 }     			
+		      		 }else{
+		      				item.taskstatus=&quot;INCOMPLETE&quot;; 
+	     			 }
+		      	 }else{
+      				item.taskstatus=&quot;INCOMPLETE&quot;; 
+     			 }
+             	delete item.click; 
+             	// Task.update({ id:item.id }, item);
+             	Task.update({ id:item.id }, item).$promise.then(function(response){
+	            	
+	            	if(response.$promise.$$state.status==1)
+	            		{
+	            		refresh();
+	            		
+	            		
+	            		// $scope.success= item.id + &quot; task has been updated
+						// successfully&quot;;
+	            		}else{
+	            			unspecifiedError();
+	            		// $scope.error= item.id + &quot; task failed to update&quot;;
+	            		}
+	 		      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		 });
+             	 
+             	};
+		
+        	/**
+			 * selim
+			 * 
+			 * @ngdoc method
+			 * @name Pdf Download
+			 * @methodOf
+			 * @description
+			 * 
+			 */
+          
+        	
+        	$scope.download=function(item){ console.log(&#039;localData:&#039;+$rootScope.currentProfile.localData);
+    			console.log(&quot;inside download&quot;); 
+    			
+    			 
+	            if(item.consannexid.consentstart != undefined)
+	 	           {
+	            	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	 	           }
+	 	           else
+	 	           {	        	   
+	 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	 	           }
+	 	           if(item.consannexid.consentend != undefined)
+	 	           {
+	 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	 	           }
+	 	           else
+	 	           {	        	   
+	 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+	 		       }
+	 	           if(item.consannexid.consentstart != undefined)
+	 	           {
+	 	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	 	           }
+	 	           else
+	 	           {	        	   
+	 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	 	           }
+	 	           if(item.consannexid.consentend != undefined)
+	 	           {
+	 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	 	           }
+	 	           else
+	 	           {	        	   
+	 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+	 		       }
+	            	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+	            	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+	            	item.consannexid.startdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+	            	item.consannexid.enddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+	            	delete item.consannexid.consentstart;
+			        delete item.consannexid.consentend;
+			        delete item.consannexid.startdate;
+			        delete item.consannexid.enddate;	
+			       if(item.consannexid.startdate  == &quot;Invalid date&quot; || item.consannexid.startdate  == undefined ){
+		        	   delete item.consannexid.startdate ;
+		           }	     			           
+		           if(item.consannexid.enddate == &quot;Invalid date&quot; || item.consannexid.enddate == undefined){
+		        	   delete item.consannexid.enddate;
+		           }
+    			
+    			PDFDownload.update({ id:item.id }, item).$promise.then(function(res){
+	            	
+	            	if(res.$promise.$$state.status==1){
+	            		$http.get(&#039;./config.json&#039;).then(function (response) {
+	    					var link = response.data[&quot;test-server&quot;].ENVIRONMENT.SERVICE_URI+&#039;consent-pdf/&#039;+item.id;
+	    					$http({method: &#039;GET&#039;,url: link,responseType: &#039;arraybuffer&#039;}).then(function (response) {
+	    						var bin = new Blob([response.data]);
+	    						var docName=&#039;&#039;;
+	    						if(item.consannexid.bpid.profileType == &quot;HCP&quot;){
+	    						docName = item.consannexid.bpid.lastName+&#039;,&#039;+item.consannexid.bpid.firstName+&#039;.pdf&#039;; 
+	    						}else{
+	    						docName = item.consannexid.bpid.organisationName+&#039;.pdf&#039;; 
+	    						}
+          
+	    						saveAs(bin, docName); 
+	    						toasty.success({
+	    	            	        title: &#039;Success&#039;,
+	    	            	        msg: &#039;PDF Downloaded Successfully!&#039;,
+	    	            	        showClose: true,
+	    	            	        clickToClose: true,
+	    	            	        timeout: 5000,
+	    	            	        sound: false,
+	    	            	        html: false,
+	    	            	        shake: false,
+	    	            	        theme: &#039;bootstrap&#039;
+	    	            	      });
+	    					}).catch(function(){
+	    						internalError();
+	    					});	
+	    					
+	    				});
+	            	}else{
+	            			unspecifiedError();	            		
+	            		}
+	            	    	            	
+	 		      }).catch(function(){
+		 		    	// refresh();
+		 		    	 internalError();	
+		       		 });    			
+    	};
+	
+		/**
+		 * selim
+		 * 
+		 * @ngdoc method
+		 * @name update
+		 * @methodOf
+		 * @description Updates Task
+		 * @param {object}
+		 *            item Task to update
+		 */
+      
+       
+		 $scope.update = function(item) {
+			 console.log(&quot;Inside update function&quot;);
+			 
+			 $scope.success=&#039;&#039;;
+			 $scope.error=&#039;&#039;;
+	         angular.forEach($scope.TaskAttributes, function(con){
+	            	
+	         if (con.id === item.id) {
+	       
+	           con.updatedDate = new Date(); 
+	           con.consannexid.updatedDate = new Date();
+	         }
+	            });
+	         if(item.consannexid.annnexlocation != undefined){
+	        	 //if(item.consannexid.consentstatus.id != &#039;63&#039; &amp;&amp; item.consannexid.eventname != null &amp;&amp; item.consannexid.eventname != &quot;&quot;)
+		      		if(item.consannexid.consentstatus.id != &#039;7004&#039; &amp;&amp; item.consannexid.eventname != null &amp;&amp; item.consannexid.eventname != &quot;&quot;){
+		      			 if(item.consannexid.acmcode != null  ||item.consannexid.pocode != null ){
+		      				 if(item.consannexid.acmcode != &quot;&quot; || item.consannexid.pocode != &quot;&quot; ){
+		      					item.taskstatus=&quot;COMPLETED&quot;;
+		      				 }else{
+				       				item.taskstatus=&quot;INCOMPLETE&quot;; 
+			     			 }		      				
+		      			 }else{
+		       				item.taskstatus=&quot;INCOMPLETE&quot;; 
+		     			 }     			
+		      		 }else{
+		      				item.taskstatus=&quot;INCOMPLETE&quot;; 
+	     			 }
+		      	 }else{
+   				item.taskstatus=&quot;INCOMPLETE&quot;; 
+  			 }
+	         
+	       // Input Date format
+	           if(item.consannexid.consentstart != undefined){
+	           item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else{	        	   
+	           item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined){
+	           item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else{	        	   
+		           item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		           }
+   		
+	           // Adding timezone
+	           item.consannexid.consentstartdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+	           item.consannexid.consentenddate = moment.tz(item.consannexid.consentend,moment.tz.guess());
+     	   
+	           // Convert to DB date format
+	           item.consannexid.consentstartdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+	           item.consannexid.consentenddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+
+	           delete item.consannexid.consentend;
+	           delete item.consannexid.consentstart;
+	           delete item.consannexid.enddate;
+	           delete item.consannexid.startdate;
+	         
+	           if(item.consannexid.consentstartdate == &quot;Invalid date&quot; || item.consannexid.consentstartdate == undefined ){
+	        	   delete item.consannexid.consentstartdate;
+	           }
+	           
+	           if(item.consannexid.consentenddate == &quot;Invalid date&quot; || item.consannexid.consentenddate == undefined){
+	        	   delete item.consannexid.consentenddate;
+	           }
+	           
+		         delete item.click;
+	           // Task.update({ id:item.id }, item);
+	         	Task.update({ id:item.id }, item).$promise.then(function(response){
+	            	
+	            	if(response.$promise.$$state.status==1)
+	            		{
+	            		refresh();
+	            		toasty.success({
+	            	        title: &#039;Success&#039;,
+	            	        msg: &#039;Task Updated !&#039;,
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: &#039;bootstrap&#039;
+	            	      });
+	            		
+	            		// $scope.success= item.id + &quot; task has been updated
+						// successfully&quot;;
+	            		}else{
+	            			unspecifiedError();
+	            		// $scope.error= item.id + &quot; task failed to update&quot;;
+	            		}
+	 		      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		 });
+	          };
+	          
+	          
+	       
+          /**
+			 * @ngdoc method
+			 * @name update
+			 * @methodOf
+			 * @description Updates Task
+			 * @param {object}
+			 *            item Task to update
+			 */
+  		 $scope.revoke = function(item) {
+  			 console.log(&quot;Inside revoke function&quot;);
+  			
+  			$scope.success=&#039;&#039;;
+			$scope.error=&#039;&#039;;
+  	         angular.forEach($scope.TaskAttributes, function(con){
+  	            	
+  	         if (con.id === item.id) {
+  	           con.consannexid.consentstatus.id=62;
+  	           con.updatedDate = new Date();      
+  	              }
+  	            });            
+  	           // Task.update({ id:item.id }, item);
+  	         	Task.update({ id:item.id }, item).$promise.then(function(response){
+ 	          
+ 	           	if(response.$promise.$$state.status==1)
+ 	           		{
+ 	           	toasty.success({
+        	        title: &#039;Success&#039;,
+        	        msg: &#039;Task Revoked !&#039;,
+        	        showClose: true,
+        	        clickToClose: true,
+        	        timeout: 5000,
+        	        sound: false,
+        	        html: false,
+        	        shake: false,
+        	        theme: &#039;bootstrap&#039;
+        	      });
+ 	           		// $scope.success= item.id + &quot; task has been revoked &quot;;
+ 	           		}else{
+ 	           		unspecifiedError();
+ 	           		// $scope.error= item.id + &quot; task failed to revoke&quot;;
+ 	           		}
+ 			      }).catch(function(){
+	 		    	 refresh();
+	 		    	 internalError();	
+	       		      });
+  	          };  
+	          
+	      
+
+
+  	     $scope.updateDelete = function(item) {
+			console.log(&quot;Inside updateDelete function&quot;);
+			
+			$scope.success=&#039;&#039;;
+			$scope.error=&#039;&#039;;
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.deleted = &#039;true&#039;;
+					con.taskstatus = &quot;DELETED&quot;;
+					con.deleteReason = item.deleteReason.Name;
+					con.deleteReasonDesc = item.deleteReasonDesc;
+					con.undeleteReason=&#039;&#039;;
+					con.updatedDate = new Date();
+					
+				}
+			});
+			if(item.consannexid.consentstart != undefined)
+	           {
+         	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined)
+	           {
+	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		       }
+	           if(item.consannexid.consentstart != undefined)
+	           {
+	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined)
+	           {
+	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		       }
+         	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+         	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+         	item.consannexid.startdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+         	item.consannexid.enddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+         	delete item.consannexid.consentstart;
+		        delete item.consannexid.consentend;
+		        delete item.consannexid.startdate;
+		        delete item.consannexid.enddate;	
+		       if(item.consannexid.startdate  == &quot;Invalid date&quot; || item.consannexid.startdate  == undefined ){
+	        	   delete item.consannexid.startdate ;
+	           }	     			           
+	           if(item.consannexid.enddate == &quot;Invalid date&quot; || item.consannexid.enddate == undefined){
+	        	   delete item.consannexid.enddate;
+	           }
+			
+			Task.update({ id:item.id }, item).$promise.then(function(response){
+	          
+	           	if(response.$promise.$$state.status==1)
+	           		{
+	           		refresh();
+	           		toasty.success({
+	        	        title: &#039;Success&#039;,
+	        	        msg: &#039;Task Deleted!&#039;,
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 5000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: &#039;bootstrap&#039;
+	        	      });
+	           		// $scope.success= item.id + &quot; task has been deleted &quot;;
+	           		}else{
+	           		unspecifiedError();
+	           		// $scope.error= item.id + &quot; task failed to delete&quot;;
+	           		}
+			      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		      });
+			// Task.update({
+			// id : item.id
+			// }, item);
+		};
+		$scope.count=&#039;null&#039;;
+	
+	    $scope.onCategoryChange = function (item) {
+	    	item.reassignReason=&#039;&#039;;
+	    	 $scope.count=1;
+	    		    	 
+	    };
+	    
+		$scope.updateReassign = function(item) {
+			console.log(&quot;Inside updateReassign function&quot;);
+			
+			item.assignedto=item.changedowner;
+			
+			$scope.success=&#039;&#039;;
+			$scope.error=&#039;&#039;;
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+                     con.updatedDate = new Date();
+                     delete item.assignedto.id;
+                     delete item.assignedto.countryCode;
+                     delete item.assignedto.countryId;
+                     delete item.assignedto.errors;
+                     delete item.changedowner;
+				}
+			});
+			
+			if(item.consannexid.consentstart != undefined)
+	           {
+         	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined)
+	           {
+	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		       }
+	           if(item.consannexid.consentstart != undefined)
+	           {
+	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined)
+	           {
+	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		       }
+         	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+         	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+         	item.consannexid.startdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+         	item.consannexid.enddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+         	delete item.consannexid.consentstart;
+		        delete item.consannexid.consentend;
+		        delete item.consannexid.startdate;
+		        delete item.consannexid.enddate;	
+		       if(item.consannexid.startdate  == &quot;Invalid date&quot; || item.consannexid.startdate  == undefined ){
+	        	   delete item.consannexid.startdate ;
+	           }	     			           
+	           if(item.consannexid.enddate == &quot;Invalid date&quot; || item.consannexid.enddate == undefined){
+	        	   delete item.consannexid.enddate;
+	           }
+			
+			
+			
+			Task.update({ id:item.id }, item).$promise.then(function(response){
+	          
+	           	if(response.$promise.$$state.status==1)
+	           		{
+	           		refresh();
+	           		toasty.success({
+	        	        title: &#039;Success&#039;,
+	        	        msg: &#039;Task Reassigned!&#039;,
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 5000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: &#039;bootstrap&#039;
+	        	      });
+	           		// $scope.success= item.id + &quot; task has been reassigned to
+					// &quot;+ item.assignedto;
+	           		}else{
+	           			unspecifiedError();
+	           		// $scope.error= item.id + &quot; task failed to reassigned&quot;;
+	           		}
+			      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		      });
+			// Task.update({
+			// id : item.id
+			// }, item);
+		};
+
+		$scope.updateUnDelete = function(item) {
+			console.log(&quot;Inside updateDelete function&quot;);
+			
+			$scope.success=&#039;&#039;;
+			$scope.error=&#039;&#039;;
+			angular.forEach($scope.TaskAttributes, function(con) {
+				if (con.id === item.id) {
+					con.deleted = &#039;false&#039;;
+					con.taskstatus = &quot;INCOMPLETE&quot;;
+					con.deleteReason = &#039;&#039;;
+					con.deleteReasonDesc = &#039;&#039;;
+					con.updatedDate = new Date();
+				}
+			});
+			// Task.update({
+			// id : item.id
+			// }, item);
+			
+			if(item.consannexid.consentstart != undefined)
+	           {
+         	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined)
+	           {
+	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		       }
+	           if(item.consannexid.consentstart != undefined)
+	           {
+	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+	           }
+	           if(item.consannexid.consentend != undefined)
+	           {
+	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+	           }
+	           else
+	           {	        	   
+	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+		       }
+         	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+         	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+         	item.consannexid.startdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+         	item.consannexid.enddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+         	delete item.consannexid.consentstart;
+		        delete item.consannexid.consentend;
+		        delete item.consannexid.startdate;
+		        delete item.consannexid.enddate;	
+		       if(item.consannexid.startdate  == &quot;Invalid date&quot; || item.consannexid.startdate  == undefined ){
+	        	   delete item.consannexid.startdate ;
+	           }	     			           
+	           if(item.consannexid.enddate == &quot;Invalid date&quot; || item.consannexid.enddate == undefined){
+	        	   delete item.consannexid.enddate;
+	           }
+			
+			
+			Task.update({ id:item.id }, item).$promise.then(function(response){
+	           
+	           	if(response.$promise.$$state.status==1)
+	           		{
+	           		refresh();
+	           		toasty.success({
+	        	        title: &#039;Success&#039;,
+	        	        msg: &#039;Task Undeleted!&#039;,
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 5000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: &#039;bootstrap&#039;
+	        	      });
+	           		// $scope.success= item.id + &quot; task has been undeleted&quot;;
+	           		}else{
+	           			unspecifiedError();
+	           		// $scope.error= item.id + &quot; task failed to undelete&quot;;
+	           		}
+			      }).catch(function(){
+		 		    	 refresh();
+		 		    	 internalError();	
+		       		      });
+		};
+		 	          
+		 
+		// $scope.$on(&#039;$localeChangeSuccess&#039;, getTaskData);
+		   
+		   
+		  
+    
+  }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

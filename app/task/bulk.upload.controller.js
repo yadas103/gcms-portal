@@ -26,7 +26,7 @@
     
       //$scope.localData = $rootScope.currentProfile.localData;
 	  //$scope.watch;
-      
+    
       $scope.uploader = new FileUploader({
         filters: [{
           fn: function(item) {

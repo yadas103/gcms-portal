@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="4.3">
+	<file name="app\FileSaver.js">
+		<error line="121" column="60" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\notification\excel.upload.controller.js">
+		<error line="39" column="26" severity="warning" message="Expected an assignment or function call and instead saw an expression." source="jshint.W030" />
+		<error line="59" column="49" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="61" column="15" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="63" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="69" column="49" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="73" column="19" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="76" column="15" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="78" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="87" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="98" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="113" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="120" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="132" column="63" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="140" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="188" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="189" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="190" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="192" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="197" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="204" column="51" severity="warning" message="Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (keepgoing, $scope, i)" source="jshint.W083" />
+		<error line="259" column="47" severity="warning" message="&apos;spread operator&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="260" column="43" severity="warning" message="&apos;spread operator&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="278" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="287" column="13" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="288" column="13" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="335" column="25" severity="warning" message="&apos;i&apos; is already defined." source="jshint.W004" />
+		<error line="397" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="400" column="45" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="401" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="410" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="417" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="421" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="460" column="21" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="462" column="25" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="463" column="25" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="464" column="25" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="465" column="25" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="536" column="18" severity="warning" message="Unnecessary semicolon." source="jshint.W032" />
+		<error line="537" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="540" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="541" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="542" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="543" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="544" column="13" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="545" column="13" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="546" column="31" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="558" column="31" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="560" column="41" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="581" column="21" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="583" column="21" severity="warning" message="Misleading line break before &apos;+&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="704" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="709" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="714" column="38" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="734" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="740" column="13" severity="warning" message="Misleading line break before &apos;+&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="742" column="13" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="743" column="55" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+	</file>
+	<file name="app\pre-administration\pre-administration.controller.js">
+		<error line="607" column="41" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="615" column="23" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\pre-administration\pre-administration.reviewer.controller.js">
+		<error line="103" column="36" severity="warning" message="Expected an assignment or function call and instead saw an expression." source="jshint.W030" />
+	</file>
+	<file name="app\administration\administration.reviewer.controller.js">
+		<error line="100" column="36" severity="warning" message="Expected an assignment or function call and instead saw an expression." source="jshint.W030" />
+	</file>
+	<file name="app\admin\roles\admin.roles.controller.js">
+		<error line="182" column="35" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+	</file>
+	<file name="app\components\data\components.data.service.logged-user-detail.js">
+		<error line="71" column="31" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+	</file>
+	<file name="app\components\modal\components.modal.directive.js">
+		<error line="126" column="15" severity="warning" message="Unnecessary semicolon." source="jshint.W032" />
+		<error line="127" column="13" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\components\session\components.session.directive.js">
+		<error line="33" column="16" severity="warning" message="Expected an assignment or function call and instead saw an expression." source="jshint.W030" />
+		<error line="76" column="38" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="110" column="88" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="131" column="88" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="145" column="88" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="161" column="90" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="176" column="90" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="190" column="90" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="204" column="90" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\components\session\components.session.service.js">
+		<error line="150" column="42" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="158" column="42" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="288" column="51" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+	</file>
+	<file name="app\filemanager\controllers\filemanager.controller.js">
+		<error line="334" column="68" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="668" column="68" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="929" column="16" severity="warning" message="Unreachable &apos;console&apos; after &apos;return&apos;." source="jshint.W027" />
+		<error line="987" column="47" severity="warning" message="Did you mean to return a conditional instead of an assignment?" source="jshint.W093" />
+	</file>
+	<file name="app\filemanager\directives\upload.directive.js">
+		<error line="80" column="44" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\filemanager\providers\client.js">
+		<error line="204" column="20" severity="warning" message="[&apos;transformRequest&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="436" column="96" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="456" column="91" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="480" column="34" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="547" column="17" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="572" column="19" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="756" column="137" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="770" column="7" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\filemanager\providers\config.js">
+		<error line="51" column="8" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="52" column="7" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+	<file name="app\filemanager\services\filemanager.middleware.js">
+		<error line="270" column="27" severity="warning" message="[&apos;properties&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="276" column="27" severity="warning" message="[&apos;href&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="282" column="29" severity="warning" message="[&apos;properties&apos;] is better written in dot notation." source="jshint.W069" />
+	</file>
+	<file name="app\filemanager\services\filemanager.navigator.js">
+		<error line="87" column="74" severity="warning" message="Expected an assignment or function call and instead saw an expression." source="jshint.W030" />
+		<error line="101" column="21" severity="warning" message="&apos;path&apos; is already defined." source="jshint.W004" />
+		<error line="102" column="72" severity="warning" message="Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (console, self, Item)" source="jshint.W083" />
+		<error line="113" column="20" severity="warning" message="Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (self)" source="jshint.W083" />
+	</file>
+	<file name="app\profile\list\profile.list.controller.js">
+		<error line="707" column="16" severity="warning" message="[&apos;selid&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="708" column="16" severity="warning" message="[&apos;selectedParams&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="709" column="16" severity="warning" message="[&apos;collectingCtry&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="710" column="16" severity="warning" message="[&apos;profileCountry&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="711" column="16" severity="warning" message="[&apos;regionId&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="727" column="40" severity="warning" message="[&apos;validity_start_date&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="728" column="40" severity="warning" message="[&apos;validity_end_date&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="748" column="25" severity="warning" message="&apos;i&apos; is already defined." source="jshint.W004" />
+		<error line="769" column="21" severity="warning" message="&apos;i&apos; is already defined." source="jshint.W004" />
+		<error line="875" column="35" severity="warning" message="[&apos;payercountry&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="876" column="35" severity="warning" message="[&apos;profilecountry&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="877" column="35" severity="warning" message="[&apos;profileType&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="878" column="35" severity="warning" message="[&apos;bpid&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="879" column="35" severity="warning" message="[&apos;tmpl_id&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="880" column="35" severity="warning" message="[&apos;eventname&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="881" column="35" severity="warning" message="[&apos;pocode&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="882" column="35" severity="warning" message="[&apos;acmcode&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="885" column="35" severity="warning" message="[&apos;regionId&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="886" column="35" severity="warning" message="[&apos;tempProfile&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="889" column="35" severity="warning" message="[&apos;consentstartdate&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="890" column="35" severity="warning" message="[&apos;consentenddate&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="891" column="35" severity="warning" message="[&apos;startdate&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="892" column="35" severity="warning" message="[&apos;enddate&apos;] is better written in dot notation." source="jshint.W069" />
+		<error line="895" column="35" severity="warning" message="[&apos;eventEndDate&apos;] is better written in dot notation." source="jshint.W069" />
+	</file>
+	<file name="app\profilereview\identitydetail\identity.controller.js">
+		<error line="224" column="13" severity="warning" message="&apos;currentprofile&apos; is already defined." source="jshint.W004" />
+		<error line="338" column="26" severity="warning" message="Unnecessary semicolon." source="jshint.W032" />
+		<error line="401" column="28" severity="warning" message="Unnecessary semicolon." source="jshint.W032" />
+	</file>
+	<file name="app\components\modal\controllers\modal.default.controller.js">
+		<error line="32" column="82" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="150" column="25" severity="warning" message="Misleading line break before &apos;&amp;&amp;&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="151" column="25" severity="warning" message="Misleading line break before &apos;&amp;&amp;&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="160" column="29" severity="warning" message="Misleading line break before &apos;&amp;&amp;&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="219" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="230" column="13" severity="warning" message="Misleading line break before &apos;+&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="232" column="13" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="233" column="55" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="242" column="57" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="302" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="303" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="304" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="305" column="13" severity="warning" message="&apos;const&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="306" column="31" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="325" column="31" severity="warning" message="&apos;arrow function syntax (=&gt;)&apos; is only available in ES6 (use &apos;esversion: 6&apos;)." source="jshint.W119" />
+		<error line="358" column="21" severity="warning" message="&apos;let&apos; is available in ES6 (use &apos;esversion: 6&apos;) or Mozilla JS extensions (use moz)." source="jshint.W104" />
+		<error line="360" column="21" severity="warning" message="Misleading line break before &apos;+&apos;; readers may interpret this as an expression boundary." source="jshint.W014" />
+		<error line="363" column="54" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="377" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+		<error line="383" column="10" severity="warning" message="Missing semicolon." source="jshint.W033" />
+	</file>
+</checkstyle>

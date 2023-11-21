@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/administration/administration.details.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/administration/administration.details.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">75.33</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">720</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">134.21</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">4.21</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName===&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;UserRoleCtrl&#039;, UserRole);
+
+  UserRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$stateParams&#039;, &#039;$state&#039;, &#039;UserDetail&#039;];
+
+  /**
+   * @ngdoc method
+   * @name UserRole
+   * @methodOf gcms.administration.controller:UserRoleCtrl
+   * @description Constructor for the user role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $stateParams An object that provides controllers or other services with the individual parts of the navigated URL.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserDetail The user detail data service
+   */
+  function UserRole($rootScope, $scope, $stateParams, $state, UserDetail){
+	  console.log(&quot;Inside UserRole===&gt;&gt;&gt;&quot;);
+    var userName = $stateParams.id;
+    console.log(&quot;Inside UserRole:userName==&gt;&gt;&gt;&quot;+userName);
+    var defaultProfile = {};
+    var session = $rootScope.session;
+    $scope.allowDefaultCountryChange = false;
+    $scope.currentProfile = {};
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+    	console.log(&quot;Inside getData===&gt;&gt;&gt;&quot;);
+      return session.collections.role().then(function(roles) {
+    	  console.log(&quot;Inside getData 1===&gt;&gt;&gt;&quot;);
+        $scope.roles = roles;
+        return UserDetail.get({userName: userName}).$promise;
+      }).then(function(user){
+    	  console.log(&quot;Inside getData 2===&gt;&gt;&gt;&quot;);
+        $scope.user = user;
+        defaultProfile = user.userProfiles.find(function(item){ return item.defaultProfileIndicator === true; });
+        return session.user.getCurrentProfile();
+      }).then(function(currentProfile){
+    	  console.log(&quot;Inside getData 3===&gt;&gt;&gt;&quot;);
+        $scope.currentProfile = currentProfile;
+        $scope.allowDefaultCountryChange = currentProfile.countryId === defaultProfile.countryId;
+      });
+    };
+
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name setPrimary
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Sets the primary profile for a user
+     * @param {object} countryId The country identifier
+     */
+    $scope.setPrimary = function(countryId){
+      for (var i in $scope.user.userProfiles){
+        if ($scope.user.userProfiles[i].countryId !== countryId){
+          $scope.user.userProfiles[i].defaultProfileIndicator = false;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name save
+     * @methodOf gcms.administration.controller:UserRoleCtrl
+     * @description Updates the specified user profile
+     */
+    $scope.save = function(item){
+      UserDetail.update({userName: userName}, $scope.user).$promise.then(function(){ $state.go(&#039;admin&#039;); });
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:UserRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/filemanager/providers/client.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/filemanager/providers/client.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">70.25</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">862</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">69.81</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">13.11</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function (angular) {
+  var module = angular.module(&#039;dctmRestClient&#039;, []);
+
+  module.constant(&#039;dctmConstants&#039;, {
+    LOGIN_INFO: {
+      AUTH_HEADER: &#039;authHeader&#039;,
+      BASE_URI: &#039;baseUri&#039;,
+      REPOSITORY: &#039;repository&#039;
+    },
+    HEADERS: {
+      ACCEPT: &#039;Accept&#039;,
+      CONTENT_TYPE: &#039;Content-Type&#039;,
+      AUTHORIZATION: &#039;Authorization&#039;
+    },
+    LINK_RELATIONS: {
+      REPOSITORIES: &#039;http://identifiers.emc.com/linkrel/repositories&#039;,
+      CABINETS: &#039;http://identifiers.emc.com/linkrel/cabinets&#039;,
+      DOCUMENTS: &#039;http://identifiers.emc.com/linkrel/documents&#039;,
+      FOLDERS: &#039;http://identifiers.emc.com/linkrel/folders&#039;,
+      OBJECTS: &#039;http://identifiers.emc.com/linkrel/objects&#039;,
+      PARENT_LINKS: &#039;http://identifiers.emc.com/linkrel/parent-links&#039;,
+      CHECKOUT: &#039;http://identifiers.emc.com/linkrel/checkout&#039;,
+      CANCEL_CHECKOUT: &#039;http://identifiers.emc.com/linkrel/cancel-checkout&#039;,
+      CHECKIN_NEXT_MAJOR: &#039;http://identifiers.emc.com/linkrel/checkin-next-major&#039;,
+      CHECKED_OUT_OBJECTS: &#039;http://identifiers.emc.com/linkrel/checked-out-objects&#039;,
+      OBJECT_ASPECTS: &#039;http://identifiers.emc.com/linkrel/object-aspects&#039;,
+      DELETE: &#039;http://identifiers.emc.com/linkrel/delete&#039;,
+      PRIMARY_CONTENT: &#039;http://identifiers.emc.com/linkrel/primary-content&#039;,
+      CONTENT_MEDIA: &#039;http://identifiers.emc.com/linkrel/content-media&#039;,
+      PERMISSIONS: &#039;http://identifiers.emc.com/linkrel/permissions&#039;,
+      PERMISSION_SET: &#039;http://identifiers.emc.com/linkrel/permission-set&#039;,
+      USERS: &#039;http://identifiers.emc.com/linkrel/users&#039;,
+      GROUPS: &#039;http://identifiers.emc.com/linkrel/groups&#039;,
+      CURRENT_USER: &#039;http://identifiers.emc.com/linkrel/current-user&#039;,
+      DEFAULT_FOLDER: &#039;http://identifiers.emc.com/linkrel/default-folder&#039;,
+      CURRENT_USER_PREFERENCES: &#039;http://identifiers.emc.com/linkrel/current-user-preferences&#039;,
+      TYPES: &#039;http://identifiers.emc.com/linkrel/types&#039;,
+      ASPECT_TYPES: &#039;http://identifiers.emc.com/linkrel/aspect-types&#039;,
+      RELATION_TYPES: &#039;http://identifiers.emc.com/linkrel/relation-types&#039;,
+      FORMATS: &#039;http://identifiers.emc.com/linkrel/formats&#039;,
+      RELATIONS: &#039;http://identifiers.emc.com/linkrel/relations&#039;,
+      NETWORK_LOCATIONS: &#039;http://identifiers.emc.com/linkrel/network-locations&#039;,
+      ASSOCIATIONS: &#039;http://identifiers.emc.com/linkrel/associations&#039;,
+      BATCH_CAPABILITIES: &#039;http://identifiers.emc.com/linkrel/batch-capabilities&#039;,
+      SEARCH: &#039;http://identifiers.emc.com/linkrel/search&#039;,
+      SAVED_SEARCHES: &#039;http://identifiers.emc.com/linkrel/saved-searches&#039;,
+      SEARCH_TEMPLATES: &#039;http://identifiers.emc.com/linkrel/search-templates&#039;,
+      ACLS: &#039;http://identifiers.emc.com/linkrel/acls&#039;,
+      SELF: &#039;self&#039;,
+      EDIT: &#039;edit&#039;,
+      CONTENTS: &#039;contents&#039;,
+      ENCLOSURE: &#039;enclosure&#039;
+    },
+    QUERY_PARAMS: {
+      PAGE: &#039;page&#039;,
+      ITEMS_PER_PAGE: &#039;items-per-page&#039;,
+      INLINE: &#039;inline&#039;,
+      VIEW: &#039;view&#039;,
+      Q: &#039;q&#039;,
+      LOCATIONS: &#039;locations&#039;,
+      DEL_NON_EMPTY: &#039;delete-non-empty&#039;,
+      DEL_VERSION: &#039;delete-version&#039;,
+      DEL_ALL_LINKS: &#039;delete-all-links&#039;,
+      MEDIA_URL_POLICY: &#039;media-url-policy&#039;,
+      PRIMARY: &#039;primary&#039;,
+      OVERWRITE: &#039;overwrite&#039;,
+      FORMAT: &#039;format&#039;,
+      ACCESSOR: &#039;accessor&#039;
+    },
+    MIME: {
+      VND_DCTM_JSON: &#039;application/vnd.emc.documentum+json&#039;,
+      HOME_JSON: &#039;application/home+json&#039;,
+      APP_JSON: &#039;application/json&#039;,
+      ANY_JSON: &#039;application/*+json&#039;,
+      ANY: &#039;*/*&#039;
+    },
+    BASIC_PERMISSIONS: [&#039;None&#039;, &#039;Browse&#039;, &#039;Read&#039;, &#039;Relate&#039;, &#039;Version&#039;, &#039;Write&#039;, &#039;Delete&#039;],
+    EXTEND_PERMISSIONS: [&#039;CHANGE_FOLDER_LINKS&#039;, &#039;CHANGE_LOCATION&#039;, &#039;CHANGE_OWNER&#039;, &#039;CHANGE_PERMIT&#039;, &#039;CHANGE_STATE&#039;, &#039;DELETE_OBJECT&#039;, &#039;EXECUTE_PROC&#039;],
+    REPOSITORY_RESOURCE: &#039;repoResource&#039;,
+    REPOSITORY_LINKS: &#039;repoLinks&#039;,
+    DOC_LINK: &#039;docLink&#039;
+  });
+
+  module.provider(&#039;clientLocalStore&#039;, function (dctmConstants) {
+    this.$get = function () {
+      return new ClientLocalStore();
+    };
+
+    function ClientLocalStore () {
+      var baseUri = localStorage.getItem(dctmConstants.LOGIN_INFO.BASE_URI);
+      var repo = localStorage.getItem(dctmConstants.LOGIN_INFO.REPOSITORY);
+      var authHeader = localStorage.getItem(dctmConstants.LOGIN_INFO.AUTH_HEADER);
+      var repoResource = localStorage.getItem(dctmConstants.REPOSITORY_RESOURCE);
+      if (baseUri &amp;&amp; repo &amp;&amp; authHeader) {
+        this.authenticated = true;
+        this.loginInfo = {
+          baseUri: baseUri,
+          repoName: repo,
+          authHeader: authHeader
+        };
+      }else {
+        this.authenticated = false;
+        this.loginInfo = null;
+      }
+    }
+
+    ClientLocalStore.prototype = {
+      &#039;saveLogin&#039;: function saveLogin (loginInfo, repo, aLinks) {
+        this.loginInfo = loginInfo;
+        localStorage.setItem(dctmConstants.LOGIN_INFO.BASE_URI, loginInfo.baseUri);
+        localStorage.setItem(dctmConstants.LOGIN_INFO.REPOSITORY, loginInfo.repoName);
+        localStorage.setItem(dctmConstants.LOGIN_INFO.AUTH_HEADER, loginInfo.credentialHeader);
+        localStorage.setItem(dctmConstants.REPOSITORY_RESOURCE, JSON.stringify(repo));
+        localStorage.setItem(dctmConstants.REPOSITORY_LINKS, aLinks);
+        this.authenticated = true;
+      },
+      &#039;clearLogin&#039;: function clearLogin () {
+        localStorage.removeItem(dctmConstants.LOGIN_INFO.BASE_URI);
+        localStorage.removeItem(dctmConstants.LOGIN_INFO.REPOSITORY);
+        localStorage.removeItem(dctmConstants.LOGIN_INFO.AUTH_HEADER);
+        localStorage.removeItem(dctmConstants.REPOSITORY_RESOURCE);
+        this.authenticated = false;
+        this.loginInfo = null;
+      },
+      &#039;getCachedRepository&#039;: function getCachedRepository () {
+        var str = localStorage.getItem(dctmConstants.REPOSITORY_RESOURCE);
+        if (str) {
+          return JSON.parse(str);
+        }else {
+          return null;
+        }
+      },
+      &#039;getCachedRepositoryArr&#039;: function getCachedRepositoryArr () {
+          var str = localStorage.getItem(dctmConstants.REPOSITORY_LINKS);
+          if (str) {
+            return str;
+          }else {
+            return null;
+          }
+        },      
+      &#039;getBaseUri&#039;: function getBaseUri () {
+        return localStorage.getItem(dctmConstants.LOGIN_INFO.BASE_URI);
+      },
+      &#039;getCredentialHeader&#039;: function getCredentialHeader () {
+        return localStorage.getItem(dctmConstants.LOGIN_INFO.AUTH_HEADER);
+      }
+    };
+  });
+
+  module.provider(&#039;clientBase&#039;, function (dctmConstants) {
+    this.$get = [&#039;$http&#039;, &#039;$q&#039;, &#039;clientLocalStore&#039;, function ($http, $q, clientLocalStore) {
+      function DCTMRestClientBase ($http, $q) {
+        this.http = function (obj) {
+          if (clientLocalStore.authenticated &amp;&amp; arguments[0]) {
+            var requestObj = arguments[0];
+            if (!requestObj.headers) {
+              requestObj.headers = {};
+            }
+            var headers = requestObj.headers;
+            headers[dctmConstants.HEADERS.AUTHORIZATION] = clientLocalStore.getCredentialHeader();
+          }
+          return $http.apply(null, arguments);
+        };
+        this.q = $q;
+      }
+
+      DCTMRestClientBase.prototype = {
+        &#039;get&#039;: function get (link, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          headers[dctmConstants.HEADERS.ACCEPT] = dctmConstants.MIME.VND_DCTM_JSON;
+          link = appendURLParams(link, arguments);
+          return this.http({method: &#039;GET&#039;,url: link,headers: headers});
+        },
+        &#039;getBinary&#039;: function getBinary (link, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          headers[dctmConstants.HEADERS.ACCEPT] = dctmConstants.MIME.VND_DCTM_JSON;
+          link = appendURLParams(link, arguments);
+          var params = {headers: headers,responseType: &#039;arraybuffer&#039;};
+          return this.http({method: &#039;GET&#039;,url: link,headers: headers,responseType: &#039;arraybuffer&#039;});
+        },
+        &#039;post&#039;: function post (link, data, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          headers[dctmConstants.HEADERS.ACCEPT] = dctmConstants.MIME.VND_DCTM_JSON;
+          headers[dctmConstants.HEADERS.CONTENT_TYPE] = dctmConstants.MIME.VND_DCTM_JSON;
+          link = appendURLParams(link, arguments);
+          var params = {headers: headers,url: link};
+          return this.http({method: &#039;POST&#039;,url: link,headers: headers,data: data});
+        },
+        &#039;postContentfulObj&#039;: function postContentfulObj (link, data, file, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          if (file) {
+            var fd = new FormData();
+            fd.append(&#039;metadata&#039;, new Blob([angular.toJson(data)], {type: dctmConstants.MIME.VND_DCTM_JSON}));
+            fd.append(&#039;content&#039;, file);
+            headers[dctmConstants.HEADERS.CONTENT_TYPE] = undefined;
+            headers[&#039;transformRequest&#039;] = angular.identity;
+            data = fd;
+          }else {
+            headers[dctmConstants.HEADERS.CONTENT_TYPE] = dctmConstants.MIME.VND_DCTM_JSON;
+          }
+          headers[dctmConstants.HEADERS.ACCEPT] = dctmConstants.MIME.VND_DCTM_JSON;
+          var params = {headers: headers,url: link};
+          return this.http({method: &#039;POST&#039;,url: link,headers: headers,data: data});
+        },
+        &#039;postBinary&#039;: function postBinary (link, binary, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          if (!headers[dctmConstants.HEADERS.CONTENT_TYPE]) {
+            headers[dctmConstants.HEADERS.CONTENT_TYPE] = dctmConstants.MIME.HOME_JSON;
+          }
+          var params = {headers: headers,url: link};
+          link = appendURLParams(link, arguments);
+          return this.post(link, binary, params);
+        },
+        &#039;put&#039;: function put (link, data, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          headers[dctmConstants.HEADERS.ACCEPT] = dctmConstants.MIME.VND_DCTM_JSON;
+          headers[dctmConstants.HEADERS.CONTENT_TYPE] = dctmConstants.MIME.VND_DCTM_JSON;
+          var params = {headers: headers,url: link};
+          link = appendURLParams(link, arguments);
+          return this.http({method: &#039;PUT&#039;,url: link,headers: headers,data: data});
+        },
+        &#039;delete&#039;: function dlt (link, headers) {
+          if (!headers) {
+            headers = {};
+          }
+          headers[dctmConstants.HEADERS.CONTENT_TYPE] = dctmConstants.MIME.VND_DCTM_JSON;
+          var params = {headers: headers,url: link};
+          link = appendURLParams(link, arguments);
+          return this.http({method: &#039;DELETE&#039;,url: link,headers: headers});
+        },
+        &#039;getLinkFromResource&#039;: function getLinkFromResourceLinks (resource, rel) {
+          return findLinkInLinksArray(resource.links, rel);
+        },
+        &#039;getSelfLinkOfEntry&#039;: findSelfLinkFromEntry,
+        &#039;getHomeDocument&#039;: function getHomeDocument (baseUri) {
+          var headers = {};
+          headers[dctmConstants.HEADERS.ACCEPT] = dctmConstants.MIME.ANY_JSON;
+          var link = homeDocUri(baseUri);
+          return this.http({method: &#039;GET&#039;,url: link,headers: headers});
+        },
+        &#039;getRepositories&#039;: function getRepositories (services) {
+          var headers = {};
+          if (!services) {
+            throw new Error(&#039;&quot;Services&quot; entry must be provided&#039;);
+          }
+          if (!services.resources) {
+            throw new Error(&#039;Illegal &quot;services&quot; entry&quot;&#039;);
+          }
+          if (!services.resources[dctmConstants.LINK_RELATIONS.REPOSITORIES]) {
+            throw new Error(&#039;No Repositories link in services entry&#039;);
+          }
+          var link = services.resources[dctmConstants.LINK_RELATIONS.REPOSITORIES].href;
+          return this.http({method: &#039;GET&#039;,url: link,headers: headers});
+        },
+        &#039;getRepository&#039;: function getRepository (repos, repoName, headers) {
+          var link = findRepoLinkFromRepos(repos, repoName);
+          return this.get(link, headers);
+        },
+        &#039;getCachedRepository&#039;: function getCachedRepository () {
+          return clientLocalStore.getCachedRepository();
+        },
+        &#039;getCachedRepositoryArr&#039;: function getCachedRepositoryArr () {
+            return clientLocalStore.getCachedRepositoryArr();
+          }
+        
+      };
+
+      return new DCTMRestClientBase($http, $q);
+    }];
+
+    function findRepoLinkFromRepos (repositories, repoName) {
+      var entry = findEntryFromFeedByTitle(repositories, repoName);
+      if (!entry) {
+        throw new Error(&#039;The repository is not found:&#039; + repoName);
+      }
+      return findLinkInLinksArray(entry.links, dctmConstants.LINK_RELATIONS.EDIT);
+    }
+
+    function homeDocUri (baseUri) {
+      var link;
+      if (baseUri) {
+        link = baseUri;
+      }else {
+        link = clientLocalStore.getBaseUri();
+      }
+      if (link.endsWith(&#039;/&#039;)) {
+        return link + &#039;services&#039;;
+      }else {
+        return link + &#039;/services&#039;;
+      }
+    }
+  });
+
+  module.provider(&#039;dctmAuth&#039;, function (dctmConstants) {
+    this.$get = [&#039;clientBase&#039;, &#039;clientLocalStore&#039;, function (clientBase, clientLocalStore) {
+      function DCTMAuthenticationClient () {
+      }
+
+      DCTMAuthenticationClient.prototype = {
+        &#039;login&#039;: function (loginInfo) {
+          var defer = clientBase.q.defer();
+          var promise = defer.promise;
+          var client = clientBase;
+          client.getHomeDocument(loginInfo.baseUri).then(function (resp) {
+            client.getRepositories(resp.data).then(function (resp) {
+              var headers = {};
+              var credentialHeader = basicAuth(loginInfo);
+              headers[dctmConstants.HEADERS.AUTHORIZATION] = credentialHeader;
+              client.getRepository(resp.data, loginInfo.repoName, headers).then(function (resp) {
+                loginInfo.credentialHeader = credentialHeader;
+                var aLinks = resp.data;
+                clientLocalStore.saveLogin(loginInfo, resp.data, aLinks);
+                defer.resolve(resp);
+              }, function (error) {
+                defer.reject(error);
+              });
+            });
+          }, function (error) {
+            defer.reject(error);
+          });
+          return promise;
+        },
+        &#039;authenticated&#039;: function () {
+          return clientLocalStore.authenticated;
+        },
+        &#039;logout&#039;: function () {
+          var defer = clientBase.q.defer();
+          var promise = defer.promise;
+          try {
+            setTimeout(function () {
+              clientLocalStore.clearLogin();
+              defer.resolve(&#039;success&#039;);
+            }, 1);
+          } catch(error) {
+            setTimeout(function () {
+              defer.reject(error);
+            }, 1);
+          }
+          return promise;
+        }
+      };
+      return new DCTMAuthenticationClient();
+    }];
+
+    function basicAuth (loginInfo) {
+      return &#039;Basic &#039; + btoa(loginInfo.username + &#039;:&#039; + loginInfo.password);
+    }
+  });
+
+  module.provider(&#039;dctmClient&#039;, function (dctmConstants) {
+    this.$get = [&#039;clientBase&#039;, &#039;dctmAuth&#039;, function (clientBase, dctmAuth) {
+      function DCTMRestClient (clientBase) {
+        this.clientBase = clientBase;
+      }
+
+      DCTMRestClient.prototype = {
+        &#039;login&#039;: function (loginInfo) {
+          return dctmAuth.login(loginInfo);
+        },              
+        &#039;authenticated&#039;: function () {
+          return dctmAuth.authenticated();
+        },
+        &#039;logout&#039;: function () {
+          return dctmAuth.logout();
+        },
+        &#039;get&#039;: function get (link, headers) {
+          return this.clientBase.get.apply(this.clientBase, arguments);
+        },
+        &#039;getBinary&#039;: function getBinary (link, headers) {
+          return this.clientBase.getBinary.apply(this.clientBase, arguments);
+        },
+        &#039;getLinkFromResource&#039;: function getLinkFromResourceLinks (resource, rel) {
+          return this.clientBase.getLinkFromResource.apply(this.clientBase, arguments);
+        },
+        &#039;getSelfLinkOfEntry&#039;: function (entry) {
+          return this.clientBase.getSelfLinkOfEntry.apply(this.clientBase, arguments);
+        },
+        &#039;post&#039;: function post (link, data, headers) {
+          return this.clientBase.post.apply(this.clientBase, arguments);
+        },
+        &#039;postContentfulObj&#039;: function post (link, data, file, headers) {
+          return this.clientBase.postContentfulObj.apply(this.clientBase, arguments);
+        },
+        &#039;postBinary&#039;: function postBinary (link, binary, headers) {
+          return this.clientBase.postBinary.apply(this.clientBase, arguments);
+        },
+        &#039;put&#039;: function put (link, data, headers) {
+          return this.clientBase.put.apply(this.clientBase, arguments);
+        },
+        &#039;delete&#039;: function dlt (link, headers) {
+          return this.clientBase[&#039;delete&#039;].apply(this.clientBase, arguments);
+        },
+        &#039;getHomeDocument&#039;: function getHomeDocument (baseUri) {
+          return this.clientBase.getHomeDocument.apply(this.clientBase, arguments);
+        },
+        &#039;getRepositories&#039;: function getRepositories (services) {
+          return this.clientBase.getRepositories.apply(this.clientBase, arguments);
+        },
+        &#039;getRepository&#039;: function getRepository (repos, repoName) {
+          return this.clientBase.getRepository.apply(this.clientBase, arguments);
+        },
+        &#039;getCachedRepository&#039;: function getRepository (repos, repoName) {
+          return this.clientBase.getCachedRepository.apply(this.clientBase, arguments);
+        },
+        &#039;getCabinets&#039;: function getCabinets (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.CABINETS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;createCabinet&#039;: function createCabinet (repository, newCabinet) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.CABINETS);
+          link = appendURLParams(link, arguments);
+          return this.post(link, newCabinet);
+        },
+        &#039;createDocument&#039;: function (cabinetOrFolder, data, file) {
+          var link = findLinkInLinksArray(cabinetOrFolder.links, dctmConstants.LINK_RELATIONS.DOCUMENTS);
+          link = appendURLParams(link, arguments);
+          return this.postContentfulObj(link, data, file);
+        },
+        &#039;copy&#039;: function copy (cabinetOrFolder, objToCopy, newProperties) {
+          var link = findLinkInLinksArray(cabinetOrFolder.links, dctmConstants.LINK_RELATIONS.OBJECTS);
+          link = appendURLParams(link, arguments);
+          var objLink = findLinkInLinksArray(objToCopy.links, dctmConstants.LINK_RELATIONS.SELF);
+          return this.post(link, {href: objLink, properties: newProperties, &#039;deep-copy&#039;: true})
+        },
+        &#039;move&#039;: function move (objToMove, sourceFolder, targetFolder) {
+          var client = this;
+          var sourceFolderId = sourceFolder.properties.r_object_id;
+          var targetFolderUrl = findLinkInLinksArray(targetFolder.links, dctmConstants.LINK_RELATIONS.EDIT);
+          if (!targetFolderUrl) {
+            throw new Error(&#039;No permission to move objects to the target folder!&quot;&#039;);
+          }
+          var parentLinksUrl = findLinkInLinksArray(objToMove.links, dctmConstants.LINK_RELATIONS.PARENT_LINKS);
+          var delayed = this.get(parentLinksUrl).then(function (resp) {
+            var parents = resp.data.entries;
+            var parentUrl = null;
+            for (var j = 0; j &lt; parents.length; j++) {
+              if (parents[j].summary == sourceFolderId) {
+                parentUrl = findLinkInLinksArray(parents[j].links, dctmConstants.LINK_RELATIONS.EDIT);
+                break;
+              }
+            }
+            if (!parentUrl) {
+              throw new Error(&#039;The source folder is not a parent of the object to move!&quot;&#039;)
+            }
+            client.put(parentUrl, { href: targetFolderUrl });
+          });
+          return delayed;
+        },
+        &#039;getDocumentByLink&#039;: function getDocumentByLink (cacheDocLink) {      	
+
+        	return this.get(cacheDocLink);
+        },
+        &#039;getPrimaryContentMedia&#039;: function getPrimaryContentMedia (document) {
+            var self = this;
+            var defer = this.clientBase.q.defer();
+            var promise = defer.promise;
+            this.getPrimaryContentMeta(document, dctmConstants.QUERY_PARAMS.MEDIA_URL_POLICY, &#039;local&#039;).then(function (resp) {
+              var contentMeta = resp.data;
+              var contentMediaUrl = findLinkInLinksArray(contentMeta.links, dctmConstants.LINK_RELATIONS.CONTENT_MEDIA);
+              defer.resolve(self.getBinary(contentMediaUrl));
+            });
+            return promise;
+          },
+          &#039;getPrimaryContentMeta&#039;: function getPrimaryContentMeta (document) {
+            var link = findLinkInLinksArray(document.links, dctmConstants.LINK_RELATIONS.PRIMARY_CONTENT);
+            link = appendURLParams(link, arguments);
+            return this.get(link)
+          } ,
+        &#039;setContent&#039;: function setContent (document, binary) {
+          var link = findLinkInLinksArray(document.links, dctmConstants.LINK_RELATIONS.CONTENTS);
+          link = appendURLParams(link, arguments);
+          return this.postBinary(link, binary);
+        },
+        &#039;createFolder&#039;: function (cabinetOrFolder, data) {
+          var link = findLinkInLinksArray(cabinetOrFolder.links, dctmConstants.LINK_RELATIONS.FOLDERS);
+          link = appendURLParams(link, arguments);
+          return this.post(link, data);
+        },
+        &#039;checkOut&#039;: function checkOut (obj) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.CHECKOUT);
+          link = appendURLParams(link, arguments);
+          return this.put(link);
+        },
+        &#039;cancelCheckOut&#039;: function checkOut (obj) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.CANCEL_CHECKOUT);
+          link = appendURLParams(link, arguments);
+          return this[&#039;delete&#039;](link);
+        },
+        &#039;checkIn&#039;: function checkOut (obj, data, file) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.CHECKIN_NEXT_MAJOR);
+          link = appendURLParams(link, arguments);
+          return this.postContentfulObj(link, data, file);
+        },
+        &#039;getChildFolders&#039;: function getChildFolders (cabinetOrFolder) {
+          var link = findLinkInLinksArray(cabinetOrFolder.links, dctmConstants.LINK_RELATIONS.FOLDERS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getChildObjects&#039;: function getChildObjects (cabinetOrFolder) {
+          var link = findLinkInLinksArray(cabinetOrFolder.links, dctmConstants.LINK_RELATIONS.OBJECTS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getChildDocuments&#039;: function getChildDocuments (cabinetOrFolder) {
+          var link = findLinkInLinksArray(cabinetOrFolder.links, dctmConstants.LINK_RELATIONS.DOCUMENTS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getObjectAspects&#039;: function getAspectTypsOfObject (obj) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.OBJECT_ASPECTS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getObjectByPath&#039;: function getObjectByPath (repo, path) {
+          var defer = this.clientBase.q.defer();
+          var promise = defer.promise;
+          if (!path) {
+            throw new Error(&#039;object path must be provided&#039;);
+          }
+          var pathArr = path.split(&#039;/&#039;);
+          var objName = pathArr.pop();
+          var folderPath = pathArr.join(&#039;/&#039;);
+          var dql = &quot;SELECT * FROM dm_sysobject WHERE FOLDER (&#039;&quot; + folderPath + &quot;&#039;) and object_name = &#039;&quot; + objName + &quot;&#039;&quot;;
+          var link = this.getLinkFromResource(repo, dctmConstants.LINK_RELATIONS.SELF);
+          this.get(link, null, &#039;dql&#039;, encodeURIComponent(dql)).then(angular.bind(this, function (resp) {
+            if (!resp.data || !resp.data.entries || resp.data.entries.length == 0) {
+              defer.resolve(null);
+            }else {
+              var obj = resp.data.entries[0];
+              this.get(this.getLinkFromResource(obj.content, dctmConstants.LINK_RELATIONS.SELF), null).then(function (resp) {
+                defer.resolve(resp);
+              }, function (error) {
+                defer.reject(error);
+              })
+            }
+          }), function (error) {
+            defer.reject(error);
+          });
+          return promise;
+        },
+        &#039;getFolderObjectByPath&#039;: function getFolderObjectByPath (repoLink,path) {
+            var defer = this.clientBase.q.defer();
+            var promise = defer.promise;
+            if (!path) {
+              throw new Error(&#039;object path must be provided&#039;);
+            }
+            
+           var dql = &quot;select r_object_id from dm_folder where any r_folder_path = &#039;&quot; + path + &quot;&#039;&quot;;
+
+            this.get(repoLink, null, &#039;dql&#039;, encodeURIComponent(dql)).then(angular.bind(this, function (resp) {
+              if (!resp.data || !resp.data.entries || resp.data.entries.length == 0) {
+                defer.resolve(null);
+              }else {
+                var obj = resp.data.entries[0];
+                this.get(this.getLinkFromResource(obj.content, dctmConstants.LINK_RELATIONS.SELF), null).then(function (resp) {
+                  defer.resolve(resp);
+                }, function (error) {
+                  defer.reject(error);
+                })
+              }
+            }), function (error) {
+              defer.reject(error);
+            });
+            return promise;
+          },
+        &#039;attachAspect&#039;: function attachAspect (obj, aspects) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.OBJECT_ASPECTS);
+          link = appendURLParams(link, arguments);
+          if (!aspects) {
+            aspects = [];
+          }
+          if (typeof (aspects) == &#039;string&#039;) {
+            aspects = [aspects];
+          }
+          var data = {
+            aspects: aspects
+          };
+          return this.post(link, data);
+        },
+        &#039;detachAspect&#039;: function detachAspect (objectAspects, aspect) {
+          var link = findLinkInLinksArray(objectAspects.links, dctmConstants.LINK_RELATIONS.DELETE, aspect);
+          return this[&#039;delete&#039;](link);
+        },
+        &#039;getPermissions&#039;: function getPermissionOfObject (obj) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.PERMISSIONS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getPermissionSet&#039;: function getPermissionSetOfObject (obj) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.PERMISSION_SET);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;setPermissionSet&#039;: function setPermissionSetOfObject (obj, newPermissionSet) {
+          var link = findLinkInLinksArray(obj.links, dctmConstants.LINK_RELATIONS.PERMISSION_SET);
+          link = appendURLParams(link, arguments);
+          return this.put(link, newPermissionSet);
+        },
+        &#039;getUsers&#039;: function getUsers (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.USERS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;createUser&#039;: function createUser (repository, newUser) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.USERS);
+          link = appendURLParams(link, arguments);
+          return this.post(link, newUser);
+        },
+        &#039;getGroups&#039;: function getGroups (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.GROUPS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;createGroup&#039;: function createUser (repository, newGroup) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.GROUPS);
+          link = appendURLParams(link, arguments);
+          return this.post(link, newGroup);
+        },
+        &#039;getUserMembers&#039;: function getUserMembers (group) {
+          var link = findLinkInLinksArray(group.links, dctmConstants.LINK_RELATIONS.USERS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getSubGroups&#039;: function getSubGroups (group) {
+          var link = findLinkInLinksArray(group.links, dctmConstants.LINK_RELATIONS.GROUPS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;addUserMember&#039;: function addUserMember (group, user) {
+          var link = findLinkInLinksArray(group.links, dctmConstants.LINK_RELATIONS.USERS);
+          link = appendURLParams(link, arguments);
+          var userLink = findLinkInLinksArray(user.links, dctmConstants.LINK_RELATIONS.SELF);
+          return this.post(link, {href: userLink});
+        },
+        &#039;addSubGroup&#039;: function addUserMember (group, sub) {
+          var link = findLinkInLinksArray(group.links, dctmConstants.LINK_RELATIONS.GROUPS);
+          link = appendURLParams(link, arguments);
+          var subLink = findLinkInLinksArray(sub.links, dctmConstants.LINK_RELATIONS.SELF);
+          return this.post(link, {href: subLink});
+        },
+        &#039;getCurrentUser&#039;: function getCurrentUser (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.CURRENT_USER);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getUserHome&#039;: function getUserHome (user) {
+          var link = findLinkInLinksArray(user.links, dctmConstants.LINK_RELATIONS.DEFAULT_FOLDER);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getCurrentUserPreferences&#039;: function getCurrentUserPreferences (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.CURRENT_USER_PREFERENCES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;createCurrentUserPreference&#039;: function createCurrentUserPreference (repository, newPref) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.CURRENT_USER_PREFERENCES);
+          link = appendURLParams(link, arguments);
+          return this.post(link, newPref);
+        },
+        &#039;getCheckedoutObjects&#039;: function getCheckedoutObjects (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.CHECKED_OUT_OBJECTS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getTypes&#039;: function getTypes (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.TYPES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getFormats&#039;: function getFormats (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.FORMATS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getNetworkLocations&#039;: function getNetworkLocations (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.NETWORK_LOCATIONS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getRelations&#039;: function getRelations (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.RELATIONS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getRelationTypes&#039;: function getRelationTypes (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.RELATION_TYPES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+
+        &#039;getAspectTypes&#039;: function getAspectTypes (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.ASPECT_TYPES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getACLs&#039;: function getACLs (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.ACLS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getAssociations&#039;: function getAssociations (acl) {
+          var link = findLinkInLinksArray(acl.links, dctmConstants.LINK_RELATIONS.ASSOCIATIONS);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getBatchCapabilities&#039;: function getBatchCapabilities (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.BATCH_CAPABILITIES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getSavedSearches&#039;: function getSavedSearches (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.SAVED_SEARCHES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getSearchTemplates&#039;: function getSearchTemplates (repository) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.SEARCH_TEMPLATES);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;getItemFromFeedEntry&#039;: function getItemFromFeedEntry (entry) {
+          var link = findSelfLinkFromEntry(entry);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        },
+        &#039;createItem&#039;: function createItem (resource, newItem) {
+          var link = findLinkInLinksArray(resource.links, dctmConstants.LINK_RELATIONS.SELF);
+          link = appendURLParams(link, arguments);
+          return this.post(link, newItem);
+        },
+        &#039;updateItem&#039;: function updateItem (resource, newItem) {
+          var link = findLinkInLinksArray(resource.links, dctmConstants.LINK_RELATIONS.EDIT);
+          if (!link) {
+            throw Error(&#039;No permission to edit resource &quot;&#039; + findLinkInLinksArray(resource, dctmConstants.LINK_RELATIONS.SELF) + &#039;&quot;.&#039;);
+          }
+          link = appendURLParams(link, arguments);
+          return this.post(link, newItem);
+        },
+        &#039;deleteItem&#039;: function deleteItem (resource) {
+          var link = findLinkInLinksArray(resource.links, dctmConstants.LINK_RELATIONS.DELETE);
+          if (!link) {
+            throw Error(&#039;No permission to delete resource &quot;&#039; + findLinkInLinksArray(resource, dctmConstants.LINK_RELATIONS.SELF) + &#039;&quot;.&#039;)
+          }
+          link = appendURLParams(link, arguments);
+          return this[&#039;delete&#039;](link);
+        },
+        &#039;simpleSearch&#039;: function simpleSearch (repository, q) {
+          var link = findLinkInLinksArray(repository.links, dctmConstants.LINK_RELATIONS.SEARCH);
+          link = appendURLParams(link, [dctmConstants.QUERY_PARAMS.Q, q]);
+          link = appendURLParams(link, arguments);
+          return this.get(link);
+        }
+      };
+
+      return new DCTMRestClient(clientBase);
+    }]
+  });
+
+  function findEntryFromFeedByTitle (feed, title) {
+    var entries = feed.entries;
+    if (!entries) {
+      return null;
+    }
+    for (var i = 0; i &lt; entries.length; i++) {
+      var entry = entries[i];
+      if (entry.title == title) {
+        return entry;
+      }
+    }
+    return null;
+  }
+
+  function findSelfLinkFromEntry (entry) {
+    if (isLineEntry(entry)) {
+      return findLinkInLinksArray(entry.content.links, dctmConstants.LINK_RELATIONS.SELF);
+    }else {
+      return entry.content.src;
+    }
+  }
+
+  function isLineEntry (entry) {
+    if (!entry) {
+      return false;
+    }
+    if (!entry.content) {
+      return false;
+    }
+    if (entry.content.src) {
+      return false;
+    }
+    return true;
+  }
+
+  function appendURLParams (link, args) {
+    var from = args.callee ? args.callee.length : 0;
+    if (args.length &lt; from) {
+      return link;
+    }
+    if (link.indexOf(&#039;?&#039;) &gt; 0) {
+      link = link + &#039;&amp;&#039;;
+    }else {
+      link = link + &#039;?&#039;;
+    }
+    for (var i = from; i &lt; args.length - 1; i = i + 2) {
+      var paramName = args[i];
+      var paramValue = args[i + 1];
+      link = link + paramName + &#039;=&#039; + paramValue + &#039;&amp;&#039;;
+    }
+
+    return link.substring(0, link.length - 1);
+  }
+
+  function findLinkInLinksArray (array, rel, title) {
+    if (!(array instanceof Array)) {
+      throw new Error(&#039;Illegal links&#039;);
+    }
+    if (!rel) {
+      throw new Error(&#039;rel must be provided&#039;);
+    }
+
+    var found = null;
+    for (var i = 0; i &lt; array.length; i++) {
+      var link = array[i];
+      if (link.rel == rel) {
+        if (title) {
+          if (link.title == title) {
+            found = link;
+            break;
+          }
+        }else {
+          found = link;
+          break;
+        }
+      }
+    }
+    if (found == null) {
+      return null;
+    }
+    var uri = found.href;
+    if (uri == null) {
+      uri = found.hreftemplate;
+      if (uri &amp;&amp; uri.indexOf(&#039;{&#039;) &gt; 0) {
+        uri = uri.substring(0, uri.indexOf(&#039;{&#039;));
+      }
+    }
+    return uri;
+  }
+})(angular);</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

@@ -16,7 +16,8 @@
   angular
     .module('gcms.components.modal', [
       'ui.bootstrap',
-      'gcms.components.data'
+      'gcms.components.data',
+      'smart-table'
     ]);
 
 })();

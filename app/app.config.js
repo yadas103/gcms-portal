@@ -42,7 +42,7 @@
       })	  
       .state('landing', {
           	resolve: {},             
-              url: '/',    
+              url: '/', 
               templateUrl: 'app/profile/search/profile.search.html',
               controller: 'ProfileListCtrl',
               data: {
@@ -50,6 +50,8 @@
                 action: 'browse'
               }
       })
+      
+      
       .state('profile-results', {
         resolve: {},
         url: '/profile-results/?:criteria',
@@ -107,6 +109,26 @@
           action: 'browse'
         }
       })
+    /*  pre-notification tab*/
+      .state('notification', {
+        resolve: {},
+        url: '/pre-notification',
+        controller: 'ExcelCtrl',
+        templateUrl: 'app/notification/notification.html',
+      
+     
+      })
+    
+          /*  pre-administration tab*/
+      .state('pre-administration', {
+        resolve: {},
+        url: '/pre-administration',
+        controller: 'PreAdminCtrl',
+        templateUrl: 'app/pre-administration/pre-administration.html',
+      })
+      
+      
+      
       .state('timeout', {
     	resolve: {},
         url: '/',

@@ -93,6 +93,7 @@
         		  };
         		})
        .directive('pageSelect', [function() {
+    	   console.log("pageSelect");
     	   return {
     		restrict: 'E',
     		

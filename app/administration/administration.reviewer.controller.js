@@ -46,9 +46,7 @@
 			 if(item.cntryReviewer.endsWith(';')){
 				 item.cntryReviewer = item.cntryReviewer.substr(0, item.cntryReviewer.length - 1);
 		    	}else{
-		    		// item.cntryReviewer=item.cntryReviewer+";"
-		    		// item.cntryReviewer = item.cntryReviewer.substr(0,
-					// item.cntryReviewer.length - 1);
+		    		
 		    	}			  	
 		    	$scope.array = item.cntryReviewer.split(';');	
 		    	$scope.array = String.prototype.toUpperCase.apply($scope.array).split(",");
@@ -73,7 +71,6 @@
 		    	    	$scope.error="Please verify reviewer(ID),which is provided "+user;
 		    	    }else{
 		    	    	$scope.countgg=$scope.countgg+1;
-		    	    	// console.log("success"+user);
 		    	    }
 		    	});
 		    	if($scope.array.length===$scope.countuser-1){
@@ -116,7 +113,6 @@
 			      	          theme: 'bootstrap'
 			      	        });	
 		       		  });
-		    		// console.log("Update");
 	    	    }
 		    	
 		    	

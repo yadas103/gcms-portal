@@ -40,6 +40,9 @@
 	  'gcms.task',
 	  'gcms.administration',
 	  'gcms.help',
+	  'gcms.notification',
+	 
+	  'gcms.pre-administration',
 	  'gcms.consentmgmt',
 	  'ngJsonExportExcel',
 	  'dctmNgFileManager',

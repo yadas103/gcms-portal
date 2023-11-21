@@ -1,6 +1,5 @@
 <div class="panel panel-primary table-responsive">
 	<div class="panel-heading">{{('Manage Countries and Templates' | gTranslate:translationData:'MNG_CNTRY_TMPL')}}</div>
-
 	<div class="panel-body">
 
 <!-- <div ng-include="'app/filemanager/templates' + '/modals.html'"></div> -->
@@ -227,7 +226,7 @@
 						<th>{{('Username' | gTranslate:translationData:'USR_NM')}}</th>
 						<th>{{('Country' | gTranslate:translationData:'CNTRY')}}</th>
 						
-						<th ng-repeat="role in roles">
+						<th ng-repeat="role in roles" ng-hide="role.roleName == 'Pre-Notification Admin' || role.roleName == 'Pre-Notification User'">
 						<gcms-modal template="admin.role.detail.html" controller="ModalDefaultCtrl" content="role" ok="detailOk" alt="Role Details" ><span style="background-color: #337ab7; color: white !important">{{role.roleName}}</span></gcms-modal>
 						</th>
 					</tr>
@@ -239,7 +238,7 @@
 						<th><input st-search="countryISOCode" placeholder=" " class="form-control"
 							type="search" /></th>
 						
-						<th ng-repeat="role in roles"></th>
+						<th ng-repeat="role in roles" ng-hide="role.roleName == 'Pre-Notification Admin' || role.roleName == 'Pre-Notification User'"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -255,7 +254,7 @@
 						
 		  <td>{{profile.userName}}</td>
           <td>{{profile.countryISOCode}}</td>
-		  <td ng-repeat="role in roles"><i ng-show="profile.roleId === role.id" class="fa fa-check"></i></td>
+		  <td ng-repeat="role in roles" ng-hide="role.roleName == 'Pre-Notification Admin' || role.roleName == 'Pre-Notification User'"><i ng-show="profile.roleId === role.id" class="fa fa-check"></i></td>
 										
 					</tr>
 				</tbody>

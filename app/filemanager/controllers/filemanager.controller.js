@@ -2,8 +2,8 @@
   'use strict';
   angular.module('dctmNgFileManager')
     .controller('FileManagerController', [
-      '$scope', '$rootScope', '$window', '$translate','fileManagerConfig','item', 'permit','Templates','Task','toasty', 'fileNavigator', 'apiMiddleware', 'dctmClient', 'dctmConstants',
-      function ($scope, $rootScope, $window, $translate,fileManagerConfig, Item, Permit,Templates, Task ,toasty,FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
+      '$scope', '$rootScope', '$window', '$translate','fileManagerConfig','item', 'permit','Templates','PreTemplates','Task','toasty', 'fileNavigator', 'apiMiddleware', 'dctmClient', 'dctmConstants',
+      function ($scope, $rootScope, $window, $translate,fileManagerConfig, Item, Permit,Templates,PreTemplates, Task ,toasty,FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
         var $storage = $window.localStorage;
         $scope.config = fileManagerConfig;
         $scope.reverse = false;
@@ -40,7 +40,6 @@
           $scope.apiMiddleware.logout();
           $scope.modal('signout', true);
         };
-        
 
         $scope.uploadFiles = function (item) {
         	console.log("uploadFiles");
@@ -68,7 +67,7 @@
 	             
 	                if($scope.item.consannexid== undefined ){
 	                	
-	                	if($scope.uploadFileList[0].name.includes('.doc')){	                		
+	                	if($scope.uploadFileList[0].name.includes('.doc')){	
 	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
 	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
 	        		            $scope.modal('uploadfile', true);
@@ -150,7 +149,7 @@
 	        		            		}else{
 	        		            			toasty.error({
 	  	        		          	          title: 'Error',
-	  	        		          	          msg: 'Internal server Error! Failed to update database ',
+	  	        		          	          msg: 'Internal server Error! Failed to update database 1 ',
 	  	        		          	          showClose: true,
 	  	        		          	          clickToClose: true,
 	  	        		          	          timeout: 6000,
@@ -164,7 +163,7 @@
 	        		 		      }).catch(function(){
 	        		 		    	 toasty.error({
 	        		          	          title: 'Error',
-	        		          	          msg: 'Internal server Error! Failed to update database ',
+	        		          	          msg: 'Internal server Error! Failed to update database 2',
 	        		          	          showClose: true,
 	        		          	          clickToClose: true,
 	        		          	          timeout: 6000,
@@ -174,7 +173,9 @@
 	        		          	          theme: 'bootstrap'
 	        		          	        });
 	        		     		    	
-	        		       		      });        		                   		            
+	        		       		      });   
+	        		         
+	        		            
 	        		          }, function (resp) {
 	        		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
 	        		            $scope.apiMiddleware.error = errorMsg;
@@ -282,7 +283,7 @@
 	        		            		}else{
 	        		            			toasty.error({
 	  	        		          	          title: 'Error',
-	  	        		          	          msg: 'Internal server Error! Failed to update database ',
+	  	        		          	          msg: 'Internal server Error! Failed to update database 3',
 	  	        		          	          showClose: true,
 	  	        		          	          clickToClose: true,
 	  	        		          	          timeout: 6000,
@@ -296,7 +297,7 @@
 	        		 		      }).catch(function(){
 	        		 		    	 toasty.error({
 	        		          	          title: 'Error',
-	        		          	          msg: 'Internal server Error! Failed to update database ',
+	        		          	          msg: 'Internal server Error! Failed to update database 4',
 	        		          	          showClose: true,
 	        		          	          clickToClose: true,
 	        		          	          timeout: 6000,
@@ -368,6 +369,343 @@
         	
         
         };
+        
+        /*preTemplate start*/
+        $scope.uploadHtmlFiles = function (item) {
+        	if($scope.uploadFileList[0].name.toLowerCase().includes(item.cntry_id.isoCode.toLowerCase())){
+        	console.log("uploadHtmlFiles");
+        	delete item.startDate;
+	        delete item.endDate;
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: atob(result.password),
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+            	 	$scope.warning='';
+     				$scope.error='';
+     				$scope.success='';
+	                $scope.fileNavigator.refresh();
+	                $scope.modal('signin', true);
+	             
+	                var repoLink=loginInfo.baseUri+'/repositories/'+loginInfo.repoName;
+	                var path =loginInfo.folderPath;
+	             
+	                if($scope.item.consannexid== undefined ){
+	                	
+	                	if(($scope.uploadFileList[0].name.includes('.html'))){ 
+	                		if(($scope.uploadFileList[0].name.includes('intro'))){
+                                $scope.item.tmpl_type = "intro";
+                            }
+                            else if(($scope.uploadFileList[0].name.includes('tov'))){
+                                $scope.item.tmpl_type = "tov";
+                            }
+	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+	        		            $scope.modal('uploadfile', true);
+	        		            var link =respn.data.links[0];
+	        		            var docLink = link.href;		            	        		            
+	        		            console.log("Function calling from Template module") ;
+	        		            $scope.item.tmpl_location=docLink;	        		         
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
+	     		 		       }
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,'DD-MM-YYYY');
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
+	     		 		       }
+	     		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+	     		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());	     		       	   	     			          
+	     		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
+	     		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
+	     		            	delete item.validity_start;
+	     				        delete item.validity_end;
+	     				        delete item.startDate;
+	     				        delete item.endDate;	
+	     				       if(item.validity_start_date  == "Invalid date" || item.validity_start_date  == undefined ){
+	     			        	   delete item.validity_start_date ;
+	     			           }	     			           
+	     			           if(item.validity_end_date == "Invalid date" || item.validity_end_date == undefined){
+	     			        	   delete item.validity_end_date;
+	     			           }
+	        		            PreTemplates.update({ id:item.id },item).$promise.then(function(response){
+	        		            	if(response.validity_start_date != null && response.validity_end_date != null ){
+		        		            	  item.startDate = moment(response.validity_start_date,'YYYY-MM-DD');
+		        			        	  item.endDate = moment(response.validity_end_date,'YYYY-MM-DD')  ;
+		        			        	  item.startDate = moment.tz(item.startDate,moment.tz.guess());   			
+		        			              item.endDate = moment.tz(item.endDate,moment.tz.guess());	
+		        			              item.startDate = moment(item.startDate,'YYYY-MM-DD').format('DD-MM-YYYY');
+		        			        	  item.endDate = moment(item.endDate,'YYYY-MM-DD').format('DD-MM-YYYY');
+		        			        	  }		  
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: 'Success',
+	        			           	        msg: 'Template Uploaded Successfully!',
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: 'bootstrap'
+	        			           	      });
+	        		            		
+	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: 'Error',
+	  	        		          	          msg: 'Internal server Error! Failed to update database',
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: 'bootstrap'
+	  	        		          	        });
+	        		            		
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: 'Error',
+	        		          	          msg: 'Internal server Error! Failed to update database',
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: 'bootstrap'
+	        		          	        });
+	        		     		    	
+	        		       		      });   
+	        		         
+	        		            
+	        		          }, function (resp) {
+	        		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+	        		            $scope.apiMiddleware.error = errorMsg;
+	        		            toasty.error({
+	          	          	          title: 'Repository Error',
+	          	          	          msg: 'Template  not able to upload ! ',
+	          	          	          showClose: true,
+	          	          	          clickToClose: true,
+	          	          	          timeout: 6000,
+	          	          	          sound: false,
+	          	          	          html: false,
+	          	          	          shake: false,
+	          	          	          theme: 'bootstrap'
+	          	          	        });
+	        		            
+	        		          });	
+	        	                }, function (resp) {
+	        	                  self.apiMiddleware.parseError(resp.data);
+	        	                });
+	                		
+	                	}else{
+	                		$scope.error="Template should be .html type";
+	                		console.log("File type should be html type");
+	                	}
+	                	
+	                }else{
+	                	
+                		if($scope.uploadFileList[0].name.includes('.pdf')){
+                			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+            		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+            		            $scope.modal('uploadfile', true);
+            		            var link =respn.data.links[0];
+            		            var docLink = link.href;		            
+            		            console.log("Function calling from Task module");
+            		            $scope.item.consannexid.annnexlocation=docLink; 
+            		            
+            		            
+            		            
+            		            if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+            		            	item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,'DD-MM-YYYY');
+ 	     		 		       }
+ 	     		 	           if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,'DD-MM-YYYY');
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,'DD-MM-YYYY');
+ 	     		 		       }
+ 	     		            	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+ 	     		            	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+ 	     		            	item.consannexid.startdate = moment(item.consannexid.consentstart).format('YYYY-MM-DD');   			
+ 	     		            	item.consannexid.enddate = moment(item.consannexid.consentend).format('YYYY-MM-DD');
+ 	     		            	delete item.consannexid.consentstart;
+ 	     				        delete item.consannexid.consentend;
+ 	     				        delete item.consannexid.startdate;
+ 	     				        delete item.consannexid.enddate;	
+ 	     				       if(item.consannexid.startdate  == "Invalid date" || item.consannexid.startdate  == undefined ){
+ 	     			        	   delete item.consannexid.startdate ;
+ 	     			           }	     			           
+ 	     			           if(item.consannexid.enddate == "Invalid date" || item.consannexid.enddate == undefined){
+ 	     			        	   delete item.consannexid.enddate;
+ 	     			           }
+          
+            		            Task.update({ id:item.id },item).$promise.then(function(response){
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: 'Success',
+	        			           	        msg: 'File Uploaded Successfully!',
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: 'bootstrap'
+	        			           	      });
+	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: 'Error',
+	  	        		          	          msg: 'Internal server Error! Failed to update database',
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: 'bootstrap'
+	  	        		          	        });
+	        		            		
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: 'Error',
+	        		          	          msg: 'Internal server Error! Failed to update database',
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: 'bootstrap'
+	        		          	        });
+	        		     		    	
+	        		       		      });           		            
+            		            
+            		          }, function (resp) {
+            		            var errorMsg = resp.data && resp.data.error || $translate.instant('error_uploading_files');
+            		            $scope.apiMiddleware.error = errorMsg;
+            		            toasty.error({
+          	          	          title: 'Repository Error',
+          	          	          msg: 'File is not able to upload ! ',
+          	          	          showClose: true,
+          	          	          clickToClose: true,
+          	          	          timeout: 6000,
+          	          	          sound: false,
+          	          	          html: false,
+          	          	          shake: false,
+          	          	          theme: 'bootstrap'
+          	          	        });
+            		       
+            		          });	
+            	                }, function (resp) {
+            	                  self.apiMiddleware.parseError(resp.data);
+            	                });
+                		
+                	     }else{
+                	    	 $scope.error="File should be .pdf type";
+                	    	 console.log("File should be pdf type")
+                	}
+                	
+                }	
+             	}, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                     toasty.error({
+            	          title: 'Error',
+            	          msg: 'Repository Login error ! Uploading Failed',
+            	          showClose: true,
+            	          clickToClose: true,
+            	          timeout: 6000,
+            	          sound: false,
+            	          html: false,
+            	          shake: false,
+            	          theme: 'bootstrap'
+            	        });
+                     
+                   });
+         	 
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+      	          title: 'Error',
+      	          msg: 'Not able to read Configuration file! Uploading failed',
+      	          showClose: true,
+      	          clickToClose: true,
+      	          timeout: 6000,
+      	          sound: false,
+      	          html: false,
+      	          shake: false,
+      	          theme: 'bootstrap'
+      	        });                
+               
+            });
+        	}else{
+        		$scope.error="Invalid template, country code does not match";
+        	}	
+        
+        };
+        /*preTemplate end*/
         
         $scope.uploadFilesR = function () {
         	console.log("uploadFilesR");

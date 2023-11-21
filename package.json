@@ -60,5 +60,8 @@
     "test-single-run": "karma start karma.conf.js  --single-run",
     "test": "karma start karma.conf.js",
     "start": "http-server -a 0.0.0.0 -p 8000"
+  },
+  "dependencies": {
+    "angular-ui-sortable": "^0.19.0"
   }
 }

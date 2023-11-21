@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/components/session/components.session.service.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/components/session/components.session.service.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">73.50</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">718</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">36.30</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">4.02</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc service
+ * @name gcms.components.session.service:session
+ *
+ * @description
+ * This service provides session data to the application.
+ *
+ * ```js
+ * function myCtrl($rootScope, $scope) {
+ *   $scope.token = $rootScope.session.user.token;
+ *   ...
+ * }
+ *```
+ */
+
+(function() {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.components.session&#039;)
+    .factory(&#039;session&#039;, session);
+
+	console.log(&#039;Here in user-detail***1....&#039;);
+	
+  session.$inject = [&#039;$rootScope&#039;,&#039;$q&#039;, &#039;LoggedUserDetail&#039;, &#039;Country&#039;, &#039;Role&#039;, &#039;Lov&#039;, &#039;UIConfig&#039;, &#039;tmhDynamicLocale&#039;, &#039;localeMapper&#039;, &#039;CONFIG&#039;, &#039;Language&#039;, &#039;LocalText&#039;];
+
+  console.log(&#039;Here in user-detail***2....&#039;);
+  /**
+   * @ngdoc method
+   * @name session
+   * @methodOf gcms.components.session.service:session
+   * @description Constructor for the session service
+   * @param {object} $rootScope An execution context providing separation between the model and the view
+   * @param {object} $q A service that helps you run functions asynchronously, and use their return values (or exceptions) when they are done processing.
+   * @param {object} LoggedUserDetail Represents a logged user detail data service
+   * @param {object} Country Represents a country data service
+   * @param {object} Role Represents a role data service
+   * @param {object} Lov Represents a lov data service
+   * @param {object} UIConfig Represents a ui config data service
+   * @param {object} tmhDynamicLocale The dynamic locale service that will be used to switch locales at runtime and to dynamically load in locale files
+   * @param {object} localeMapper The locale mapper data service
+   * @param {object} CONFIG The configuration constants for the application
+   * @returns {object} The session service
+   */
+  function session($rootScope, $q, LoggedUserDetail, Country, Role, Lov, UIConfig, tmhDynamicLocale, localeMapper, CONFIG, Language, LocalText) {
+	  
+	  console.log(&#039;Here in user-detail***3....&#039;);
+    // private variables
+    var promises = {};
+    var localizableLovs = {};
+    var lovs = {};
+    var userName = null;
+    var userDetailPromise = null;
+    var currentProfile = null;
+    //var languages = null;
+    //var currentLanguage = null;
+
+    /**
+     * @ngdoc method
+     * @name resetLocalizableCache
+     * @methodOf gcms.components.session.service:session
+     * @description Resets all cached values that depend on county to null, used for locale changes
+     */
+    var resetLocalizableCache = function(){
+      localizableLovs = {};
+    };
+
+    /**
+     * @ngdoc method
+     * @name getProfiles
+     * @methodOf gcms.components.session.service:session
+     * @description Gets profiles for a user (all countries)
+     * @returns {object} A promise resolving to an array
+     */
+    var getCurrentUser = function () {
+      console.log(&#039;Here in user-detail***getCurrentUser....1&#039;);
+      console.log(&#039;Here in user-detail***getCurrentUser....&#039; + userDetailPromise);
+      if (!userDetailPromise) {
+        console.log(&#039;Here in user-detail***getCurrentUser....2&#039;);
+        userDetailPromise = LoggedUserDetail.query().$promise;
+      }
+      console.log(&#039;Here in user-detail***getCurrentUser....3&#039;);
+      return userDetailPromise.then(function (result) {
+        console.log(&#039;Here in user-detail***getCurrentUser....4&#039;);
+        if (result) {
+          // faild to get user details
+          userName = result.userName;
+        }
+        userDetailPromise = null;
+
+        return result;
+      })
+      .catch(function(error){
+		  console.log(&#039;Here in user-detail***getCurrentUser....ERROR&#039;);
+        // console.log(&#039;Current User ID Error&#039;, error);
+        if(error.status === 0 &amp;&amp; error.statusText === &#039;&#039;){
+          window.location.assign(&#039;/&#039;);
+          window.location.reload(true);
+        }
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getUserId
+     * @methodOf gcms.components.session.service:session
+     * @description Gets profile id for a user
+     * @returns {object} A promise resolving to a number
+     */
+    var getUserId = function() {
+		console.log(&#039;Here in user-detail***4....&#039;);
+      return getCurrentUser().then(function(profile) {
+        return profile.id;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getFullName
+     * @methodOf gcms.components.session.service:session
+     * @description Gets full name for a user
+     * @returns {object} A promise resolving to a string
+     */
+    var getFullName = function() {
+      return getCurrentUser().then(function(profile) {
+        if(!profile) {
+          return &#039;Anonymous User&#039;;
+        }
+        var firstName = profile.firstName || &#039;Unknown&#039;;
+        var lastName = profile.lastName || &#039;Unknown&#039;;
+        return firstName + &#039; &#039; + lastName;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getPrimaryProfile
+     * @methodOf gcms.components.session.service:session
+     * @description Gets primary profile for a user
+     * @returns {object} A promise resolving to a profile object
+     */
+    var getPrimaryProfile = function() {
+      return getCurrentUser().then(function(user){
+		  console.log(&#039;Here in user-detail***UP5....&#039;+user);
+        var primaryProfile = null;
+        if(localStorage.getItem(&quot;currentProfile&quot;) != null &amp;&amp; localStorage.getItem(&quot;currentProfile&quot;) != undefined){
+          angular.forEach(user.userProfiles, function(profile){
+            if (profile.roleId === JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).roleId &amp;&amp; profile.countryId == JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).countryId){
+              primaryProfile = profile;
+              console.log(primaryProfile)
+            }
+          }); 
+        }
+        else{
+          angular.forEach(user.userProfiles, function(profile){
+            if (profile.defaultProfileIndicator === true){
+              primaryProfile = profile;
+              console.log(primaryProfile)
+            }
+          }); 
+        }
+                
+        return primaryProfile;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getCurrentProfile
+     * @methodOf gcms.components.session.service:session
+     * @description Gets current profile for a user
+     * @returns {object} A promise resolving to a profile object
+     */
+    var getCurrentProfile = function() {
+      console.log(&#039;Here in user-detail***UP1....&#039;);
+      // console.log(&#039;Here in user-detail***UP2....&#039;+currentProfile);
+      if (currentProfile) {
+        console.log(&quot;current profile..&quot;, JSON.stringify(currentProfile));
+        return $q.when(currentProfile);
+
+      }
+
+      console.log(&#039;Here in user-detail***UP10....&#039;);
+      // console.log(&#039;Here in user-detail***UP20....&#039;+getPrimaryProfile());
+
+      return getPrimaryProfile().then(function (profile) {
+        console.log(&#039;Here in user-detail***UP3....&#039; + JSON.stringify(profile));
+        return profile;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name setProfile
+     * @methodOf gcms.components.session.service:session
+     * @description Sets profile for a user
+     * @param {Number} id The profile id for the profile to be set
+     * @returns {object} A profile object
+     */
+    var setProfile = function(profile){
+		console.log(&#039;Here in user-detail***UP4....&#039;+JSON.stringify(profile));
+		getAllLanguages(profile.countryId);
+
+      setLocale(profile.countryId);
+      resetLocalizableCache();
+      $rootScope.currentProfile = profile;
+      currentProfile = profile;
+      if(currentProfile.roleId == 5){
+        $rootScope.profileReviewTabShow = true;
+        $rootScope.homeTabHide = true;
+        $rootScope.notificationTabShow = false;
+        $rootScope.preAdminTabShow = false;
+        $rootScope.manageTabShow = true;
+        $rootScope.adminTabShow = true;
+      }
+      else if(currentProfile.roleId == 6){
+        $rootScope.profileReviewTabShow = false;
+        $rootScope.manageTabShow = false;
+        $rootScope.adminTabShow = false;
+        $rootScope.homeTabHide = false;
+        $rootScope.notificationTabShow = true;
+        $rootScope.preAdminTabShow = true;
+      }
+      else if(currentProfile.roleId == 7){
+        $rootScope.profileReviewTabShow = false;
+        $rootScope.manageTabShow = false;
+        $rootScope.adminTabShow = false;
+        $rootScope.homeTabHide = false;
+        $rootScope.notificationTabShow = true;
+        $rootScope.preAdminTabShow = false;
+      }
+      return profile;
+    };
+    
+    /**
+     * @ngdoc method
+     * @name getLocalText(language)
+     * @methodOf gcms.components.session.service:session
+     * @description Sets profile for a user
+     * @param {Number} id The profile id for the profile to be set
+     * @returns {object} A profile object
+     */
+  /*  var getLocalText = function(){
+		console.log(&#039;Here in local-***UPL....&#039;);
+      
+      resetLocalizableCache();
+      $rootScope.currentProfile = profile;
+      currentProfile = profile;
+      return profile;
+    };*/
+
+    /**
+     * @ngdoc method
+     * @name setLocale
+     * @methodOf gcms.components.session.service:session
+     * @description Sets locale
+     * @param {Number} id The country id for the locale
+     * @returns {object} A promise resolving to a locale object
+     */
+    var setLocale = function(countryId){
+      return getCountry(countryId).then(function(country){
+        var selectedLocale = CONFIG.locale.find(function(locale){
+          return country.isoCode.toUpperCase() === locale.isoCode.toUpperCase();
+        });
+        if (!selectedLocale){
+          selectedLocale = {
+            isoCode: country.isoCode.toLowerCase(),
+            locale: country.isoCode.toLowerCase()
+          };
+          CONFIG.locale.push(selectedLocale);
+        }
+        tmhDynamicLocale.set(selectedLocale.locale);
+        localizableLovs = [];
+        return selectedLocale;
+      });
+    };
+    
+    var getAllLanguages = function(countryId){
+    	Language.query({id : countryId}).$promise.then(loadLanguages);
+    };
+    
+    var loadLanguages = function(languages){
+    	//console.log(&quot;curnt profile: &quot;+JSON.stringify($rootScope.currentProfile));
+    	$rootScope.currentProfile.languages = languages;
+    	$rootScope.languages = languages;
+    	//console.log(&quot;curnt profile: &quot;+JSON.stringify($rootScope.currentProfile));
+    	//var arr = languages.filter(d =&gt; d.default === &#039;Y&#039;);
+    	var defaultLanguage = (languages.filter(d =&gt; d.default === &#039;Y&#039;))[0];
+
+    	$rootScope.currentProfile.defaultLanguage = defaultLanguage;
+    	setLanguage(defaultLanguage);
+		};
+
+		var setLanguage = function(language){
+			console.log(&#039;Here in setLanguage***SL1....&#039; + language);
+				
+			resetLocalizableCache();
+			$rootScope.currentProfile.currentLanguage = language;
+			getLocalText($rootScope.currentProfile.countryId, $rootScope.currentProfile.currentLanguage.languageCode);
+			return language;
+	    };
+	    
+	    var getLocalText = function(countryId, languageCode){//console.log(countryId+languageCode);
+	    	LocalText.query({id : countryId,language:languageCode}).$promise.then(loadLocalText);
+	    };
+	    
+	    var loadLocalText = function(localData){
+	    	$rootScope.translationData = localData;
+	    };
+			
+    /**
+     * @ngdoc method
+     * @name getPermissions
+     * @methodOf gcms.components.session.service:session
+     * @description Gets permissions for the current profile
+     * @returns {object} A promise resolving to a permissions array
+     */
+    var getPermissions = function() {
+      return getCurrentProfile().then(function(profile){
+        var profileRoleId = profile.roleId;
+        return getRoles().then(function(roles){
+          var permissions = null;
+          angular.forEach(roles, function(role){
+            if (role.id === profileRoleId){
+              permissions = role.rolePermissions;
+            }
+          });
+          return permissions;
+        });
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getAttributes
+     * @methodOf gcms.components.session.service:session
+     * @description Gets attributes for the specified country
+     * @returns {object} A promise resolving to an attributes array
+     */
+    var getAttributes = function() {
+      return getCountryAttributes();
+    };
+
+    /**
+     * @ngdoc method
+     * @name getCountry
+     * @methodOf gcms.components.session.service:session
+     * @description Gets country
+     * @param {Number} id The id of a country
+     * @returns {object} A promise resolving to a country object
+     */
+    var getCountry = function(id){
+      return getCountries().then(function(countries) {
+        var selectedCountry = null;
+        angular.forEach(countries, function(country){
+          if(country.id === id) {
+            selectedCountry = country;
+          }
+        });
+        return selectedCountry;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getCountries
+     * @methodOf gcms.components.session.service:session
+     * @description Gets countries
+     * @returns {object} A promise resolving to a countries array
+     */
+    var getCountries = function() {
+      if (lovs.countries) {
+        return $q.when(lovs.countries);
+      }
+
+      if (!promises.country){
+        promises.country = Country.query().$promise;        
+      }
+
+      return promises.country.then(function(result){
+        promises.country = null;
+        lovs.countries = result;
+        $rootScope.countries = result;
+        return result;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getRoles
+     * @methodOf gcms.components.session.service:session
+     * @description Gets roles
+     * @returns {object} A promise resolving to a roles array
+     */
+    var getRoles = function() {
+      if (lovs.roles) {
+        return $q.when(lovs.roles);
+      }
+
+      if (!promises.roles){
+        promises.roles = Role.query().$promise;
+      }
+
+      return promises.roles.then(function(result){
+        promises.roles = null;
+        lovs.roles = result;
+        return result;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getLocalizedLov
+     * @methodOf gcms.components.session.service:session
+     * @description Gets lovs value
+     * @returns {object} A promise resolving to a lovs array
+     */
+    var getLocalizedLov = function(lov) {
+      if (localizableLovs[lov]) {
+        return $q.when(localizableLovs[lov]);
+      }
+
+      if (!promises[lov]){
+        promises[lov] = Lov.query({name: lov}).$promise;
+      }
+
+      return promises[lov].then(function(result){
+        promises[lov] = null;
+        localizableLovs[lov] = result;
+        return result;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name getUniqueIds
+     * @methodOf gcms.components.session.service:session
+     * @description Gets unique identifiers
+     * @returns {object} A promise resolving to an unique identifiers array
+     */
+    var getUniqueIds = function() {
+      return getLocalizedLov(&#039;unique-id&#039;);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getCredentials
+     * @methodOf gcms.components.session.service:session
+     * @description Gets credentials
+     * @returns {object} A promise resolving to a credentials array
+     */
+    var getCredentials = function() {
+      return getLocalizedLov(&#039;credential&#039;);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getSpecialties
+     * @methodOf gcms.components.session.service:session
+     * @description Gets specialties
+     * @returns {object} A promise resolving to a specialties array
+     */
+    var getSpecialties = function() {
+      return getLocalizedLov(&#039;specialty&#039;);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getRecipientTypes
+     * @methodOf gcms.components.session.service:session
+     * @description Gets recipient types
+     * @returns {object} A promise resolving to an recipient types array
+     */
+    var getRecipientTypes = function() {
+      return $q.when(CONFIG.recipientType);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getRecipientTypesString
+     * @methodOf gcms.components.session.service:session
+     * @description Gets recipient types
+     * @returns {object} A promise resolving to an recipient types array with a string key
+     */
+    var getRecipientTypesString = function() {
+      return $q.when(CONFIG.recipientTypeString);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getCompletionStatuses
+     * @methodOf gcms.components.session.service:session
+     * @description Gets completion statuses
+     * @returns {object} A promise resolving to a completion status array
+     */
+    var getCompletionStatuses = function() {
+      return $q.when(CONFIG.completionStatus);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getLockedStatuses
+     * @methodOf gcms.components.session.service:session
+     * @description Gets locked statuses
+     * @returns {object} A promise resolving to a locked status array
+     */
+    var getLockedStatuses = function() {
+      return $q.when(CONFIG.lockedStatus);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getAddressTypes
+     * @methodOf gcms.components.session.service:session
+     * @description Gets address types
+     * @returns {object} A promise resolving to an address types array
+     */
+    var getAddressTypes = function() {
+      return getLocalizedLov(&#039;address-type&#039;);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getConsentTypes
+     * @methodOf gcms.components.session.service:session
+     * @description Gets consent types
+     * @returns {object} A promise resolving to a consent types array
+     */
+    var getConsentTypes = function() {
+      return getLocalizedLov(&#039;consent&#039;);
+    };
+   
+
+    /**
+     * @ngdoc method
+     * @name getSuffixes
+     * @methodOf gcms.components.session.service:session
+     * @description Gets suffixes
+     * @returns {object} A promise resolving to a suffixes array
+     */
+    var getSuffixes = function() {
+      return $q.when(CONFIG.suffix);
+    };
+
+    /**exchangeSource
+     * @ngdoc method
+     * @name getTransactionStatuses
+     * @methodOf gcms.components.session.service:session
+     * @description Gets transaction statuses
+     * @returns {object} A promise resolving to a transaction statuses array
+     */
+    var getTransactionStatuses = function() {
+       return $q.when(CONFIG.transactionStatus);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getPayeeTypes
+    * @methodOf gcms.components.session.service:session
+    * @description Gets payee types
+    * @returns {object} A promise resolving to a payee types array
+    */
+    var getPayeeTypes = function() {
+      return getLocalizedLov(&#039;payee-type&#039;);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getSourceCode
+    * @methodOf gcms.components.session.service:session
+    * @description Gets source codes
+    * @returns {object} A promise resolving to a source codes array
+    */
+    var getSourceCode = function() {
+      return getLocalizedLov(&#039;source-code&#039;);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getNameTypes
+    * @methodOf gcms.components.session.service:session
+    * @description Gets name types
+    * @returns {object} A promise resolving to a name types array
+    */
+    var getNameTypes = function() {
+      return getLocalizedLov(&#039;name-type&#039;);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getFileTypes
+    * @methodOf gcms.components.session.service:session
+    * @description Gets file types
+    * @returns {object} A promise resolving to a file types array
+    */
+    var getFileTypes = function() {
+      return getLocalizedLov(&#039;file-type&#039;);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getLocales
+    * @methodOf gcms.components.session.service:session
+    * @description Gets locales
+    * @returns {object} A promise resolving to a locales array
+    */
+    var getLocales = function() {
+      return $q.when(CONFIG.locale);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getCountryAttributes
+    * @methodOf gcms.components.session.service:session
+    * @description Gets country attributes
+    * @returns {object} A promise resolving to a country attribute array
+    */
+    var getCountryAttributes = function() {
+      return getLocalizedLov(&#039;country-attribute&#039;);
+    };
+
+    /**
+    * @ngdoc method
+    * @name getLegalEntities
+    * @methodOf gcms.components.session.service:session
+    * @description Gets Legal entities
+    * @returns {object} A promise resolving to a legal entities array
+    */
+    var getLegalEntity = function() {
+      return getLocalizedLov(&#039;legal-entity&#039;);
+    };
+
+    /**
+     * @ngdoc method
+     * @name getCoveredRecipientRole
+     * @methodOf gcms.components.session.service:session
+     * @description Gets Covered RecipientRoles
+     * @returns {object} A promise resolving to a covered recipeint role array
+     */
+     var getCoveredRecipientRole = function() {
+       return getLocalizedLov(&#039;covered-recipient-role&#039;);
+     };
+    
+    /**
+    * @ngdoc method
+    * @name getFomattedLegalEntityTypes
+    * @methodOf gcms.components.session.service:session
+    * @description Gets formatted Legal Entity types
+    * @returns {object} A promise resolving to an formatted Legal Entity types array
+    */
+    var getFomattedLegalEntityTypes = function() {
+      return getLocalizedLov(&#039;legal-entity&#039;)
+      .then(function(legalEntityTypes){
+        return $q.all([legalEntityTypes, getCountries()]);
+      })
+      .then(function(result){
+        var legalEntityTypes = result[0];
+        var countries = result[1];
+        var isoCode = localeMapper.getCurrentISOCode();
+        var country = countries.find(function(item){ return item.isoCode.toUpperCase() === isoCode.toUpperCase(); });
+        var countryName = country ? country.name : &#039;&#039;;
+        var formattedValues = legalEntityTypes.map(function(item){
+          var obj = {};
+          if (item.value &amp;&amp; item.name){
+            obj.id = item.id;
+            obj.name = countryName + &#039; - &#039; + item.value + &#039; - &#039; + item.name;
+            obj.value = countryName + &#039; - &#039; + item.value + &#039; - &#039; + item.name;
+          }
+          return obj;
+        });
+        return $q.when(formattedValues);
+      });
+    };
+
+    return {
+      set: function() {
+        return {
+          user: {
+            userId: getUserId,
+            userName: userName,
+            fullName: getFullName(),
+            getCurrentUser: getCurrentUser(),
+            getCurrentProfile: getCurrentProfile,
+            primaryProfile: getPrimaryProfile(),
+            getPermissions: getPermissions,
+            getAttributes: getAttributes,
+            setProfile: setProfile
+          },
+          collections: {
+            addressType: getAddressTypes,
+            recipientType: getRecipientTypes,
+            recipientTypeString: getRecipientTypesString,
+            completionStatus: getCompletionStatuses,
+            lockedStatus: getLockedStatuses,
+            consentType: getConsentTypes,
+            suffix: getSuffixes,
+            transactionStatus: getTransactionStatuses,
+            sourceCode: getSourceCode,
+            uniqueid: getUniqueIds,
+            credential: getCredentials,
+            specialty: getSpecialties,
+            country : getCountries,
+            role : getRoles,
+            payeeType: getPayeeTypes,
+            nameType: getNameTypes,
+            fileType: getFileTypes,
+            locale: getLocales,
+            countryAttributes: getCountryAttributes,
+            legalEntity : getLegalEntity,
+            coveredRecipientRole : getCoveredRecipientRole
+          }
+        };
+      }
+    };
+
+  }
+
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/components/uniqueid-upload/components.uniqueid-upload.service.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/components/uniqueid-upload/components.uniqueid-upload.service.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">57.83</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">237</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">47.45</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">2.42</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc service
+ * @name gcms.components.uniqueid.service:uniqueid
+ *
+ * @description
+ * This service determines the appropriate unique id (type and value) to display.
+ */
+
+(function() {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.components.uniqueidupload&#039;)
+    .factory(&#039;uniqueidupload&#039;, UniqueidUpload);
+
+  UniqueidUpload.$inject = [&#039;$rootScope&#039;, &#039;$q&#039;];
+
+  /**
+    * @ngdoc method
+    * @name UniqueidUpload
+    * @methodOf gcms.components.uniqueid.service:uniqueid
+    * @description Constructor for the uniqueidupload service
+    * @param {object} $rootScope A root object that refers to the application model.
+    * It is an execution context for expressions. Scopes are arranged in a hierarchical structure which mimic the DOM structure of the application.
+    * @param {object} $q A service that helps you run functions asynchronously, and use their return values (or exceptions) when they are done processing.
+    * @returns {object} The uniqueidupload service
+    */
+  function UniqueidUpload($rootScope, $q) {
+    /**
+      * @ngdoc method
+      * @name getUploadDefaultUniqueId
+      * @methodOf gcms.components.uniqueid.service:uniqueid
+      * @description Gets uniqueId object based on properties from incomplete/rejected object.
+      * @param {object} recipient The covered recipient
+      * @returns {object} The uniqueId object
+      */
+    function getUploadDefaultUniqueId(recipient) {
+      // private variables
+      var partyType = null;
+      var partyCountryCode = null;
+      var uniqueIDType = null;
+      var uniqueIDType2 = null;
+      var uniqueIDType3 = null;
+      var uniqueIDType4 = null;
+      var uniqueIDType5 = null;
+      var uniqueIDType6 = null;
+      var uniqueIDType7 = null;
+      var uniqueIDType8 = null;
+      var uniqueIDType9 = null;
+      var uniqueIDType10 = null;
+      var uniqueIdValue = null;
+      var uniqueIdValue2 = null;
+      var uniqueIdValue3 = null;
+      var uniqueIdValue4 = null;
+      var uniqueIdValue5 = null;
+      var uniqueIdValue6 = null;
+      var uniqueIdValue7 = null;
+      var uniqueIdValue8 = null;
+      var uniqueIdValue9 = null;
+      var uniqueIdValue10 = null;
+      var recipientUniqueIds = [];
+
+      // validate party type
+      partyType = recipient.partyType || &#039;PERSON&#039;;
+      partyType = partyType.toUpperCase().trim();
+      if (partyType === &#039;HCP&#039;) {partyType = &#039;PERSON&#039;;}
+      if (partyType === &#039;HCO&#039;) {partyType = &#039;ORGANIZATION&#039;;}
+
+      //validate party country code
+      partyCountryCode = recipient.partyCountryCode || &#039;US&#039;;
+      partyCountryCode = partyCountryCode.toUpperCase().trim();
+
+      //validate unique id types
+      uniqueIDType = recipient.uniqueIDType || &#039;&#039;;
+      uniqueIDType2 = recipient.uniqueIDType2 || &#039;&#039;;
+      uniqueIDType3 = recipient.uniqueIDType3 || &#039;&#039;;
+      uniqueIDType4 = recipient.uniqueIDType4 || &#039;&#039;;
+      uniqueIDType5 = recipient.uniqueIDType5 || &#039;&#039;;
+      uniqueIDType6 = recipient.uniqueIDType6 || &#039;&#039;;
+      uniqueIDType7 = recipient.uniqueIDType7 || &#039;&#039;;
+      uniqueIDType8 = recipient.uniqueIDType8 || &#039;&#039;;
+      uniqueIDType9 = recipient.uniqueIDType9 || &#039;&#039;;
+      uniqueIDType10 = recipient.uniqueIDType10 || &#039;&#039;;
+      uniqueIDType = uniqueIDType.toUpperCase().trim();
+      uniqueIDType2 = uniqueIDType2.toUpperCase().trim();
+      uniqueIDType3 = uniqueIDType3.toUpperCase().trim();
+      uniqueIDType4 = uniqueIDType4.toUpperCase().trim();
+      uniqueIDType5 = uniqueIDType5.toUpperCase().trim();
+      uniqueIDType6 = uniqueIDType6.toUpperCase().trim();
+      uniqueIDType7 = uniqueIDType7.toUpperCase().trim();
+      uniqueIDType8 = uniqueIDType8.toUpperCase().trim();
+      uniqueIDType9 = uniqueIDType9.toUpperCase().trim();
+      uniqueIDType10 = uniqueIDType10.toUpperCase().trim();
+
+      //validate unique id values
+      uniqueIdValue = recipient.uniqueIdValue || &#039;&#039;;
+      uniqueIdValue2 = recipient.uniqueIdValue2 || &#039;&#039;;
+      uniqueIdValue3 = recipient.uniqueIdValue3 || &#039;&#039;;
+      uniqueIdValue4 = recipient.uniqueIdValue4 || &#039;&#039;;
+      uniqueIdValue5 = recipient.uniqueIdValue5 || &#039;&#039;;
+      uniqueIdValue6 = recipient.uniqueIdValue6 || &#039;&#039;;
+      uniqueIdValue7 = recipient.uniqueIdValue7 || &#039;&#039;;
+      uniqueIdValue8 = recipient.uniqueIdValue8 || &#039;&#039;;
+      uniqueIdValue9 = recipient.uniqueIdValue9 || &#039;&#039;;
+      uniqueIdValue10 = recipient.uniqueIdValue10 || &#039;&#039;;
+      uniqueIdValue = uniqueIdValue.toUpperCase().trim();
+      uniqueIdValue2 = uniqueIdValue2.toUpperCase().trim();
+      uniqueIdValue3 = uniqueIdValue3.toUpperCase().trim();
+      uniqueIdValue4 = uniqueIdValue4.toUpperCase().trim();
+      uniqueIdValue5 = uniqueIdValue5.toUpperCase().trim();
+      uniqueIdValue6 = uniqueIdValue6.toUpperCase().trim();
+      uniqueIdValue7 = uniqueIdValue7.toUpperCase().trim();
+      uniqueIdValue8 = uniqueIdValue8.toUpperCase().trim();
+      uniqueIdValue9 = uniqueIdValue9.toUpperCase().trim();
+      uniqueIdValue10 = uniqueIdValue10.toUpperCase().trim();
+
+      // fill recipientUniqueIds array
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType, &#039;value&#039;: uniqueIdValue});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType2, &#039;value&#039;: uniqueIdValue2});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType3, &#039;value&#039;: uniqueIdValue3});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType4, &#039;value&#039;: uniqueIdValue4});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType5, &#039;value&#039;: uniqueIdValue5});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType6, &#039;value&#039;: uniqueIdValue6});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType7, &#039;value&#039;: uniqueIdValue7});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType8, &#039;value&#039;: uniqueIdValue8});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType9, &#039;value&#039;: uniqueIdValue9});
+      recipientUniqueIds.push({&#039;name&#039;: uniqueIDType10, &#039;value&#039;: uniqueIdValue10});
+
+      if (recipientUniqueIds.length &gt; 0){
+        return $rootScope.session.user.getCurrentProfile().then(function(profile){
+          return $q.all([profile.countryId, $rootScope.session.collections.country(), $rootScope.session.collections.uniqueid()]);
+        })
+        .then(function(result){
+          var countryId = result[0];
+          var countries = result[1];
+          var uniqueIds = result[2];
+          var country = countries.find(function(item){ return item.id === countryId &amp;&amp; item.isoCode === partyCountryCode; });
+          var countryUniqueIdTypes = (typeof country !== &#039;undefined&#039;) ? country.displayUniqueIdentifierType : [];
+          var recipientTypeAndValueUniqueIds = recipientUniqueIds.filter(function(item){
+            if (item.name.length &gt; 0 &amp;&amp; item.value.length &gt; 0){
+              return item;
+            }
+          });
+          var recipientTypeOnlyUniqueIds = recipientUniqueIds.filter(function(item){
+            if (item.name.length &gt; 0 &amp;&amp; item.value.length === 0){
+              return item;
+            }
+          });
+
+          var primaryTypeAndValueUniqueId = getUniqueId(recipientTypeAndValueUniqueIds, countryUniqueIdTypes, uniqueIds, countryId, partyType, &#039;PRIMARY&#039;);
+          if (primaryTypeAndValueUniqueId){
+            return $q.when(primaryTypeAndValueUniqueId);
+          } else {
+            var primaryTypeOnlyUniqueId = getUniqueId(recipientTypeOnlyUniqueIds, countryUniqueIdTypes, uniqueIds, countryId, partyType, &#039;PRIMARY&#039;);
+            if (primaryTypeOnlyUniqueId){
+              return $q.when(primaryTypeOnlyUniqueId);
+            } else {
+              var secondaryTypeAndValueUniqueId = getUniqueId(recipientTypeAndValueUniqueIds, countryUniqueIdTypes, uniqueIds, countryId, partyType, &#039;SECONDARY&#039;);
+              if (secondaryTypeAndValueUniqueId){
+                return $q.when(secondaryTypeAndValueUniqueId);
+              } else {
+                var secondaryTypeOnlyUniqueId = getUniqueId(recipientTypeOnlyUniqueIds, countryUniqueIdTypes, uniqueIds, countryId, partyType, &#039;SECONDARY&#039;);
+                if (secondaryTypeOnlyUniqueId){
+                  return $q.when(secondaryTypeOnlyUniqueId);
+                } else {
+                  var sortedTypeAndValueUniqueIds = recipientTypeAndValueUniqueIds[0];
+                  if (sortedTypeAndValueUniqueIds){
+                    return $q.when(sortedTypeAndValueUniqueIds);
+                  } else {
+                    var sortedTypeOnlyUniqueIds = recipientTypeOnlyUniqueIds[0];
+                    if (sortedTypeOnlyUniqueIds){
+                      return $q.when(sortedTypeOnlyUniqueIds);
+                    } else {
+                      return $q.when({name: &#039;&#039;, value:&#039;N/A&#039;});
+                    }
+                  }
+                }
+              }
+            }
+          }
+        });
+      } else {
+        return $q.when({name: &#039;&#039;, value:&#039;N/A&#039;});
+      }
+    }
+
+    /**
+      * @ngdoc method
+      * @name getUniqueId
+      * @methodOf gcms.components.uniqueid.service:uniqueid
+      * @description Gets recipient unique id based on country id, party type, and priority
+      * @param {Array} recipientUniqueIds The recipient unique ids
+      * @param {Array} countryUniqueIdTypes The country unique ids
+      * @param {Array} uniqueIds The unique id list of values
+      * @param {Number} countryId The country id for the current profile
+      * @param {String} partyTypeCode The party type code (e.g., &quot;PERSON&quot; or &quot;ORGANIZATION&quot;)
+      * @param {priority} priority The display priority (e.g., &quot;PRIMARY&quot; or &quot;SECONDARY&quot;)
+      * @returns {object} The unique id object
+      */
+    var getUniqueId = function(recipientUniqueIds, countryUniqueIdTypes, uniqueIds, countryId, partyTypeCode, priority){
+        var countryUniqueIdTypeId = getCountryUniqueIdType(countryUniqueIdTypes, countryId, partyTypeCode, priority);
+        var countryUniqueIdTypeName = getCountryUniqueIdTypeName(uniqueIds, countryUniqueIdTypeId);
+        var recipientUniqueId = getRecipientUniqueId(recipientUniqueIds, countryUniqueIdTypeName);
+        return recipientUniqueId;
+    };
+
+    // get country unique type id based on country, party type, and priority
+    var getCountryUniqueIdType = function(countryUniqueIdTypes, countryId, partyTypeCode, priority){
+      var countryUniqueIdType = countryUniqueIdTypes.find(function(item){
+        return item.countryId === countryId &amp;&amp; item.partyTypeCode === partyTypeCode &amp;&amp; item.displayPriorityCode === priority;
+      });
+      var countryUniqueIdTypeId = (typeof countryUniqueIdType !== &#039;undefined&#039;) ? countryUniqueIdType.uniqueIdentifierTypeID : 0;
+      return countryUniqueIdTypeId;
+    };
+
+    // get country unique id type name based on country unique id type id
+    var getCountryUniqueIdTypeName = function(uniqueIds, countryUniqueIdTypeId){
+      var lovUniqueIdType = uniqueIds.find(function(item){
+        return item.id === parseInt(countryUniqueIdTypeId);
+      });
+      var countryUniqueIdTypeName = (typeof lovUniqueIdType !== &#039;undefined&#039;) ? lovUniqueIdType.name : &#039;&#039;;
+      return countryUniqueIdTypeName;
+    };
+
+    // get recipient unique id object
+    var getRecipientUniqueId = function(recipientUniqueIds, countryUniqueIdTypeName){
+      var recipientUniqueId = recipientUniqueIds.find(function(item){
+        return item.name === countryUniqueIdTypeName;
+      });
+      return recipientUniqueId;
+    };
+
+    return {
+      getUploadDefaultUniqueId: getUploadDefaultUniqueId
+    };
+  }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

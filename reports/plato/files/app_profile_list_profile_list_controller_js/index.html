@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/profile/list/profile.list.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/profile/list/profile.list.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">59.16</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">1041</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">82.11</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">16.18</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc overview
+ * @name gcms.profile.ProfileListCtrl
+ *
+ * @requires gcms.profile
+ *
+ * @description Controller: Handles Home, Creates Missing Profile , Generate Consent Annex modules.
+ * 
+ * @param ProfileSearch,$scope,$http,$stateParams,$state,myService,Templates,Country,IdentityRequest,Review,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ctrl,ConsentAnnexPdf
+ */
+
+(function () {
+
+	&#039;use strict&#039;;
+
+	angular
+	.module(&#039;gcms.profile&#039;)
+	.filter(&#039;SearchFilter&#039;, function($filter){
+		    return function(input, predicate){
+		    	var fn=[];		    			    			    			    	   		    		    			    	 		    
+		    	var keys = Object.keys(predicate);
+		    	var y=0;
+		    	var patternStr = &#039;&#039;;		    			    	
+		    	
+		    	var patternlastName = (typeof predicate.lastName == &quot;string&quot;) ? predicate.lastName.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.lastName;
+		    	var patternfirstName = (typeof predicate.firstName == &quot;string&quot;) ? predicate.firstName.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.firstName;
+		    	var patternorganisationName = (typeof predicate.organisationName == &quot;string&quot;) ? predicate.organisationName.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.organisationName;
+		    	var patterncity = (typeof predicate.city == &quot;string&quot;) ? predicate.city.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.city;
+		    	var patternaddress = (typeof predicate.address == &quot;string&quot;) ? predicate.address.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.address;
+		    	var patternspeciality = (typeof predicate.speciality == &quot;string&quot;) ? predicate.speciality.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.speciality;
+		    	var patternid =  (typeof predicate.id == &quot;string&quot;) ? predicate.id.replace(&quot;%&quot;,&quot;.*&quot;) : predicate.id;
+		    	
+		    	if(keys.length != 0){		   
+		    			    
+						var lastName = new RegExp(patternlastName, &#039;gi&#039;);
+						var firstName = new RegExp(patternfirstName, &#039;gi&#039;);
+						var organisationName = new RegExp(patternorganisationName, &#039;gi&#039;);
+						var city = new RegExp(patterncity, &#039;gi&#039;);
+						var address = new RegExp(patternaddress, &#039;gi&#039;);
+						var speciality = new RegExp(patternspeciality, &#039;gi&#039;);
+						var id = new RegExp(patternid, &#039;gi&#039;);
+						for(var i in input){							
+							if (lastName.exec(input[i].lastName) != null &amp;&amp; firstName.exec(input[i].firstName) != null &amp;&amp; organisationName.exec(input[i].organisationName) != null &amp;&amp; city.exec(input[i].city) != null &amp;&amp; address.exec(input[i].address) != null &amp;&amp; speciality.exec(input[i].speciality) != null &amp;&amp; id.exec(input[i].id) != null){
+								lastName.lastIndex = 0;
+								firstName.lastIndex = 0;
+								organisationName.lastIndex = 0;
+								city.lastIndex = 0;
+								address.lastIndex = 0;
+								speciality.lastIndex = 0;
+								id.lastIndex = 0;
+								fn.push(input[i]);																	
+							}
+							}
+						
+		    		return fn;
+				    	}
+		    	else{
+		    		return input;
+		    	}		        
+		    };
+		})
+	.controller(&#039;ProfileListCtrl&#039;, ProfileSearch);
+
+	ProfileSearch.$inject = [&#039;ProfileSearch&#039;,&#039;$scope&#039;,&#039;$http&#039;,&#039;myService&#039;,&#039;Templates&#039;,&#039;Country&#039;,&#039;IdentityRequest&#039;,&#039;Review&#039;,&#039;UIConfig&#039;,&#039;EmailGeneration&#039;,&#039;UserProfile&#039;,&#039;LoggedUserDetail&#039;,&#039;ConsentAnnex&#039;,&#039;ConsentAnnexView&#039;,&#039;ConsentAnnexPdf&#039;,&#039;$rootScope&#039;,&#039;toasty&#039;,&#039;ngDialog&#039;,&#039;ValidatedCode&#039;,&#039;Credential&#039;];
+
+	function ProfileSearch(ProfileSearch,$scope,$http,myService,Templates,Country,IdentityRequest,Review,UIConfig,EmailGeneration,UserProfile,LoggedUserDetail,ConsentAnnex,ConsentAnnexView,ConsentAnnexPdf,$rootScope,toasty,ngDialog,ValidatedCode,Credential) {
+
+		var params = {};
+		console.log(&quot;Inside Profile.list.controller&quot;);
+		$scope.orderByField = &#039;firstName&#039;;
+		$scope.reverseSort = false;
+		$scope.selectedids = [];  
+		$scope.itemsByPage=20;
+		$scope.dataToSend = {checkedIds :{},templates :{}};
+		var ids = [];
+		var index;
+		var criteria = {};
+		$scope.alerts = [];
+		$scope.profile = {};
+		$scope.request = {};
+		var collecting_country_id = {};
+		var profile_country_id = {};
+		$scope.setDownload = true;
+		$scope.id = [];                
+		$scope.templId = {};
+		$scope.readOnlyCC = false;
+		$scope.profileFiler = false;
+		$scope.readOnlyPC = false;
+		$scope.request.profileType = &#039;HCP&#039;;	
+		$scope.request.CCID = &#039;&#039;;
+		$scope.request.NIT = &#039;&#039;;
+		$scope.profile.readOnly = false;
+		$scope.hideHCO = true;
+		$scope.crossInCountry = {};
+		$scope.profileTypeSelected = {};
+		$scope.templateTypeSelected = {};	
+		$scope.clearText = &quot;&quot;;
+		$scope.sysAdmin = false;		
+		$scope.sysAdminCCID = false;
+		$scope.sysAdminNIT = false;
+		$scope.profile_types = [{
+			name: &#039;HCP&#039;,
+			value: &#039;HCP&#039;
+		},   {
+			name: &#039;HCO&#039;,
+			value: &#039;HCO&#039;
+		}];
+		 var ctrl = this;
+		 var internalError = function(){
+		        toasty.error({
+		          title: &#039;Error&#039;,
+		          msg: &#039;Internal Server Error!&#039;,
+		          showClose: true,
+		          clickToClose: true,
+		          timeout: 5000,
+		          sound: false,
+		          html: false,
+		          shake: false,
+		          theme: &#039;bootstrap&#039;
+		        });
+		      };
+		      var unspecifiedError = function(){
+		          toasty.error({
+		            title: &#039;Error&#039;,
+		            msg: &#039;Unspecified error!&#039;,
+		            showClose: true,
+		            clickToClose: true,
+		            timeout: 5000,
+		            sound: false,
+		            html: false,
+		            shake: false,
+		            theme: &#039;bootstrap&#039;
+		          });
+		        };
+		        var success = function(){ 
+		        toasty.success({
+        	        title: &#039;Success&#039;,
+        	        msg: &#039;Success !&#039;,
+        	        showClose: true,
+        	        clickToClose: true,
+        	        timeout: 5000,
+        	        sound: false,
+        	        html: false,
+        	        shake: false,
+        	        theme: &#039;bootstrap&#039;
+        	      });
+		        };
+		        
+		        var successTempProfile = function(){ 
+			        toasty.success({
+	        	        title: &#039;Success&#039;,
+	        	        msg: &#039;Temporary Profile created successfully, you may generate Consent Annex now!&#039;,
+	        	        showClose: true,
+	        	        clickToClose: true,
+	        	        timeout: 30000,
+	        	        sound: false,
+	        	        html: false,
+	        	        shake: false,
+	        	        theme: &#039;bootstrap&#039;
+	        	      });
+			        };
+		       	
+		        UIConfig.query().$promise.then(function(result){
+		        	$scope.configFile = result;
+		        });
+		        
+		        $scope.HOME_PAY_CNTRY_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Here you can select the Paying Country for this interaction. It is important to know the paying country because this is the way we determine between local interactions and cross-border interactions.&quot;
+        		};
+		        
+		        $scope.HOME_REP_CNTRY_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Here you choose the Reporting Country. This is the HCP or HCO Country. Application will search in this location for HCPs or HCOs.&quot;
+        		};
+		        
+		        $scope.HOME_PROFILE_TYP_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Here you select the profile type. HCP is for Healthcare Professionals (doctors, residents, etc.) and HCO is for Healthcare Organizations (hospitals, universities, private practice companies, etc.).&quot;
+        		};
+		        
+		        $scope.HOME_FRS_NM_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the first name of the HCP here. If it is an Organization, leave it empty. The system will search using partial criteria too. For example, if you are looking for -John-, entering -jo- will bring all the names that contains -jo-. The system is not case sensitive.&quot;
+        		};
+		       
+		        
+		        $scope.HOME_LST_NM_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the Last Name of the HCP or Organization name here. The system will search using partial criteria too. For example, if you are looking for -John-, entering -jo- will bring all the names that contains -jo-. The system is not case sensitive.&quot;
+        		};
+		        
+		        $scope.HOME_PROFILE_CITY_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the HCP or HCO City here. The system will search using partial criteria too. For example, if you are looking for -Berlin-, entering -be- will bring all the profiles where their Cities contains -be-. The system is not case sensitive.&quot;
+        		};
+		        
+		        $scope.HOME_PROFILE_SPEC_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the HCP Specialty here. If it is an Organization, leave it empty. The specialties are usually written in the language of the HCP/HCO nationality. If you do not know exactly the name of specialty, leave it empty. The system will search using partial criteria too. For example, if you are looking for -Cardiology-, entering -ca- will bring all the profiles with specialties that contains -ca-. The system is not case sensitive.&quot;
+		        };
+		        
+		        $scope.HOME_TEMPLATE_TYPE_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Select the Consent Template here. This list is dynamically populated based on your Reporting Country Selections.&quot;
+		        		};
+		       
+		        $scope.HOME_ADDRESS_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the HCP or HCO Address here. The system will search using partial criteria too. For example, if you are looking for -GNEISENAUSTRASSE 5-, entering -GNE- will bring all the profiles where their Addresses contains -GNE-. The system is not case sensitive.&quot;
+        		};
+		        	
+		        $scope.CCID_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the CCID here. If you do not know exactly the CCID, leave it empty. The system will search using partial criteria too. The system is not case sensitive.&quot;
+		        };
+		        
+		        $scope.NIT_MSG = {
+		        		  &quot;title&quot;: &quot;Title&quot;,
+		        		  &quot;content&quot;: &quot;Enter the NIT here. If you do not know exactly the NIT, leave it empty. The system will search using partial criteria too. The system is not case sensitive.&quot;
+		        };
+
+		        
+		//Getting Logged in User Profile
+				
+		        $scope.userProfileData = function(){	
+					var currentprofile = $rootScope.currentProfile;
+					if(localStorage.getItem(&quot;currentProfile&quot;) != null &amp;&amp; localStorage.getItem(&quot;currentProfile&quot;) != undefined){
+						$scope.loggedInUserCountry = JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).countryId;
+						$scope.loggedInUserCountryName = JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).countryName;
+						$scope.loggedInUserCountryCode = JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).countryISOCode;
+						$scope.loggedInUserRegionId = JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).regionId;
+						$scope.loggedInUserRole = JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).roleId;
+						$scope.logged_In_User= JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).userName;
+						$scope.fullName = JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).firstName+&quot; &quot;+JSON.parse(localStorage.getItem(&quot;currentProfile&quot;)).lastName;
+					}        	
+					else{
+						$scope.loggedInUserCountry = currentprofile.countryId;
+						$scope.loggedInUserCountryName = currentprofile.countryName ;
+						$scope.loggedInUserCountryCode = currentprofile.isoCode;
+						$scope.loggedInUserRegionId = currentprofile.regionId ;
+						$scope.loggedInUserRole = currentprofile.roleId;
+						$scope.logged_In_User= currentprofile.userName;
+						$scope.fullName = currentprofile.firstName+&quot; &quot;+currentprofile.lastName;
+					}
+				
+					if($scope.loggedInUserRole == 5){
+						$scope.sysAdmin = true;
+					}
+					
+					if($scope.loggedInUserRegionId == 5 &amp;&amp; $scope.request.profileType == &#039;HCP&#039; ){
+						$scope.profileFiler = true;
+						$scope.sysAdminCCID = true;
+					}	
+					
+					if ($scope.loggedInUserRole == 2 || $scope.loggedInUserRole == 3 ){	
+						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
+						 $scope.request.country = $scope.loggedInUserCountryName;
+						 $scope.request.regionId = $scope.loggedInUserRegionId;
+						 $scope.readOnlyCC = true;
+						 $scope.readOnlyPC = true;
+					}
+					else if ($scope.loggedInUserRole == 1 || $scope.loggedInUserRole == 4 || $scope.loggedInUserRole == 5)
+					{	
+						 $scope.request.collectingCountry = $scope.loggedInUserCountryName;
+						 $scope.request.regionId = $scope.loggedInUserRegionId;
+						 //$scope.readOnlyCC = true;
+					}											               
+		};
+				
+		
+		
+		$scope.compare = function(){	
+			$scope.request.tmpl_id = $scope.clearText;
+			$scope.request.regionId = $scope.loggedInUserRegionId;
+			$scope.profileFiler = false;
+			$scope.sysAdminNIT = $scope.clearText;
+			$scope.sysAdminCCID = $scope.clearText;
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == &quot;&quot; ) ? true : false;
+			if(($scope.request.country == &#039;COLOMBIA&#039; &amp;&amp; $scope.request.collectingCountry == &#039;COLOMBIA&#039;) &amp;&amp; $scope.request.profileType == &#039;HCO&#039; ){
+				$scope.request.regionId = 5;
+				$scope.profileFiler = true;
+				$scope.sysAdminNIT = true;
+				$scope.sysAdminCCID = false;
+
+			}
+			
+			if(($scope.request.country == &#039;COLOMBIA&#039; &amp;&amp; $scope.request.collectingCountry == &#039;COLOMBIA&#039;) &amp;&amp; $scope.request.profileType == &#039;HCP&#039; ){
+				$scope.sysAdminNIT = false;
+				$scope.sysAdminCCID = true;
+				$scope.request.regionId = 5;
+				$scope.profileFiler = true;
+
+			}
+			if(($scope.request.collectingCountry == $scope.request.country) &amp;&amp; $scope.loggedInUserRole == 1){				
+				$http.get(&#039;./emailproperties.json&#039;).then(function (response) {
+				$scope.str =  response.data.countryinfo.msg;
+				$scope.str = $scope.str.replace(&quot;PC&quot;,$scope.request.collectingCountry);
+				$scope.str = $scope.str.replace(&quot;RC&quot;,$scope.request.country);
+				ngDialog.open({ template:&quot;&lt;html&gt;&lt;body&gt;&lt;div class=\&quot;dialog-contents row\&quot; style=\&quot;margin-right: 0px;margin-left: 0px;\&quot;&gt;&lt;p style=\&quot;font-family:Calibri\&quot; &gt;&quot;+
+				$scope.str+ &quot;&lt;/p&gt;&quot;+
+			    &quot;&lt;div style=\&quot;float:right;\&quot;&gt;&lt;button ng-click=\&quot;closeThisDialog()\&quot; style=\&quot;padding-left: 10px; padding-right: 10px;font-family:calibri;color: #fff;background-color: #337ab7;border-color: #337ab7;\&quot;&gt;OK&lt;/button&gt;&lt;/div&gt; &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;&quot; , plain: true ,showClose: true});
+				});
+			}
+		};
+			
+		
+		//Called on create missing profile to sent country and lock 
+		$scope.passCountryName = function (){
+			if($scope.request.country != undefined){
+			$scope.profile.country = $scope.request.country;
+			$scope.profile.readOnly = true;
+			}
+			else
+				{
+				$scope.profile.msg = &quot;Please select Reporting Country to auto populate Profile Country&quot;;
+				$scope.profile.readOnly = true;
+				}
+		};
+		
+		
+		//Calling $scope.userProfileData() to get Logged in User Profile Data
+		$scope.userProfileData();
+
+		//Loading Paying Country for Global
+		
+		
+		//Loading Countries
+		var updateCountry = function(result){
+			$scope.counties = result;         
+		};
+
+		var loadCountry = function(){
+			$scope.counties = [];
+			$scope.counties = $rootScope.countries;
+			/*Country.query().$promise.then(updateCountry);*/
+		};
+
+		loadCountry();
+
+		$scope.$on(&#039;$localeChangeSuccess&#039;, loadCountry);
+		var updateCredential = function(result){
+  			$scope.credential = result;
+  		};
+  		
+		var loadCredential = function(profType){
+			$scope.credential = [];
+	  		Credential.query({id : $scope.loggedInUserCountry,partyType : profType}).$promise.then(updateCredential);
+	  	};
+	  	
+	  	$scope.clear = function()
+		{
+			$scope.request.lastName = $scope.clearText;
+			$scope.request.city = $scope.clearText;
+			$scope.request.firstName = $scope.clearText;
+			$scope.request.address = $scope.clearText;
+			$scope.request.tmpl_id = $scope.clearText;
+			$scope.request.speciality = $scope.clearText;
+			$scope.request.uniqueTypeId = $scope.clearText;
+			$scope.request.uniqueTypeCode = $scope.clearText;
+			$scope.sysAdminNIT = $scope.clearText;
+			$scope.sysAdminCCID = $scope.clearText;
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == &quot;&quot; ) ? true : false;
+			
+			if(($scope.request.country == &#039;COLOMBIA&#039; &amp;&amp; $scope.request.collectingCountry == &#039;COLOMBIA&#039;) &amp;&amp; $scope.request.profileType == &#039;HCO&#039; ){
+				$scope.sysAdminNIT = true;
+				$scope.sysAdminCCID = false;
+			}
+			
+			if(($scope.request.country == &#039;COLOMBIA&#039; &amp;&amp; $scope.request.collectingCountry == &#039;COLOMBIA&#039;) &amp;&amp; $scope.request.profileType == &#039;HCP&#039; ){
+				$scope.sysAdminNIT = false;
+				$scope.sysAdminCCID = true;
+			}
+		};				
+		
+		//Function to search for requested profiles
+		$scope.submit = function(request) {
+			$scope.responseOnSearch = &#039;&#039;;			
+			params =  request;
+			$scope.profile.country = request.country;        	
+			$scope.selectedids = [];
+			$scope.cntryValue = request.country;
+			//R2.0 - arunkv - for time being using isTempProfile as tempProfile attribute, need to add this in bus profile
+			var data = {&quot;country&quot;:&quot;&quot;,&quot;profileType&quot;:&quot;&quot;,&quot;lastName&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;firstName&quot;:&quot;&quot;,&quot;address&quot;:&quot;&quot;,&quot;collectingCountry&quot;:&quot;&quot;,&quot;speciality&quot;:&quot;&quot;,&quot;uniqueTypeCode&quot;:&quot;&quot;,&quot;uniqueTypeId&quot;:&quot;&quot;,&quot;isTempProfile&quot;:&quot;&quot;,&quot;regionId&quot;:&quot;&quot;,&quot;credential&quot;:&quot;&quot;};
+			/*if($scope.request.profileType == &#039;HCP&#039;){
+				$scope.hideHCO = true;
+				$scope.hideHCP = false;
+			}else if($scope.request.profileType == &#039;HCO&#039;){
+				$scope.hideHCP = true;
+				$scope.hideHCO = false;
+			}*/
+
+			for(var i in $scope.counties){
+				if ($scope.counties[i].name == request.collectingCountry){
+					collecting_country_id = $scope.counties[i].id;              
+				}
+				if ($scope.counties[i].name == request.country){
+					profile_country_id = $scope.counties[i].id;              
+				}
+			} 
+			data.country = params.country;
+			data.profileType = params.profileType;
+			data.lastName = (params.lastName !== undefined &amp;&amp; params.lastName !== &quot;&quot; ) ? params.lastName : &#039;lastName&#039;;
+			data.city = (params.city !== undefined &amp;&amp; params.city !== &quot;&quot;) ? params.city : &#039;city&#039;;
+			data.firstName = (params.firstName !== undefined &amp;&amp; params.firstName !== &quot;&quot;) ? params.firstName : &#039;firstName&#039;;
+			data.address = (params.address !== undefined &amp;&amp; params.address !== &quot;&quot; ) ? params.address : &#039;address&#039;;
+			if(data.profileType == &#039;HCP&#039; &amp;&amp; data.country == &#039;COLOMBIA&#039;){
+				data.uniqueTypeCode = &#039;CCID&#039;;
+			}
+			if(data.profileType == &#039;HCO&#039; &amp;&amp; data.country == &#039;COLOMBIA&#039;){
+				data.uniqueTypeCode = &#039;NIT&#039;;
+			}
+			data.speciality = (params.speciality !== undefined &amp;&amp; params.speciality !== &quot;&quot;) ? params.speciality : &#039;speciality&#039;;
+			data.uniqueTypeId = (params.uniqueTypeId !== undefined &amp;&amp; params.uniqueTypeId !== &quot;&quot;) ? params.uniqueTypeId : &#039;uniqueTypeId&#039;;
+			data.collectingCountry = params.collectingCountry;
+			data.regionId = $scope.request.regionId;
+			data.credential = $scope.request.credential;
+			ProfileSearch.get({
+				country : data.country,
+				profileType : data.profileType,
+				lastName : data.lastName,
+				city : data.city,
+				firstName : data.firstName,
+				address : data.address,
+				speciality : data.speciality,
+				uniqueTypeCode  : data.uniqueTypeCode,
+				uniqueTypeId : data.uniqueTypeId,
+				regionId : data.regionId,
+				credential : data.credential
+			}).$promise
+			.then(function(profileSearch) {
+				$scope.profileSearch = profileSearch;				
+				/*if($scope.search !== undefined){
+					$scope.search = undefined;
+				}*/
+				$scope.isReset = true;
+				if($scope.request.profileType == &#039;HCP&#039;){
+					$scope.hideHCO = true;
+					$scope.hideHCP = false;
+				}else if($scope.request.profileType == &#039;HCO&#039;){
+					$scope.hideHCP = true;
+					$scope.hideHCO = false;
+				}
+				
+				// show Credentials in Search results only for Colombia
+				if($scope.loggedInUserCountry == 2046)
+					$scope.hideCredential = false;
+				else
+					$scope.hideCredential = true;
+
+			}).catch(function(){
+				$scope.responseOnSearch = &quot;No records to show&quot;;
+				$scope.profileSearch.length = 0;
+				$scope.profileSearchCopy.length = 0;                               	
+			});                       
+		};       
+
+		$scope.profileSearchCopy = [].concat($scope.profileSearch);
+
+		$scope.checkboxes = { &#039;checked&#039;: false, items: {} };
+
+		// watch for check all checkbox
+		$scope.$watch(&#039;checkboxes.checked&#039;, function(value) {
+			angular.forEach($scope.profileSearch, function(item) {
+				if (angular.isDefined(item.id)) {
+					$scope.checkboxes.items[item.id] = value;
+				}
+			});
+		});
+		
+		// watch for data checkboxes
+		$scope.$watch(&#039;checkboxes.items&#039;, function(values) {
+
+			if (!$scope.profileSearch) {
+				return;
+			}
+			var checked = 0, unchecked = 0,
+			total = $scope.profileSearch.length;
+
+			angular.forEach($scope.profileSearch, function(item) {
+				checked   +=  ($scope.checkboxes.items[item.id]) || 0;
+				unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+				if($scope.checkboxes.items[item.id] &amp;&amp; ($scope.selectedids.indexOf(item) === -1)){
+					$scope.selectedids.push(item);            	  
+				}
+				else if(!$scope.checkboxes.items[item.id] &amp;&amp; ($scope.selectedids.indexOf(item) !== -1)){                
+					index = $scope.selectedids.indexOf(item);
+					$scope.selectedids.splice(index,1);
+
+				}
+			});
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == &quot;&quot; ) ? true : false;
+			if ((unchecked == 0) || (checked == 0)) {
+				$scope.checkboxes.checked = (checked == total);
+			}
+			// grayed check box
+			angular.element(document.getElementById(&quot;select_all&quot;)).prop(&quot;indeterminate&quot;, (checked != 0 &amp;&amp; unchecked != 0));
+		}, true);
+
+
+		$scope.emaildetails = {};
+		$scope.countryCopy = {};
+		$scope.profile_type_id = {};
+		$scope.countryReviwer = {};
+		$scope.resultcopy = {};
+
+		$scope.generateEmail = function(emaildetails){
+			EmailGeneration.save(emaildetails).$promise
+			.then(function(response) {
+				if(response.$promise.$$state.status == 1)
+				{
+					console.log(&quot;Yes&quot;);
+				}
+				else
+				{
+					console.log(&quot;No&quot;);
+				}
+
+			});
+		};
+
+		//Gets reviewer data and generates email 
+		$scope.getReviewerDetails = function(reqID){
+			var  emailTo = &#039;emailTo&#039;;
+			var  emailFrom = &#039;emailFrom&#039;;
+			var  message = &#039;message&#039;;
+			var  emailCC = &#039;emailCC&#039;;
+			var  requestID = &#039;requestID&#039;;
+			var  subject = &#039;subject&#039;;
+			var emaildetails = {};
+			var result = {};
+			var fn = ($scope.resultcopy.firstName == null)? &#039;&#039; : $scope.resultcopy.firstName;
+			var ln = ($scope.resultcopy.lastName == null)? &#039;&#039; : $scope.resultcopy.lastName;
+			var on = ($scope.resultcopy.organizationName == null)? &#039;&#039; : $scope.resultcopy.organizationName;	        		    	
+			var city = ($scope.resultcopy.city == null)? &#039;&#039; : $scope.resultcopy.city ;       		    	
+			var notes = ($scope.resultcopy.notes == null)? &#039;&#039; : $scope.resultcopy.notes;
+			
+					
+				result = $rootScope.reviewers;
+					for(var i in result){
+						if(i != &quot;$promise&quot; &amp;&amp; i != &quot;$resolved&quot;){
+							if (result[i].countries.name == $scope.countryCopy){
+								$scope.countryReviwer = result[i].cntryReviewer;             
+							}
+						}
+					}
+
+						if( $scope.configFile.emailTo != &quot;&quot;){
+							$scope.emaildetails[emailTo] = $scope.configFile.emailTo; 
+							$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom; 
+						}
+						else {
+							$scope.emaildetails[emailTo] = $scope.countryReviwer;
+							$scope.emaildetails[emailFrom] = $scope.configFile.emailFrom;
+						}
+						if(fn != &#039;&#039;){
+							$scope.msgHCP = $scope.configFile.msgHcp;
+							$scope.msgHCP = $scope.msgHCP.replace(new RegExp(&quot;REQUESTOR_FULL_NAME&quot;, &#039;g&#039;),$scope.fullName);
+							$scope.msgHCP = $scope.msgHCP.replace(new RegExp(&quot;PROFILE_TYPE&quot;, &#039;g&#039;),$scope.profile_type_id);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;PROFILE_FIRST_NAME&quot;,fn);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;PROFILE_LAST_NAME&quot;,ln);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;PROFILE_SPECIALTY&quot;,$scope.resultcopy.specility);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;PROFILE_CITY&quot;,city);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;NOTE_FOR_REVIEWER&quot;,notes);
+							$scope.msgHCP = $scope.msgHCP.replace(new RegExp(&quot;PROFILE_CNTRY&quot;, &#039;g&#039;),$scope.countryCopy);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;PROFILE_ADDRESS&quot;,$scope.resultcopy.address);
+							$scope.msgHCP = $scope.msgHCP.replace(&quot;COUNTRY_REVIEWER&quot;,$scope.countryReviwer);
+							
+							$scope.emaildetails[message] = $scope.msgHCP;
+						}
+						else if(on != &#039;&#039;){
+							$scope.msgHCO = $scope.configFile.msgHco;
+							$scope.msgHCO = $scope.msgHCO.replace(new RegExp(&quot;REQUESTOR_FULL_NAME&quot;, &#039;g&#039;),$scope.fullName);
+							$scope.msgHCO = $scope.msgHCO.replace(new RegExp(&quot;PROFILE_TYPE&quot;, &#039;g&#039;),$scope.profile_type_id);
+							$scope.msgHCO = $scope.msgHCO.replace(&quot;ORG_NAME&quot;,on);						
+							$scope.msgHCO = $scope.msgHCO.replace(&quot;PROFILE_SPECIALTY&quot;,$scope.resultcopy.specility);
+							$scope.msgHCO = $scope.msgHCO.replace(&quot;PROFILE_CITY&quot;,city);
+							$scope.msgHCO = $scope.msgHCO.replace(&quot;NOTE_FOR_REVIEWER&quot;,notes);
+							$scope.msgHCO = $scope.msgHCO.replace(new RegExp(&quot;PROFILE_CNTRY&quot;, &#039;g&#039;),$scope.countryCopy);
+							$scope.msgHCO = $scope.msgHCO.replace(&quot;PROFILE_ADDRESS&quot;,$scope.resultcopy.address);
+							$scope.msgHCO = $scope.msgHCO.replace(&quot;COUNTRY_REVIEWER&quot;,$scope.countryReviwer);
+							
+							$scope.emaildetails[message] = $scope.msgHCO;
+						}
+						$scope.emaildetails[requestID] = $scope.countryReviwer;
+						$scope.emaildetails[subject] = &quot;GCMS - &quot;+$scope.profile_type_id+&quot; Profile Review Request for &quot;+$scope.countryCopy;						
+						emaildetails = $scope.emaildetails;
+						$scope.generateEmail(emaildetails);					    			    	
+				
+		};
+		
+		//Create missing profile : Empty First/Last/Org name text box based on the profile type selection
+		// refresh the Credentials dropdown
+		$scope.resetForm = function(item){
+			$scope.validationCCID = &#039;&#039;;
+			$scope.validationNIT = &#039;&#039;;
+			if(item.profileTypeId.Name == &#039;HCP&#039;){
+				item.organizationName = &#039;&#039;;
+				$scope.uniqueTypeCodeNIT = &#039;&#039;;
+			}
+			else if(item.profileTypeId.Name == &#039;HCO&#039;){
+				item.firstName = &#039;&#039;;
+				item.lastName = &#039;&#039;;				
+				$scope.uniqueTypeCodeCCID = &#039;&#039;;
+			}	
+			
+			loadCredential(item.profileTypeId.Name);
+		};
+		
+		//Creates the missing profile 
+		$scope.create = function(item){   
+			$scope.responseOnSave = &#039;&#039;;
+			$scope.responseOnUnsave = &#039;&#039;;
+			item.regionId = 3;	// setting regionId
+			var request = item;
+			var reqID = {};
+			request.profileTypeId = item.profileTypeId.Name;
+			request.status = &#039;Pending&#039;;
+			delete request.readOnly;
+			delete request.msg;
+			IdentityRequest.save(request).$promise
+			.then(function(result) {
+				if(result.$promise.$$state.status == 1)
+				{
+
+					reqID = result.id;
+					$scope.countryCopy = result.country;
+					$scope.profile_type_id = result.profileTypeId;
+					$scope.resultcopy = result;
+					//Gets Reviewer Details and sends out email to respected Reviewer on save of the requested data
+					$scope.getReviewerDetails(reqID);					
+					success();
+					item.firstName = &#039;&#039;;
+					item.profileTypeId = &#039;&#039;;
+					item.lastName = &#039;&#039;;
+					item.organizationName = &#039;&#039;;
+					item.city = &#039;&#039;;
+					item.country = &#039;&#039;;
+					item.specility = &#039;&#039;;
+					item.address = &#039;&#039;;
+					item.notes = &#039;&#039;;
+
+				}
+
+			}).catch(function(){
+				
+				internalError();
+
+
+			}); 
+		};
+		
+		//Creates the temporary profile capable of getting consent 
+		$scope.createTempProfile = function(item){   
+			$scope.responseOnSave = &#039;&#039;;
+			$scope.responseOnUnsave = &#039;&#039;;
+			item.regionId = 5;	// setting regionId for Colombia
+			item.uniqueTypeCodeForNIT = $rootScope.NIT;
+			item.uniqueTypeCodeForCCID = $rootScope.CCID;
+			var request = item;
+			var reqID = {};
+			request.profileTypeId = item.profileTypeId.Name;
+			request.status = &#039;Pending&#039;;
+			delete request.readOnly;
+			delete request.msg;
+			IdentityRequest.save(request).$promise
+			.then(function(result) {
+				if(result.$promise.$$state.status == 1)
+				{
+
+					reqID = result.id;
+					$scope.countryCopy = result.country;
+					$scope.profile_type_id = result.profileTypeId;
+					$scope.resultcopy = result;
+					//Gets Reviewer Details and sends out email to respected Reviewer on save of the requested data
+					$scope.getReviewerDetails(reqID);					
+					successTempProfile();
+					item.firstName = &#039;&#039;;
+					item.profileTypeId = &#039;&#039;;
+					item.uniqueTypeCodeForNIT = &#039;&#039;;
+					item.uniqueTypeCodeForCCID = &#039;&#039;;
+					item.lastName = &#039;&#039;;
+					item.organizationName = &#039;&#039;;
+					item.city = &#039;&#039;;
+					item.country = &#039;&#039;;
+					item.specility = &#039;&#039;;
+					item.address = &#039;&#039;;
+					item.notes = &#039;&#039;;
+					item.regionId = &#039;&#039;;
+
+				}
+
+			}).catch(function(){
+				
+				internalError();
+
+
+			}); 
+		};
+
+		//Collects the checked profile id&#039;s and related info
+		$scope.templateDate = {};
+		$scope.list = function(){ 
+			$scope.currentYear = new Date();
+			$scope.dataToSend = {checkedIds :{},templates :{},request : {}};
+
+			ids[&#039;selid&#039;] =  {checked: JSON.stringify($scope.selectedids)};
+			ids[&#039;selectedParams&#039;] = {selection: JSON.stringify(params)};
+			ids[&#039;collectingCtry&#039;] = collecting_country_id;
+			ids[&#039;profileCountry&#039;] = profile_country_id;
+			ids[&#039;regionId&#039;] = {regId: $scope.request.regionId};
+			myService.set(ids);
+			$scope.id = myService.get();
+			$scope.checkedIds = $scope.id.selid.checked;
+			$scope.checkedIds = JSON.parse($scope.checkedIds);
+			$scope.cntryValue = $scope.id.selectedParams.selection;
+			$scope.regionIdSelection = $scope.id.regionId.regId;
+			$scope.searchCriteria = JSON.parse($scope.cntryValue);
+			$scope.cntryValue = $scope.searchCriteria.country;
+			$scope.dataToSend.checkedIds = $scope.checkedIds;
+			$scope.dataToSend.templates = $scope.templates;
+			$scope.currentYear = (new Date()).getFullYear();
+			
+			for(var i in $scope.templates){
+				if($scope.templates[i].id == $scope.request.tmpl_id){							
+					$scope.daterange = $scope.templates[i].dates_rages;
+					$scope.templateDate[&#039;validity_start_date&#039;] = $scope.templates[i].validity_start_date;
+					$scope.templateDate[&#039;validity_end_date&#039;] = $scope.templates[i].validity_end_date;
+					if($scope.daterange == &#039;Y&#039; ){
+						$scope.dataToSend.setDates = false;
+					}
+					else
+					{
+						$scope.dataToSend.setDates = true;
+					}
+			}
+			}
+			/*if($scope.templateDate.validity_start_date != null &amp;&amp; $scope.templateDate.validity_end_date != null){
+				$scope.templateDate[&#039;start_year&#039;] = $scope.templateDate.validity_start_date.substring(0,4);
+				$scope.templateDate[&#039;start_month&#039;] = $scope.templateDate.validity_start_date.substring(5,7);
+				$scope.templateDate[&#039;start_day&#039;]= $scope.templateDate.validity_start_date.substring(8,10);
+				
+				$scope.templateDate[&#039;end_year&#039;] = $scope.templateDate.validity_end_date.substring(0,4);
+				$scope.templateDate[&#039;end_month&#039;] = $scope.templateDate.validity_end_date.substring(5,7);
+				$scope.templateDate[&#039;end_day&#039;]= $scope.templateDate.validity_end_date.substring(8,10);
+				}*/
+				
+				for(var i  in $scope.checkedIds){
+					$scope.dataToSend.request[$scope.checkedIds[i].id] = {&quot;acmcode&quot; : &quot;&quot;,&quot;eventname&quot; : &quot;&quot;,&quot;pocode&quot; : &quot;&quot;,&quot;tmpl_id&quot; : &quot;&quot;,&quot;consentstartdate&quot; : &quot;&quot;,&quot;consentenddate&quot; : &quot;&quot;,&quot;eventEndDate&quot;: &quot;&quot;};
+					if($scope.templateDate.validity_start_date != null &amp;&amp; $scope.templateDate.validity_end_date != null){
+					$scope.dataToSend.request[$scope.checkedIds[i].id].consentstartdate = moment.tz(moment($scope.templateDate.validity_start_date,&#039;YYYY-MM-DD&#039;),moment.tz.guess()) ;
+					$scope.dataToSend.request[$scope.checkedIds[i].id].consentenddate = moment.tz(moment($scope.templateDate.validity_end_date,&#039;YYYY-MM-DD&#039;),moment.tz.guess()) ;
+					}				
+				}
+		
+
+		};
+
+		//Copy to selected
+		$scope.copy = function(item,copy){
+			$scope.copyCheckedIds = [];
+			$scope.currentYear = (new Date()).getFullYear();
+			for(var i  in $scope.item.checkedIds){
+				if(item.checkbox[$scope.item.checkedIds[i].id] == true){
+					$scope.copyCheckedIds.push($scope.item.checkedIds[i].id);
+				}
+			}
+			 				
+			for(var i  in $scope.copyCheckedIds){
+				item.request[$scope.copyCheckedIds[i]].acmcode = copy.acmcode; 
+				item.request[$scope.copyCheckedIds[i]].eventname = copy.eventname;
+				item.request[$scope.copyCheckedIds[i]].pocode = copy.pocode;
+				if(copy.eventEndDate != undefined &amp;&amp; copy.eventEndDate != &quot;&quot;){
+				item.request[$scope.copyCheckedIds[i]].eventEndDate = copy.eventEndDate.clone();
+				}
+				if(copy.consentstartdate != undefined &amp;&amp; copy.consentstartdate != &quot;&quot;){
+				//item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz($scope.templateDate.start_year+&#039;/&#039;+$scope.templateDate.start_month+&#039;/&#039;+$scope.templateDate.start_day,moment.tz.guess()) : copy.consentstartdate.clone();
+				item.request[$scope.copyCheckedIds[i]].consentstartdate = copy.consentstartdate.clone() == undefined? moment.tz(moment($scope.templateDate.validity_start_date,&#039;YYYY-MM-DD&#039;),moment.tz.guess()) : copy.consentstartdate.clone();
+				}
+				if(copy.consentstartdate != undefined &amp;&amp; copy.consentstartdate != &quot;&quot;){
+				//item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz($scope.templateDate.end_year+&#039;/&#039;+$scope.templateDate.end_month+&#039;/&#039;+$scope.templateDate.end_day,moment.tz.guess()) : copy.consentenddate.clone();
+				item.request[$scope.copyCheckedIds[i]].consentenddate = copy.consentenddate.clone() == undefined? moment.tz(moment($scope.templateDate.validity_end_date,&#039;YYYY-MM-DD&#039;),moment.tz.guess()) : copy.consentenddate.clone();
+				}
+				
+			}
+		};
+		
+		//Loads all templates 
+		var updateTemplates = function(result){
+			$scope.templates = result;             
+			$scope.dataToSend.templates = $scope.templates;
+			$rootScope.template = $scope.templates;
+		};
+
+		//Filter on Template
+		$scope.templateFilter = function (result){
+			$scope.crossInCountry = $scope.request.collectingCountry==$scope.request.country? &#039;InCountry&#039; : &#039;CrossBorder&#039;;
+			$scope.profileTypeSelected = $scope.request.profileType;
+			$scope.templateTypeSelected = $scope.crossInCountry+&#039;-&#039;+$scope.profileTypeSelected;					
+			
+			return ((result.cntry_id.name == $scope.request.country) &amp;&amp; (result.tmpl_status == &quot;ACTIVE&quot;) &amp;&amp; (result.tmpl_type == $scope.templateTypeSelected ) &amp;&amp; result.tmpl_location != null);
+		};
+				
+		
+		$scope.change = function(){			
+			$scope.setDownload = ($scope.selectedids.length == 0 || $scope.request.tmpl_id == undefined || $scope.request.tmpl_id == &quot;&quot; ) ? true : false;
+		};
+		
+		//Filters templates based on Reporting Country				
+		$scope.efpiaFilter = function(countries){
+			return (countries.efpiaCntryFlag == &#039;Y&#039;);
+			
+		};
+
+		var loadTemplates = function(){
+			$scope.templates = [];
+			Templates.query().$promise.then(updateTemplates);
+		};
+
+		loadTemplates();
+		
+		$scope.$on(&#039;$localeChangeSuccess&#039;, loadTemplates);
+
+		$scope.update = function(item) {
+			$scope.templates = item;
+			$rootScope.templates = item;
+		};
+		
+		
+	
+		//Creates Task and Generates PDF
+		$scope.submittry = function(item){ 
+			$scope.msg = &#039;&#039;;
+			$scope.responseOnUnsave = &#039;&#039;;
+			var values = $scope.checkedIds;               	 
+			var modifiedparams = {};
+			$scope.created = false;
+			$scope.createdBy = {};
+
+			//Create Consent Annex rows
+			$scope.getPDFs = function(modifiedparams,y){
+				return ConsentAnnex.save(modifiedparams).$promise.then(function(result) {
+					if(result.$promise.$$state.status == 1)
+					{	 
+						$scope.createdBy = result.createdBy;
+						y++;											
+						$scope.createTask(y);		                    													
+					}
+
+				}).catch(function(){
+					internalError();
+				});
+			};
+			//Downloads multiple PDFs as zip 
+			$scope.downloadAsZip = function(){
+				$http.get(&#039;./config.json&#039;).then(function (response) {
+					var link = response.data[&quot;test-server&quot;].ENVIRONMENT.SERVICE_URI+&#039;consent-annex-pdf/&#039;+ $scope.createdBy;
+					$http({method: &#039;GET&#039;,url: link,responseType: &#039;arraybuffer&#039;}).then(function (response) {
+						var bin = new Blob([response.data]);
+						var docName = &#039;Consent Files.zip&#039;;           
+						saveAs(bin, docName); 
+						success();
+					}).catch(function(){
+						internalError();
+					});	
+					
+				});			
+			};
+
+			var y = 0;
+			$scope.createTask = function(y){
+				if(y&lt;$scope.checkedIds.length){
+					var currentId = values[y].id; 	
+					//Creating Object to send it to Consent Annex				
+					modifiedparams[&#039;payercountry&#039;] = {id: JSON.stringify($scope.id.collectingCtry)};
+					modifiedparams[&#039;profilecountry&#039;] = {id: JSON.stringify($scope.id.profileCountry)};
+					modifiedparams[&#039;profileType&#039;] = $scope.searchCriteria.profileType;
+					modifiedparams[&#039;bpid&#039;] = {id: currentId};
+					modifiedparams[&#039;tmpl_id&#039;] = {id: JSON.stringify($scope.request.tmpl_id)};
+					modifiedparams[&#039;eventname&#039;] = item.request[currentId].eventname;
+					modifiedparams[&#039;pocode&#039;] = item.request[currentId].pocode;
+					modifiedparams[&#039;acmcode&#039;] = item.request[currentId].acmcode;
+					//R2.0 - arunkv
+					//TODO: conditionally set
+					modifiedparams[&#039;regionId&#039;] = $scope.regionIdSelection;
+					modifiedparams[&#039;tempProfile&#039;] = values[y].isTempProfile;
+
+					if($scope.dataToSend.setDates == false){
+					modifiedparams[&#039;consentstartdate&#039;] = item.request[currentId].consentstartdate;
+					modifiedparams[&#039;consentenddate&#039;] = item.request[currentId].consentenddate;
+					modifiedparams[&#039;startdate&#039;] = item.request[currentId].consentstartdate.format(&quot;YYYY-MM-DD&quot;);
+					modifiedparams[&#039;enddate&#039;] = item.request[currentId].consentenddate.format(&quot;YYYY-MM-DD&quot;);
+					}
+					else{
+					modifiedparams[&#039;eventEndDate&#039;] = item.request[currentId].eventEndDate;
+					}
+					$scope.getPDFs(modifiedparams,y);				  	
+				}
+				else
+				{
+					$scope.downloadAsZip();
+					return;
+				}
+
+			};
+
+			if(y==0){
+				$scope.createTask(y);
+			}														
+		};
+		
+		//Loading History
+		$scope.consentAttributes = {};
+        $scope.view = function(id,firstName,lastName,organisationName) { 
+        $rootScope.fname = firstName;
+        $rootScope.lname = lastName;
+        $rootScope.organisationName = organisationName;
+        var profileid = id;
+        $scope.consentAttributes = ConsentAnnex.query({id : profileid, regId : $scope.request.regionId});
+        $scope.consentAttributes.hisFirstName = firstName;
+        $scope.consentAttributes.hisLastName = lastName;
+        $scope.itemCopy = [].concat($scope.consentAttributes);
+        $scope.isResetConsentHistory = true;             
+        if($scope.consentAttributes==&#039;&#039;){
+                     $scope.error = &quot;No Records Found&quot;;
+                     console.log($scope.error);
+               }
+        };    
+      
+        //Start : Changes for View Link of Pending Task
+        $scope.viewTemplate = function(item){
+        	console.log(&quot;fname : &quot;+$rootScope.fname);
+        	ConsentAnnexView.update({ id:item.id }, item).$promise.then(function(res){
+            	
+            	if(res.$promise.$$state.status==1){
+            		$http.get(&#039;./config.json&#039;).then(function (response) {
+    					var link = response.data[&quot;test-server&quot;].ENVIRONMENT.SERVICE_URI+&#039;consent-pdf/&#039;+item.id;
+    					$http({method: &#039;GET&#039;,url: link,responseType: &#039;arraybuffer&#039;}).then(function (response) {
+    						var bin = new Blob([response.data]);
+    						var docName=&#039;&#039;;
+    						if(item.bpid.profileType == &quot;HCP&quot;){
+    						docName = $rootScope.lname+&#039;,&#039;+$rootScope.fname+&#039;.pdf&#039;; 
+    						}else{
+    						docName = $rootScope.organisationName+&#039;.pdf&#039;; 
+    						}
+    						console.log(&quot;doc name is : &quot;+docName);
+    						saveAs(bin, docName); 
+    						toasty.success({
+    	            	        title: &#039;Success&#039;,
+    	            	        msg: &#039;PDF Downloaded Successfully!&#039;,
+    	            	        showClose: true,
+    	            	        clickToClose: true,
+    	            	        timeout: 5000,
+    	            	        sound: false,
+    	            	        html: false,
+    	            	        shake: false,
+    	            	        theme: &#039;bootstrap&#039;
+    	            	      });
+    					}).catch(function(){
+    						internalError();
+    					});	
+    					
+    				});
+            	}else{
+            			unspecifiedError();	            		
+            		}
+            	    	            	
+ 		      }).catch(function(){
+	 		    	// refresh();
+	 		    	 internalError();	
+	       		 });
+        };
+        //End
+        
+        $scope.evaluateMail = function(item){
+        	console.log(&quot;item details : &quot;+item.createdBy);
+        	var emailDetails = item.createdBy+&quot;@pfizer.com&quot;;
+        	
+        	window.location.href = &#039;mailto:&#039;+emailDetails;
+        };
+        
+        $scope.validationCCID=&#039;&#039;;
+        $scope.uniqueTypeCodeCCID = &#039;&#039;;
+        $scope.validateCCID = function(){
+        	$rootScope.CCID = $scope.uniqueTypeCodeCCID;
+        	var regionId = 5;
+        	console.log(&quot;CCID in here : &quot;+$scope.uniqueTypeCodeCCID);
+        	
+        	ValidatedCode.get({id : $scope.uniqueTypeCodeCCID,regionId : regionId}).$promise
+        	.then(function(result) {
+                if(result.$promise.$$state.status == 1)
+            	{
+             	   {
+             		   $scope.trData=result;  
+             		   $scope.validationCCID=&quot;false&quot;;
+             		   $scope.success=&quot;CCID is duplicate&quot;;
+             		   $scope.uniqueTypeCodeCCID = &#039;&#039;;
+                	}
+                	
+                	}
+               
+              }).catch(function(){
+           	  
+             	 $scope.validationCCID=&quot;true&quot;;
+             	 $scope.error=&quot;CCID is valid&quot;;
+              });
+        	
+      	  
+      	   
+         }; 
+         
+         $scope.validationNIT=&#039;&#039;;
+         $scope.uniqueTypeCodeNIT = &#039;&#039;;
+         $scope.validateNIT = function(){ 
+        	 $rootScope.NIT = $scope.uniqueTypeCodeNIT;
+         	var regionId = 5;
+         	console.log(&quot;NIT in here : &quot;+$scope.uniqueTypeCodeNIT);
+         	ValidatedCode.get({id : $scope.uniqueTypeCodeNIT,regionId : regionId}).$promise
+         	.then(function(result) {
+                 if(result.$promise.$$state.status == 1)
+             	{
+              	   {
+              		   $scope.trData=result;  
+              		   $scope.validationNIT=&quot;false&quot;;
+              		   $scope.success=&quot;NIT is duplicate&quot;;
+              		   $scope.uniqueTypeCodeNIT = &#039;&#039;;
+                 	}
+                 	
+                 	}
+                
+               }).catch(function(){
+            	  
+              	 $scope.validationNIT=&quot;true&quot;;
+              	 $scope.error=&quot;NIT is valid&quot;;
+               });
+         	
+       	  
+       	   
+          };
+	}
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

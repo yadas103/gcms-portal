@@ -1,5 +1,5 @@
 /**
- * @ngdoc overview
+ 
  * @name gcms.task
  * 
  * @description Represents a task controller.
@@ -18,6 +18,7 @@
   function TaskController($rootScope, $scope,$filter,Task,Users,toasty,PDFDownload,$http,ConsentPdf,session){
 	  
 	  console.log("Inside task controller");
+	 
 	  	//session.
 	  //$scope.localData = $rootScope.currentProfile.localData;
 /*
@@ -26,7 +27,7 @@
 		    $scope.localData=newValue;
 		   
 		});*/
-	  
+	
 	    var internalError = function(){
 	        toasty.error({
 	          title: 'Error',

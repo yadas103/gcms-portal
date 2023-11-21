@@ -6,11 +6,10 @@
 		Cross-Border Consent forms you collected from HCPs or HCOs you
 		interacted with.' | gTranslate:translationData:'BLW_TSK')}}
 	</div>
-	
+
 
 </h3> 
 <!--  <div ng-controller="FileManagerController" ng-init="login()"></div>  -->
-
 <div class="panel panel-primary">
 	<div class="panel-heading">{{('Upload your documents-Automatic Match' | gTranslate:translationData:'UPLD_DCMT_AUT')}}</div>
 				<div class="panel-body" ng-controller="BulkCtrl">
@@ -89,7 +88,14 @@
 							<th style="width:10%;" ng-hide="loggedInUserRoleId !='5' && status!='COMPLETED' " 
 								>{{('Activity' | gTranslate:translationData:'ACTVTY')}}								
 								</th>
-							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'">{{('Activity' | gTranslate:translationData:'ACTVTY')}}</th>						 
+
+							<th ng-show="loggedInUserRoleId !='5'&& status =='DELETED'">{{('Activity' | gTranslate:translationData:'ACTVTY')}}</th>
+							
+							<!-- Selection for Incompelete status -->
+							<th style="width:10%;" ng-hide="status!='INCOMPLETE' " 
+								>{{('Select')}}								
+								</th>
+													 
 							<!-- <th ng-show="status=='COMPLETED'">DLU P/T</th> -->
 								
 						</tr>
@@ -237,7 +243,9 @@
 											alt="{{con.id}}"> <!-- <span class="glyphicon glyphicon-refresh" style="color:#337ab7;  margin-left: 20px; margin-top: 8px;" ></span> -->
 										<span>{{('Reassign' | gTranslate:translationData:'REASSGN')}}</span> </gcms-modal>
 									
+									
 									</div>
+						
 									
 									<div ng-switch-when="COMPLETED">
 									  <span style="margin-left:17px;" row-select="con" ng-click="select(con)">  <input
@@ -271,12 +279,15 @@
 												controller="ModalDefaultCtrl" content="con" ok="updateUnDelete"
 												alt="{{con.id}}"> <span ng-show="loggedInUserRoleId !='5' && loggedInUserRole.userName ==con.assignedto.userName">Undelete</span>
 											</gcms-modal></td>
-							<!-- <td ng-show="con.taskstatus =='COMPLETED'">
+											
+											
+							<!-- checkbox for Incompete status -->				
+							<td ng-show="con.taskstatus =='INCOMPLETE'">
 							
-									<span row-select="con" ng-click="select(con)">  <input
-											 type="checkbox" style="margin-left:7px;"/></span>	 							     
+									<span style="margin-left:10px;" row-select="con" ng-click="select(con)">  <input
+											 type="checkbox" /></span>	 							     
 								
-							</td> -->
+							</td>
 
 						</tr>
 
@@ -287,7 +298,7 @@
 						</tr>
 					</tbody>
 					<tfoot>
-						<tr ng-hide="status!='COMPLETED'">
+						<tr ng-hide="status=='DELETED'">
 							<td colspan="14">
 							<div class="row" style="margin-top: 12px;margin-bottom: 2px;">
 							<div class="col-sm-6">
@@ -307,8 +318,7 @@
 							</div>
 							</td>
 
-						</tr>
-												
+						</tr>							
 						<tr>
 							<td colspan="14" class="text-center" ng-hide="itemsByPage >= totalcount">
 								<div st-items-by-page='itemsByPage' st-pagination=""

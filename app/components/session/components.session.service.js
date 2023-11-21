@@ -72,17 +72,17 @@
      * @description Gets profiles for a user (all countries)
      * @returns {object} A promise resolving to an array
      */
-    var getCurrentUser = function(){
-		console.log('Here in user-detail***getCurrentUser....1');
-		console.log('Here in user-detail***getCurrentUser....'+userDetailPromise);
-      if (!userDetailPromise){
-		  console.log('Here in user-detail***getCurrentUser....2');
+    var getCurrentUser = function () {
+      console.log('Here in user-detail***getCurrentUser....1');
+      console.log('Here in user-detail***getCurrentUser....' + userDetailPromise);
+      if (!userDetailPromise) {
+        console.log('Here in user-detail***getCurrentUser....2');
         userDetailPromise = LoggedUserDetail.query().$promise;
       }
-	console.log('Here in user-detail***getCurrentUser....3');
-      return userDetailPromise.then(function(result){
-		  console.log('Here in user-detail***getCurrentUser....4');
-        if(result){
+      console.log('Here in user-detail***getCurrentUser....3');
+      return userDetailPromise.then(function (result) {
+        console.log('Here in user-detail***getCurrentUser....4');
+        if (result) {
           // faild to get user details
           userName = result.userName;
         }
@@ -140,15 +140,26 @@
      * @returns {object} A promise resolving to a profile object
      */
     var getPrimaryProfile = function() {
-		console.log('Here in user-detail***UP5....');
       return getCurrentUser().then(function(user){
 		  console.log('Here in user-detail***UP5....'+user);
         var primaryProfile = null;
-        angular.forEach(user.userProfiles, function(profile){
-          if (profile.defaultProfileIndicator === true){
-            primaryProfile = profile;
-          }
-        });
+        if(localStorage.getItem("currentProfile") != null && localStorage.getItem("currentProfile") != undefined){
+          angular.forEach(user.userProfiles, function(profile){
+            if (profile.roleId === JSON.parse(localStorage.getItem("currentProfile")).roleId && profile.countryId == JSON.parse(localStorage.getItem("currentProfile")).countryId){
+              primaryProfile = profile;
+              console.log(primaryProfile)
+            }
+          }); 
+        }
+        else{
+          angular.forEach(user.userProfiles, function(profile){
+            if (profile.defaultProfileIndicator === true){
+              primaryProfile = profile;
+              console.log(primaryProfile)
+            }
+          }); 
+        }
+                
         return primaryProfile;
       });
     };
@@ -161,17 +172,19 @@
      * @returns {object} A promise resolving to a profile object
      */
     var getCurrentProfile = function() {
-		console.log('Here in user-detail***UP1....');
-		console.log('Here in user-detail***UP2....'+currentProfile);
+      console.log('Here in user-detail***UP1....');
+      // console.log('Here in user-detail***UP2....'+currentProfile);
       if (currentProfile) {
+        console.log("current profile..", JSON.stringify(currentProfile));
         return $q.when(currentProfile);
+
       }
 
-		console.log('Here in user-detail***UP10....');
-		console.log('Here in user-detail***UP20....'+getPrimaryProfile());
-		
-      return getPrimaryProfile().then(function(profile){
-		  console.log('Here in user-detail***UP3....'+profile);
+      console.log('Here in user-detail***UP10....');
+      // console.log('Here in user-detail***UP20....'+getPrimaryProfile());
+
+      return getPrimaryProfile().then(function (profile) {
+        console.log('Here in user-detail***UP3....' + JSON.stringify(profile));
         return profile;
       });
     };
@@ -185,13 +198,37 @@
      * @returns {object} A profile object
      */
     var setProfile = function(profile){
-		console.log('Here in user-detail***UP4....'+profile);
+		console.log('Here in user-detail***UP4....'+JSON.stringify(profile));
 		getAllLanguages(profile.countryId);
 
       setLocale(profile.countryId);
       resetLocalizableCache();
       $rootScope.currentProfile = profile;
       currentProfile = profile;
+      if(currentProfile.roleId == 5){
+        $rootScope.profileReviewTabShow = true;
+        $rootScope.homeTabHide = true;
+        $rootScope.notificationTabShow = false;
+        $rootScope.preAdminTabShow = false;
+        $rootScope.manageTabShow = true;
+        $rootScope.adminTabShow = true;
+      }
+      else if(currentProfile.roleId == 6){
+        $rootScope.profileReviewTabShow = false;
+        $rootScope.manageTabShow = false;
+        $rootScope.adminTabShow = false;
+        $rootScope.homeTabHide = false;
+        $rootScope.notificationTabShow = true;
+        $rootScope.preAdminTabShow = true;
+      }
+      else if(currentProfile.roleId == 7){
+        $rootScope.profileReviewTabShow = false;
+        $rootScope.manageTabShow = false;
+        $rootScope.adminTabShow = false;
+        $rootScope.homeTabHide = false;
+        $rootScope.notificationTabShow = true;
+        $rootScope.preAdminTabShow = false;
+      }
       return profile;
     };
     

@@ -45,7 +45,9 @@
         controller: '@',
         content: '=',
         cancel: '&',
-        ok: '&'
+        ok: '&',
+        test:'='
+        
       },
       templateUrl: 'app/components/modal/components.modal.html',
       controller: function($scope, $modal) {
@@ -76,7 +78,6 @@
             */
         
            $scope.resolve = function(item) {
-             // $scope.modelBeingEdited = item;
              $scope.ok()(item);
           
              console.log("in resove" +item);
@@ -102,26 +103,28 @@
             * Opens the modal instance
             */
            $scope.open = function(){
+        	   
+        	   if ($scope.test == true || $scope.test == undefined) {
+               var modalInstance = $modal.open({
+                     backdrop: 'static',
+                     keyboard: false,
+                 templateUrl: 'app/components/modal/templates/' + $scope.template,
+                 controller: $scope.controller,
+                 resolve: {
+                    item: function () {
+                      return $scope.content;
+                                   
+                    }
+                 }
+               });
 
-             var modalInstance = $modal.open({
-                   backdrop: 'static',
-                   keyboard: false,
-               templateUrl: 'app/components/modal/templates/' + $scope.template,
-               controller: $scope.controller,
-               resolve: {
-                  item: function () {
-                    return $scope.content;
-                                 
-                  }
-               }
-             });
-
-             modalInstance.result
-               .then(  $scope.resolve  )
-               .catch( $scope.reject   );
-                   
-             return modalInstance;
-           };
+               modalInstance.result
+                 .then(  $scope.resolve  )
+                 .catch( $scope.reject   );
+                     
+               return modalInstance;
+             };
+           }
       }
     };
   }

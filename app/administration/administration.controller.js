@@ -51,7 +51,6 @@
 	  	 var getReviewData = function(){		  
 		   Review.query().$promise.then(function(review){		    	 
 		       $scope.ReviewAttributes = review;		     
-		       // console.log($scope.ReviewAttributes );
 		       });
 		  };
 		  getReviewData();
@@ -66,13 +65,6 @@
 			 * @description partial view of reviewArributes
 			 */
 		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
-		
-		/*//Filter on Reviewer data
-		$scope.ReviewerFilter = function (result){
-			//console.log(result.countries.id );
-			//console.log($rootScope.currentProfile.countryId);
-			return (result.countries.id == $rootScope.currentProfile.countryId) ;
-		};*/
 		
 		/**
 		 * @author: selim
@@ -92,9 +84,6 @@
 			 * @description update reviewer table
 			 */
 	  $scope.update = function(item) {			
-		//Reloads page once Identity Reviewer is updated.	          		        	  
-	       		        		  
-	        	//$window.location.reload();		        		          		
 	         
 	       };
 	         								
@@ -116,7 +105,6 @@
 	  		 * @param {object}
 	  		 *            item country to update
 	  		 */
-	  	//$scope.expanded = false;
 	  	  $scope.value=function(con){
 	  		 console.log("Inside value");
 	  		  con.expanded = true;		  
@@ -135,8 +123,6 @@
 	  	 var getTemplateData = function(){			  
 	  		  Templates.query().$promise.then(function(template){			    	 
 	  		       $scope.Templates = template;			     			       
-	  		      // $scope.addItem = { temp: $scope.Templates };
-	  		      // console.log($scope.Templates );
 	  		     for(var i in $scope.Templates){
 	  		    	 if($scope.Templates[i].dates_rages == 'Y'){
 	  		    	 if(i != "$promise" || i != "$resolve"){
@@ -172,7 +158,6 @@
 		        	console.log($scope.id);
 		        	angular.forEach($scope.Templates, function(temp){
 			              if (temp.cntry_id.id===$scope.id) {
-			            	 // console.log("inside counter")
 			            	  $scope.counter++;
 			              }
 			            });		        	
@@ -242,7 +227,6 @@
 					 *            item Template to update
 					 */
 		          
-		        //On Click of Task Edit, initialize dates
 		          $scope.date = function(item){		        	  
 		        	  item.validity_start_date = moment(item.startDate,'DD-MM-YYYY');
 		        	  item.validity_end_date = moment(item.endDate,'DD-MM-YYYY')  ;
@@ -257,13 +241,11 @@
 		          $scope.updateTemplate = function(item) {
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
-		                // do nessasary work here if needed
 		            	  temp.updatedDate = new Date();
 		              }
 		            });
 		            console.log(item.id);
 		            
-		            //Input Date format
 		 	           if(item.validity_start != undefined)
 		 	           {
 		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
@@ -280,7 +262,6 @@
 		 	           {	        	   
 		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
 		 		       }
-		 	          //Input Date format
 		 	           if(item.validity_start != undefined)
 		 	           {
 		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
@@ -298,11 +279,9 @@
 		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
 		 		       }
 		       		
-			           //Adding timezone
 		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
 		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
 		       	   
-			           //Convert to DB date format
 		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
 		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
 
@@ -351,12 +330,10 @@
 		            angular.forEach($scope.Templates, function(temp){
 		              if (temp.id === item.id) {
 		            	  temp.updatedDate = new Date();
-		                // do nessasary work here if needed
 		            	  item.tmpl_status="INACTIVE";
 		              }
 		            });
 		            console.log(item.id);
-		            //Input Date format
 		 	           if(item.validity_start != undefined)
 		 	           {
 		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
@@ -373,7 +350,6 @@
 		 	           {	        	   
 		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
 		 		       }
-		 	          //Input Date format
 		 	           if(item.validity_start != undefined)
 		 	           {
 		 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
@@ -391,11 +367,9 @@
 		 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
 		 		       }
 		       		
-			           //Adding timezone
 		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
 		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
 		       	   
-			           //Convert to DB date format
 		            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
 		            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
 
@@ -445,12 +419,10 @@
 			            angular.forEach($scope.Templates, function(temp){
 			              if (temp.id === item.id) {
 			            	  temp.updatedDate = new Date();
-			                // do nessasary work here if needed
 			            	  item.tmpl_status="ACTIVE";
 			              }
 			            });
 			            console.log(item.id);
-			          //Input Date format
 			 	           if(item.validity_start != undefined)
 			 	           {
 			 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
@@ -467,7 +439,6 @@
 			 	           {	        	   
 			 	        	  item.validity_end = moment(item.validity_end_date,['DD-MM-YYYY','YYYY-MM-DD']).format('DD-MM-YYYY');
 			 		       }
-			 	          //Input Date format
 			 	           if(item.validity_start != undefined)
 			 	           {
 			 	        	  item.validity_start = moment(item.validity_start,'DD-MM-YYYY');
@@ -485,11 +456,9 @@
 			 	        	  item.validity_end = moment(item.validity_end_date,'DD-MM-YYYY');
 			 		       }
 			       		
-				           //Adding timezone
 			            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
 			            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
 			       	   
-				           //Convert to DB date format
 			            	item.validity_start_date = moment(item.validity_start).format('YYYY-MM-DD');   			
 			            	item.validity_end_date = moment(item.validity_end).format('YYYY-MM-DD');
 
@@ -594,10 +563,8 @@
 		  
 		  
 		  
-		// private variables
 		    var allUsers = [];
 
-		    // scope variables
 		    $scope.addItem = { users: [], roles: []};
 		          /**
 		  		 * @ngdoc method
@@ -622,20 +589,12 @@
 		        return UserProfile.query().$promise;
 		      }).then(function(profiles){
 		        $scope.profiles = profiles;
-		        //get all users in the system
 		        return UserDetail.query().$promise;
 		      }).then(function(users){
-		        //copy only the ones not already listed on the page
 		        allUsers = users;
 		        $scope.users = users.filter(removeExisting);
 		        $scope.addItem = { users: $scope.users, roles: $scope.roles};
-		        //return $rootScope.session.user.getCurrentProfile();
-		      });/*.then(function(profile){
-		        var countryId = profile.countryId;
-		        return $rootScope.session.user.getAttributes(countryId);
-		      }).then(function(attributes){
-		        $scope.countryAttributes = attributes;
-		      });*/
+		      });
 		    };
 
 		    getData();
@@ -667,8 +626,7 @@
 				profile.deleteRecord = false;
 				profile.deleted = false;
 
-				//UserProfile.save(profile).$promise.then(getData);
-				// Added to display success message once the new role added.
+				
 				UserProfile.save(profile).$promise.then(function(result){
 					getData();
 					$scope.success='User role saved successfully';

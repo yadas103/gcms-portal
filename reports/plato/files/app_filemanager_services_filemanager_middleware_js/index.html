@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/filemanager/services/filemanager.middleware.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/filemanager/services/filemanager.middleware.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">73.30</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">315</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">48.18</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">3.95</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function (angular) {
+  &#039;use strict&#039;;
+  angular.module(&#039;dctmNgFileManager&#039;)
+    .service(&#039;apiMiddleware&#039;, [&#039;$http&#039;, &#039;$q&#039;, &#039;$window&#039;, &#039;fileManagerConfig&#039;, &#039;dctmClient&#039;, &#039;dctmConstants&#039;,&#039;UIConfig&#039;,
+      function ($http, $q, $window, fileManagerConfig, dctmClient, dctmConstants,UIConfig) {
+        var ApiMiddleware = function () {
+          this.inprocess = false;
+          this.error = &#039;&#039;;
+          this.asyncSuccess = false;
+        };
+
+        ApiMiddleware.prototype.getLinkFromResource = function (data, rel) {
+          return dctmClient.getLinkFromResource(data, rel);
+        };
+
+        ApiMiddleware.prototype.parseEntries = function (data) {
+          var objects = [];
+          var entries = data.entries;
+          if (entries != null) {
+            for (var k = 0; k &lt; entries.length; k++) {
+              objects[k] = {
+                &#039;name&#039;: entries[k].title,
+                &#039;rights&#039;: &#039;drwxr-xr-x&#039;,
+                &#039;size&#039;: this.getContentSize(entries[k].content),
+                &#039;date&#039;: entries[k].published,
+                &#039;type&#039;: this.getObjectType(entries[k].content),
+                &#039;id&#039;: entries[k].id,
+                &#039;owner&#039;: entries[k].author[0].name,
+                &#039;object&#039;: entries[k].content.src == null ? entries[k].content : {}
+              };
+            }
+          }
+          return objects;
+        };
+
+        ApiMiddleware.prototype.parseError = function (error, defaultMsg) {
+          if (error &amp;&amp; error.status &amp;&amp; error.status &gt;= 400) {
+            if (error.code) {
+              this.error = error.code;
+              if (error.message) {
+                this.error = this.error + &#039;\r\nReason: &#039; + error.message;
+              }
+              if (error.details) {
+                this.error = this.error + &#039;\r\nMore:     &#039; + error.details;
+              }
+            }
+          }
+          if (!this.error &amp;&amp; defaultMsg) {
+            this.error = defaultMsg;
+          }
+          this.inprocess = false;
+        };
+
+        ApiMiddleware.prototype.getObjectType = function (content) {
+          if (content == null) {
+            return &#039;unknown&#039;;
+          }
+          var objectsHref = dctmClient.getLinkFromResource(content, dctmConstants.LINK_RELATIONS.OBJECTS);
+          if (objectsHref == null) {
+            return &#039;file&#039;;
+          }else {
+            return &#039;dir&#039;;
+          }
+        };
+
+        ApiMiddleware.prototype.getContentSize = function (content) {
+          if (content == null) {
+            return 0;
+          }
+          var contentHref = dctmClient.getLinkFromResource(content, dctmConstants.LINK_RELATIONS.PRIMARY_CONTENT);
+          if (contentHref == null) {
+            return 0;
+          }else {
+            return content.properties.r_full_content_size;
+          }
+        };
+
+        ApiMiddleware.prototype.getPath = function (arrayPath) {
+          return &#039;/&#039; + arrayPath.join(&#039;/&#039;);
+        };
+
+        ApiMiddleware.prototype.getFileList = function (files) {
+          return (files || []).map(function (file) {
+            return file &amp;&amp; file.model.id;
+          });
+        };
+
+        ApiMiddleware.prototype.getObjectList = function (files) {
+          return (files || []).map(function (file) {
+            var obj = file &amp;&amp; file.model.object;
+            obj.properties.object_name = file.tempModel.name;
+            return obj;
+          });
+        };
+
+        ApiMiddleware.prototype.getFilePath = function (item) {
+          return item &amp;&amp; item.model.fullPath();
+        };
+
+        ApiMiddleware.prototype.listRepositories = function () {
+          dctmClient.getHomeDocument(fileManagerConfig.rootContext).then(function (homedoc) {
+            dctmClient.getRepositories(homedoc.data)
+              .then(function (repos) {
+                fileManagerConfig.repositories = repos.data.entries;
+              });
+          });
+        };
+      
+        ApiMiddleware.prototype.getConfigFile = function() {
+           
+        	return UIConfig.query().$promise.then(function(result){
+            	
+              return result;
+            });           
+          };
+       
+          
+        ApiMiddleware.prototype.login = function (loginInfo) {
+          return dctmClient.login(loginInfo).then(function () {
+            fileManagerConfig.signedin = true;
+          });
+        };
+
+        
+        ApiMiddleware.prototype.logout = function () {
+          return dctmClient.logout().then(function () {
+            fileManagerConfig.signedin = false;
+          });
+        };
+
+        ApiMiddleware.prototype.listRootCabinets = function (pageNumber, itemsPerPage) {
+          var repository = dctmClient.getCachedRepository();
+          return dctmClient.getCabinets(repository,
+            dctmConstants.QUERY_PARAMS.INLINE, true,
+            dctmConstants.QUERY_PARAMS.PAGE, pageNumber,
+            dctmConstants.QUERY_PARAMS.ITEMS_PER_PAGE, itemsPerPage);
+        };
+       
+        
+         ApiMiddleware.prototype.getObjectByPath = function (repo, path) {
+        	 return dctmClient.getObjectByPath(repo, path);
+         };
+    
+        
+        ApiMiddleware.prototype.getFolderObjectByPath = function (repoLink,path) {
+       
+     	return dctmClient.getFolderObjectByPath(repoLink,path);
+       
+        };
+        ApiMiddleware.prototype.listFolderChildren = function (parent, pageNumber, itemsPerPage) {
+          var viewAttrs = &#039;r_object_id,r_object_type,object_name,r_modify_date,r_creation_date,i_folder_id,r_full_content_size,a_content_type&#039;;
+          return dctmClient.getChildObjects(parent,
+            dctmConstants.QUERY_PARAMS.INLINE, true,
+            dctmConstants.QUERY_PARAMS.VIEW, viewAttrs,
+            dctmConstants.QUERY_PARAMS.PAGE, pageNumber,
+            dctmConstants.QUERY_PARAMS.ITEMS_PER_PAGE, itemsPerPage);
+        };
+
+        ApiMiddleware.prototype.createFolder = function (parent) {
+          var newFolder = { properties: { object_name: parent.name }};
+          return dctmClient.createFolder(parent.object, newFolder);
+        };
+
+        ApiMiddleware.prototype.ftSearch = function (terms, path, pageNumber, pageSize) {
+          var repository = dctmClient.getCachedRepository();
+          if (path &amp;&amp; path != &#039;/&#039;) {
+            return dctmClient.simpleSearch(repository, terms,
+              dctmConstants.QUERY_PARAMS.LOCATIONS, path,
+              dctmConstants.QUERY_PARAMS.INLINE, true,
+              dctmConstants.QUERY_PARAMS.PAGE, pageNumber,
+              dctmConstants.QUERY_PARAMS.ITEMS_PER_PAGE, pageSize);
+          }else {
+            return dctmClient.simpleSearch(repository, terms,
+              dctmConstants.QUERY_PARAMS.INLINE, true,
+              dctmConstants.QUERY_PARAMS.PAGE, pageNumber,
+              dctmConstants.QUERY_PARAMS.ITEMS_PER_PAGE, pageSize);
+          }
+        };
+
+        ApiMiddleware.prototype.upload = function (fileList, path, parent) {
+          if (! $window.FormData) {
+            throw new Error(&#039;Unsupported browser version&#039;);
+          }
+          var fileObj = fileList.item(0);
+          var docObj = buildPersistentObject([&#039;r_object_type&#039;, &#039;dm_document&#039;, &#039;object_name&#039;, fileObj.name]);
+          return dctmClient.createDocument(parent, docObj, fileObj);
+        };
+
+        ApiMiddleware.prototype.remove = function (files) {
+          var objects = this.getObjectList(files);
+          var delayed = null;
+          for (var k = 0; k &lt; objects.length; k++) {
+            delayed = dctmClient.deleteItem(objects[k],
+              dctmConstants.QUERY_PARAMS.DEL_NON_EMPTY, true,
+              dctmConstants.QUERY_PARAMS.DEL_VERSION, &#039;all&#039;,
+              dctmConstants.QUERY_PARAMS.DEL_ALL_LINKS, true);
+          }
+          return delayed;
+        };
+
+        ApiMiddleware.prototype.rename = function (item) {
+          var data = buildPersistentObject([&#039;object_name&#039;, item.tempModel.name]);
+          return dctmClient.updateItem(item.model.object, data);
+        };
+
+        ApiMiddleware.prototype.copy = function (files, targetFolder) {
+          var items = this.getObjectList(files);
+          var delayed = null;
+          for (var k = 0; k &lt; items.length; k++) {
+            delayed = dctmClient.copy(targetFolder, items[k], {object_name: items[k].properties.object_name});
+          }
+          return delayed;
+        };
+
+        ApiMiddleware.prototype.move = function (files, sourceFolder, targetFolder) {
+          var items = this.getObjectList(files);
+          var delayed = null;
+          for (var k = 0; k &lt; items.length; k++) {
+            delayed = dctmClient.move(items[k], sourceFolder, targetFolder);
+          }
+          return delayed;
+        };
+
+        ApiMiddleware.prototype.getContent = function (item, distributed) {
+          return dctmClient.getPrimaryContentMedia(item.model.object);
+        };
+
+        ApiMiddleware.prototype.getContentMeta = function (item, distributed) {
+          return dctmClient.getPrimaryContentMeta(item.model.object,
+            dctmConstants.QUERY_PARAMS.MEDIA_URL_POLICY, distributed ? &#039;dc-pref&#039; : &#039;local&#039;);
+        };
+
+        ApiMiddleware.prototype.edit = function (item) {
+          var document = item.model.object;
+          var binary = item.tempModel.content;
+          return dctmClient.setContent(document, binary,
+            dctmConstants.QUERY_PARAMS.PRIMARY, true,
+            dctmConstants.QUERY_PARAMS.OVERWRITE, true,
+            dctmConstants.QUERY_PARAMS.PAGE, 0,
+            dctmConstants.QUERY_PARAMS.FORMAT, document.properties.a_content_type);
+        };
+
+
+        ApiMiddleware.prototype.getDocumentDownload = function (doc) {
+        	return dctmClient.getPrimaryContentMedia(doc).then(function (content) {
+                var bin = new Blob([content.data]);
+                var docName=doc.properties.object_name;           
+                saveAs(bin, docName);
+              });
+        };
+		
+		    ApiMiddleware.prototype.getDocumentByLink = function (cacheDocLink) {
+            return dctmClient.getDocumentByLink(cacheDocLink);
+        };
+        
+        ApiMiddleware.prototype.getPermissionSet = function (item) {
+          return dctmClient.getPermissionSet(item.model.object);
+        };
+
+        ApiMiddleware.prototype.setPermissionSet = function (item, permissionSet) {
+          return dctmClient.setPermissionSet(item.model.object, permissionSet);
+        };
+
+        function buildPersistentObject (properties) {
+          var prop = {};
+          for (var k = 0; k &lt; properties.length - 1; k = k + 2) {
+            prop[properties[k]] = properties[k + 1];
+          }
+          var persistentObject = {};
+          persistentObject[&#039;properties&#039;] = prop;
+          return persistentObject;
+        }
+
+        function buildHrefObjectWithProperties (uri, properties) {
+          var persistentObject = {};
+          persistentObject[&#039;href&#039;] = uri;
+          if (properties != null &amp;&amp; properties.length &gt; 0) {
+            var prop = {};
+            for (var k = 0; k &lt; properties.length - 1; k = k + 2) {
+              prop[properties[k]] = properties[k + 1];
+            }
+            persistentObject[&#039;properties&#039;] = prop;
+          }
+          return persistentObject;
+        }
+
+        /************** line separator for implemented APIs ************/
+
+        ApiMiddleware.prototype.downloadMultiple = function (files, forceNewWindow) {
+          var items = this.getFileList(files);
+          var timestamp = new Date().getTime().toString().substr(8, 13);
+          var toFilename = timestamp + &#039;-&#039; + fileManagerConfig.multipleDownloadFileName;
+
+          return this.restClient.downloadMultiple(
+            fileManagerConfig.downloadMultipleUrl,
+            items,
+            toFilename,
+            fileManagerConfig.downloadFilesByAjax,
+            forceNewWindow
+          );
+        };
+
+        ApiMiddleware.prototype.compress = function (files, compressedFilename, path) {
+          var items = this.getFileList(files);
+          return this.restClient.compress(fileManagerConfig.compressUrl, items, compressedFilename, this.getPath(path));
+        };
+
+        ApiMiddleware.prototype.extract = function (item, folderName, path) {
+          var itemPath = this.getFilePath(item);
+          return this.restClient.extract(fileManagerConfig.extractUrl, itemPath, folderName, this.getPath(path));
+        };
+
+        return ApiMiddleware;
+      }]);
+})(angular);</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

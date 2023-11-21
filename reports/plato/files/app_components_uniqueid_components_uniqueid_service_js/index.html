@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/components/uniqueid/components.uniqueid.service.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/components/uniqueid/components.uniqueid.service.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">72.82</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">138</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">21.82</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">0.78</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc service
+ * @name gcms.components.uniqueid.service:uniqueid
+ *
+ * @description
+ * Represents a uniqueid service.
+ * This service determines the appropriate unique id (type and value) to display.
+ */
+
+(function() {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.components.uniqueid&#039;)
+    .factory(&#039;uniqueid&#039;, Uniqueid);
+
+  Uniqueid.$inject = [&#039;$rootScope&#039;, &#039;$q&#039;, &#039;idname&#039;];
+
+  /**
+    * @ngdoc method
+    * @name Uniqueid
+    * @methodOf gcms.components.uniqueid.service:uniqueid
+    * @description Constructor for the uniqueid service
+    * @param {object} $rootScope A root object that refers to the application model.
+    * It is an execution context for expressions. Scopes are arranged in a hierarchical structure which mimic the DOM structure of the application.
+    * @param {object} $q A service that helps you run functions asynchronously, and use their return values (or exceptions) when they are done processing.
+    * @param {object} idname A service for getting the name from the id and the id from the name
+    * @returns {object} The uniqueid service
+    */
+  function Uniqueid($rootScope, $q, idname) {
+
+    /**
+      * @ngdoc method
+      * @name getDefaultUniqueId
+      * @methodOf gcms.components.uniqueid.service:uniqueid
+      * @description Gets uniqueId object based on a recipient.
+      * @param {object} recipient The covered recipient
+      * @returns {object} The uniqueId object
+      */
+    function getDefaultUniqueId(recipient) {
+      var addresses = recipient.addresses;
+      var uniqueIds = recipient.uniqueIdentifiers;
+      var partyTypeCode = recipient.businessPartyTypeCode;
+
+      if (partyTypeCode === &#039;HCP&#039;) {partyTypeCode = &#039;PERSON&#039;;}
+      if (partyTypeCode === &#039;HCO&#039;) {partyTypeCode = &#039;ORGANIZATION&#039;;}
+
+      if (addresses.length &gt; 0 &amp;&amp; uniqueIds.length &gt; 0){
+        return $rootScope.session.collections.addressType().then(function(types){
+          var countryId = getPrimaryAddressCountryId(addresses, types);
+          return $q.all([countryId, $rootScope.session.collections.country()]);
+        }).then(function(result){
+          var country = result[1].find(function(item){ return item.id === result[0]; });
+          var displayUniqueIdentifierTypes = country.displayUniqueIdentifierType;
+
+          // sort all unique ids based on created date
+          uniqueIds = sortUniqueIds(uniqueIds);
+
+          // find appropriate unique id
+          var primaryUniqueId = getRecipientUniqueId(uniqueIds, displayUniqueIdentifierTypes, result[0], partyTypeCode, &#039;PRIMARY&#039;);
+          if (primaryUniqueId){
+            return $q.when(primaryUniqueId);
+          } else {
+            var secondaryUniqueId = getRecipientUniqueId(uniqueIds, displayUniqueIdentifierTypes, result[0], partyTypeCode, &#039;SECONDARY&#039;);
+            if (secondaryUniqueId){
+              return $q.when(secondaryUniqueId);
+            } else {
+              return $q.when(uniqueIds[0]);
+            }
+          }
+        });
+      } else {
+        return $q.when({uniqueIdTypeID: 0, value: &#039;N/A&#039;});
+      }
+    }
+
+    /**
+      * @ngdoc method
+      * @name getPrimaryAddressCountryId
+      * @methodOf gcms.components.uniqueid.service:uniqueid
+      * @description Gets country id from recipient primary address.
+      * @param {Array} recipientAddresses The recipient addresses
+      * @param {Array} addressTypes The addressTypes array
+      * @returns {Number} The country id
+      */
+    var getPrimaryAddressCountryId = function(recipientAddresses, addressTypes){
+      var primaryAddressTypeId = idname.getIdFromName(&#039;PRIMARY ADDRESS&#039;, addressTypes);
+      var address = recipientAddresses.find(function(item){ return item.addressTypeID === primaryAddressTypeId; });
+      return address.countryId;
+    };
+
+    /**
+      * @ngdoc method
+      * @name getRecipientUniqueId
+      * @methodOf gcms.components.uniqueid.service:uniqueid
+      * @description Gets recipient unique id based on country id, party type, and priority
+      * @param {Array} recipientUniqueIds The recipient unique ids
+      * @param {Array} countryUniqueIdTypes The unique id types array for a specific country
+      * @param {Number} countryId The country id
+      * @param {String} partyTypeCode The party type code (e.g., &quot;PERSON&quot; or &quot;ORGANIZATION&quot;)
+      * @param {priority} priority The display priority (e.g., &quot;PRIMARY&quot; or &quot;SECONDARY&quot;)
+      * @returns {object} The unique id object
+      */
+    var getRecipientUniqueId = function(recipientUniqueIds, countryUniqueIdTypes, countryId, partyTypeCode, priority){
+      var uniqueIdentifierType = countryUniqueIdTypes.find(function(item){
+        return item.countryId === countryId &amp;&amp; item.partyTypeCode === partyTypeCode &amp;&amp; item.displayPriorityCode === priority;
+      });
+      var uniqueIdTypeId = uniqueIdentifierType ? uniqueIdentifierType.uniqueIdentifierTypeID : 0;
+      var uniqueId = recipientUniqueIds.find(function(item){ return item.uniqueIdTypeID === uniqueIdTypeId; });
+      return uniqueId;
+    };
+
+    /**
+      * @ngdoc method
+      * @name sortUniqueIds
+      * @methodOf gcms.components.uniqueid.service:uniqueid
+      * @description Sorts the recipients unique ids based on created date in descending order
+      * @param {Array} recipientUniqueIds The recipient unique ids
+      * @returns {Array} The recipients unique ids
+      */
+    var sortUniqueIds = function(recipientUniqueIds){
+      var sortedUniqueIds = recipientUniqueIds.sort(function (a, b) {
+        if (a.createdDate &gt; b.createdDate) {
+          return 1;
+        }
+        if (a.createdDate &lt; b.createdDate) {
+          return -1;
+        }
+        return 0;
+      });
+      return sortedUniqueIds;
+    };
+
+    return {
+      getDefaultUniqueId: getDefaultUniqueId
+    };
+  }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

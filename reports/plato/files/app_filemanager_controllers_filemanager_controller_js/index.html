@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/filemanager/controllers/filemanager.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/filemanager/controllers/filemanager.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">65.65</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">1315</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">114.09</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">16.79</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function (angular, $) {
+  &#039;use strict&#039;;
+  angular.module(&#039;dctmNgFileManager&#039;)
+    .controller(&#039;FileManagerController&#039;, [
+      &#039;$scope&#039;, &#039;$rootScope&#039;, &#039;$window&#039;, &#039;$translate&#039;,&#039;fileManagerConfig&#039;,&#039;item&#039;, &#039;permit&#039;,&#039;Templates&#039;,&#039;PreTemplates&#039;,&#039;Task&#039;,&#039;toasty&#039;, &#039;fileNavigator&#039;, &#039;apiMiddleware&#039;, &#039;dctmClient&#039;, &#039;dctmConstants&#039;,
+      function ($scope, $rootScope, $window, $translate,fileManagerConfig, Item, Permit,Templates,PreTemplates, Task ,toasty,FileNavigator, ApiMiddleware, dctmClient, dctmConstants) {
+        var $storage = $window.localStorage;
+        $scope.config = fileManagerConfig;
+        $scope.reverse = false;
+        $scope.predicate = [&#039;model.type&#039;, &#039;model.name&#039;];
+        $scope.order = function (predicate) {
+          $scope.reverse = ($scope.predicate[1] === predicate) ? !$scope.reverse : false;
+          $scope.predicate[1] = predicate;
+        };
+        $scope.query = &#039;&#039;;
+        $scope.search = &#039;&#039;;
+        $scope.fileNavigator = new FileNavigator();
+        $scope.apiMiddleware = new ApiMiddleware();
+        $scope.uploadFileList = [];
+        $scope.viewTemplate = $storage.getItem(&#039;viewTemplate&#039;) || &#039;main-table.html&#039;;
+        $scope.fileList = [];
+        $scope.temps = [];
+        $scope.dctmConstants = dctmConstants;
+       
+        $scope.taskGbl=&#039;&#039;;
+        $scope.getRepositoryList = function () {
+          $scope.apiMiddleware.listRepositories();
+        };
+
+        $scope.login = function () {
+          $scope.apiMiddleware.login().then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal(&#039;signin&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.logout = function () {
+          $scope.apiMiddleware.logout();
+          $scope.modal(&#039;signout&#039;, true);
+        };
+
+        $scope.uploadFiles = function (item) {
+        	console.log(&quot;uploadFiles&quot;);
+        	delete item.startDate;
+	        delete item.endDate;
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: atob(result.password),
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+            	 	$scope.warning=&#039;&#039;;
+     				$scope.error=&#039;&#039;;
+     				$scope.success=&#039;&#039;;
+	                $scope.fileNavigator.refresh();
+	                $scope.modal(&#039;signin&#039;, true);
+	             
+	                var repoLink=loginInfo.baseUri+&#039;/repositories/&#039;+loginInfo.repoName;
+	                var path =loginInfo.folderPath;
+	             
+	                if($scope.item.consannexid== undefined ){
+	                	
+	                	if($scope.uploadFileList[0].name.includes(&#039;.doc&#039;)){	
+	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+	        		            $scope.modal(&#039;uploadfile&#039;, true);
+	        		            var link =respn.data.links[0];
+	        		            var docLink = link.href;		            	        		            
+	        		            console.log(&quot;Function calling from Template module&quot;) ;
+	        		            $scope.item.tmpl_location=docLink;	        		         
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+	     		 		       }
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+	     		 		       }
+	     		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+	     		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());	     		       	   	     			          
+	     		            	item.validity_start_date = moment(item.validity_start).format(&#039;YYYY-MM-DD&#039;);   			
+	     		            	item.validity_end_date = moment(item.validity_end).format(&#039;YYYY-MM-DD&#039;);
+	     		            	delete item.validity_start;
+	     				        delete item.validity_end;
+	     				        delete item.startDate;
+	     				        delete item.endDate;	
+	     				       if(item.validity_start_date  == &quot;Invalid date&quot; || item.validity_start_date  == undefined ){
+	     			        	   delete item.validity_start_date ;
+	     			           }	     			           
+	     			           if(item.validity_end_date == &quot;Invalid date&quot; || item.validity_end_date == undefined){
+	     			        	   delete item.validity_end_date;
+	     			           }
+	        		            Templates.update({ id:item.id },item).$promise.then(function(response){
+	        		            	if(response.validity_start_date != null &amp;&amp; response.validity_end_date != null ){
+		        		            	  item.startDate = moment(response.validity_start_date,&#039;YYYY-MM-DD&#039;);
+		        			        	  item.endDate = moment(response.validity_end_date,&#039;YYYY-MM-DD&#039;)  ;
+		        			        	  item.startDate = moment.tz(item.startDate,moment.tz.guess());   			
+		        			              item.endDate = moment.tz(item.endDate,moment.tz.guess());	
+		        			              item.startDate = moment(item.startDate,&#039;YYYY-MM-DD&#039;).format(&#039;DD-MM-YYYY&#039;);
+		        			        	  item.endDate = moment(item.endDate,&#039;YYYY-MM-DD&#039;).format(&#039;DD-MM-YYYY&#039;);
+		        			        	  }		  
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: &#039;Success&#039;,
+	        			           	        msg: &#039;Template Uploaded Successfully!&#039;,
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: &#039;bootstrap&#039;
+	        			           	      });
+	        		            		
+	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: &#039;Error&#039;,
+	  	        		          	          msg: &#039;Internal server Error! Failed to update database 1 &#039;,
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: &#039;bootstrap&#039;
+	  	        		          	        });
+	        		            		
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: &#039;Error&#039;,
+	        		          	          msg: &#039;Internal server Error! Failed to update database 2&#039;,
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: &#039;bootstrap&#039;
+	        		          	        });
+	        		     		    	
+	        		       		      });   
+	        		         
+	        		            
+	        		          }, function (resp) {
+	        		            var errorMsg = resp.data &amp;&amp; resp.data.error || $translate.instant(&#039;error_uploading_files&#039;);
+	        		            $scope.apiMiddleware.error = errorMsg;
+	        		            toasty.error({
+	          	          	          title: &#039;Repository Error&#039;,
+	          	          	          msg: &#039;Template  not able to upload ! &#039;,
+	          	          	          showClose: true,
+	          	          	          clickToClose: true,
+	          	          	          timeout: 6000,
+	          	          	          sound: false,
+	          	          	          html: false,
+	          	          	          shake: false,
+	          	          	          theme: &#039;bootstrap&#039;
+	          	          	        });
+	        		            
+	        		          });	
+	        	                }, function (resp) {
+	        	                  self.apiMiddleware.parseError(resp.data);
+	        	                });
+	                		
+	                	}else{
+	                		$scope.error=&quot;Template should be .doc/.docx type&quot;;
+	                		console.log(&quot;File type should be doc type&quot;);
+	                	}
+	                	
+	                }else{
+	                	
+                		if($scope.uploadFileList[0].name.includes(&#039;.pdf&#039;)){
+                			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+            		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+            		            $scope.modal(&#039;uploadfile&#039;, true);
+            		            var link =respn.data.links[0];
+            		            var docLink = link.href;		            
+            		            console.log(&quot;Function calling from Task module&quot;);
+            		            $scope.item.consannexid.annnexlocation=docLink; 
+            		            
+            		            
+            		            
+            		            if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+            		            	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+ 	     		 		       }
+ 	     		 	           if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+ 	     		 		       }
+ 	     		            	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+ 	     		            	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+ 	     		            	item.consannexid.startdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+ 	     		            	item.consannexid.enddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+ 	     		            	delete item.consannexid.consentstart;
+ 	     				        delete item.consannexid.consentend;
+ 	     				        delete item.consannexid.startdate;
+ 	     				        delete item.consannexid.enddate;	
+ 	     				       if(item.consannexid.startdate  == &quot;Invalid date&quot; || item.consannexid.startdate  == undefined ){
+ 	     			        	   delete item.consannexid.startdate ;
+ 	     			           }	     			           
+ 	     			           if(item.consannexid.enddate == &quot;Invalid date&quot; || item.consannexid.enddate == undefined){
+ 	     			        	   delete item.consannexid.enddate;
+ 	     			           }
+            		            
+            		            
+            		            
+            		            
+            		            Task.update({ id:item.id },item).$promise.then(function(response){
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: &#039;Success&#039;,
+	        			           	        msg: &#039;File Uploaded Successfully!&#039;,
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: &#039;bootstrap&#039;
+	        			           	      });
+	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: &#039;Error&#039;,
+	  	        		          	          msg: &#039;Internal server Error! Failed to update database 3&#039;,
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: &#039;bootstrap&#039;
+	  	        		          	        });
+	        		            		
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: &#039;Error&#039;,
+	        		          	          msg: &#039;Internal server Error! Failed to update database 4&#039;,
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: &#039;bootstrap&#039;
+	        		          	        });
+	        		     		    	
+	        		       		      });           		            
+            		            
+            		          }, function (resp) {
+            		            var errorMsg = resp.data &amp;&amp; resp.data.error || $translate.instant(&#039;error_uploading_files&#039;);
+            		            $scope.apiMiddleware.error = errorMsg;
+            		            toasty.error({
+          	          	          title: &#039;Repository Error&#039;,
+          	          	          msg: &#039;File is not able to upload ! &#039;,
+          	          	          showClose: true,
+          	          	          clickToClose: true,
+          	          	          timeout: 6000,
+          	          	          sound: false,
+          	          	          html: false,
+          	          	          shake: false,
+          	          	          theme: &#039;bootstrap&#039;
+          	          	        });
+            		       
+            		          });	
+            	                }, function (resp) {
+            	                  self.apiMiddleware.parseError(resp.data);
+            	                });
+                		
+                	     }else{
+                	    	 $scope.error=&quot;File should be .pdf type&quot;;
+                	    	 console.log(&quot;File should be pdf type&quot;)
+                	}
+                	
+                }	
+             	}, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                     toasty.error({
+            	          title: &#039;Error&#039;,
+            	          msg: &#039;Repository Login error ! Uploading Failed&#039;,
+            	          showClose: true,
+            	          clickToClose: true,
+            	          timeout: 6000,
+            	          sound: false,
+            	          html: false,
+            	          shake: false,
+            	          theme: &#039;bootstrap&#039;
+            	        });
+                     
+                   });
+         	 
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+      	          title: &#039;Error&#039;,
+      	          msg: &#039;Not able to read Configuration file! Uploading failed&#039;,
+      	          showClose: true,
+      	          clickToClose: true,
+      	          timeout: 6000,
+      	          sound: false,
+      	          html: false,
+      	          shake: false,
+      	          theme: &#039;bootstrap&#039;
+      	        });                
+               
+            });
+        	
+        
+        };
+        
+        /*preTemplate start*/
+        $scope.uploadHtmlFiles = function (item) {
+        	if($scope.uploadFileList[0].name.toLowerCase().includes(item.cntry_id.isoCode.toLowerCase())){
+        	console.log(&quot;uploadHtmlFiles&quot;);
+        	delete item.startDate;
+	        delete item.endDate;
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: atob(result.password),
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+            	 	$scope.warning=&#039;&#039;;
+     				$scope.error=&#039;&#039;;
+     				$scope.success=&#039;&#039;;
+	                $scope.fileNavigator.refresh();
+	                $scope.modal(&#039;signin&#039;, true);
+	             
+	                var repoLink=loginInfo.baseUri+&#039;/repositories/&#039;+loginInfo.repoName;
+	                var path =loginInfo.folderPath;
+	             
+	                if($scope.item.consannexid== undefined ){
+	                	
+	                	if(($scope.uploadFileList[0].name.includes(&#039;.html&#039;))){ 
+	                		if(($scope.uploadFileList[0].name.includes(&#039;intro&#039;))){
+                                $scope.item.tmpl_type = &quot;intro&quot;;
+                            }
+                            else if(($scope.uploadFileList[0].name.includes(&#039;tov&#039;))){
+                                $scope.item.tmpl_type = &quot;tov&quot;;
+                            }
+	                			$scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+	        		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+	        		            $scope.modal(&#039;uploadfile&#039;, true);
+	        		            var link =respn.data.links[0];
+	        		            var docLink = link.href;		            	        		            
+	        		            console.log(&quot;Function calling from Template module&quot;) ;
+	        		            $scope.item.tmpl_location=docLink;	        		         
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+	     		 		       }
+	     		 	           if(item.validity_start != undefined)
+	     		 	           {
+	     		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           if(item.validity_end != undefined)
+	     		 	           {
+	     		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+	     		 	           }
+	     		 	           else
+	     		 	           {	        	   
+	     		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+	     		 		       }
+	     		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+	     		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());	     		       	   	     			          
+	     		            	item.validity_start_date = moment(item.validity_start).format(&#039;YYYY-MM-DD&#039;);   			
+	     		            	item.validity_end_date = moment(item.validity_end).format(&#039;YYYY-MM-DD&#039;);
+	     		            	delete item.validity_start;
+	     				        delete item.validity_end;
+	     				        delete item.startDate;
+	     				        delete item.endDate;	
+	     				       if(item.validity_start_date  == &quot;Invalid date&quot; || item.validity_start_date  == undefined ){
+	     			        	   delete item.validity_start_date ;
+	     			           }	     			           
+	     			           if(item.validity_end_date == &quot;Invalid date&quot; || item.validity_end_date == undefined){
+	     			        	   delete item.validity_end_date;
+	     			           }
+	        		            PreTemplates.update({ id:item.id },item).$promise.then(function(response){
+	        		            	if(response.validity_start_date != null &amp;&amp; response.validity_end_date != null ){
+		        		            	  item.startDate = moment(response.validity_start_date,&#039;YYYY-MM-DD&#039;);
+		        			        	  item.endDate = moment(response.validity_end_date,&#039;YYYY-MM-DD&#039;)  ;
+		        			        	  item.startDate = moment.tz(item.startDate,moment.tz.guess());   			
+		        			              item.endDate = moment.tz(item.endDate,moment.tz.guess());	
+		        			              item.startDate = moment(item.startDate,&#039;YYYY-MM-DD&#039;).format(&#039;DD-MM-YYYY&#039;);
+		        			        	  item.endDate = moment(item.endDate,&#039;YYYY-MM-DD&#039;).format(&#039;DD-MM-YYYY&#039;);
+		        			        	  }		  
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: &#039;Success&#039;,
+	        			           	        msg: &#039;Template Uploaded Successfully!&#039;,
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: &#039;bootstrap&#039;
+	        			           	      });
+	        		            		
+	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: &#039;Error&#039;,
+	  	        		          	          msg: &#039;Internal server Error! Failed to update database&#039;,
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: &#039;bootstrap&#039;
+	  	        		          	        });
+	        		            		
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: &#039;Error&#039;,
+	        		          	          msg: &#039;Internal server Error! Failed to update database&#039;,
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: &#039;bootstrap&#039;
+	        		          	        });
+	        		     		    	
+	        		       		      });   
+	        		         
+	        		            
+	        		          }, function (resp) {
+	        		            var errorMsg = resp.data &amp;&amp; resp.data.error || $translate.instant(&#039;error_uploading_files&#039;);
+	        		            $scope.apiMiddleware.error = errorMsg;
+	        		            toasty.error({
+	          	          	          title: &#039;Repository Error&#039;,
+	          	          	          msg: &#039;Template  not able to upload ! &#039;,
+	          	          	          showClose: true,
+	          	          	          clickToClose: true,
+	          	          	          timeout: 6000,
+	          	          	          sound: false,
+	          	          	          html: false,
+	          	          	          shake: false,
+	          	          	          theme: &#039;bootstrap&#039;
+	          	          	        });
+	        		            
+	        		          });	
+	        	                }, function (resp) {
+	        	                  self.apiMiddleware.parseError(resp.data);
+	        	                });
+	                		
+	                	}else{
+	                		$scope.error=&quot;Template should be .html type&quot;;
+	                		console.log(&quot;File type should be html type&quot;);
+	                	}
+	                	
+	                }else{
+	                	
+                		if($scope.uploadFileList[0].name.includes(&#039;.pdf&#039;)){
+                			    $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+            		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+            		            $scope.modal(&#039;uploadfile&#039;, true);
+            		            var link =respn.data.links[0];
+            		            var docLink = link.href;		            
+            		            console.log(&quot;Function calling from Task module&quot;);
+            		            $scope.item.consannexid.annnexlocation=docLink; 
+            		            
+            		            
+            		            
+            		            if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+            		            	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+ 	     		 		       }
+ 	     		 	           if(item.consannexid.consentstart != undefined)
+ 	     		 	           {
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.consentstart,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	item.consannexid.consentstart = moment(item.consannexid.startdate,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           if(item.consannexid.consentend != undefined)
+ 	     		 	           {
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.consentend,&#039;DD-MM-YYYY&#039;);
+ 	     		 	           }
+ 	     		 	           else
+ 	     		 	           {	        	   
+ 	     		 	        	  item.consannexid.consentend = moment(item.consannexid.enddate,&#039;DD-MM-YYYY&#039;);
+ 	     		 		       }
+ 	     		            	item.consannexid.startdate = moment.tz(item.consannexid.consentstart,moment.tz.guess());   			
+ 	     		            	item.consannexid.enddate = moment.tz(item.consannexid.consentend,moment.tz.guess());	     		       	   	     			          
+ 	     		            	item.consannexid.startdate = moment(item.consannexid.consentstart).format(&#039;YYYY-MM-DD&#039;);   			
+ 	     		            	item.consannexid.enddate = moment(item.consannexid.consentend).format(&#039;YYYY-MM-DD&#039;);
+ 	     		            	delete item.consannexid.consentstart;
+ 	     				        delete item.consannexid.consentend;
+ 	     				        delete item.consannexid.startdate;
+ 	     				        delete item.consannexid.enddate;	
+ 	     				       if(item.consannexid.startdate  == &quot;Invalid date&quot; || item.consannexid.startdate  == undefined ){
+ 	     			        	   delete item.consannexid.startdate ;
+ 	     			           }	     			           
+ 	     			           if(item.consannexid.enddate == &quot;Invalid date&quot; || item.consannexid.enddate == undefined){
+ 	     			        	   delete item.consannexid.enddate;
+ 	     			           }
+          
+            		            Task.update({ id:item.id },item).$promise.then(function(response){
+	        		            	if(response.$promise.$$state.status==1)
+	        		            		{
+	        		            		toasty.success({
+	        			           	        title: &#039;Success&#039;,
+	        			           	        msg: &#039;File Uploaded Successfully!&#039;,
+	        			           	        showClose: true,
+	        			           	        clickToClose: true,
+	        			           	        timeout: 5000,
+	        			           	        sound: false,
+	        			           	        html: false,
+	        			           	        shake: false,
+	        			           	        theme: &#039;bootstrap&#039;
+	        			           	      });
+	        		            		$scope.uploadFileList = [];
+	        		            		$scope.ok(item);
+	        		            		}else{
+	        		            			toasty.error({
+	  	        		          	          title: &#039;Error&#039;,
+	  	        		          	          msg: &#039;Internal server Error! Failed to update database&#039;,
+	  	        		          	          showClose: true,
+	  	        		          	          clickToClose: true,
+	  	        		          	          timeout: 6000,
+	  	        		          	          sound: false,
+	  	        		          	          html: false,
+	  	        		          	          shake: false,
+	  	        		          	          theme: &#039;bootstrap&#039;
+	  	        		          	        });
+	        		            		
+	        		            		}
+	        		 		      }).catch(function(){
+	        		 		    	 toasty.error({
+	        		          	          title: &#039;Error&#039;,
+	        		          	          msg: &#039;Internal server Error! Failed to update database&#039;,
+	        		          	          showClose: true,
+	        		          	          clickToClose: true,
+	        		          	          timeout: 6000,
+	        		          	          sound: false,
+	        		          	          html: false,
+	        		          	          shake: false,
+	        		          	          theme: &#039;bootstrap&#039;
+	        		          	        });
+	        		     		    	
+	        		       		      });           		            
+            		            
+            		          }, function (resp) {
+            		            var errorMsg = resp.data &amp;&amp; resp.data.error || $translate.instant(&#039;error_uploading_files&#039;);
+            		            $scope.apiMiddleware.error = errorMsg;
+            		            toasty.error({
+          	          	          title: &#039;Repository Error&#039;,
+          	          	          msg: &#039;File is not able to upload ! &#039;,
+          	          	          showClose: true,
+          	          	          clickToClose: true,
+          	          	          timeout: 6000,
+          	          	          sound: false,
+          	          	          html: false,
+          	          	          shake: false,
+          	          	          theme: &#039;bootstrap&#039;
+          	          	        });
+            		       
+            		          });	
+            	                }, function (resp) {
+            	                  self.apiMiddleware.parseError(resp.data);
+            	                });
+                		
+                	     }else{
+                	    	 $scope.error=&quot;File should be .pdf type&quot;;
+                	    	 console.log(&quot;File should be pdf type&quot;)
+                	}
+                	
+                }	
+             	}, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                     toasty.error({
+            	          title: &#039;Error&#039;,
+            	          msg: &#039;Repository Login error ! Uploading Failed&#039;,
+            	          showClose: true,
+            	          clickToClose: true,
+            	          timeout: 6000,
+            	          sound: false,
+            	          html: false,
+            	          shake: false,
+            	          theme: &#039;bootstrap&#039;
+            	        });
+                     
+                   });
+         	 
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+      	          title: &#039;Error&#039;,
+      	          msg: &#039;Not able to read Configuration file! Uploading failed&#039;,
+      	          showClose: true,
+      	          clickToClose: true,
+      	          timeout: 6000,
+      	          sound: false,
+      	          html: false,
+      	          shake: false,
+      	          theme: &#039;bootstrap&#039;
+      	        });                
+               
+            });
+        	}else{
+        		$scope.error=&quot;Invalid template, country code does not match&quot;;
+        	}	
+        
+        };
+        /*preTemplate end*/
+        
+        $scope.uploadFilesR = function () {
+        	console.log(&quot;uploadFilesR&quot;);
+        	
+        	$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: atob(result.password),
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        	
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+	                $scope.fileNavigator.refresh();
+	                $scope.modal(&#039;signin&#039;, true);
+	             
+	                var repoLink=loginInfo.baseUri+&#039;/repositories/&#039;+loginInfo.repoName;
+	                var path =loginInfo.folderPath; 
+	              
+	                $scope.apiMiddleware.getFolderObjectByPath(repoLink,path).then(function (feed) {   		              
+		            $scope.apiMiddleware.upload($scope.uploadFileList, $scope.fileNavigator.currentPath, feed.data).then(function (respn) {
+		           
+		            var link =respn.data.links[0];
+		            var docLink = link.href;
+		            	$scope.item.consannexid.revocationDocLink=docLink;
+		            	toasty.success({
+		           	        title: &#039;Success&#039;,
+		           	        msg: &#039;File Uploaded Successfully!&#039;,
+		           	        showClose: true,
+		           	        clickToClose: true,
+		           	        timeout: 5000,
+		           	        sound: false,
+		           	        html: false,
+		           	        shake: false,
+		           	        theme: &#039;bootstrap&#039;
+		           	      });
+		            			           
+		          }, function (resp) {
+		            var errorMsg = resp.data &amp;&amp; resp.data.error || $translate.instant(&#039;error_uploading_files&#039;);
+		            $scope.apiMiddleware.error = errorMsg;
+		            toasty.error({
+	          	          title: &#039;Repository Error&#039;,
+	          	          msg: &#039;File is not able to upload ! &#039;,
+	          	          showClose: true,
+	          	          clickToClose: true,
+	          	          timeout: 6000,
+	          	          sound: false,
+	          	          html: false,
+	          	          shake: false,
+	          	          theme: &#039;bootstrap&#039;
+	          	        });
+		            
+		          });	
+	                }, function (resp) {
+	                  self.apiMiddleware.parseError(resp.data);
+	                });
+	                              
+              }, function (resp) {
+                     $scope.apiMiddleware.parseError(resp.data);
+                     toasty.error({
+             	          title: &#039;Error&#039;,
+             	          msg: &#039;Repository Login error ! Uploading Failed&#039;,
+             	          showClose: true,
+             	          clickToClose: true,
+             	          timeout: 6000,
+             	          sound: false,
+             	          html: false,
+             	          shake: false,
+             	          theme: &#039;bootstrap&#039;
+             	        });
+                     
+                   });
+           
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+      	          title: &#039;Error&#039;,
+      	          msg: &#039;Not able to read Configuration file! Uploading failed&#039;,
+      	          showClose: true,
+      	          clickToClose: true,
+      	          timeout: 6000,
+      	          sound: false,
+      	          html: false,
+      	          shake: false,
+      	          theme: &#039;bootstrap&#039;
+      	        });
+                
+            });
+        	
+        	
+        
+        };
+        
+
+       
+        $scope.download = function (obj) {    		
+    		$scope.link=obj;
+    		console.log(&quot;$scope  &quot;+$scope.link);
+    		console.log(&quot;$scope  &quot; , $scope.link.id);
+    		console.log(&quot;$scope  &quot;+$scope.link.consannexid);
+    	
+    		$scope.apiMiddleware.getConfigFile().then(function (result) {
+        		
+        		var loginInfo = {
+        		            baseUri: result.gnosisRestServiceUrl,
+        		            repoName: result.repositoryName,
+        		            username: result.userName,
+        		            password: atob(result.password),
+        		            folderPath: result.gnosisFolderPath
+        		          };
+        		 
+             $scope.apiMiddleware.login(loginInfo).then(function () {
+
+        		 $scope.fileNavigator.refresh();
+	             $scope.modal(&#039;signin&#039;, true);
+        		var location;
+        		if($scope.link.consannexid == undefined){
+	        		console.log(&quot;Inside IF &quot;);
+	        		location=$scope.link.tmpl_location;
+        		}else{
+        			console.log(&quot;Inside ELSE &quot;);
+        			location=$scope.link.consannexid.annnexlocation;
+        		}
+        		console.log(location);
+                $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
+                var doc=resp.data;
+                return $scope.apiMiddleware.getDocumentDownload(doc).then(function (resp) {
+                toasty.success({
+           	        title: &#039;Success&#039;,
+           	        msg: &#039;Downloaded Successfully!&#039;,
+           	        showClose: true,
+           	        clickToClose: true,
+           	        timeout: 5000,
+           	        sound: false,
+           	        html: false,
+           	        shake: false,
+           	        theme: &#039;bootstrap&#039;
+           	      });
+                });
+                	});
+        	
+            	 
+             }, function (resp) {
+                 $scope.apiMiddleware.parseError(resp.data);
+                 
+                 console.log(&quot;File is not able to download &quot;);
+                 toasty.error({
+          	          title: &#039;Error&#039;,
+          	          msg: &#039;Repository Login error ! Downloading Failed&#039;,
+          	          showClose: true,
+          	          clickToClose: true,
+          	          timeout: 6000,
+          	          sound: false,
+          	          html: false,
+          	          shake: false,
+          	          theme: &#039;bootstrap&#039;
+          	        });
+               });
+        	
+          
+        	}, function (resp) {
+                $scope.apiMiddleware.parseError(resp.data);
+                toasty.error({
+        	          title: &#039;Error&#039;,
+        	          msg: &#039;Not able to read Configuration file! Downloading failed&#039;,
+        	          showClose: true,
+        	          clickToClose: true,
+        	          timeout: 6000,
+        	          sound: false,
+        	          html: false,
+        	          shake: false,
+        	          theme: &#039;bootstrap&#039;
+        	        });
+            });
+    		
+    	
+       };
+       
+       
+       $scope.downloadCH = function (obj) {    		
+   		$scope.link=obj;
+   		console.log(&quot;$scope  &quot;+$scope.link);
+   		console.log(&quot;$scope  &quot; , $scope.link.id);
+   		
+   			
+		$scope.apiMiddleware.getConfigFile().then(function (result) {
+    		
+    		var loginInfo = {
+    		            baseUri: result.gnosisRestServiceUrl,
+    		            repoName: result.repositoryName,
+    		            username: result.userName,
+    		            password: atob(result.password),
+    		            folderPath: result.gnosisFolderPath
+    		          };
+    		 
+         $scope.apiMiddleware.login(loginInfo).then(function () {
+
+       		 $scope.fileNavigator.refresh();
+	             $scope.modal(&#039;signin&#039;, true);
+       		
+       		
+	        	var location=$scope.link.annnexlocation;
+               $scope.apiMiddleware.getDocumentByLink(location).then(function (resp) {
+               var doc=resp.data;
+               return $scope.apiMiddleware.getDocumentDownload(doc).then(function (resp) {
+               toasty.success({
+       	        title: &#039;Success&#039;,
+       	        msg: &#039;Downloaded Successfully!&#039;,
+       	        showClose: true,
+       	        clickToClose: true,
+       	        timeout: 5000,
+       	        sound: false,
+       	        html: false,
+       	        shake: false,
+       	        theme: &#039;bootstrap&#039;
+       	      });
+               });
+               
+               console.log(&quot;File Downloaded Successfully&quot;);
+               	});
+       	
+         }, function (resp) {
+             $scope.apiMiddleware.parseError(resp.data);
+            
+             console.log(&quot;File is not able to download &quot;);
+             toasty.error({
+   	          title: &#039;Error&#039;,
+   	          msg: &#039;Repository Login error! Download Failed&#039;,
+   	          showClose: true,
+   	          clickToClose: true,
+   	          timeout: 6000,
+   	          sound: false,
+   	          html: false,
+   	          shake: false,
+   	          theme: &#039;bootstrap&#039;
+   	        });
+           });
+       	 
+    	}, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+            toasty.error({
+  	          title: &#039;Error&#039;,
+  	          msg: &#039;Not able to read Configuration file! Download failed&#039;,
+  	          showClose: true,
+  	          clickToClose: true,
+  	          timeout: 6000,
+  	          sound: false,
+  	          html: false,
+  	          shake: false,
+  	          theme: &#039;bootstrap&#039;
+  	        });
+        });
+		
+		
+      }; 
+      $scope.remove = function () {
+          $scope.apiMiddleware.remove($scope.temps).then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal(&#039;remove&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };      
+      $scope.prepareNewFolder = function () {
+          var item = new Item($scope.fileNavigator.folderObject, $scope.fileNavigator.currentPath);
+          $scope.temps = [item];
+          return item;
+        };
+
+        $scope.createFolder = function () {
+          var itemLocal = $scope.singleSelection();
+          var name = itemLocal.tempModel.name;
+          itemLocal.tempModel.id = $scope.fileNavigator.folderId;
+          itemLocal.tempModel.object = $scope.fileNavigator.folderObject;
+
+          if (!name || $scope.fileNavigator.fileNameExists(name)) {
+            return $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+          }
+
+          $scope.apiMiddleware.createFolder(itemLocal.tempModel).then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal(&#039;newfolder&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.nextPage = function () {
+          if ($scope.search == &#039;&#039;) {
+            $scope.fileNavigator.nextPage();
+          } else {
+            if (!$scope.fileNavigator.hasNext()) {
+              console.log(&#039;No More Pages&#039;);
+              return;
+            }
+            $scope.fileNavigator.pageNumber++;
+            return search();
+          }
+        };
+
+        $scope.previousPage = function () {
+          if ($scope.search == &#039;&#039;) {
+            $scope.fileNavigator.previousPage();
+          } else {
+            if (!$scope.fileNavigator.hasPrevious()) {
+              console.log(&#039;No Previous Pages&#039;);
+              return;
+            }
+            $scope.fileNavigator.pageNumber--;
+            return search();
+          }
+        };
+
+        $scope.ftSearch = function () {
+          if ($scope.search == &#039;&#039;) {
+            $scope.fileNavigator.refresh();
+          } else {
+            return search();
+          }
+        };
+
+        var search = function () {
+          var currentFullPath = $scope.fileNavigator.currentFullPath();
+          var currentPage = $scope.fileNavigator.pageNumber;
+          var currentPageSize = $scope.fileNavigator.pageSize;
+          return $scope.apiMiddleware.ftSearch($scope.search, currentFullPath, currentPage, currentPageSize)
+            .then(function (resp) {
+              var objects = $scope.apiMiddleware.parseEntries(resp.data);
+              $scope.fileNavigator.fileList = (objects || []).map(function (file) {
+                return new Item(file, &#039;/&#039;);
+              });
+              $scope.fileNavigator.buildTree(&#039;/&#039;);
+            }, function (resp) {
+              $scope.apiMiddleware.parseError(resp.data);
+            });
+        };
+        $scope.openImagePreview = function () {
+          var item = $scope.singleSelection();
+          $scope.apiMiddleware.inprocess = true;
+          $scope.apiMiddleware.getContentMeta(item, true).then(function (resp) {
+            var acsUrl = $scope.apiMiddleware.getLinkFromResource(resp.data, dctmConstants.LINK_RELATIONS.ENCLOSURE);
+            $scope.modal(&#039;imagepreview&#039;, null, true)
+              .find(&#039;#imagepreview-target&#039;)
+              .attr(&#039;src&#039;, acsUrl)
+              .unbind(&#039;load error&#039;)
+              .on(&#039;load error&#039;, function () {
+                $scope.apiMiddleware.inprocess = false;
+                $scope.$apply();
+              });
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.rename = function () {
+          var item = $scope.singleSelection();
+          var name = item.tempModel.name;
+          var samePath = item.tempModel.path.join(&#039;&#039;) === item.model.path.join(&#039;&#039;);
+          if (!name || (samePath &amp;&amp; $scope.fileNavigator.fileNameExists(name))) {
+            $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+            return false;
+          }
+          $scope.apiMiddleware.rename(item).then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal(&#039;rename&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.openEditItem = function () {
+          var item = $scope.singleSelection();
+          $scope.apiMiddleware.getContent(item, false).then(function (resp) {
+            item.tempModel.content = item.model.content = String.fromCharCode.apply(null, new Uint8Array(resp.data));
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+          $scope.modal(&#039;edit&#039;);
+        };
+
+        $scope.edit = function () {
+          $scope.apiMiddleware.edit($scope.singleSelection()).then(function () {
+            $scope.modal(&#039;edit&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.move = function () {
+          var anyItem = $scope.singleSelection() || $scope.temps[0];
+          if (anyItem &amp;&amp; validateSamePath(anyItem)) {
+            $scope.apiMiddleware.error = $translate.instant(&#039;error_cannot_move_same_path&#039;);
+            return false;
+          }
+          $scope.apiMiddleware.move($scope.temps, $scope.fileNavigator.folderObject, $rootScope.selectedModalObject).then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal(&#039;move&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.copy = function () {
+          var item = $scope.singleSelection();
+          if (item) {
+            var name = item.tempModel.name.trim();
+            var nameExists = $scope.fileNavigator.fileNameExists(name);
+            if (nameExists &amp;&amp; validateSamePath(item)) {
+              $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+              return false;
+            }
+            if (!name) {
+              $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+              return false;
+            }
+          }
+          $scope.apiMiddleware.copy($scope.temps, $rootScope.selectedModalObject).then(function () {
+            $scope.fileNavigator.refresh();
+            $scope.modal(&#039;copy&#039;, true);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.getPermissions = function () {
+          console.log(&#039;Get permissions for &#039; + $scope.temp.model.name);
+          $scope.apiMiddleware.getPermissionSet($scope.temp).then(function (resp) {
+            $scope.temp.tempModel.permit = new Permit(resp.data);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.changePermissions = function () {
+          console.log(&#039;Change permissions for &#039; + $scope.temp.model.name);
+          var grantedToUpdate = $scope.temp.tempModel.permit.toPermissionSet();
+          $scope.apiMiddleware.setPermissionSet($scope.temp, grantedToUpdate).then(function (resp) {
+            $scope.temp.tempModel.permit = new Permit(resp.data);
+          }, function (resp) {
+            $scope.apiMiddleware.parseError(resp.data);
+          });
+        };
+
+        $scope.addTempPermission = function () {
+          console.log(&#039;Add a new permission to &#039; + $scope.temp.model.name);
+          $scope.temp.tempModel.permit.increase();
+        };
+
+        /************** line separator for implemented APIs ************/
+
+        $scope.compress = function () {
+          var name = $scope.temp.tempModel.name.trim();
+          var nameExists = $scope.fileNavigator.fileNameExists(name);
+
+          if (nameExists &amp;&amp; validateSamePath($scope.temp)) {
+            $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+            return false;
+          }
+          if (!name) {
+            $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+            return false;
+          }
+
+          $scope.apiMiddleware.compress($scope.temps, name, $rootScope.selectedModalPath).then(function () {
+            $scope.fileNavigator.refresh();
+            if (! $scope.config.compressAsync) {
+              return $scope.modal(&#039;compress&#039;, true);
+            }
+            $scope.apiMiddleware.asyncSuccess = true;
+          }, function () {
+            $scope.apiMiddleware.asyncSuccess = false;
+          });
+        };
+
+        $scope.extract = function () {
+          var item = $scope.temp;
+          var name = $scope.temp.tempModel.name.trim();
+          var nameExists = $scope.fileNavigator.fileNameExists(name);
+
+          if (nameExists &amp;&amp; validateSamePath($scope.temp)) {
+            $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+            return false;
+          }
+          if (!name) {
+            $scope.apiMiddleware.error = $translate.instant(&#039;error_invalid_filename&#039;);
+            return false;
+          }
+
+          $scope.apiMiddleware.extract(item, name, $rootScope.selectedModalPath).then(function () {
+            $scope.fileNavigator.refresh();
+            if (! $scope.config.extractAsync) {
+              return $scope.modal(&#039;extract&#039;, true);
+            }
+            $scope.apiMiddleware.asyncSuccess = true;
+          }, function () {
+            $scope.apiMiddleware.asyncSuccess = false;
+          });
+        };
+
+        $scope.$watch(&#039;temps&#039;, function () {
+          if ($scope.singleSelection()) {
+            $scope.temp = $scope.singleSelection();
+          } else {
+            $scope.temp = new Item({rights: 644});
+            $scope.temp.multiple = true;
+          }
+          $scope.temp.revert();
+        });
+
+        $scope.fileNavigator.onRefresh = function () {
+          $scope.temps = [];
+          $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
+          $rootScope.selectedModalObject = $scope.fileNavigator.folderObject;
+        };
+
+        $scope.setTemplate = function (name) {
+          $storage.setItem(&#039;viewTemplate&#039;, name);
+          $scope.viewTemplate = name;
+        };
+
+        $scope.changeLanguage = function (locale) {
+          if (locale) {
+            $storage.setItem(&#039;language&#039;, locale);
+            return $translate.use(locale);
+          }
+          $translate.use($storage.getItem(&#039;language&#039;) || fileManagerConfig.defaultLang);
+        };
+
+        $scope.isSelected = function (item) {
+          return $scope.temps.indexOf(item) !== -1;
+        };
+
+       
+
+        $scope.singleSelection = function () {
+          return $scope.temps.length === 1 &amp;&amp; $scope.temps[0];
+        };
+
+        $scope.totalSelecteds = function () {
+          return {
+            total: $scope.temps.length
+          };
+        };
+
+        $scope.selectionHas = function (type) {
+          return $scope.temps.find(function (item) {
+            return item &amp;&amp; item.model.type === type;
+          });
+        };
+
+        $scope.smartClick = function (item) {
+          if (item.isFolder()) {
+            return $scope.fileNavigator.folderClick(item);
+          }
+          if (item.isImage()) {
+            if ($scope.config.previewImagesInModal) {
+              return $scope.openImagePreview(item);
+            }
+            return $scope.apiMiddleware.download(item, true);
+          }
+          if (item.isEditable()) {
+            return $scope.openEditItem(item);
+          }
+        };       
+        $scope.modal = function (id, hide, returnElement) {        	       
+          var element = $(&#039;#&#039; + id);
+          element.modal(hide ? &#039;hide&#039; : &#039;show&#039;);
+          $scope.apiMiddleware.error = &#039;&#039;;
+          $scope.apiMiddleware.asyncSuccess = false;
+          return returnElement ? element : true;
+        };
+
+        $scope.modalWithPathSelector = function (id) {
+          $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
+          $rootScope.selectedModalObject = $scope.fileNavigator.folderObject;
+          return $scope.modal(id);
+        };
+
+        $scope.isInThisPath = function (path) {
+          var currentPath = $scope.fileNavigator.currentPath.join(&#039;/&#039;);
+          return currentPath.indexOf(path) !== -1;
+        };
+
+        var validateSamePath = function (item) {
+          var selectedPath = $rootScope.selectedModalPath.join(&#039;&#039;);
+          var selectedItemsPath = item &amp;&amp; item.model.path.join(&#039;&#039;);
+          return selectedItemsPath === selectedPath;
+        };
+
+        var getQueryParam = function (param) {
+          var found = $window.location.search.substr(1).split(&#039;&amp;&#039;).filter(function (item) {
+            return param === item.split(&#039;=&#039;)[0];
+          });
+          return found[0] &amp;&amp; found[0].split(&#039;=&#039;)[1] || undefined;
+        };
+
+        $scope.changeLanguage(getQueryParam(&#039;lang&#039;));
+        $scope.isWindows = getQueryParam(&#039;server&#039;) === &#039;Windows&#039;;
+        if (fileManagerConfig.signedin) {
+          $scope.fileNavigator.refresh();
+        }else {
+          $scope.modal(&#039;signin&#039;);
+        }
+      }]);
+})(angular, jQuery);</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/admin/roles/admin.roles.controller.test.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/admin/roles/admin.roles.controller.test.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">62.17</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">452</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">21.48</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">3.22</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function() {
+
+  &#039;use strict&#039;;
+
+  describe(&#039;gcms.administration&#039;, function() {
+
+    var scope, UserProfile, $q, $rootScope, $controller, Role, UserDetail;
+
+    var mockRole =
+            [{
+                &#039;id&#039;: 1,
+                &#039;countryCode&#039;: null,
+                &#039;countryId&#039;: null,
+                &#039;createdDate&#039;: &#039;2015-03-25&#039;,
+                &#039;updatedDate&#039;: null,
+                &#039;createdBy&#039;: &#039;Test&#039;,
+                &#039;updatedBy&#039;: null,
+                &#039;deleteRecord&#039;: false,
+                &#039;errors&#039;: null,
+                &#039;roleName&#039;: &#039;Guest&#039;,
+                &#039;roleDescription&#039;: &#039;Default (based on assignment of NT-ID) role, can only see Search HCP/O&#039;,
+                &#039;rolePermissions&#039;: [
+                    {
+                        &#039;id&#039;: 100,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 1,
+                        &#039;roleActionId&#039;: 2,
+                        &#039;roleActionName&#039;: &#039;Read&#039;,
+                        &#039;entityTypeName&#039;: &#039;Landing&#039;,
+                        &#039;entityTypeId&#039;: 1
+                    },
+                    {
+                        &#039;id&#039;: 101,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 1,
+                        &#039;roleActionId&#039;: 2,
+                        &#039;roleActionName&#039;: &#039;Read&#039;,
+                        &#039;entityTypeName&#039;: &#039;Covered Recipient&#039;,
+                        &#039;entityTypeId&#039;: 2
+                    },
+                    {
+                        &#039;id&#039;: 102,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 1,
+                        &#039;roleActionId&#039;: 2,
+                        &#039;roleActionName&#039;: &#039;Read&#039;,
+                        &#039;entityTypeName&#039;: &#039;Value Exchange&#039;,
+                        &#039;entityTypeId&#039;: 3
+                    },
+                    {
+                        &#039;id&#039;: 103,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2020-04-08&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 1,
+                        &#039;roleActionId&#039;: 2,
+                        &#039;roleActionName&#039;: &#039;Read&#039;,
+                        &#039;entityTypeName&#039;: &#039;Administration&#039;,
+                        &#039;entityTypeId&#039;: 4
+                    }
+                ]
+            },
+            {
+                &#039;id&#039;: 5,
+                &#039;countryCode&#039;: null,
+                &#039;countryId&#039;: null,
+                &#039;createdDate&#039;: &#039;2014-01-01&#039;,
+                &#039;updatedDate&#039;: &#039;2014-01-01&#039;,
+                &#039;createdBy&#039;: &#039;SINGHM62&#039;,
+                &#039;updatedBy&#039;: &#039;SINGHM62&#039;,
+                &#039;deleteRecord&#039;: false,
+                &#039;errors&#039;: null,
+                &#039;roleName&#039;: &#039;Local Admin&#039;,
+                &#039;roleDescription&#039;: &#039;Local Admin&#039;,
+                &#039;rolePermissions&#039;: [
+                    {
+                        &#039;id&#039;: 162,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 1,
+                        &#039;roleActionName&#039;: &#039;Create&#039;,
+                        &#039;entityTypeName&#039;: &#039;Landing&#039;,
+                        &#039;entityTypeId&#039;: 1
+                    },
+                    {
+                        &#039;id&#039;: 163,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 2,
+                        &#039;roleActionName&#039;: &#039;Read&#039;,
+                        &#039;entityTypeName&#039;: &#039;Landing&#039;,
+                        &#039;entityTypeId&#039;: 1
+                    },
+                    {
+                        &#039;id&#039;: 164,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 3,
+                        &#039;roleActionName&#039;: &#039;Update&#039;,
+                        &#039;entityTypeName&#039;: &#039;Landing&#039;,
+                        &#039;entityTypeId&#039;: 1
+                    },
+                    {
+                        &#039;id&#039;: 165,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 4,
+                        &#039;roleActionName&#039;: &#039;Delete&#039;,
+                        &#039;entityTypeName&#039;: &#039;Landing&#039;,
+                        &#039;entityTypeId&#039;: 1
+                    },
+                    {
+                        &#039;id&#039;: 170,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 1,
+                        &#039;roleActionName&#039;: &#039;Create&#039;,
+                        &#039;entityTypeName&#039;: &#039;Covered Recipient&#039;,
+                        &#039;entityTypeId&#039;: 2
+                    },
+                    {
+                        &#039;id&#039;: 172,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 2,
+                        &#039;roleActionName&#039;: &#039;Read&#039;,
+                        &#039;entityTypeName&#039;: &#039;Covered Recipient&#039;,
+                        &#039;entityTypeId&#039;: 2
+                    },
+                    {
+                        &#039;id&#039;: 173,
+                        &#039;countryCode&#039;: null,
+                        &#039;countryId&#039;: null,
+                        &#039;createdDate&#039;: &#039;2015-04-23&#039;,
+                        &#039;updatedDate&#039;: null,
+                        &#039;createdBy&#039;: &#039;talapr01&#039;,
+                        &#039;updatedBy&#039;: null,
+                        &#039;deleteRecord&#039;: false,
+                        &#039;errors&#039;: null,
+                        &#039;roleID&#039;: 5,
+                        &#039;roleActionId&#039;: 3,
+                        &#039;roleActionName&#039;: &#039;Update&#039;,
+                        &#039;entityTypeName&#039;: &#039;Covered Recipient&#039;,
+                        &#039;entityTypeId&#039;: 2
+                    }
+                ]
+            }
+        ];
+
+    var mockUsers = [
+      {
+        &#039;id&#039;: 1,
+        &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+        &#039;updatedDate&#039;: &#039;2015-05-08&#039;,
+        &#039;createdBy&#039;: &#039;talapr01&#039;,
+        &#039;updatedBy&#039;: &#039;panigk&#039;,
+        &#039;countryCode&#039;: null,
+        &#039;countryId&#039;: 1768,
+        &#039;deleteRecord&#039;: false,
+        &#039;errors&#039;: null,
+        &#039;userName&#039;: &#039;andrej34&#039;,
+        &#039;firstName&#039;: &#039;Andres&#039;,
+        &#039;lastName&#039;: &#039;Joel &#039;,
+        &#039;roles&#039;: null,
+        &#039;defaultProfileIndicator&#039;: true,
+        &#039;country&#039;: null,
+        &#039;roleId&#039;: 7,
+        &#039;deleted&#039;: false
+    },
+    {
+        &#039;id&#039;: 2,
+        &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+        &#039;updatedDate&#039;: &#039;2015-05-04&#039;,
+        &#039;createdBy&#039;: &#039;talapr01&#039;,
+        &#039;updatedBy&#039;: &#039;talapr01&#039;,
+        &#039;countryCode&#039;: null,
+        &#039;countryId&#039;: 1768,
+        &#039;deleteRecord&#039;: false,
+        &#039;errors&#039;: null,
+        &#039;userName&#039;: &#039;talapr01&#039;,
+        &#039;firstName&#039;: &#039;Ramesh&#039;,
+        &#039;lastName&#039;: &#039;Talapaneni&#039;,
+        &#039;roles&#039;: null,
+        &#039;defaultProfileIndicator&#039;: false,
+        &#039;country&#039;: null,
+        &#039;roleId&#039;: 7,
+        &#039;deleted&#039;: false
+    },
+    {
+        &#039;id&#039;: 3,
+        &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+        &#039;updatedDate&#039;: null,
+        &#039;createdBy&#039;: &#039;talapr01&#039;,
+        &#039;updatedBy&#039;: null,
+        &#039;countryCode&#039;: null,
+        &#039;countryId&#039;: 1768,
+        &#039;deleteRecord&#039;: false,
+        &#039;errors&#039;: null,
+        &#039;userName&#039;: &#039;grekod&#039;,
+        &#039;firstName&#039;: &#039;Dmitry&#039;,
+        &#039;lastName&#039;: &#039;Grekov&#039;,
+        &#039;roles&#039;: null,
+        &#039;defaultProfileIndicator&#039;: false,
+        &#039;country&#039;: null,
+        &#039;roleId&#039;: 7,
+        &#039;deleted&#039;: false
+    }
+    ];
+    var mockUsersCreate = {
+       &#039;id&#039;: 4,
+       &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+       &#039;updatedDate&#039;: &#039;2015-05-07&#039;,
+       &#039;createdBy&#039;: &#039;talapr01&#039;,
+       &#039;updatedBy&#039;: &#039;narner&#039;,
+       &#039;countryCode&#039;: null,
+       &#039;countryId&#039;: 1768,
+       &#039;deleteRecord&#039;: false,
+       &#039;errors&#039;: null,
+       &#039;userName&#039;: &#039;narner&#039;,
+       &#039;firstName&#039;: &#039;Ramadevi&#039;,
+       &#039;lastName&#039;: &#039;Narne&#039;,
+       &#039;roles&#039;: null,
+       &#039;defaultProfileIndicator&#039;: false,
+       &#039;country&#039;: null,
+       &#039;roleId&#039;: 6,
+       &#039;deleted&#039;: false
+    };
+
+    var mockUsersDelete = [{
+       &#039;id&#039;: 5,
+       &#039;createdDate&#039;: &#039;2015-04-20&#039;,
+       &#039;updatedDate&#039;: &#039;2015-05-07&#039;,
+       &#039;createdBy&#039;: &#039;talapr01&#039;,
+       &#039;updatedBy&#039;: &#039;narner&#039;,
+       &#039;countryCode&#039;: null,
+       &#039;countryId&#039;: 1768,
+       &#039;deleteRecord&#039;: false,
+       &#039;errors&#039;: null,
+       &#039;userName&#039;: &#039;narner&#039;,
+       &#039;firstName&#039;: &#039;Ramadevi&#039;,
+       &#039;lastName&#039;: &#039;Narne&#039;,
+       &#039;roles&#039;: null,
+       &#039;defaultProfileIndicator&#039;: false,
+       &#039;country&#039;: null,
+       &#039;roleId&#039;: 6,
+       &#039;deleted&#039;: false
+    }];
+
+    beforeEach(module(&#039;gcms.administration&#039;));
+    beforeEach(module(&#039;templates&#039;));
+
+    beforeEach(module(function($provide) {
+      $provide.factory(&#039;UserProfile&#039;, function() {
+        return UserProfile;
+      });
+    }));
+
+    beforeEach(module(function($provide) {
+      $provide.factory(&#039;UserDetail&#039;, function() {
+        return UserDetail;
+      });
+    }));
+
+    beforeEach(module(function($provide) {
+      $provide.factory(&#039;Role&#039;, function() {
+        return Role;
+      });
+    }));
+
+    beforeEach(module(function($provide) {
+      $provide.value(&#039;$state&#039;, null);
+    }));
+
+    beforeEach(inject(function(_$q_, _$controller_, _$rootScope_) {
+      $q = _$q_;
+      $controller = _$controller_;
+      $rootScope = _$rootScope_;
+      $rootScope.session = sessionMock;
+    }));
+
+    var sessionMock = {
+      user: {
+          id: 1,
+          token: 1,
+          fullName: function(){ $q.when(&#039;Test User&#039;); },
+          getCurrentRole: function(){ return $q.when({}); },
+          primaryRoleName: {},
+          getCurrentProfile: function(){return $q.when({});},
+          getAttributes: function(){return $q.when({});},
+          getCurrentUser: function(){ return $q.when({}); },
+          roles: function() { $q.when([]); },
+          setRole: function() {}
+      },
+      collections: {
+        country : {},
+        role : {}
+      }
+    };
+
+    beforeEach(function() {
+      UserProfile = {
+        query: function() {
+          return {
+            $promise: $q.when(mockUsers)
+          };
+        },
+        create:function() {},
+        update: function() {},
+        delete: function() {}
+      };
+
+      Role = {
+        query: function() {
+          return {
+            $promise: $q.when(mockRole)
+          };
+        },
+      };
+
+      UserDetail = {
+        query: function() {
+          return {
+            $promise: $q.when(mockUsers)
+          };
+        },
+      };
+      spyOn(Role, &#039;query&#039;).and.callThrough();
+      spyOn(UserDetail, &#039;query&#039;).and.callThrough();
+      spyOn(UserProfile, &#039;query&#039;).and.callThrough();
+      spyOn(UserProfile, &#039;delete&#039;).and.callThrough();
+      spyOn(UserProfile, &#039;update&#039;).and.callThrough();
+      spyOn(UserProfile, &#039;create&#039;).and.callThrough();
+      scope = $rootScope.$new();
+      $controller(&#039;AdminRoleCtrl&#039;, {$scope: scope});
+      scope.$digest();
+    });
+
+    describe(&#039;Admin roles Controller&#039;, function() {
+
+      it(&#039;Should call the Role query&#039;, function() {
+        expect(Role.query).toHaveBeenCalled();
+      });
+
+      it(&#039;Should call the Role details&#039;, function() {
+        expect(scope.roles).toEqual(mockRole);
+      });
+
+      it(&#039;Should call the UserProfile query&#039;, function() {
+        expect(UserProfile.query).toHaveBeenCalled();
+      });
+
+      xit(&#039;Should retrieve the userroles data specific to the particular country&#039;, function() {
+        expect(scope.profiles).toEqual(mockUsers);
+      });
+
+      it(&#039;Should contain three users&#039;, function() {
+        expect(scope.profiles).toBeArrayOfSize(3);
+      });
+
+      xdescribe(&#039;When an new user role is created&#039;, function() {
+        beforeEach(function() {
+          scope.create(mockUsersCreate);
+        });
+
+        it(&#039;Should add one more user role details&#039;, function() {
+          expect(scope.profiles).toBeArrayOfSize(4);
+        });
+
+        it(&#039;Should call the save function&#039;, function(){
+          expect(UserProfile.save).toHaveBeenCalled();
+        });
+      });
+
+      xdescribe(&#039;When an user role is deleted&#039;, function() {
+        beforeEach(function() {
+          expect(scope.profiles).toEqual(mockUsersDelete);
+        });
+        it(&#039;Should remove one user role details&#039;, function() {
+          expect(scope.profiles).toBeArrayOfSize(2);
+        });
+      });
+    });
+  });
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

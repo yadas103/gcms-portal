@@ -26,7 +26,9 @@
       ENVIRONMENT.SERVICE_URI + ':locale/consent-template/:id' + ENVIRONMENT.SERVICE_EXT,
       {
       	  id: '@id',
-          locale: function(){ return localeMapper.getCurrentISOCode(); },
+          locale: function(){ 
+        	  console.log("getCurrentISOCode :"+localeMapper.getCurrentISOCode());
+        	  return localeMapper.getCurrentISOCode(); },
         },
       {
     	  update: { method:'PUT' },

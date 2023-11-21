@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/notification/excel.upload.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/notification/excel.upload.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">57.72</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">795</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">104.66</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">10.88</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">(function () {
+    &#039;use strict&#039;;
+    angular
+        .module(&#039;gcms.notification&#039;)
+        .controller(&#039;ExcelCtrl&#039;, ExcelUploadController);
+
+    ExcelUploadController.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;FileUploader&#039;, &#039;ExcelFileMonitor&#039;, &#039;PlaceHolder&#039;, &#039;localeMapper&#039;, &#039;toasty&#039;, &#039;$sce&#039;,&#039;PreTemplates&#039;,&#039;item&#039;,&#039;SendEmailItem&#039;];
+
+    function ExcelUploadController($rootScope, $scope, FileUploader, ExcelFileMonitor, PlaceHolder, localeMapper, toasty, sce,PreTemplates,item,SendEmailItem) {
+
+        console.log(&quot;Inside Excel Upload controller&quot;);
+        $scope.itemsByPage = 10;
+        $scope.uploads = [];
+        $scope.alerts = [];
+        $scope.locale = localeMapper.getCurrentISOCode();
+        $scope.userID = $rootScope.loggedInUserRoleId;
+        $scope.selectedTemplateType = &#039;&#039;;
+        $scope.placeHolderResult = {};
+        $scope.placeHolderList = &#039;&#039;;
+        $scope.datamodel = [{ &quot;PlaceHolderName&quot;: &quot;&quot;, &quot;FieldName&quot;: &quot;&quot;, &quot;FreeText&quot;: &quot;&quot; }];
+        $scope.fieldlist = [];
+        $scope.exceldata = [];
+        $scope.emailMessage = &#039;&#039;;
+        $scope.filterExceldata = [];
+        $scope.SearchText = &#039;&#039;;
+        $scope.newExcelData = &#039;&#039;;
+        $scope.htmldata = &#039;&#039;;
+        $scope.finaldata = [];
+        $scope.finalmodel = { &quot;placeHolderName&quot;: &quot;&quot;, &quot;fieldNames&quot;: &quot;&quot;, &quot;fieldValues&quot;: &quot;&quot; };
+        $scope.istemplatevalid = false;
+        $scope.data = &#039;&#039;;
+        $scope.dataobj = { &quot;countryCode&quot;: &quot;AUG&quot;, &quot;templatetype&quot;: &quot;intro&quot;, &quot;emailListData&quot;: [], &quot;excelData&quot;: [] };
+        $scope.searchparam = null;
+        $scope.testselect = {};
+        $scope.emailTemplateName = &#039;&#039;;
+        $scope.curPage = null,
+        $scope.itemsPerPage = null,
+        $scope.maxSize = null;
+        $scope.items = &#039;&#039;;
+        $scope.filteredItems = &#039;&#039;;
+        $scope.selectedIndexNumber = &#039;&#039;;
+        $scope.selectedValueField = [];
+        $scope.isPreviewEmail = true;
+        $scope.uploadFileList = [];
+        $scope.dataTableFields = [];
+        $scope.sendAllButton = false;
+        $scope.selectedData = {};
+        $scope.countyCode = localStorage.getItem(&quot;countryCode&quot;);
+
+        $scope.filterExpression = function(testselect) {
+            return (testselect.cntry_id.isoCode == $scope.countyCode);
+        };
+        $scope.PreTemplate = [];
+    
+        /*DataTable creation*/
+        $scope.getHeaderData = function () {
+            $scope.str = &#039;&#039;;
+            $scope.dataTableFields.forEach(item =&gt; {
+                $scope.str += &#039;&lt;th&gt;&#039; + item + &#039;&lt;/th&gt;&#039;;
+            })
+            return $scope.str;
+        }
+
+        $scope.getBodyData = function () {
+            $scope.str1 = &#039;&#039;;
+            $scope.str2 = &#039;&#039;;
+            angular.forEach($scope.exceldata, function(item2, key){
+            $scope.dataTableFields.forEach(item =&gt; {
+                    if(JSON.parse($scope.selectedData).Email == item2.Email){
+                        $scope.str2 +=  &#039;&lt;td&gt;&#039; + $scope.exceldata[key][item] + &#039;&lt;/td&gt;&#039; ;
+                    }
+                })
+                $scope.str1 += &#039;&lt;tr&gt;&#039; + $scope.str2 + &#039;&lt;/tr&gt;&#039;;
+                $scope.str2 = &#039;&#039;;
+            })
+            return $scope.str1;
+        }
+
+        $scope.selectDataTableFields = function (fld, active) {
+            if (active) {
+                $scope.dataTableFields.push(fld);
+            }
+            else {
+                $scope.dataTableFields.splice($scope.dataTableFields.indexOf(fld), 1);
+            }
+        }
+
+        $scope.createDataTable = function () {
+        	$scope.selectedData = JSON.stringify($scope.filterExceldata[$scope.selectedIndexNumber]);
+            console.log(&quot;selected Data:&quot; + JSON.stringify($scope.exceldata[$scope.selectedIndexNumber]));
+            $scope.html = &#039;&lt;table class=&quot;table table-bordered&quot;&gt;&#039; +
+                &#039;&lt;thead&gt;&lt;tr&gt;&#039; + $scope.getHeaderData() + &#039;&lt;/tr&gt;&lt;/thead&gt;&#039; +
+                &#039;&lt;tbody&gt;&lt;tr&gt;&#039; + $scope.getBodyData() + &#039;&lt;/tr&gt;&lt;/tbody&gt;&#039; +
+                &#039;&lt;/table&gt;&#039;;
+            $scope.trustedHtml = sce.trustAsHtml($scope.html);
+            return $scope.html;
+        }
+
+        $scope.loadPlaceholder = function () {
+        	$scope.selectedRow = null;
+        	$scope.dataTableFields = [];
+            $scope.datamodel = [{ &quot;PlaceHolderName&quot;: &quot;&quot;, &quot;FieldName&quot;: &quot;&quot;, &quot;FreeText&quot;: &quot;&quot; }];
+
+            if ($scope.showPreviewButton == true) {
+                $scope.showPreviewButton = false;
+            }
+            if($scope.sendAllButton == true){
+                $scope.sendAllButton = false;
+            }
+            $scope.reset();
+            PlaceHoldercall();
+        }
+    
+        $scope.objectnames = function () {
+            var keynames = Object.keys($scope.exceldata[0]);
+            $scope.fieldlist = keynames;
+            $scope.fieldlist.push(&#039;Custom Value&#039;);
+
+        }
+
+        /* PlaceHolder start */
+        var PlaceHoldercall = function () {
+            return PlaceHolder.query({ temptype:JSON.parse($scope.testselect).tmpl_type,emailTemplateName:JSON.parse($scope.testselect).tmpl_name}).$promise.then(function (result) {
+                $scope.Result = result;
+                console.log($scope.Result[0]);
+                $scope.placeHolderList = $scope.Result[0].placeHolderList;
+                $scope.emailMessage = $scope.Result[0].message;
+                $scope.htmldata = sce.trustAsHtml($scope.emailMessage);
+            }).catch(function () {
+                $scope.uploader.clearQueue();
+                console.log(&quot;found error in placeholder call&quot;)
+
+            });
+        };
+
+        /* validate button start */
+        $scope.validate = function () {
+            $scope.columnslist = &#039;&#039;;
+            const regex = /[!@#%$^&amp;()-\d_=0123456789??.,&gt;&lt;:;&quot;\d&#039;&#039;]/g;
+            var keepgoing = true;
+            angular.forEach($scope.datamodel, function (value, key) {
+                if (keepgoing) {
+                    $scope.istemplatevalid = false;
+                    $scope.finalfieldvalue = &quot;&quot;;
+                    if (value.FreeText !== &#039;&#039; &amp;&amp; value.FreeText != undefined) {
+                        $scope.finalfieldvalue = value.FreeText;
+                    }
+                    else if (value.FieldName !== &#039;&#039; &amp;&amp; value.FieldName !== undefined) {
+                        $scope.finalfieldvalue = value.FieldName;
+                    }
+                    else if (value.FieldName == &#039;&#039; || value.FieldName == undefined) {
+                        $scope.finalfieldvalue = &quot;&quot;;
+                    }
+
+                    if (keepgoing) {
+                        var ismultiplecolumns = $scope.finalfieldvalue.indexOf(&#039;+&#039;);
+                        if (ismultiplecolumns &gt; -1) {
+                            var colslist = $scope.finalfieldvalue.split(&#039;+&#039;);
+                            for (var i = 0; i &lt; colslist.length; i++) {
+                                if ($scope.fieldlist.includes(colslist[i], 0) == false) {
+                                    alert(&#039;Field Name not exist in excel&#039; + colslist[i]);
+                                    $scope.istemplatevalid = false;
+                                    keepgoing = false;
+                                    break;
+                                }
+                            }
+                            $scope.columnslist = $scope.columnslist + $scope.finalfieldvalue + &#039;,&#039;;
+                        }
+                        else {
+                            $scope.columnslist = $scope.columnslist + $scope.finalfieldvalue + &#039;,&#039;;
+                        }
+
+                        $scope.finalmodel.placeHolderName = value.PlaceHolderName;
+                        if (keepgoing) { $scope.istemplatevalid = true; }
+                    }
+
+                }
+            });
+            if ($scope.istemplatevalid == true &amp;&amp; keepgoing == true) {
+                $scope.filterexcel();
+            }
+        };
+        /* validate button end */
+
+        $scope.patterntest = function () {
+            console.log(&quot;Inside patterntest method&quot;);
+            const paragraph = &#039;a1&lt;&gt;,.:&quot;;&#039;;
+            const regex = /[!@#%$^&amp;()-\d_=0123456789??.,&gt;&lt;:;&quot;\d&#039;&#039;]/g;
+            const found = paragraph.match(regex);
+            alert(found.length);
+        }
+
+        $scope.filterexcel = function () {
+            console.log(&quot;filterexcel method&quot;);
+            $scope.finaldata = [];
+            const regex = /[!@#%$^&amp;()-\d_=0123456789??.,&gt;&lt;:;&quot;\d&#039;&#039;]/g;
+            var keepgoing = true;
+            if (JSON.parse($scope.testselect).tmpl_type == &quot;tov&quot;) {
+                $scope.dataTable = $scope.createDataTable();
+            }
+            for (var i = 0; i &lt; $scope.filterExceldata.length; i++) {
+                $scope.filterdata = [];
+                angular.forEach($scope.datamodel, function (value, key) {
+                    if (keepgoing) {
+                        $scope.finalmodel = {};
+                        $scope.finalmodel.placeHolderName = &#039;&#039;;
+                        $scope.finalmodel.fieldValues = &#039;&#039;;
+                        $scope.finalfieldvalue = &#039;&#039;;
+                        $scope.finalmodel.placeHolderName = value.PlaceHolderName;
+                        if (value.FreeText !== &#039;&#039; &amp;&amp; value.FreeText !== undefined) {
+                            $scope.finalfieldvalue = value.FreeText;
+                        }
+                        else if (value.FieldName !== &#039;&#039; &amp;&amp; value.FieldName !== undefined) {
+                            $scope.finalfieldvalue = value.FieldName;
+                        }
+                        else if (value.FieldName !== undefined) {
+                            $scope.finalfieldvalue = &quot;&quot;;
+                        }
+                        else if (value.FieldName === &#039;Custom Value&#039;) {
+                            $scope.finalfieldvalue = value.FreeText;
+                        }
+                        $scope.finalmodel.placeHolderName = value.PlaceHolderName;
+                        $scope.finalmodel.fieldNames = $scope.finalfieldvalue;
+                        if ($scope.finalmodel.placeHolderName == &#039;DATA_TABLE&#039;) {
+                            $scope.finalmodel.fieldNames = $scope.dataTableFields.toString();
+                        }
+                        if (keepgoing) {
+                            var ismultiplecolumns = $scope.finalfieldvalue.indexOf(&#039;+&#039;);
+                            if (ismultiplecolumns &gt; -1) {
+
+                                var colslist = $scope.finalfieldvalue.split(&#039;+&#039;);
+                                for (var i1 = 0; i1 &lt; colslist.length; i1++) {
+                                    $scope.finalmodel = $scope.finalmodel.fieldValues + $scope.filterExceldata[i][colslist[i1]] + &#039; &#039;;
+                                }
+                                colslist = [];
+                            }
+                            else if (value.FreeText !== &quot;&quot; &amp;&amp; value.FreeText != undefined) {
+                                $scope.finalmodel.fieldValues = value.FreeText;
+                            }
+                            else {
+                                $scope.finalmodel.fieldValues = $scope.filterExceldata[i][$scope.finalfieldvalue];
+                            }
+                        }
+                        $scope.filterdata.push($scope.finalmodel);
+                    }
+                });
+                if ($scope.finalmodel.PlaceHolderName == &#039;DATA_TABLE&#039;) {
+                }
+
+                $scope.finaldata.push({ &quot;email&quot;: $scope.filterExceldata[i].Email, &quot;uniqueId&quot;: $scope.filterExceldata[i].UniqueID, &quot;data&quot;: $scope.filterdata });
+                /*console.log(&quot;$scope.filterdata&quot;+ JSON.stringify($scope.finaldata));*/
+            }
+
+            $scope.dataobj.countryCode = $scope.locale;
+            $scope.dataobj.templatetype = JSON.parse($scope.testselect).tmpl_type;
+            $scope.dataobj.message = $scope.emailMessage;
+            $scope.dataobj.emailListData = [];
+            $scope.dataobj.emailListData.push(...$scope.finaldata);
+            $scope.dataobj.excelData.push(...$scope.filterExceldata);
+            console.log(&quot;uniqueFinaldata:&quot; + JSON.stringify($scope.dataobj.emailListData));
+
+            for (var p = 0; p &lt; $scope.placeHolderList.length; p++) {
+                for (var m = 0; m &lt; $scope.finaldata[$scope.selectedIndexNumber].data.length; m++) {
+                    if ($scope.finaldata[$scope.selectedIndexNumber].data[m].placeHolderName === $scope.placeHolderList[p]) {
+                        $scope.message = $scope.emailMessage.replaceAll(&#039;#&#039; + $scope.placeHolderList[p] + &#039;#&#039;, $scope.finaldata[$scope.selectedIndexNumber].data[m].fieldValues);
+                        $scope.emailMessage = $scope.message;
+                    }
+                    if ($scope.placeHolderList[p] == &#039;DATA_TABLE&#039;) {
+                        $scope.message = $scope.emailMessage.replaceAll(&#039;#DATA_TABLE#&#039;, $scope.dataTable);
+                        $scope.emailMessage = $scope.message;
+                    }
+                }
+            }
+            $scope.htmldata = sce.trustAsHtml($scope.emailMessage);
+            $scope.sendAllButton = true;
+            PlaceHoldercall();
+        }
+
+        $scope.showPreviewButton = false;
+        $scope.previewValid = false;
+        
+        $scope.selectedRow = null;
+        $scope.getIndexNumber = function (indexNumber,c) {
+            $scope.selectedIndexNumber = indexNumber + (($scope.curPage - 1) * $scope.itemsPerPage);
+            
+            let totalCount= $scope.datamodel.length;
+            let processdCount =0;
+            if(JSON.parse($scope.testselect).tmpl_type == &quot;intro&quot;){
+                for(var i=0; i&lt;$scope.datamodel.length; i++){
+                    if($scope.datamodel[i].FieldName == null || $scope.datamodel[i].FieldName == undefined || $scope.datamodel[i].FieldName == &quot;&quot;){
+                        $scope.previewValid = false;
+                       // alert(&quot;Please replace placeholder for &quot;+  $scope.datamodel[i].PlaceHolderName);
+                        toasty.warning({
+							title: &#039;Action Required:&#039;,
+							msg: &#039;Please replace placeholder for &#039;+  $scope.datamodel[i].PlaceHolderName,
+							showClose: true,
+							clickToClose: true,
+							timeout: 15000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+                        break;
+                    }
+                    else if($scope.datamodel[i].FieldName == &#039;Custom Value&#039; &amp;&amp; $scope.datamodel[i].FreeText == &quot;&quot; &amp;&amp; ($scope.selectedIndexNumber != null || $scope.selectedIndexNumber!=undefined)){
+                        $scope.previewValid = false;
+                        //alert(&quot;Please provide custom value for &quot; + $scope.datamodel[i].PlaceHolderName); 
+                        toasty.warning({
+							title: &#039;Action Required:&#039;,
+							msg: &#039;Please provide custom value for &#039;+  $scope.datamodel[i].PlaceHolderName,
+							showClose: true,
+							clickToClose: true,
+							timeout: 15000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+                        break;              
+                    }
+                    else{
+                        processdCount++;
+                        $scope.previewValid = true;
+                    }
+                }
+                if($scope.previewValid &amp;&amp; processdCount == totalCount) {
+                	/*$scope.isSelectedRow = $scope.selectedIndexNumber;*/
+                	$scope.selectedRow =c;
+                    $scope.showPreviewButton = true;
+                }
+            }
+            if(JSON.parse($scope.testselect).tmpl_type == &quot;tov&quot;){
+                for(var i=0; i&lt;$scope.datamodel.length; i++){
+                    if(($scope.datamodel[i].FieldName == null || $scope.datamodel[i].FieldName == undefined || $scope.datamodel[i].FieldName == &quot;&quot;) &amp;&amp; $scope.datamodel[i].PlaceHolderName != &#039;DATA_TABLE&#039;){
+                        //alert(&quot;Please replace placeholder for &quot;+  $scope.datamodel[i].PlaceHolderName);
+                    	toasty.warning({
+							title: &#039;Action Required:&#039;,
+							msg: &#039;Please replace placeholder for &#039;+  $scope.datamodel[i].PlaceHolderName,
+							showClose: true,
+							clickToClose: true,
+							timeout: 15000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+                        break;
+                    }
+                    else if($scope.datamodel[i].FieldName ==&#039;Custom Value&#039; &amp;&amp; $scope.datamodel[i].FreeText == &quot;&quot; &amp;&amp; ($scope.selectedIndexNumber != null || $scope.selectedIndexNumber!=undefined) &amp;&amp; $scope.datamodel[i].PlaceHolderName != &#039;DATA_TABLE&#039;){
+                        $scope.previewValid = false;
+                        //alert(&quot;Please provide custom value for &quot; + $scope.datamodel[i].PlaceHolderName);
+                        toasty.warning({
+							title: &#039;Action Required:&#039;,
+							msg: &#039;Please provide custom value for &#039;+  $scope.datamodel[i].PlaceHolderName,
+							showClose: true,
+							clickToClose: true,
+							timeout: 15000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+                        break;
+                    }
+                    else if($scope.datamodel[i].PlaceHolderName == &#039;DATA_TABLE&#039; &amp;&amp; $scope.dataTableFields.length &lt;= 0){
+                        $scope.previewValid = false;
+                        //alert(&quot;Please select placeholder from data table&quot;);
+                        toasty.warning({
+							title: &#039;Action Required:&#039;,
+							msg: &#039;Please select placeholder from data table &#039;,
+							showClose: true,
+							clickToClose: true,
+							timeout: 15000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+                        break;
+                    }
+                    else{
+                        processdCount++;
+                        $scope.previewValid = true;
+                    }
+                }
+
+                if($scope.previewValid &amp;&amp; processdCount == totalCount) {
+                	/*$scope.isSelectedRow = $scope.selectedIndexNumber;*/
+                	$scope.selectedRow =c;
+                    $scope.showPreviewButton = true;
+
+                }
+
+            }
+        }
+
+        $scope.getPlaceHolderValueSelect = function (dropDownValue) {
+        	$scope.showPreviewButton = false
+        }
+
+        $scope.isRadOnly = function (FieldName) {
+            if (FieldName == &#039;Custom Value&#039;) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        $scope.reset = function () {
+            $scope.placeHolderList = &quot;&quot;;
+            $scope.selectedValueField = [];
+            $scope.showPreviewButton = false;
+            // $scope.datamodel = [{ &quot;PlaceHolderName&quot;: &quot;&quot;, &quot;FieldName&quot;: &quot;&quot;, &quot;FreeText&quot;: &quot;&quot; }];
+        }
+        $scope.clearSearch = function () {
+            $scope.SearchText = &quot;&quot;;
+            $scope.filteredItems =$scope.filteredItemsCopy;
+        }
+
+        /*FileUploader*/
+        $scope.uploader = new FileUploader({
+            
+            filters: [{
+                fn: function (item) {
+                    var flag = false;
+                    for (var i in this.queue) {
+                        if (item.name === this.queue[i].file.name) {
+                            flag = true;
+                        }
+                    }
+                    if (flag) {
+                        item.name += &#039;(&#039; + (this.queue.length + 1) + &#039;)&#039;;
+                    }
+                    return true;
+                }
+            }],
+
+            url: &#039;../gcms-service/&#039; + $scope.locale + &#039;/excel-upload&#039;
+
+        });
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+ 
+        $scope.upload = function () {
+            console.log(&quot;Inside upload&quot;);
+            $scope.a = false;
+            if ($scope.uploader.progress == 100) {
+                $scope.success = &#039;&#039;;
+                $scope.error = &#039;&#039;;
+                return ExcelFileMonitor.query({ userid: $scope.userID }).$promise.then(function (result) {
+                    $scope.Result = result;
+                    $scope.a = result.$resolved;
+                    $scope.exceldata = $scope.Result[0].data;
+                    $scope.filterExceldata = uniqueData($scope.exceldata, &#039;Email&#039;);
+                    const allMandatoryColumnsExists = checkMadatoryColumnExistence($scope.exceldata);
+                    if(allMandatoryColumnsExists){
+                        const checkValidCountryCode = validateCountryCode($scope.exceldata);
+                        const missingEmailandUniqueIdandRecipientName = checkMissingEmailUniqueIdRecipientName($scope.exceldata);
+                        const uniqueEmailIdValidationData = findConflicts($scope.Result[0].data);
+                        const isValidEmail = checkValidEmail($scope.Result[0].data);
+
+                        if(missingEmailandUniqueIdandRecipientName == false || checkValidCountryCode == false || uniqueEmailIdValidationData == false || isValidEmail == false){
+                            // $scope.a=false;
+                            // $scope.filterExceldata = &quot;&quot;;
+                            // $scope.excelData =&quot;&quot;;
+                            $scope.filteredItems =&quot;&quot;;
+                            toasty.error({
+                                            title: &#039;Error&#039;,
+                                            msg: &#039;Error occured in file upload ! Please check in view data&#039;,
+                                            showClose: true,
+                                            clickToClose: true,
+                                            timeout: 10000,
+                                            sound: false,
+                                            html: false,
+                                            shake: false,
+                                            theme: &#039;bootstrap&#039;
+                                        });
+                                        $scope.uploader.clearQueue();
+                        }
+                        
+                        if(missingEmailandUniqueIdandRecipientName != false &amp;&amp; checkValidCountryCode != false &amp;&amp; uniqueEmailIdValidationData != false &amp;&amp; isValidEmail != false) {
+                            toasty.success({
+                                title: &#039;Success&#039;,
+                                msg: &#039;File Processed ! See results&#039;,
+                                showClose: true,
+                                clickToClose: true,
+                                timeout: 15000,
+                                sound: false,
+                                html: false,
+                                shake: false,
+                                theme: &#039;bootstrap&#039;
+                            });
+                            $scope.objectnames();
+                        /*pagination s*/
+                        $scope.curPage = 1;
+                        $scope.itemsPerPage = 10;
+                        $scope.maxSize = 5;
+                        // $scope.items =$scope.item;[]
+                        
+                        $scope.numOfPages = Math.ceil($scope.filterExceldata.length / $scope.itemsPerPage);
+                    
+                        $scope.pageChanged = function() {
+                        console.log(&#039;Page changed to: &#039; + $scope.curPage);
+                        };
+                    
+                        $scope.$watch(&#039;curPage + numOfPages&#039;, function () {
+
+                            $scope.filteredItems = $scope.filterExceldata.slice((($scope.curPage-1)*$scope.itemsPerPage), (($scope.curPage)*$scope.itemsPerPage));
+                            $scope.filteredItemsCopy = angular.copy($scope.filteredItems);
+                        });
+                        }
+                        $scope.uploader.clearQueue();
+                    }
+                    
+                        
+                    }).catch(function () {
+                        $scope.uploader.clearQueue();
+                        toasty.error({
+                            title: &#039;Error&#039;,
+                            msg: &#039;Error occured in file upload ! Please upload a excel file&#039;,
+                            showClose: true,
+                            clickToClose: true,
+                            timeout: 5000,
+                            sound: false,
+                            html: false,
+                            shake: false,
+                            theme: &#039;bootstrap&#039;
+                        });
+                        $scope.a = false;
+                    });
+                };
+        }
+        
+        function findConflicts(data){
+            const emailToIds = {};
+            const idToEmails ={};
+            const conflictedEmails = new Set();
+            const conflictedIds = new Set();
+            let emailConflict;
+            let idConflict;
+            data.forEach(item =&gt;{
+                if(!emailToIds[item.Email]){
+                    emailToIds[item.Email] = [item.UniqueID];
+                }else if(!emailToIds[item.Email].includes(item.UniqueID)){
+                    conflictedEmails.add(item.Email);
+                }
+                if(!idToEmails[item.UniqueID]){
+                    idToEmails[item.UniqueID] = [item.Email];
+                }else if(!idToEmails[item.UniqueID].includes(item.Email)){
+                    conflictedIds.add(item.UniqueID);
+                }
+            });
+            data.forEach(item =&gt;{
+                if(conflictedEmails.has(item.Email)){
+                    emailConflict = true
+                }
+                if(conflictedIds.has(item.UniqueID)){
+                    idConflict = true;
+                }
+            });
+            if(emailConflict || idConflict){
+                return false;
+            }
+            
+        }
+        function checkMissingEmailUniqueIdRecipientName(array){
+            for(var i=0; i&lt;array.length ; i++){
+                if((array[i].Email == null ||array[i].Email == undefined) || (array[i].UniqueID == null || array[i].UniqueID == undefined) ||  (array[i].RecipientName == null || array[i].RecipientName == undefined)){
+                    return false;
+                }
+            }
+        }
+        function checkValidEmail(data){
+            for(var i=0; i&lt;data.length ; i++){ 
+                if(data[i].Email != null || data[i].Email !=undefined){
+                    let email = data[i].Email.replace(/^\s+|\s+$/gm,&#039;&#039;);
+                    var EMAIL_REGEX = &quot;^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@&quot;
+                    + &quot;[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$&quot;;
+                    if(!email.match(EMAIL_REGEX)){
+                        return false;
+                    }
+                }
+            } 
+        }
+        function checkMadatoryColumnExistence(array){
+            $scope.columns = Object.keys(array[0]);
+           if($scope.columns.indexOf(&quot;Country&quot;) == -1){
+            $scope.a=false;
+            $scope.filterExceldata = &quot;&quot;;
+            $scope.excelData =&quot;&quot;;
+            $scope.filteredItems =&quot;&quot;;
+            toasty.error({
+                            title: &#039;Error&#039;,
+                            msg: &#039;Error occured in file upload ! Country is mising from data&#039;,
+                            showClose: true,
+                            clickToClose: true,
+                            timeout: 10000,
+                            sound: false,
+                            html: false,
+                            shake: false,
+                            theme: &#039;bootstrap&#039;
+                        });
+                        $scope.uploader.clearQueue();
+           }
+           if($scope.columns.indexOf(&quot;Email&quot;) == -1){
+            $scope.a=false;
+            $scope.filterExceldata = &quot;&quot;;
+            $scope.excelData =&quot;&quot;;
+            $scope.filteredItems =&quot;&quot;;
+            toasty.error({
+                            title: &#039;Error&#039;,
+                            msg: &#039;Error occured in file upload ! Email is mising from data&#039;,
+                            showClose: true,
+                            clickToClose: true,
+                            timeout: 10000,
+                            sound: false,
+                            html: false,
+                            shake: false,
+                            theme: &#039;bootstrap&#039;
+                        });
+                        $scope.uploader.clearQueue();
+           }
+           if($scope.columns.indexOf(&quot;UniqueID&quot;) == -1){
+            $scope.a=false;
+            $scope.filterExceldata = &quot;&quot;;
+            $scope.excelData =&quot;&quot;;
+            $scope.filteredItems =&quot;&quot;;
+            toasty.error({
+                            title: &#039;Error&#039;,
+                            msg: &#039;Error occured in file upload ! UniqueID is mising from data&#039;,
+                            showClose: true,
+                            clickToClose: true,
+                            timeout: 10000,
+                            sound: false,
+                            html: false,
+                            shake: false,
+                            theme: &#039;bootstrap&#039;
+                        });
+                        $scope.uploader.clearQueue();
+           }
+           if($scope.columns.indexOf(&quot;RecipientName&quot;) == -1){
+            $scope.a=false;
+            $scope.filterExceldata = &quot;&quot;;
+            $scope.excelData =&quot;&quot;;
+            $scope.filteredItems =&quot;&quot;;
+            toasty.error({
+                            title: &#039;Error&#039;,
+                            msg: &#039;Error occured in file upload ! RecipientName is mising from data&#039;,
+                            showClose: true,
+                            clickToClose: true,
+                            timeout: 10000,
+                            sound: false,
+                            html: false,
+                            shake: false,
+                            theme: &#039;bootstrap&#039;
+                        });
+                        $scope.uploader.clearQueue();
+           }
+           if($scope.columns.indexOf(&quot;Country&quot;) == -1 || $scope.columns.indexOf(&quot;Email&quot;) == -1 || $scope.columns.indexOf(&quot;UniqueID&quot;) == -1 || $scope.columns.indexOf(&quot;RecipientName&quot;) == -1){
+            return false;
+           }
+           else{
+            return true;
+           }
+        }
+        function validateCountryCode(array){
+            for(var i=0; i&lt;array.length ; i++){
+                if(angular.lowercase(array[i].Country) != $scope.locale ){
+                    return false;
+                }
+            }
+        }
+ 
+     
+        var getPreTemplateData = function(){			  
+	  		PreTemplates.query().$promise.then(function(template){	
+	  		     $scope.PreTemplates = template;
+	  		     for(var i in $scope.PreTemplates){
+	  		    	 if($scope.PreTemplates[i].dates_rages == &#039;Y&#039;){
+	  		    	 if(i != &quot;$promise&quot; || i != &quot;$resolve&quot;){
+	 				$scope.PreTemplates[i].validity_start_date = moment($scope.PreTemplates[i].validity_start_date,&#039;YYYY-MM-DD&#039;);
+	 				$scope.PreTemplates[i].validity_end_date = moment($scope.PreTemplates[i].validity_end_date,&#039;YYYY-MM-DD&#039;)  ;
+	 				$scope.PreTemplates[i].validity_start_date = moment.tz($scope.PreTemplates[i].validity_start_date,moment.tz.guess());   			
+	 				$scope.PreTemplates[i].validity_end_date = moment.tz($scope.PreTemplates[i].validity_end_date,moment.tz.guess());
+	 				$scope.PreTemplates[i].validity_start_date = moment($scope.PreTemplates[i].validity_start_date).format(&#039;DD-MM-YYYY&#039;);
+	 				$scope.PreTemplates[i].validity_end_date = moment($scope.PreTemplates[i].validity_end_date).format(&#039;DD-MM-YYYY&#039;)  ;
+	 				$scope.PreTemplates[i].startDate = $scope.PreTemplates[i].validity_start_date;
+	 				$scope.PreTemplates[i].endDate = $scope.PreTemplates[i].validity_end_date;
+	 				$scope.date($scope.PreTemplates[i]);
+	  		    	 }
+	  		    	 }
+	  		    	 } 
+	  		       });
+	  	};
+	  	getPreTemplateData();
+	  		
+        $scope.startOver = function() {
+            location.reload();
+        }
+	  	  
+	  	  /*check for null tmpl_location*/
+        $scope.filterNullValues = function(temp){
+            return temp.tmpl_location !== null;
+        }
+	  	  
+	  	function uniqueData(array, key) {
+            var uniqueArray = [];
+            var map = new Map();
+            array.forEach((user,index) =&gt; {
+              if(index == 0) {
+                map.set(array[index].Email, array[index].Email);
+                uniqueArray.push(array[index]);
+              }
+                if (!map.get(user[key])) {
+                map.set(user[key], user[key]);
+                uniqueArray.push(user);
+              }
+            });
+            return uniqueArray;
+        }
+	  	
+        $scope.searchInItem = function(searchText){
+            if(searchText != null &amp;&amp; searchText!= undefined &amp;&amp; searchText!= &quot;&quot;){
+                $scope.filteredItems =  $scope.filterExceldata;
+            }
+            else{
+                $scope.filteredItems =$scope.filteredItemsCopy;
+            }
+        }
+        
+		$scope.sendAll = function(item){
+			$scope.success = &#039;&#039;;
+			$scope.error = &#039;&#039;;
+			var EMAIL_REGEX = &quot;^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@&quot;
+            + &quot;[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$&quot;;
+			
+			let emailListCopy =[];
+			$scope.item.emailListData.forEach(Element =&gt;{
+				if(Element.email.match(EMAIL_REGEX)){
+					emailListCopy.push(Element);
+				}
+			});
+			if($scope.item.emailListData.length == emailListCopy.length){
+				return SendEmailItem.query(item).$promise.then(function(result){
+					console.log(result[0].errors);
+					if(result[0].errors == null){
+							toasty.success({
+							title: &#039;Success&#039;,
+						 	msg: &#039;Email successfully sent to all recipients &#039;,
+						 	showClose: true,
+						 	clickToClose: true,
+						 	timeout: 5000,
+						 	sound: false,
+						 	html: false,
+						 	shake: false,
+						 	theme: &#039;bootstrap&#039;
+						 });
+						$scope.ok(item);
+					}
+					else{
+						toasty.error({
+							title: &#039;Error&#039;,
+							msg: &#039;Error&#039;,
+							showClose: true,
+							clickToClose: true,
+							timeout: 15000,
+							sound: false,
+							html: false,
+							shake: false,
+							theme: &#039;bootstrap&#039;
+						});
+					}
+					
+				});
+			}
+			else{
+				toasty.error({
+					title: &#039;Error&#039;,
+					msg: &#039;Recipient list contains Invalid Emails....&#039;,
+					showClose: true,
+					clickToClose: true,
+					timeout: 15000,
+					sound: false,
+					html: false,
+					shake: false,
+					theme: &#039;bootstrap&#039;
+				});
+			}
+		};
+    }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

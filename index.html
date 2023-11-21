@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="assets/css/app.css">
   <link rel="stylesheet" href="assets/vendor/angular-moment-picker/dist/angular-moment-picker.min.css">
   <link rel="stylesheet" href="assets/vendor/ng-dialog/css/ngDialog.min.css">
-  <link rel="stylesheet" href="assets/vendor/ng-dialog/css/ngDialog-theme-default.min.css">
+  <link rel="stylesheet" href="assets/vendor/ng-dialog/css/ngDialog-theme-default.min.css">  
   
   
   <!-- endbuild -->
@@ -103,11 +103,17 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li gcms-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6 class="nav-details"><b>{{('Home' | gTranslate:translationData:'HOM')}}</b></h6></a></li>
-                <li gcms-secure section-name="Manage Consent" action-name="browse"><a ui-sref="task"><h6 class="nav-details"><b>{{('Manage Consent' | gTranslate:translationData:'MNG_CONS')}}</b></h6></a></li>
-                <li ng-show = "profileReviewTabShow" gcms-secure section-name="Profile Review" action-name="browse"><a ui-sref="profilereview"><h6 class="nav-details"><b>{{('Profile Review' | gTranslate:translationData:'PRF_REV')}}</b></h6></a></li>                
-                 <li gcms-secure section-name="Administration" action-name="browse"><a ui-sref="admin"><h6 class="nav-details"><b>{{('Administration' | gTranslate:translationData:'ADM')}}</b></h6></a></li>
-                  <li gcms-secure section-name="Help and Support" action-name="browse"><a href="http://btondemand.pfizer.com/" target="_blank"><h6 class="nav-details"><b>{{('Help and Support' | gTranslate:translationData:'HLP_SPT')}}</b></h6></a></li>
+                <li ng-show="homeTabHide" gcms-secure section-name="Home" action-name="browse" ><a ui-sref="landing"><h6 class="nav-details"><b>{{('Home' | gTranslate:translationData:'HOM')}}</b></h6></a></li>
+                <li ng-show="homeTabHide"  section-name="Manage Consent" action-name="browse"><a ui-sref="task"><h6 class="nav-details"><b>{{('Manage Consent' | gTranslate:translationData:'MNG_CONS')}}</b></h6></a></li>
+                <li ng-show = "profileReviewTabShow"  section-name="Profile Review" action-name="browse"><a ui-sref="profilereview"><h6 class="nav-details"><b>{{('Profile Review' | gTranslate:translationData:'PRF_REV')}}</b></h6></a></li>                
+                 <li ng-show="adminTabShow"  section-name="Administration" action-name="browse"><a ui-sref="admin"><h6 class="nav-details"><b>{{('Administration' | gTranslate:translationData:'ADM')}}</b></h6></a></li>
+                  <!-- Added by yadas103 -->
+                   <li ng-show = "notificationTabShow"  action-name="browse"><a ui-sref="notification"><h6 class="nav-details"><b>{{('Pre-Notification' | gTranslate:translationData:'PRE_NOTI')}}</b></h6></a></li>
+                   <li ng-show = "preAdminTabShow"  action-name="browse"><a ui-sref="pre-administration"><h6 class="nav-details"><b>{{('Pre-Administration' | gTranslate:translationData:'PRE_ADMIN')}}</b></h6></a></li>
+                    
+                  <li ng-show="homeTabHide"  section-name="Help and Support" action-name="browse"><a href="http://btondemand.pfizer.com/" target="_blank"><h6 class="nav-details"><b>{{('Help and Support' | gTranslate:translationData:'HLP_SPT')}}</b></h6></a></li>
+                  
+                 
               </ul>
 
               <!-- This is the start of the Navigation Right -->
@@ -152,7 +158,6 @@
 <!-- build:js app.js -->
   <!-- custom js -->
   <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-
   <!-- vendor js -->
   <script src="assets/vendor/angular/angular.min.js"></script>
   <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -181,7 +186,7 @@
   <script src="assets/vendor/angular-strap/dist/angular-strap.min.js"></script>
   <script src="assets/vendor/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <script src="assets/vendor/alasql/dist/alasql.min.js"></script>
-  <script src="assets/vendor/alasql/dist/xlsx.core.min.js"></script>
+  <script src="assets/vendor/alasql/dist/xlsx.core.min.js"></script>  
   
  	
   <!-- app js -->
@@ -234,6 +239,9 @@
   <script src="app/components/data/components.data.service.business-profile.js"></script>
   <script src="app/components/data/components.data.service.business.uniquecode.js"></script>
   <script src="app/components/data/components.data.service.templates.js"></script>
+  
+  <script src="app/components/data/components.data.service.pre.templates.js"></script>
+  
   <script src="app/components/data/components.data.service.profile.search.js"></script>
   <script src="app/components/data/components.data.service.identity.request.js"></script>
   <script src="app/components/data/components.data.service.identityRequest.js"></script>
@@ -298,6 +306,23 @@
   <script src="app/landing/components/welcome/landing.welcome.directive.js"></script>
 
    <script src="/app/help/help.module.js"></script>
+   
+    <!--  notification module yadas103 -->
+    <script src="app/notification/notification.module.js"></script>
+ 
+	<script src="app/notification/notification.controller.js"></script>
+	
+	
+	<script src="app/components/data/components.data.service.notification.js"></script>
+	<script src="app/components/data/components.data.service.send.all.email.js"></script>
+	
+
+	
+
+
+	<script src="app/pre-administration/pre-administration.module.js"></script>
+   <script src="app/pre-administration/pre-administration.controller.js"></script>
+  <script src="app/pre-administration/pre-administration.reviewer.controller.js"></script>
 
   <script src="app/profile/profile.module.js"></script>
 
@@ -321,6 +346,15 @@
   <!-- bulk upload khans129 -->
   <script src="app/components/data/components.data.service.file-monitor.js"></script>
   <script src="app/task/bulk.upload.controller.js"></script>
+  
+  <!-- excel upload yadas103 -->
+  <script src="app/components/data/components.data.service.excel-file-monitor.js"></script>
+  <script src="app/components/data/components.data.service.html-placeholder-monitor.js"></script>
+  <script src="app/notification/excel.upload.controller.js"></script>
+  
+
+  
+  
   <!-- admin  khans129 -->
 
   <script src="app/components/data/components.data.service.review.js"></script>

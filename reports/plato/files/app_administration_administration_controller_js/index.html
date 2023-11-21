@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/administration/administration.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/administration/administration.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">63.31</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">688</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">82.15</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">6.08</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc overview
+ * @name gcms.admin
+ * @author: selim
+ * @description Represents a admin controller.
+ */
+(function () {
+  &#039;use strict&#039;;
+
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;AdminCtrl&#039;, AdminController);
+
+  AdminController.$inject = [&#039;$rootScope&#039;,&#039;$scope&#039;,&#039;$state&#039;,&#039;localeMapper&#039;,&#039;Review&#039;,&#039;Templates&#039;,&#039;UserProfile&#039;, &#039;UserDetail&#039;, &#039;Role&#039;,&#039;$window&#039;,&#039;toasty&#039;];
+
+  
+  function AdminController($rootScope, $scope,$state,localeMapper,Review,Templates,UserProfile, UserDetail, Role,$window,toasty){
+	  
+	  console.log(&quot;Inside Admin controller&quot;);
+	    
+	  
+	  /**
+		 * @author: selim
+		 * @ngdoc internal error
+		 * @name 
+		 * @description show error message
+		 */
+	    
+	    var internalError = function(){
+	        toasty.error({
+	          title: &#039;Error&#039;,
+	          msg: &#039;Internal Server Error!&#039;,
+	          showClose: true,
+	          clickToClose: true,
+	          timeout: 5000,
+	          sound: false,
+	          html: false,
+	          shake: false,
+	          theme: &#039;bootstrap&#039;
+	        });
+	      };
+	    
+		/**
+		 * @author: selim
+		 * @ngdoc method
+		 * @name getData
+		 * @description gets all review data one load
+		 */
+	  
+	  	 var getReviewData = function(){		  
+		   Review.query().$promise.then(function(review){		    	 
+		       $scope.ReviewAttributes = review;		     
+		       });
+		  };
+		  getReviewData();
+	    
+	    
+	    
+		  /**
+			 * @author: selim
+			 * @ngdoc method
+			 * @name getdata
+			 * @used smart table
+			 * @description partial view of reviewArributes
+			 */
+		$scope.displayedCollection = [].concat($scope.ReviewAttributes);
+		
+		/**
+		 * @author: selim
+		 * @ngdoc method
+		 * @name update
+		 * @description update reviewer table
+		 */
+      $scope.$on(&#039;$localeChangeSuccess&#039;, getReviewData);
+		
+	
+	  
+	  
+	  /**
+		 * @author: selim
+		 * @ngdoc method
+			 * @name update
+			 * @description update reviewer table
+			 */
+	  $scope.update = function(item) {			
+	         
+	       };
+	         								
+	          
+	/*****************Template section**********************/          
+	          
+	          
+	          /**  @author: selim
+	  		 * @description counter used for maintaining unique template code
+	  		 */
+	  	  
+	  	  $scope.counter = 1;
+	  	  
+	  	  /**  @author: selim
+	  		 * @ngdoc method
+	  		 * @name value
+	  		 * @methodOf Button form UI
+	  		 * @description called for expanding template row and maintaining country id
+	  		 * @param {object}
+	  		 *            item country to update
+	  		 */
+	  	  $scope.value=function(con){
+	  		 console.log(&quot;Inside value&quot;);
+	  		  con.expanded = true;		  
+	  		  $scope.id=con.countries.id;
+	  		  $scope.isoCode=con.countries.isoCode;
+
+	  	  };
+	          
+	          /**
+	  		 * @author: selim
+	  		 * @ngdoc method
+	  		 * @name getdata
+	  		 * @methodOf
+	  		 * @description get all template data
+	  		 */
+	  	 var getTemplateData = function(){			  
+	  		  Templates.query().$promise.then(function(template){			    	 
+	  		       $scope.Templates = template;			     			       
+	  		     for(var i in $scope.Templates){
+	  		    	 if($scope.Templates[i].dates_rages == &#039;Y&#039;){
+	  		    	 if(i != &quot;$promise&quot; || i != &quot;$resolve&quot;){
+	 				$scope.Templates[i].validity_start_date = moment($scope.Templates[i].validity_start_date,&#039;YYYY-MM-DD&#039;);
+	 				$scope.Templates[i].validity_end_date = moment($scope.Templates[i].validity_end_date,&#039;YYYY-MM-DD&#039;)  ;
+	 				$scope.Templates[i].validity_start_date = moment.tz($scope.Templates[i].validity_start_date,moment.tz.guess());   			
+	 				$scope.Templates[i].validity_end_date = moment.tz($scope.Templates[i].validity_end_date,moment.tz.guess());
+	 				$scope.Templates[i].validity_start_date = moment($scope.Templates[i].validity_start_date).format(&#039;DD-MM-YYYY&#039;);
+	 				$scope.Templates[i].validity_end_date = moment($scope.Templates[i].validity_end_date).format(&#039;DD-MM-YYYY&#039;)  ;
+	 				$scope.Templates[i].startDate = $scope.Templates[i].validity_start_date;
+	 				$scope.Templates[i].endDate = $scope.Templates[i].validity_end_date;
+	 				$scope.date($scope.Templates[i]);
+	  		    	 }
+	  		    	 }
+	  		    	 } 
+	  		       });
+	  		};
+	  		  getTemplateData();
+		          
+
+		          /**selim
+					 * @ngdoc method
+					 * @name create
+					 * @methodOf
+					 * @description Creates template
+					 * @param {object}
+					 *            item Tempalte to create
+					 */
+		          $scope.createTemplate = function(item){
+		        	console.log(&quot;Inside create method&quot;);
+		        	item.countryCode = localeMapper.getCurrentISOCode();
+		        	item.cntry_id={id: JSON.stringify($scope.id)};
+		        	console.log($scope.id);
+		        	angular.forEach($scope.Templates, function(temp){
+			              if (temp.cntry_id.id===$scope.id) {
+			            	  $scope.counter++;
+			              }
+			            });		        	
+		        	
+		        	var temptype=item.tmpl_type;
+		        	console.log(&quot;Template Type&quot;+temptype);
+		        	if(item.tmpl_type==&quot;InCountry-HCP&quot;){
+		        		item.tmpl_code=$scope.isoCode+&quot;LP&quot;+$scope.counter;
+		        	} else if(item.tmpl_type==&quot;InCountry-HCO&quot;){
+		        		item.tmpl_code=$scope.isoCode+&quot;LO&quot;+$scope.counter;
+		        	} else if(item.tmpl_type==&quot;CrossBorder-HCP&quot;){
+		        		item.tmpl_code=$scope.isoCode+&quot;GP&quot;+$scope.counter;
+		        	} else if(item.tmpl_type==&quot;CrossBorder-HCO&quot;){
+		        		item.tmpl_code=$scope.isoCode+&quot;GO&quot;+$scope.counter;
+		        	}	
+		        	item.tmpl_status=&quot;INACTIVE&quot;; 
+		        	console.log(item.tmpl_code);
+		        	console.log(item);
+		        	delete item.expanded;
+		            $scope.Templates.push(item);
+		           
+		            item.validity_start_date =  moment.tz(item.validity_start_date,moment.tz.guess()) ;				            
+		            item.validity_end_date =  moment.tz(item.validity_end_date,moment.tz.guess()) ;
+		         	item.validity_start_date = moment(item.validity_start_date).format(&#039;YYYY-MM-DD&#039;);   			
+	            	item.validity_end_date = moment(item.validity_end_date).format(&#039;YYYY-MM-DD&#039;);
+
+	            	delete item.validity_start;
+			        delete item.validity_end;
+			        delete item.startDate;
+			        delete item.endDate;
+		           
+		           if(item.validity_start_date  == &quot;Invalid date&quot; || item.validity_start_date  == undefined ){
+		        	   delete item.validity_start_date ;
+		           }
+		           
+		           if(item.validity_end_date == &quot;Invalid date&quot; || item.validity_end_date == undefined){
+		        	   delete item.validity_end_date;
+		           }
+	            
+		            Templates.save(item).$promise.then(function(response){
+		            	getTemplateData();
+		            	toasty.success({
+	            	        title: &#039;Success&#039;,
+	            	        msg: &#039;Template added !&#039;,
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: &#039;bootstrap&#039;
+	            	      });
+		            }).catch(function(){		 		    	 
+		 		    	 internalError();	
+		       		 });
+		          };
+		          
+		          	$scope.close=function(item){
+		          		getTemplateData();
+		          	};
+		          /**selim
+					 * @ngdoc method
+					 * @name update
+					 * @methodOf template update
+					 * @description Updates Template
+					 * @param {object}
+					 *            item Template to update
+					 */
+		          
+		          $scope.date = function(item){		        	  
+		        	  item.validity_start_date = moment(item.startDate,&#039;DD-MM-YYYY&#039;);
+		        	  item.validity_end_date = moment(item.endDate,&#039;DD-MM-YYYY&#039;)  ;
+		        	  item.validity_start_date = moment.tz(item.validity_start_date,moment.tz.guess());   			
+		              item.validity_end_date = moment.tz(item.validity_end_date,moment.tz.guess());		            			        	  
+		        	  item.validity_start = moment(item.startDate,&#039;DD-MM-YYYY&#039;).format(&#039;DD-MM-YYYY&#039;);
+		        	  item.validity_end = moment(item.endDate,&#039;DD-MM-YYYY&#039;).format(&#039;DD-MM-YYYY&#039;)  ;
+		        	};
+		  		
+		  		
+		          
+		          $scope.updateTemplate = function(item) {
+		            angular.forEach($scope.Templates, function(temp){
+		              if (temp.id === item.id) {
+		            	  temp.updatedDate = new Date();
+		              }
+		            });
+		            console.log(item.id);
+		            
+		 	           if(item.validity_start != undefined)
+		 	           {
+		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           if(item.validity_end != undefined)
+		 	           {
+		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+		 		       }
+		 	           if(item.validity_start != undefined)
+		 	           {
+		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           if(item.validity_end != undefined)
+		 	           {
+		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+		 		       }
+		       		
+		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
+		       	   
+		            	item.validity_start_date = moment(item.validity_start).format(&#039;YYYY-MM-DD&#039;);   			
+		            	item.validity_end_date = moment(item.validity_end).format(&#039;YYYY-MM-DD&#039;);
+
+		            	delete item.validity_start;
+				        delete item.validity_end;
+				        delete item.startDate;
+				        delete item.endDate;
+			           
+			           if(item.validity_start_date  == &quot;Invalid date&quot; || item.validity_start_date  == undefined ){
+			        	   delete item.validity_start_date ;
+			           }
+			           
+			           if(item.validity_end_date == &quot;Invalid date&quot; || item.validity_end_date == undefined){
+			        	   delete item.validity_end_date;
+			           }
+		            
+		            delete item.expanded;
+		            Templates.update({ id:item.id }, item).$promise.then(function(response){
+		            	getTemplateData();
+		            	toasty.success({
+	            	        title: &#039;Success&#039;,
+	            	        msg: &#039;Template updated !&#039;,
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: &#039;bootstrap&#039;
+	            	      });
+		            	
+		            }).catch(function(){
+		 		    	 internalError();	
+		       		 });
+		          };
+		          
+		          /**selim
+					 * @ngdoc method
+					 * @name deactivate
+					 * @methodOf template update
+					 * @description Updates Template
+					 * @param {object}
+					 *            item Template to update
+		 */
+		          $scope.deactivateTemplate = function(item) {
+		            angular.forEach($scope.Templates, function(temp){
+		              if (temp.id === item.id) {
+		            	  temp.updatedDate = new Date();
+		            	  item.tmpl_status=&quot;INACTIVE&quot;;
+		              }
+		            });
+		            console.log(item.id);
+		 	           if(item.validity_start != undefined)
+		 	           {
+		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           if(item.validity_end != undefined)
+		 	           {
+		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+		 		       }
+		 	           if(item.validity_start != undefined)
+		 	           {
+		 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           if(item.validity_end != undefined)
+		 	           {
+		 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+		 	           }
+		 	           else
+		 	           {	        	   
+		 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+		 		       }
+		       		
+		            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+		            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
+		       	   
+		            	item.validity_start_date = moment(item.validity_start).format(&#039;YYYY-MM-DD&#039;);   			
+		            	item.validity_end_date = moment(item.validity_end).format(&#039;YYYY-MM-DD&#039;);
+
+		            	delete item.validity_start;
+				        delete item.validity_end;
+				        delete item.startDate;
+				        delete item.endDate;
+			           
+			           if(item.validity_start_date  == &quot;Invalid date&quot; || item.validity_start_date  == undefined ){
+			        	   delete item.validity_start_date ;
+			           }
+			           
+			           if(item.validity_end_date == &quot;Invalid date&quot; || item.validity_end_date == undefined){
+			        	   delete item.validity_end_date;
+			           }
+		            
+		            Templates.update({ id:item.id }, item).$promise.then(function(response){
+		            	getTemplateData();
+		            	toasty.success({
+	            	        title: &#039;Success&#039;,
+	            	        msg: &#039;Template deactivated !&#039;,
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: &#039;bootstrap&#039;
+	            	      });
+		            	
+		            }).catch(function(){
+		 		    	 internalError();	
+		       		 });
+		          };
+		          
+		          /**selim
+					 * @ngdoc method
+					 * @name deactivate
+					 * @methodOf template update
+					 * @description Updates Template
+					 * @param {object}
+					 *            item Template to update
+		 */
+		          
+		          $scope.activateTemplate = function(item) {
+		        	  if(item.tmpl_location!=undefined &amp;&amp;item.tmpl_location !=&#039;&#039; ){
+			            angular.forEach($scope.Templates, function(temp){
+			              if (temp.id === item.id) {
+			            	  temp.updatedDate = new Date();
+			            	  item.tmpl_status=&quot;ACTIVE&quot;;
+			              }
+			            });
+			            console.log(item.id);
+			 	           if(item.validity_start != undefined)
+			 	           {
+			 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+			 	           }
+			 	           else
+			 	           {	        	   
+			 	        	  item.validity_start = moment(item.validity_start_date,[&#039;DD-MM-YYYY&#039;,&#039;YYYY-MM-DD&#039;]).format(&#039;DD-MM-YYYY&#039;);
+			 	           }
+			 	           if(item.validity_end != undefined)
+			 	           {
+			 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+			 	           }
+			 	           else
+			 	           {	        	   
+			 	        	  item.validity_end = moment(item.validity_end_date,[&#039;DD-MM-YYYY&#039;,&#039;YYYY-MM-DD&#039;]).format(&#039;DD-MM-YYYY&#039;);
+			 		       }
+			 	           if(item.validity_start != undefined)
+			 	           {
+			 	        	  item.validity_start = moment(item.validity_start,&#039;DD-MM-YYYY&#039;);
+			 	           }
+			 	           else
+			 	           {	        	   
+			 	        	  item.validity_start = moment(item.validity_start_date,&#039;DD-MM-YYYY&#039;);
+			 	           }
+			 	           if(item.validity_end != undefined)
+			 	           {
+			 	        	  item.validity_end = moment(item.validity_end,&#039;DD-MM-YYYY&#039;);
+			 	           }
+			 	           else
+			 	           {	        	   
+			 	        	  item.validity_end = moment(item.validity_end_date,&#039;DD-MM-YYYY&#039;);
+			 		       }
+			       		
+			            	item.validity_start_date = moment.tz(item.validity_start,moment.tz.guess());   			
+			            	item.validity_end_date = moment.tz(item.validity_end,moment.tz.guess());
+			       	   
+			            	item.validity_start_date = moment(item.validity_start).format(&#039;YYYY-MM-DD&#039;);   			
+			            	item.validity_end_date = moment(item.validity_end).format(&#039;YYYY-MM-DD&#039;);
+
+			            	delete item.validity_start;
+					        delete item.validity_end;
+					        delete item.startDate;
+					        delete item.endDate;
+				           
+				           if(item.validity_start_date  == &quot;Invalid date&quot; || item.validity_start_date  == undefined ){
+				        	   delete item.validity_start_date ;
+				           }
+				           
+				           if(item.validity_end_date == &quot;Invalid date&quot; || item.validity_end_date == undefined){
+				        	   delete item.validity_end_date;
+				           }
+			            
+			            Templates.update({ id:item.id }, item).$promise.then(function(response){
+			            	getTemplateData();
+			            	toasty.success({
+		            	        title: &#039;Success&#039;,
+		            	        msg: &#039;Template Activated !&#039;,
+		            	        showClose: true,
+		            	        clickToClose: true,
+		            	        timeout: 5000,
+		            	        sound: false,
+		            	        html: false,
+		            	        shake: false,
+		            	        theme: &#039;bootstrap&#039;
+		            	      });
+			            	
+			            }).catch(function(){
+			 		    	 internalError();	
+			       		 });
+		        	  }else{
+		        		  toasty.error({
+		        	          title: &#039;Error&#039;,
+		        	          msg: &#039;Please Upload Template !&#039;,
+		        	          showClose: true,
+		        	          clickToClose: true,
+		        	          timeout: 5000,
+		        	          sound: false,
+		        	          html: false,
+		        	          shake: false,
+		        	          theme: &#039;bootstrap&#039;
+		        	        });
+		        	  }
+			          };
+		          
+		          
+		          /**selim
+					 * @ngdoc method
+					 * @name delete
+					 * @methodOf delete template
+					 * @description Deletes Template
+					 * @param {object}
+					 *            item Template to delete
+					 */
+		          $scope.deleteTemplate = function(item) {
+		            var index = 0;
+		            Templates.delete({ id:item.id }).$promise.then(function(response){
+		            	if(response.string == 1)
+		            	{
+		            	angular.forEach($scope.Templates, function(temp){
+		  		              if (temp.id === item.id){
+		  		                $scope.Templates.splice(index, 1);
+		  		              }
+		  		              index++;
+		  		       });	
+		            	toasty.success({
+	            	        title: &#039;Success&#039;,
+	            	        msg: &#039;Template deleted !&#039;,
+	            	        showClose: true,
+	            	        clickToClose: true,
+	            	        timeout: 5000,
+	            	        sound: false,
+	            	        html: false,
+	            	        shake: false,
+	            	        theme: &#039;bootstrap&#039;
+	            	      });
+		              } else if(response.string == 2){
+		            	  getTemplateData();
+		            	  toasty.error({
+		        	          title: &#039;Error&#039;,
+		        	          msg: &#039;There are Incompleted Task associated with this template ! Not able to Delete&#039;,
+		        	          showClose: true,
+		        	          clickToClose: true,
+		        	          timeout: 10000,
+		        	          sound: false,
+		        	          html: false,
+		        	          shake: false,
+		        	          theme: &#039;bootstrap&#039;
+		        	        });
+		              }
+		            	
+		            }).catch(function(){
+		 		    	 internalError();	
+		       		 });
+		  };
+		  
+		  
+/*************************Role SECTION**************************************/		  
+		  
+		  
+		  
+		    var allUsers = [];
+
+		    $scope.addItem = { users: [], roles: []};
+		          /**
+		  		 * @ngdoc method
+		  		 * @name removeExisting
+		  		 * @methodOf gcms.administration.controller:AdminRoleCtrl
+		  		 * @description Deteremines whether or not to remove existing user.
+		  		 * @param {object} The exising user
+		  		 */
+		  		var removeExisting = function(value){
+		  		  for(var i in $scope.profiles){
+		  			if($scope.profiles[i].userName === value.userName){
+		  			  return false;
+		  			}
+		  		  }
+		  		  return true;
+		  		};   
+		  		
+		    
+		  var getData = function(){
+		      return Role.query().$promise.then(function(roles) {
+		        $scope.roles = roles;
+		        return UserProfile.query().$promise;
+		      }).then(function(profiles){
+		        $scope.profiles = profiles;
+		        return UserDetail.query().$promise;
+		      }).then(function(users){
+		        allUsers = users;
+		        $scope.users = users.filter(removeExisting);
+		        $scope.addItem = { users: $scope.users, roles: $scope.roles};
+		      });
+		    };
+
+		    getData();
+		    
+			/**
+			 * @ngdoc method
+			 * @name create
+			 * @methodOf gcms.administration.controller:AdminRoleCtrl
+			 * @description Creates new profile based on current country.
+			 * @param {object} item The profile to create
+			 */
+			$scope.create = function(item){
+			  $rootScope.session.user.getCurrentProfile().then(function(currentProfile){
+				var user = item.user;
+				var profile = {};
+				user.userProfiles = user.userProfiles || [];
+
+				profile.defaultProfileIndicator = true;
+				for (var i in user.userProfiles){
+				  if (user.userProfiles[i].defaultProfileIndicator === true){
+					profile.defaultProfileIndicator = false;
+				  }
+				}
+
+				profile.roleId = item.role.id;
+				profile.userName = user.userName;
+				profile.countryId = currentProfile.countryId;
+				profile.createdBy = currentProfile.userName;
+				profile.deleteRecord = false;
+				profile.deleted = false;
+
+				
+				UserProfile.save(profile).$promise.then(function(result){
+					getData();
+					$scope.success=&#039;User role saved successfully&#039;;
+					}).catch(function(){
+						  $scope.error=&#039;User not saved&#039;;
+					  });
+			  });
+			};
+			
+			/**
+			 * @ngdoc method
+			 * @name delete
+			 * @methodOf gcms.administration.controller:AdminRoleCtrl
+			 * @description Deletes profile
+			 * @param {object} item The profile to delete
+			 */
+			$scope.delete = function(item) {
+			  var userName = item.userName;
+			  var user = allUsers.find(function(user){
+				return user.userName === userName;
+			  });
+
+			  if(!user){ console.log(&#039;user not found, delete aborted&#039;); return; }
+
+			  var filterProfiles = function(profile){
+				return profile.id !== item.id;
+			  };
+
+			  user.userProfiles = user.userProfiles.filter(filterProfiles);
+			  $scope.profiles = $scope.profiles.filter(filterProfiles);
+
+			  UserProfile.delete({id: item.id}).$promise.then(getData);
+			};
+
+			/**
+			 * @ngdoc method
+			 * @name delete
+			 * @methodOf gcms.administration.controller:AdminRoleCtrl
+			 * @description Handles the ok button on the detail modal
+			 */
+			$scope.detailOk = function(){};			
+			
+			/**
+				 * @ngdoc method
+				 * @name delete
+				 * @methodOf gcms.administration.controller:AdminRoleCtrl
+				 * @description Redirects user to appropriate detail screen
+				 */
+				$scope.go = function(profile) {
+					console.log(&quot;Inside go===&gt;&gt;&gt;&quot;);
+					console.log(&quot;Inside go:profile.userName===&gt;&gt;&gt;&quot;+profile.userName);
+					
+				  $state.go(&#039;admin-details&#039;, {id: profile.userName});
+				};
+	
+	 
+	  
+  }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

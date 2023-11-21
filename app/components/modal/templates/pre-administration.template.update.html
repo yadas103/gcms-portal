@@ -1,0 +1,91 @@
+<div class="modal-header" style="background-color: #337ab7;
+   color: white; padding: 5px;">
+   <h3 class="modal-title" style="font-size: medium;">{{('Edit Template' | gTranslate:translationData:'EDT_TMPL')}}</h3>
+</div>
+<div class="modal-body">
+   <form name="adminForm" class="form-horizontal" novalidate>
+<!--    <div class="form-group">
+         <label for="tmpl_code" class="col-sm-4 control-label">{{('Template Code' | gTranslate:translationData:'TMPL_CD')}} :</label>
+         <div class="col-sm-8">
+            <input ng-maxlength="30" type="text" class="form-control form-popup" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_code" placeholder="" ng-readonly="true" >
+         </div>
+      </div> -->
+      <div class="form-group">
+         <label for="template_name" class="col-sm-4 control-label">{{('Template Name' | gTranslate:translationData:'TMPL_NM')}} :</label>
+         <div class="col-sm-8">
+            <input ng-maxlength="100" type="text" class="form-control form-popup" id="tmpl_name" name="tmpl_name" ng-model="item.tmpl_name" placeholder="max 30 char" required>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="template_code" class="col-sm-4 control-label">{{('Template Description' | gTranslate:translationData:'TMPL_DSC')}} :</label>
+         <div class="col-sm-8">
+         	<textarea id="tmpl_desc" name="tmpl_desc" rows="3" cols="50" style="resize:none" class="form-control form-popup" ng-model="item.tmpl_desc" required > 
+          
+            </textarea>
+            <!-- <input type="text" class="form-control" id="tmpl_code" name="tmpl_code" ng-model="item.tmpl_desc" placeholder=""> -->
+         </div>
+      </div>
+      
+<!--       <div class="form-group">
+         <label for="templateType" class="col-sm-4 control-label">{{('Template Type' | gTranslate:translationData:'TMPL_TYP')}} :</label>
+         <div class="col-sm-8 form-popup1">
+            <select class="form-control" ng-model="item.tmpl_type" ng-click="foo();"  style=" margin-left: 0px; width: 40%; boder-radius: 30px;border-radius: 4px; height: 30px;" required>
+               <option value="">{{('Please select' | gTranslate:translationData:'PLS_SLCT')}}</option>
+               <option value="Intro">{{('Intro' | gTranslate:translationData:'INT')}}</option>
+               <option value="TOV">{{('TOV - HCP' | gTranslate:translationData:'TOV')}}</option>
+            
+               <option value="CrossBorder-HCO" ng-hide="item.dates_rages=='Y'">CrossBorder - HCO</option>
+               <option value="CrossBorder-HCP" ng-hide="item.dates_rages=='Y'">CrossBorder - HCP</option>
+            </select>
+         </div>
+      </div> -->
+      
+            <div class="form-group">
+         <label for="template_code" class="col-sm-4 control-label">Email From :</label>
+         <div class="col-sm-8">
+            <input ng-maxlength="100" type="text" class="form-control form-popup" id="email_from" name="email_from" ng-model="item.email_from" placeholder="" >
+         </div>
+      </div>
+      <div ng-show="item.dates_rages=='Y'" >
+      <div class="form-group" >
+         <label for="template_validity_start_date" class="col-sm-4 control-label">{{('Template Validity Start Date' | gTranslate:translationData:'TMPL_VLD_STRT')}} :</label>
+        <div class="col-sm-8 form-popup1">
+              <input    		 
+    		  class="form-control"
+    		  style="max-width: 32%;"
+              ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
+              moment-picker="item.validity_start"
+              locale="en"
+              format="DD-MM-YYYY"
+              ng-model="item.validity_start_date"
+              ng-required = "item.dates_rages=='Y'"
+              start-view="day"
+              ng-model-options="{updateOn: 'blur' }" >  
+         </div>
+         
+      </div>
+      <div class="form-group">
+         <label for="template_validity_end_date" class="col-sm-4 control-label">{{('Template Validity End Date' | gTranslate:translationData:'TMPL_VLD_END')}} :</label>
+         <div class="col-sm-8 form-popup1">
+             <input    		 
+    		  class="form-control"
+    		  style="max-width: 32%;"
+              ng-attr-placeholder="{{('Select a date' | gTranslate:translationData:'SLCT_DT')}}..."
+              moment-picker="item.validity_end"
+              locale="en"
+              format="DD-MM-YYYY"
+              ng-model="item.validity_end_date"
+              ng-required = "item.dates_rages=='Y'"
+              start-view="day"
+              ng-model-options="{updateOn: 'blur' }" >
+         </div>
+      </div>
+       
+      </div>
+</form>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-primary" ng-click="ok()"
+      ng-disabled="adminForm.$invalid">{{('Update' | gTranslate:translationData:'ACT_UPDT')}}</button>
+   <button class="btn btn-warning" ng-click="cancel()" >{{('Cancel' | gTranslate:translationData:'ACT_CNCL')}}</button>
+</div>

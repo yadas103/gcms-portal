@@ -1,0 +1,81 @@
+
+<div class="modal-content">
+	<style>
+		.modal-content{
+			width: 90%;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+		}
+		.modal-dialog {
+			width: 100%;
+			margin: 60px auto;
+		}
+	</style>
+	<div class="modal-header"
+		style="background-color: #337ab7; color: white; padding: 5px;">
+		<h3 class="modal-title" style="font-size: medium;">Uploaded File
+			details</h3>
+	</div>
+	<div class="modal-body">
+		<div style="overflow-x: auto;overflow-y: hidden; height: auto;">
+		<table st-table="displayedCollection" st-safe-src="item"
+		class="table table-bordered table-hover table-condensed" class="table table-striped view-data-table">
+		<style>
+			.view-data-table th{
+				white-space: nowrap;
+				overflow-x: hidden;
+				text-overflow: ellipsis;
+			}
+			.form-control{
+			width:120px;
+			}
+		</style>
+		<thead>
+			<tr style="background-color: #b8d3eb; color: white;">
+					<th ng-repeat="column in columns" ng-hide="column == 'hasConflict'"  st-sort="column">{{ column }}</th>
+		   </tr>
+		</thead>
+		
+		<tbody>
+			<style>
+				.highlight-row{
+					background-color: #ffdddd !important;
+				}
+				.tasktd:hover{
+					white-space: pre;
+					word-break: break-all;
+				}
+			</style>
+				<tr>
+					<td style="padding: 3px;" ng-repeat="column in columns" ng-hide="column == 'hasConflict'">
+						<input st-search="{{column}}" ng-model="columSearches.column.term" placeholder="" class="form-control" type="search" ng-hide="column == 'Status'"/>
+					</td>
+				</tr>
+				<tr  ng-repeat-start="data in displayedCollection track by $index" ng-class="{'highlight-row':data.hasConflict}">
+					<td style="padding: 3px;" class="tasktd" ng-repeat="column in columns"  ng-hide="column == 'hasConflict'" title={{data[column]}}>{{data[column]}}</td>
+				</tr>
+			<tr  ng-repeat-end>
+
+			</tr>
+		</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="24" class="text-center" >
+						<div st-safe-src="item"  st-items-by-page='6' st-pagination=""
+							st-template="app/task/pagination.custom.html"></div>
+					</td>
+					
+				</tr>
+			</tfoot>
+
+		</table>
+</div>
+	</div>
+		<div class="modal-footer" style="padding: 5px;">
+			<button class="btn btn-warning" ng-click="back()" ng-show="displayBack ">Back</button>
+			<button class="btn btn-warning" ng-click="showErrors()" ng-show="displayError && errorDataArray.length > 0">Show Errors</button>
+			<button class="btn btn-warning" ng-click="cancel()">Close</button>
+		</div>
+	</div>

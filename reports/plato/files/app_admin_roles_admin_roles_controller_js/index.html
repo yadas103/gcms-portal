@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/admin/roles/admin.roles.controller.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/admin/roles/admin.roles.controller.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">73.97</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">272</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">26.00</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.09</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * @ngdoc overview
+ * @name gcms.administration.controller:AdminRoleCtrl
+ * @description
+ * This controller displays all users/roles in a particular country.
+ *
+ *```html
+ &lt;h3&gt;Administration&lt;/h3&gt;
+
+ &lt;hr/&gt;
+
+ &lt;div gcms-secure section-name=&quot;Administration&quot; action-name=&quot;create&quot; style=&quot;padding-bottom:20px&quot;&gt;
+   &lt;gcms-modal template=&quot;admin.role.create.html&quot; controller=&quot;ModalDefaultCtrl&quot; content=&quot;addItem&quot; ok=&quot;create&quot; alt=&quot;Add Role&quot;&gt;
+     &lt;span class=&quot;btn btn-default&quot; role=&quot;button&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+   &lt;/gcms-modal&gt;
+ &lt;/div&gt;
+
+ &lt;div class=&quot;panel panel-primary&quot;&gt;
+   &lt;div class=&quot;panel-heading&quot;&gt;Users&lt;/div&gt;
+
+   &lt;div class=&quot;panel-body&quot;&gt;
+     &lt;table class=&quot;table table-hover roles-table&quot;&gt;
+       &lt;thead&gt;
+         &lt;tr&gt;
+           &lt;th gcms-secure section-name=&quot;Administration&quot; action-name=&quot;update&quot;&gt;&lt;/th&gt;
+           &lt;th gcms-secure section-name=&quot;Administration&quot; action-name=&quot;delete&quot;&gt;&lt;/th&gt;
+           &lt;th&gt;Username&lt;/th&gt;
+           &lt;th&gt;Country&lt;/th&gt;
+           &lt;th ng-repeat=&quot;role in roles&quot;&gt;
+             &lt;gcms-modal template=&quot;admin.role.detail.html&quot; controller=&quot;ModalDefaultCtrl&quot; content=&quot;role&quot; ok=&quot;detailOk&quot; alt=&quot;Role Details&quot;&gt;{{role.roleName}}&lt;/gcms-modal&gt;
+           &lt;/th&gt;
+         &lt;/tr&gt;
+       &lt;/thead&gt;
+       &lt;tbody&gt;
+         &lt;tr class=&quot;adminRole&quot; ng-repeat=&quot;profile in profiles | orderBy:&#039;userName&#039;&quot;&gt;
+
+           &lt;td gcms-secure section-name=&quot;Administration&quot; action-name=&quot;update&quot;
+             class=&quot;cursor-pointer&quot; style=&quot;padding-right:10px&quot;&gt;
+               &lt;a ng-click=&quot;go(profile)&quot;&gt;&lt;i class=&quot;fa fa-pencil&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+           &lt;/td&gt;
+
+           &lt;td gcms-secure section-name=&quot;Administration&quot; action-name=&quot;delete&quot;&gt;
+             &lt;gcms-modal template=&quot;admin.role.delete.html&quot; controller=&quot;ModalDefaultCtrl&quot;
+               content=&quot;profile&quot; ok=&quot;delete&quot; alt=&quot;delete user&quot;&gt;
+               &lt;i class=&quot;fa fa-trash&quot;&gt;&lt;/i&gt;
+             &lt;/gcms-modal&gt;
+           &lt;/td&gt;
+
+           &lt;td&gt;{{profile.userName}}&lt;/td&gt;
+
+           &lt;td&gt;{{profile.countryISOCode}}&lt;/td&gt;
+
+           &lt;td ng-repeat=&quot;role in roles&quot;&gt;&lt;i ng-show=&quot;profile.roleId === role.id&quot; class=&quot;fa fa-check&quot;&gt;&lt;/i&gt;&lt;/td&gt;
+
+         &lt;/tr&gt;
+       &lt;/tbody&gt;
+     &lt;/table&gt;
+   &lt;/div&gt;
+ &lt;/div&gt;
+
+ &lt;div gcms-secure section-name=&quot;Administration&quot; action-name=&quot;create&quot; style=&quot;padding-bottom:20px&quot;&gt;
+   &lt;gcms-modal template=&quot;admin.role.create.html&quot; controller=&quot;ModalDefaultCtrl&quot; content=&quot;addItem&quot; ok=&quot;create&quot; alt=&quot;Add Role&quot;&gt;
+     &lt;span class=&quot;btn btn-default&quot; role=&quot;button&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+   &lt;/gcms-modal&gt;
+ &lt;/div&gt;
+
+ &lt;div class=&quot;panel panel-primary&quot;&gt;
+   &lt;div class=&quot;panel-heading&quot;&gt;Country Attributes&lt;/div&gt;
+
+   &lt;div class=&quot;panel-body&quot;&gt;
+     &lt;table class=&quot;table table-hover roles-table&quot;&gt;
+       &lt;thead&gt;
+         &lt;tr&gt;
+           &lt;th&gt;Name&lt;/th&gt;
+           &lt;th&gt;Schema&lt;/th&gt;
+           &lt;th&gt;Table&lt;/th&gt;
+           &lt;th&gt;Field&lt;/th&gt;
+           &lt;th&gt;Hidden&lt;/th&gt;
+           &lt;th&gt;Critical&lt;/th&gt;
+           &lt;th&gt;Required&lt;/th&gt;
+           &lt;th&gt;Optional&lt;/th&gt;
+           &lt;th&gt;View&lt;/th&gt;
+         &lt;/tr&gt;
+       &lt;/thead&gt;
+       &lt;tbody&gt;
+         &lt;tr class=&quot;adminRole&quot; ng-repeat=&quot;field in countryAttributes&quot;&gt;
+           &lt;td&gt;{{field.attributeName}}&lt;/td&gt;
+           &lt;td&gt;{{field.schemaName}}&lt;/td&gt;
+           &lt;td&gt;{{field.tableName}}&lt;/td&gt;
+           &lt;td&gt;{{field.columnName}}&lt;/td&gt;
+           &lt;td&gt;&lt;i ng-show=&quot;field.criticalRequiredOptionalIndicator === &#039;H&#039;&quot; class=&quot;fa fa-check&quot;&gt;&lt;/td&gt;
+           &lt;td&gt;&lt;i ng-show=&quot;field.criticalRequiredOptionalIndicator === &#039;C&#039;&quot; class=&quot;fa fa-check&quot;&gt;&lt;/td&gt;
+           &lt;td&gt;&lt;i ng-show=&quot;field.criticalRequiredOptionalIndicator === &#039;R&#039;&quot; class=&quot;fa fa-check&quot;&gt;&lt;/td&gt;
+           &lt;td&gt;&lt;i ng-show=&quot;field.criticalRequiredOptionalIndicator === &#039;O&#039;&quot; class=&quot;fa fa-check&quot;&gt;&lt;/td&gt;
+           &lt;td&gt;&lt;i ng-show=&quot;field.criticalRequiredOptionalIndicator === &#039;V&#039;&quot; class=&quot;fa fa-check&quot;&gt;&lt;/td&gt;
+         &lt;/tr&gt;
+       &lt;/tbody&gt;
+     &lt;/table&gt;
+   &lt;/div&gt;
+ &lt;/div&gt;
+ *```
+ */
+(function () {
+  &#039;use strict&#039;;
+
+  angular
+    .module(&#039;gcms.administration&#039;)
+    .controller(&#039;AdminRoleCtrl&#039;, AdminRole);
+
+  AdminRole.$inject = [&#039;$rootScope&#039;, &#039;$scope&#039;, &#039;$state&#039;, &#039;UserProfile&#039;, &#039;UserDetail&#039;, &#039;Role&#039;];
+
+  /**
+   * @ngdoc method
+   * @name AdminRole
+   * @methodOf gcms.administration.controller:AdminRoleCtrl
+   * @description Constructor for the admin role controller
+   * @param {object} $rootScope A root object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $scope A descendent object that refers to the application model.  It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+   * @param {object} $state The service used to determine the mode of a control (critical, required, optional, view, hidden).
+   * @param {object} UserProfile The user profile data service.
+   * @param {object} UserDetail The user detail data service.
+   * @param {object} Role The role data service.
+   */
+  function AdminRole($rootScope, $scope, $state, UserProfile, UserDetail, Role){
+    // private variables
+    var allUsers = [];
+
+    // scope variables
+    $scope.addItem = { users: [], roles: []};
+
+    /**
+     * @ngdoc method
+     * @name removeExisting
+     * @methodOf gcms.administration.controller:AdminRoleCtrl
+     * @description Deteremines whether or not to remove existing user.
+     * @param {object} The exising user
+     */
+    var removeExisting = function(value){
+      for(var i in $scope.profiles){
+        if($scope.profiles[i].userName === value.userName){
+          return false;
+        }
+      }
+      return true;
+    };
+
+    /**
+     * @ngdoc method
+     * @name getData
+     * @methodOf gcms.administration.controller:AdminRoleCtrl
+     * @description Gets data
+     */
+    var getData = function(){
+      return Role.query().$promise.then(function(roles) {
+        $scope.roles = roles;
+        return UserProfile.query().$promise;
+      }).then(function(profiles){
+        $scope.profiles = profiles;
+        //get all users in the system
+        return UserDetail.query().$promise;
+      }).then(function(users){
+        //copy only the ones not already listed on the page
+        allUsers = users;
+        $scope.users = users.filter(removeExisting);
+        $scope.addItem = { users: $scope.users, roles: $scope.roles};
+        return $rootScope.session.user.getCurrentProfile();
+      }).then(function(profile){
+        var countryId = profile.countryId;	//console.log(countryId);
+        getAllLanguages(countryId);
+        return $rootScope.session.user.getAttributes(countryId);
+      }).then(function(attributes){
+        $scope.countryAttributes = attributes;
+      });
+    };
+
+    var getAllLanguages = function(countryId){
+    	Language.query({id : countryId}).$promise.then(updateLanguages);
+    };
+    var updateLanguages = function(result){
+    	$rootScope.languages = result;
+    	
+    	var arr = result.filter(d =&gt; d.default === &#039;Y&#039;);
+    	$rootScope.defaultLanguage = arr[0].languageName;
+	};
+
+    	
+    getData();
+
+    /**
+     * @ngdoc method
+     * @name create
+     * @methodOf gcms.administration.controller:AdminRoleCtrl
+     * @description Creates new profile based on current country.
+     * @param {object} item The profile to create
+     */
+    $scope.create = function(item){
+      $rootScope.session.user.getCurrentProfile().then(function(currentProfile){
+        var user = item.user;
+        var profile = {};
+        user.userProfiles = user.userProfiles || [];
+
+        profile.defaultProfileIndicator = true;
+        for (var i in user.userProfiles){
+          if (user.userProfiles[i].defaultProfileIndicator === true){
+            profile.defaultProfileIndicator = false;
+          }
+        }
+
+        profile.roleId = item.role.id;
+        profile.userName = user.userName;
+        profile.countryId = currentProfile.countryId;
+        profile.createdBy = currentProfile.userName;
+        profile.deleteRecord = false;
+        profile.deleted = false;
+
+        UserProfile.save(profile).$promise.then(getData);
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name delete
+     * @methodOf gcms.administration.controller:AdminRoleCtrl
+     * @description Deletes profile
+     * @param {object} item The profile to delete
+     */
+    $scope.delete = function(item) {
+      var userName = item.userName;
+      var user = allUsers.find(function(user){
+        return user.userName === userName;
+      });
+
+      if(!user){ console.log(&#039;user not found, delete aborted&#039;); return; }
+
+      var filterProfiles = function(profile){
+        return profile.id !== item.id;
+      };
+
+      user.userProfiles = user.userProfiles.filter(filterProfiles);
+      $scope.profiles = $scope.profiles.filter(filterProfiles);
+
+      UserProfile.delete({id: item.id}).$promise.then(getData);
+    };
+
+    /**
+     * @ngdoc method
+     * @name delete
+     * @methodOf gcms.administration.controller:AdminRoleCtrl
+     * @description Handles the ok button on the detail modal
+     */
+    $scope.detailOk = function(){};
+
+    /**
+     * @ngdoc method
+     * @name delete
+     * @methodOf gcms.administration.controller:AdminRoleCtrl
+     * @description Redirects user to appropriate detail screen
+     */
+    $scope.go = function(profile) {
+     $state.go(&#039;admin-details&#039;, {id: profile.userName});
+    };
+
+    /**
+     * @ngdoc event
+     * @name $localeChangeSuccess
+     * @eventOf gcms.administration.controller:AdminRoleCtrl
+     * @eventType broadcast on root scope
+     */
+    $scope.$on(&#039;$localeChangeSuccess&#039;, getData);
+
+  }
+})();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
